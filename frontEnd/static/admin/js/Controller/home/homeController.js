@@ -22,3 +22,22 @@ app.config(function ($routeProvider) {
             redirectTo: "/",
         });
 });
+
+app.config(function ($routeProvider) {
+    $routeProvider
+        .when("/list-Customer", {
+            templateUrl: "/templates/admin/customer/list.html",
+            controller: "CustomerController",
+        // })
+        // .when("/edit-Discount", {
+        //     templateUrl: "/templates/admin/discount/edit.html",
+        //     controller: "EditDiscountController",
+        })
+        .when("/create-Customer", {
+            templateUrl: "/templates/admin/customer/create.html",
+            controller: "CreateCustomerController",
+        })
+        .otherwise({
+            redirectTo: "/",
+        });
+});
