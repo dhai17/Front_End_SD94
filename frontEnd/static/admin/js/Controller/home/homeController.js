@@ -14,6 +14,10 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/discount/create.html",
             controller: "CreateDiscountController",
         })
+        .when("/list-PurchaseBill", {
+            templateUrl: "/templates/admin/purchasebill/list.html",
+            controller: "PurchaseBillController",
+        })
         .otherwise({
             redirectTo: "/",
         });
