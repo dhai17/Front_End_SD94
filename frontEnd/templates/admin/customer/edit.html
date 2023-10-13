@@ -1,0 +1,45 @@
+<div class="container-fluid" ng-controller="EditCustomerController">
+    <!-- Account details card-->
+    <div class="card mb-4">
+        <div class="card-header">Update customer</div>
+        <div class="card-body" >
+            <form>
+                <div class="row gx-3 mb-3">   
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputUsername">Name customer</label>
+                        <input class="form-control" id="inputUsername" type="text" placeholder="Enter customer name" ng-model="editCustomer.name">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputLocation">Phone number</label>
+                        <input class="form-control" id="inputLocation" type="text" placeholder="Enter phone number" ng-model="editCustomer.phoneNumber">
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputFirstName">Email</label>
+                        <input class="form-control" id="inputFirstName" type="text" placeholder="Enter email" ng-model="editCustomer.email">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputLastName">Date birth</label>
+                        <input class="form-control" id="inputLastName" type="date" placeholder="Enter date birth" ng-model="editCustomer.dateBirth">
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputLastName">Add ress</label>
+                        <input class="form-control" id="inputLastName" type="text" placeholder="Enter add ress" ng-model="editCustomer.addRess">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputLastName">Password</label>
+                        <input class="form-control" id="inputLastName" type="text" placeholder="Enter password" ng-model="editCustomer.passWord">
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" type="button" ng-click="returnEdit()">Return</button>
+                <button class="btn btn-primary" type="button" ng-click="saveEditCustomer()">Save changes</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+

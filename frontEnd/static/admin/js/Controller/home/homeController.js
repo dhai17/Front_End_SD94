@@ -24,10 +24,10 @@ app.config(function ($routeProvider) {
         .when("/list-Customer", {
             templateUrl: "/templates/admin/customer/list.html",
             controller: "CustomerController",
-        // })
-        // .when("/edit-Discount", {
-        //     templateUrl: "/templates/admin/discount/edit.html",
-        //     controller: "EditDiscountController",
+        })
+        .when("/edit-Customer", {
+            templateUrl: "/templates/admin/customer/edit.html",
+            controller: "EditCustomerController",
         })
         .when("/create-Customer", {
             templateUrl: "/templates/admin/customer/create.html",
