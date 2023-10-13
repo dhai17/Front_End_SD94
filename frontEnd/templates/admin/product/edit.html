@@ -1,0 +1,38 @@
+<div class="container-fluid" ng-controller="EditProductDetailsController">
+    <!-- Account details card-->
+    <div class="card mb-4">
+        <div class="card-header">Update Product Details</div>
+        <div class="card-body">
+            <form>
+                <div class=" row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="small mb-1">Sản phẩm</label>
+                        <input class="form-control" id="sanpham" type="text" placeholder="Enter san pham"
+                            ng-model="editproductDetails.product.name">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small mb-1">Màu sắc</label>
+                        <input class="form-control" id="mausac" type="text" placeholder="Enter mau sac"
+                            ng-model="editproductDetails.productColor.color">
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="small mb-1">Kích cỡ</label>
+                        <input class="form-control" id="kichco" type="number" placeholder="Enter kich co"
+                            ng-model="editproductDetails.productSize.shoeSize">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small mb-1">Số lượng</label>
+                        <input class="form-control" id="soluong" type="number" placeholder="Enter so luong"
+                            ng-model="editproductDetails.quantity">
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" type="button" ng-click="returnCreate()">Return</button>
+                <button class="btn btn-primary" type="button" ng-click="saveCreate(create)">Save
+                    changes</button>
+            </form>
+        </div>
+    </div>
+</div>

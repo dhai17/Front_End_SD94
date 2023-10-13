@@ -38,6 +38,34 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/customer/create.html",
             controller: "CreateCustomerController",
         })
+        .when("/list-ProductDetails", {
+            templateUrl: "/templates/admin/productDetails/list.html",
+            controller: "ProductDetailsController",
+        })
+        .when("/create-ProductDetails", {
+            templateUrl: "/templates/admin/productDetails/create.html",
+            controller: "EditProductDetailsController",
+        })
+        .when("/edit-ProductDetails", {
+            templateUrl: "/templates/admin/productDetails/edit.html",
+            controller: "EditProductDetailsController",
+        })
+        .when("/list-Product", {
+            templateUrl: "/templates/admin/product/list.html",
+            controller: "ProductController",
+        })
+        .when("/create-Product", {
+            templateUrl: "/templates/admin/product/create.html",
+            controller: "CreateProductController",
+        })
+        .when("/in-store", {
+            templateUrl: "/templates/admin/sales/product_list.html",
+            controller: "ListProductController",
+        })
+        .when("/details-product", {
+            templateUrl: "/templates/admin/sales/details.html",
+            controller: "detailsController",
+        })
         .otherwise({
             redirectTo: "/",
         });
