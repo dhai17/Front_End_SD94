@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="d-flex">
-        <input class="form-control me-1" type="search" placeholder="Search" aria-label="Search" ng-model="searchTerm">
+        <!-- <input class="form-control me-1" type="search" placeholder="Search" aria-label="Search" ng-model="searchTerm">
         <button class="btn btn-primary btn-sm" type="submit" ng-click="searchAllStaff(searchTerm)">Search</button>
 
         <input class="form-control me-1" type="date" placeholder="Search" aria-label="Search" ng-model="searchDate">
@@ -13,13 +13,13 @@
 
         <button type="button" class="dt-button buttons-html5 btn btn-white btn-success btn-bold" data-toggle="tooltip" title='Tải lại dữ liệu' ng-click="reLoad()">
             <span> <i class="fas fa-sync-alt"></i></span>
-        </button>
+        </button> -->
     </div>
     <br>
-    <table class="table align-middle mb-1 bg-white">
+    <table class="table table-striped table-hover">
         <thead class="bg-light">
             <tr>
-                <th></th>
+                <th>STT</th>
                 <th>Name</th>
                 <th>Phone number</th>
                 <th>Email</th>
@@ -31,7 +31,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="promotion in promotions">
+            <tr ng-repeat="promotion in pager.promotions">
                 <td>{{$index + 1}}</td>
                 <td>{{ promotion.name }}</td>
                 <td>{{ promotion.phoneNumber }}</td>
@@ -42,11 +42,11 @@
                 <td>{{ promotion.password}}</td>
                 <td>
                     <div class="button-group">
-                        <button type="button" class="btn btn-link" ng-click="editStaff(promotion)">
+                        <button type="button" class="btn btn-link" ng-click="editStaff(promotion)" data-bs-toggle="tooltip" data-bs-placement="top" title="edit">
                             <i class="bx bx-edit me-2"></i>
                         </button>
-                        <button type="button" class="btn btn-link btn-sm btn-rounded"
-                            ng-click="deleteStaff(promotion)">
+
+                        <button type="button" class="btn btn-link btn-sm btn-rounded" ng-click="deleteStaff(promotion)" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
                             <i class="bx bx-trash me-2"></i>
                         </button>
 

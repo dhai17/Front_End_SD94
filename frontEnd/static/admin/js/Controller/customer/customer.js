@@ -175,7 +175,7 @@ app.controller("CreateCustomerController", function ($scope, $http) {
 });
 // ------------------------------------------------------------------------------------------------------------------------------------------
 // //Edit controller
-// app.controller("EditCustomerController", function ($scope, $routeParams, $http) {
+// app.controller("EditStaffController", function ($scope, $routeParams, $http) {
 //     let idDiscount = $routeParams.id;
 
 //     $http.get("http://localhost:8080/api/discount/edit/discountID=" + idDiscount)

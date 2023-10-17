@@ -48,10 +48,10 @@ app.config(function ($routeProvider) {
         .when("/list-Staff", {
             templateUrl: "/templates/admin/staff/list.html",
             controller: "StaffController",
-        // })
-        // .when("/edit-Discount", {
-        //     templateUrl: "/templates/admin/discount/edit.html",
-        //     controller: "EditDiscountController",
+        })
+        .when("/edit-Staff", {
+            templateUrl: "/templates/admin/staff/edit.html",
+            controller: "EditStaffController",
         })
         .when("/create-Staff", {
             templateUrl: "/templates/admin/staff/create.html",
