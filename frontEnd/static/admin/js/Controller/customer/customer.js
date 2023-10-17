@@ -174,62 +174,61 @@ app.controller("CreateCustomerController", function ($scope, $http) {
     };
 });
 // ------------------------------------------------------------------------------------------------------------------------------------------
+<<<<<<< HEAD
 // //Edit controller
 // app.controller("EditStaffController", function ($scope, $routeParams, $http) {
 //     let idDiscount = $routeParams.id;
+=======
+//Edit controller
+app.controller("EditCustomerController", function ($scope, $routeParams, $http) {
+    let idCustomer = $routeParams.id;
+>>>>>>> 4a4db7cb113d6b2c1eef83e6efa27f068849ca2e
 
-//     $http.get("http://localhost:8080/api/discount/edit/discountID=" + idDiscount)
-//         .then(function (response) {
-//             const editDiscount = response.data;
-//             editDiscount.fomatMaximumValue = fomatMaxValue(editDiscount.maximumvalue);
-//             $scope.editDiscount = editDiscount;
-//         });
+    $http.get("http://localhost:8080/api/customer/edit/customerID=" + idCustomer)
+        .then(function (response) {
+            const editCustomer = response.data;
+            $scope.editCustomer = editCustomer;
+        });
 
-//     function fomatMaxValue(maximumvalue) {
-//         return maximumvalue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-//     }
+    //Lưu edit
+    $scope.saveEditCustomer = function () {
+        let editCustomer = {
+            id: idCustomer,
+            name: $scope.editCustomer.name,
+            phoneNumber: $scope.editCustomer.phoneNumber,
+            email: $scope.editCustomer.email,
+            dateBirth: $scope.editCustomer.dateBirth,
+            addRess: $scope.editCustomer.addRess,
+            passWord: $scope.editCustomer.passWord
+        };
 
-//     //Lưu edit
-//     $scope.saveEditDiscount = function () {
-//         let maxValue = $scope.editDiscount.fomatMaximumValue;
-//         let numericValue = parseFloat(maxValue.replace(/[^\d.-]/g, ''));
+        $http.put("http://localhost:8080/api/customer/saveUpdate", editCustomer)
+            .then(function (response) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Sửa thành công",
+                    showConfirmButton: false,
+                    timer: 2000,
+                }).then(function () {
+                    sessionStorage.setItem("isConfirmed", true);
+                    window.location.href = "#!/list-Customer";
+                });
+            })
+            .catch(function (errorResponse) {
+                if (errorResponse.status === 400) {
+                    const errorMassage = errorResponse.data.message;
+                    Swal.fire({
+                        icon: "error",
+                        title: errorMassage + "",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                }
+            });
+    };
 
-//         let editDiscount = {
-//             id: idDiscount,
-//             name: $scope.editDiscount.name,
-//             startedDate: $scope.editDiscount.startedDate,
-//             endDate: $scope.editDiscount.endDate,
-//             percentDiscount: $scope.editDiscount.percentDiscount,
-//             maximumvalue: numericValue
-//         };
-
-//         $http.put("http://localhost:8080/api/discount/saveUpdate", editDiscount)
-//             .then(function (response) {
-//                 Swal.fire({
-//                     icon: "success",
-//                     title: "Sửa thành công",
-//                     showConfirmButton: false,
-//                     timer: 2000,
-//                 }).then(function () {
-//                     sessionStorage.setItem("isConfirmed", true);
-//                     window.location.href = "#!/list-Discount";
-//                 });
-//             })
-//             .catch(function (errorResponse) {
-//                 if (errorResponse.status === 400) {
-//                     const errorMassage = errorResponse.data.message;
-//                     Swal.fire({
-//                         icon: "error",
-//                         title: errorMassage + "",
-//                         showConfirmButton: false,
-//                         timer: 2000,
-//                     });
-//                 }
-//             });
-//     };
-
-//     //Return
-//     $scope.returnEdit = function () {
-//         window.location.href = "#!/list-Discount"
-//     };
-// });
+    //Return
+    $scope.returnEdit = function () {
+        window.location.href = "#!/list-Customer"
+    };
+});
