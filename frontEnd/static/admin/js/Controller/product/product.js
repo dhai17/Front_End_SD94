@@ -194,54 +194,39 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             },
         };
 
-        // if ($scope.createProduct === undefined) {
-        //     Swal.fire({
-        //         icon: "error",
-        //         title: "Vui lòng nhập đầy đủ thông tin",
-        //         showConfirmButton: false,
-        //         timer: 2000,
-        //     });
-        //     return;
-        // }
-
-
         console.log(id_size);
-        $http.post("http://localhost:8080/api/product/saveCreate",
-            {
-                name: $scope.createProduct.name,
-                price: $scope.createProduct.price,
-                origin: $scope.createProduct.origin,
-                id_metarial: $scope.createProduct.productMaterial,
-                id_line: $scope.createProduct.productLine,
-                producer: $scope.createProduct.producer,
-                color: id_color,
-                size: id_size,
-                quantity: $scope.createProduct.quantity,
-                status: $scope.createProduct.status,
-            }
-        )
-            .then(function (response) {
+        $http.post("http://localhost:8080/api/product/saveCreate", {
+            name: $scope.createProduct.name,
+            price: $scope.createProduct.price,
+            origin: $scope.createProduct.origin,
+            id_metarial: $scope.createProduct.productMaterial,
+            id_line: $scope.createProduct.productLine,
+            producer: $scope.createProduct.producer,
+            color: id_color,
+            size: id_size,
+            quantity: $scope.createProduct.quantity,
+            status: $scope.createProduct.status,
+        }).then(function (response) {
+            Swal.fire({
+                icon: "success",
+                title: "Thêm mới thành công",
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            const details = response.data;
+            console.log(response.data);
+            $scope.details = details;
+        }).catch(function (response) {
+            if (errorResponse.status === 400) {
+                const errorMessage = errorResponse.data.message;
                 Swal.fire({
-                    icon: "success",
-                    title: "Thêm mới thành công",
+                    icon: "error",
+                    title: errorMessage + "",
                     showConfirmButton: false,
                     timer: 2000,
                 });
-                const details = response.data;
-                console.log(response.data);
-                $scope.details = details;~
-            })
-            .catch(function (errorResponse) {
-                if (errorResponse.status === 400) {
-                    const errorMessage = errorResponse.data.message;
-                    Swal.fire({
-                        icon: "error",
-                        title: errorMessage + "",
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
-                }
-            });
+            }
+        });
     };
 
 
