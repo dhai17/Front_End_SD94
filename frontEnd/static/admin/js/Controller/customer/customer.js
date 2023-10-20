@@ -174,15 +174,15 @@ app.controller("CreateCustomerController", function ($scope, $http) {
     };
 });
 // ------------------------------------------------------------------------------------------------------------------------------------------
-<<<<<<< HEAD
+
 // //Edit controller
 // app.controller("EditStaffController", function ($scope, $routeParams, $http) {
 //     let idDiscount = $routeParams.id;
-=======
+
 //Edit controller
 app.controller("EditCustomerController", function ($scope, $routeParams, $http) {
     let idCustomer = $routeParams.id;
->>>>>>> 4a4db7cb113d6b2c1eef83e6efa27f068849ca2e
+
 
     $http.get("http://localhost:8080/api/customer/edit/customerID=" + idCustomer)
         .then(function (response) {

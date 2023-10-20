@@ -1,9 +1,27 @@
 app.controller("StaffController", function ($scope, $http) {
     $http.get("http://localhost:8080/api/staff/list").then(function (response) {
         const promotions = response.data;
+
+        // Thêm trường status2 vào từng đối tượng promotion
+
+        promotions.forEach(function (promotion) {
+            promotion.status5 = getStatusText(promotion.status);
+
+        });
+
         $scope.promotions = promotions;
+
     });
-   
+
+    function getStatusText(status) {
+        if (status == 0) {
+            return "Active";
+        } else if (status == 1) {
+            return "Expired";
+        } else {
+            return "Awaiting";
+        }
+    }
 
     // Phân trang
     $scope.pager = {
@@ -36,11 +54,11 @@ app.controller("StaffController", function ($scope, $http) {
             return pageNumbers;
         }
     };
-    
 
-    function fomatMaxValue(maximumvalue) {
-        return maximumvalue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-    }
+
+    // function fomatMaxValue(maximumvalue) {
+    //     return maximumvalue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    // }
 
 
     //Chuyển hướng đến trang edit theo id
@@ -49,50 +67,83 @@ app.controller("StaffController", function ($scope, $http) {
         window.location.href = '#!/edit-Staff?id=' + idStaff;
     };
 
-//   // Xóa trong danh sách
-$scope.deleteStaff = function (promotion) {
+    //   // Xóa trong danh sách
+    $scope.deleteStaff = function (promotion) {
 
-    let idStaff = promotion.id;
+        let idStaff = promotion.id;
 
-    // Hiển thị hộp thoại xác nhận trước khi xóa
+        // Hiển thị hộp thoại xác nhận trước khi xóa
 
-    Swal.fire({
-        title: 'Xác nhận xóa',
-        text: 'Bạn có chắc chắn muốn xóa nhân viên này?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Xóa',
-        cancelButtonText: 'Hủy'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $http.put("http://localhost:8080/api/staff/deleteStaff=" + idStaff)
+        Swal.fire({
+            title: 'Confirm Delete',
+            text: 'Do you want to delete?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancel',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $http.put("http://localhost:8080/api/staff/deleteStaff=" + idStaff)
+                    .then(function (response) {
+                        const promotions = response.data;
+                        promotions.forEach(function (promotion) {
+                        });
+
+                        // Cập nhật lại dữ liệu trong table nhưng không load lại trang by Tung_BE
+                        $scope.$evalAsync(function () {
+                            $scope.promotions = promotions;
+                            Swal.fire({
+                                icon: "success",
+                                title: "Deleted successfully",
+                                showConfirmButton: false,
+                                timer: 2000,
+                            });
+                        });
+
+                    })
+                    .catch(function (error) {
+                        console.log("Error");
+                    });
+            }
+        });
+    }
+
+    $scope.$watch('searchTerm', function (newVal) {
+        if (newVal) {
+            $http.get("http://localhost:8080/api/staff/search=" + newVal)
                 .then(function (response) {
                     const promotions = response.data;
                     promotions.forEach(function (promotion) {
                     });
-
-                    // Cập nhật lại dữ liệu trong table nhưng không load lại trang by Tung_BE
-                    $scope.$evalAsync(function () {
-                        $scope.promotions = promotions;
-                        Swal.fire({
-                            icon: "success",
-                            title: "Xóa thành công",
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
+                    promotions.forEach(function (promotion) {
+                        promotion.status5 = getStatusText(promotion.status);
+            
                     });
 
-                })
-                .catch(function (error) {
-                    console.log("Error");
+                    // Cập nhật lại dữ liệu trong table nhưng không load lại trang by hduong25
+                    $scope.$evalAsync(function () {
+                        $scope.promotions = promotions;
+                    });
                 });
+        } else {
+            $http.get("http://localhost:8080/api/staff/list").then(function (response) {
+                const promotions = response.data;
+
+                // Thêm trường status2 vào từng đối tượng promotion
+
+                promotions.forEach(function (promotion) {
+                    promotion.status5 = getStatusText(promotion.status);
+
+                });
+
+                $scope.promotions = promotions;
+
+            });
         }
     });
-}
 
 
-
-     // Tìm kiếm
+    // Tìm kiếm
     $scope.searchAllStaff = function (searchTerm) {
         $http.get("http://localhost:8080/api/staff/search=" + searchTerm)
             .then(function (response) {
@@ -129,7 +180,7 @@ $scope.deleteStaff = function (promotion) {
         let day = ("0" + date.getDate()).slice(-2);
         return year + "-" + month + "-" + day;
     }
-//     // Re load
+    //     // Re load
     $scope.reLoad = function () {
         $http.get("http://localhost:8080/api/staff/list").then(function (response) {
             const promotions = response.data;
@@ -142,47 +193,73 @@ $scope.deleteStaff = function (promotion) {
         });
     }
 });
+
 // Create controller
 app.controller("CreateStaffController", function ($scope, $http) {
     $scope.saveCreateStaff = function () {
-
+        console.log($scope.createStaff.gender);
         if ($scope.createStaff === undefined) {
             Swal.fire({
                 icon: "error",
-                title: "Vui lòng nhập đầy đủ thông tin",
+                title: "Please enter complete information",
                 showConfirmButton: false,
                 timer: 2000,
             });
             return;
         }
+        $scope.saveCreateStaff = function () {
+            let radioBtn1 = document.getElementById("inlineRadio1");
+            let radioBtn2 = document.getElementById("inlineRadio2");
+            let gender;
 
-        $http.post("http://localhost:8080/api/staff/createStaff", $scope.createStaff)
-            .then(function (response) {
-                // Xử lý thành công nếu có
-                Swal.fire({
-                    icon: "success",
-                    title: "Thêm mới thành công",
-                    showConfirmButton: false,
-                    timer: 2000,
-                }).then(function () {
-                    sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-Staff";
-                });
-            })
-            .catch(function (error) {
-                if (error.status === 400) {
-                    const errorMessage = error.data.message;
+            if (radioBtn1.checked) {
+                gender = true;
+            } else if (radioBtn2.checked) {
+                gender = false;
+            }
+
+            console.log(gender);
+
+            let createStaff = {
+                name: $scope.createStaff.name,
+                phoneNumber: $scope.createStaff.phoneNumber,
+                email: $scope.createStaff.email,
+                dateOfBirth: $scope.createStaff.dateOfBirth,
+                address: $scope.createStaff.address,
+                gender: gender,
+                password: $scope.createStaff.password
+            };
+
+            $http.post("http://localhost:8080/api/staff/createStaff", createStaff)
+                .then(function (response) {
+                    // Xử lý thành công nếu có
                     Swal.fire({
-                        icon: "error",
-                        title: errorMessage + "",
+                        icon: "success",
+                        title: "Added successfully",
                         showConfirmButton: false,
                         timer: 2000,
+                    }).then(function () {
+                        sessionStorage.setItem("isConfirmed", true);
+                        window.location.href = "#!/list-Staff";
                     });
-                } else {
-                    // Xử lý lỗi khác nếu cần
-                    console.error(error);
-                }
-            });
+                })
+                .catch(function (error) {
+                    if (error.status === 400) {
+                        const errorMessage = error.data.message;
+                        Swal.fire({
+                            icon: "error",
+                            title: errorMessage + "",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                    } else {
+                        // Xử lý lỗi khác nếu cần
+                        console.error(error);
+                    }
+                });
+        };
+
+
 
     };
 
@@ -190,27 +267,29 @@ app.controller("CreateStaffController", function ($scope, $http) {
         window.location.href = "#!/list-Staff"
     };
 });
+
+
+
 //Edit Staff
 app.controller("EditStaffController", function ($scope, $routeParams, $http) {
     let idStaff = $routeParams.id;
     $http.get("http://localhost:8080/api/staff/edit/staffID=" + idStaff)
-    .then(function (response) {
-        const editStaff = response.data;
-        $scope.editStaff = editStaff;
-        console.log(editStaff.gender);
+        .then(function (response) {
+            const editStaff = response.data;
+            $scope.editStaff = editStaff;
 
-        if (editStaff.gender === true) {
-            document.getElementById('inlineRadio1').checked = true;
-        } else if (editStaff.gender === false) {
-            document.getElementById('inlineRadio2').checked = true;
-        }
-
-        // Gán giá trị cho trường nhập liệu ngày sinh
-        document.getElementById('inputDateOfBirth').value = editStaff.dateOfBirth;
-    });
+            if (editStaff.gender === true) {
+                document.getElementById('inlineRadio1').checked = true;
+            } else if (editStaff.gender === false) {
+                document.getElementById('inlineRadio2').checked = true;
+            }
+            // Gán giá trị cho trường nhập liệu ngày sinh
+            document.getElementById('inputDateOfBirth').value = editStaff.dateOfBirth;
+        });
 
     //Lưu edit
     $scope.saveEditStaff = function () {
+
         let editStaff = {
             id: idStaff,
             name: $scope.editStaff.name,
@@ -220,13 +299,16 @@ app.controller("EditStaffController", function ($scope, $routeParams, $http) {
             address: $scope.editStaff.address,
             gender: $scope.editStaff.gender,
             password: $scope.editStaff.password
+
         };
+        console.log($scope.editStaff.gender);
+
 
         $http.put("http://localhost:8080/api/staff/saveUpdate", editStaff)
             .then(function (response) {
                 Swal.fire({
                     icon: "success",
-                    title: "Sửa thành công",
+                    title: "Edit success fully",
                     showConfirmButton: false,
                     timer: 2000,
                 }).then(function () {
@@ -246,7 +328,6 @@ app.controller("EditStaffController", function ($scope, $routeParams, $http) {
                 }
             });
     };
-
     //Return
     $scope.returnEdit = function () {
         window.location.href = "#!/list-Staff"
