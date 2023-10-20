@@ -61,8 +61,7 @@
         <tbody>
             <tr ng-repeat="pending in pager.pending">
                 <td>
-                    <input type="checkbox" class="form-check-input" ng-model="pending.selected"
-                        ng-change="updateSelectAll()">
+                    <input type="checkbox" class="form-check-input" ng-model="pending.selected" ng-change="updateSelectAll()">
                 </td>
                 <td>{{$index + 1}}</td>
                 <td>{{ pending.code }}</td>

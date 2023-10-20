@@ -1,32 +1,34 @@
-<div ng-controller="CustomerController" id="customerList">
+<div ng-controller="StaffController" id="staffList">
     <div class="container-fluid my-auto d-flex align-items-center">
         <div class="mx-auto">
-            <h1>Customer</h1>
+            <h1>Staff</h1>
         </div>
     </div>
     <div class="d-flex">
         <input class="form-control me-1" type="search" placeholder="Search" aria-label="Search" ng-model="searchTerm">
-        <button class="btn btn-primary btn-sm" type="submit" ng-click="searchAllCustomer(searchTerm)">Search</button>
+        <button class="btn btn-primary btn-sm" type="submit" ng-click="searchAllStaff(searchTerm)">Search</button>
 
         <input class="form-control me-1" type="date" placeholder="Search" aria-label="Search" ng-model="searchDate">
-        <button class="btn btn-primary btn-sm" type="submit" ng-click="searchDateCustomer(searchDate)">Search</button>
+        <button class="btn btn-primary btn-sm" type="submit" ng-click="searchDateStaff(searchDate)">Search</button>
 
         <button type="button" class="dt-button buttons-html5 btn btn-white btn-success btn-bold" data-toggle="tooltip" title='Tải lại dữ liệu' ng-click="reLoad()">
             <span> <i class="fas fa-sync-alt"></i></span>
         </button>
     </div>
     <br>
-    <table class="table align-middle mb-1 bg-white">
-        <thead class="bg-light">
+    <table class="table table-striped table-hover">
+        <thead  class="bg-label-info" style="font-weight: 30px;">
             <tr>
-                <th></th>
+                <th>STT</th>
                 <th>Name</th>
                 <th>Phone number</th>
                 <th>Email</th>
                 <th>Date birth</th>
-                <th>Add ress</th>
+                <th>Address</th>
+                <th>GenDer</th>
+                <th>Status</th>
                 <th>Password</th>
-                <th>Actions</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -35,17 +37,23 @@
                 <td>{{ promotion.name }}</td>
                 <td>{{ promotion.phoneNumber }}</td>
                 <td>{{ promotion.email }}</td>
-                <td>{{ promotion.dateBirth }}</td>
-                <td>{{ promotion.addRess}}</td>
-                <td>{{ promotion.passWord}}</td>
+                <td>{{ promotion.dateOfBirth | date:'dd/MM/yyyy' }}</td>
+                <td>{{ promotion.address}}</td>
+                <td>{{ promotion.gender == true ? 'Male' :'Female'}}</td>
+                <td ng-class="{
+                    'text-success': promotion.status5 === 'Active',
+                    'text-danger': promotion.status5 === 'Expired',
+                    'text-warning': promotion.status5 === 'Awaiting'}">
+                    {{ promotion.status5 }}
+                </td>
+                <td>{{ promotion.password}}</td>
                 <td>
                     <div class="button-group">
-                        <button type="button" class="btn btn-link" ng-click="editCustomer(promotion)">
+                        <button type="button" class="btn btn-link" ng-click="editStaff(promotion)" data-bs-toggle="tooltip" data-bs-placement="top" title="edit">
                             <i class="bx bx-edit me-2"></i>
                         </button>
 
-                        <button type="button" class="btn btn-link btn-sm btn-rounded"
-                            ng-click="deleteCustomer(promotion)">
+                        <button type="button" class="btn btn-link btn-sm btn-rounded" ng-click="deleteStaff(promotion)" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
                             <i class="bx bx-trash me-2"></i>
                         </button>
 
