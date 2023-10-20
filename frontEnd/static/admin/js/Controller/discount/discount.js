@@ -88,7 +88,7 @@ app.controller("DiscountController", function ($scope, $http) {
     //Xóa trong danh sách
     $scope.deleteDiscount = function (promotion) {
         let idDiscount = promotion.id;
-        $http.put("http://localhost:8080/api/discount/deleteDiscount=" + idDiscount)
+        $http.put("http://localhost:8080/api/discount/deleteDiscount" + idDiscount)
             .then(function (response) {
                 const promotions = response.data;
 

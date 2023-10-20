@@ -49,29 +49,39 @@ app.controller("CustomerController", function ($scope, $http) {
     // Xóa trong danh sách
     $scope.deleteCustomer = function (promotion) {
         let idCustomer = promotion.id;
-        $http.put("http://localhost:8080/api/customer/deleteCustomer=" + idCustomer)
-            .then(function (response) {
-                const promotions = response.data;
-                promotions.forEach(function (promotion) {
-                });
-
-                // Cập nhật lại dữ liệu trong table nhưng không load lại trang by hduong25
-                $scope.$evalAsync(function () {
-                    $scope.promotions = promotions;
-                    Swal.fire({
-                        icon: "success",
-                        title: "Xóa thành công",
-                        showConfirmButton: false,
-                        timer: 2000,
+        Swal.fire({
+            title: 'Xác nhận xóa khách hàng',
+            text: 'Bạn có chắc chắn muốn xóa khách hàng này?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $http.put("http://localhost:8080/api/customer/deleteCustomer=" + idCustomer)
+                    .then(function (response) {
+                        const promotions = response.data;
+                        promotions.forEach(function (promotion) {
+                        });
+    
+                        // Cập nhật lại dữ liệu trong bảng mà không load lại trang
+                        $scope.$evalAsync(function () {
+                            $scope.promotions = promotions;
+                            Swal.fire({
+                                icon: "success",
+                                title: "Xóa thành công",
+                                showConfirmButton: false,
+                                timer: 2000,
+                            });
+                        });
+                    })
+                    .catch(function (error) {
+                        console.log("Lỗi");
                     });
-                });
-
-            })
-            .catch(function (error) {
-                console.log("Error");
-            });
+            }
+        });
     }
-
+    
     // Tìm kiếm
     $scope.searchAllCustomer = function (searchTerm) {
         $http.get("http://localhost:8080/api/customer/search=" + searchTerm)
@@ -174,62 +184,61 @@ app.controller("CreateCustomerController", function ($scope, $http) {
     };
 });
 // ------------------------------------------------------------------------------------------------------------------------------------------
+
 // //Edit controller
-// app.controller("EditCustomerController", function ($scope, $routeParams, $http) {
+// app.controller("EditStaffController", function ($scope, $routeParams, $http) {
 //     let idDiscount = $routeParams.id;
 
-//     $http.get("http://localhost:8080/api/discount/edit/discountID=" + idDiscount)
-//         .then(function (response) {
-//             const editDiscount = response.data;
-//             editDiscount.fomatMaximumValue = fomatMaxValue(editDiscount.maximumvalue);
-//             $scope.editDiscount = editDiscount;
-//         });
+//Edit controller
+app.controller("EditCustomerController", function ($scope, $routeParams, $http) {
+    let idCustomer = $routeParams.id;
 
-//     function fomatMaxValue(maximumvalue) {
-//         return maximumvalue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-//     }
 
-//     //Lưu edit
-//     $scope.saveEditDiscount = function () {
-//         let maxValue = $scope.editDiscount.fomatMaximumValue;
-//         let numericValue = parseFloat(maxValue.replace(/[^\d.-]/g, ''));
+    $http.get("http://localhost:8080/api/customer/edit/customerID=" + idCustomer)
+        .then(function (response) {
+            const editCustomer = response.data;
+            $scope.editCustomer = editCustomer;
+        });
 
-//         let editDiscount = {
-//             id: idDiscount,
-//             name: $scope.editDiscount.name,
-//             startedDate: $scope.editDiscount.startedDate,
-//             endDate: $scope.editDiscount.endDate,
-//             percentDiscount: $scope.editDiscount.percentDiscount,
-//             maximumvalue: numericValue
-//         };
+    //Lưu edit
+    $scope.saveEditCustomer = function () {
+        let editCustomer = {
+            id: idCustomer,
+            name: $scope.editCustomer.name,
+            phoneNumber: $scope.editCustomer.phoneNumber,
+            email: $scope.editCustomer.email,
+            dateBirth: $scope.editCustomer.dateBirth,
+            addRess: $scope.editCustomer.addRess,
+            passWord: $scope.editCustomer.passWord
+        };
 
-//         $http.put("http://localhost:8080/api/discount/saveUpdate", editDiscount)
-//             .then(function (response) {
-//                 Swal.fire({
-//                     icon: "success",
-//                     title: "Sửa thành công",
-//                     showConfirmButton: false,
-//                     timer: 2000,
-//                 }).then(function () {
-//                     sessionStorage.setItem("isConfirmed", true);
-//                     window.location.href = "#!/list-Discount";
-//                 });
-//             })
-//             .catch(function (errorResponse) {
-//                 if (errorResponse.status === 400) {
-//                     const errorMassage = errorResponse.data.message;
-//                     Swal.fire({
-//                         icon: "error",
-//                         title: errorMassage + "",
-//                         showConfirmButton: false,
-//                         timer: 2000,
-//                     });
-//                 }
-//             });
-//     };
+        $http.put("http://localhost:8080/api/customer/saveUpdate", editCustomer)
+            .then(function (response) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Sửa thành công",
+                    showConfirmButton: false,
+                    timer: 2000,
+                }).then(function () {
+                    sessionStorage.setItem("isConfirmed", true);
+                    window.location.href = "#!/list-Customer";
+                });
+            })
+            .catch(function (errorResponse) {
+                if (errorResponse.status === 400) {
+                    const errorMassage = errorResponse.data.message;
+                    Swal.fire({
+                        icon: "error",
+                        title: errorMassage + "",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                }
+            });
+    };
 
-//     //Return
-//     $scope.returnEdit = function () {
-//         window.location.href = "#!/list-Discount"
-//     };
-// });
+    //Return
+    $scope.returnEdit = function () {
+        window.location.href = "#!/list-Customer"
+    };
+});
