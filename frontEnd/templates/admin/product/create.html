@@ -1,0 +1,177 @@
+<div class="container-fluid" ng-controller="CreateProductController">
+    <!-- Account details card-->
+    <div class="card mb-4">
+        <div class="card-header">Create Product</div>
+        <div class="card-body">
+            <form>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="small mb-1">Tên sản phẩm</label>
+                        <input class="form-control" id="name" type="text" placeholder="Enter name"
+                            ng-model="createProduct.name" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small mb-1">Giá bán</label>
+                        <input class="form-control" id="price" type="text" placeholder="Enter price"
+                            ng-model="createProduct.price">
+                    </div>
+                </div>
+
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="small mb-1">Màu sắc</label>
+                        <select class="form-select" aria-label="Default select example" ng-model="selectedColor"
+                            multiple>
+                            <option selected ng-repeat="color in color" value="{{color.id}}"
+                                ng-click="getIdColor(color)">{{color.color}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small mb-1">Kích cỡ</label>
+                        <select class="form-select" aria-label="Default select example" ng-model="selectedSizes"
+                            multiple>
+                            <option ng-repeat="size in size" ng-value="size.id" ng-click="getIdSize(size)">
+                                {{size.shoeSize}}</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="small mb-1">Xuất xứ</label>
+                        <input class="form-control" id="origin" type="text" placeholder="Enter origin"
+                            ng-model="createProduct.origin">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small mb-1">Chất liệu</label>
+                        <select class="form-select" aria-label="Default select example"
+                            ng-model="createProduct.productMaterial">
+                            <option ng-repeat="material in material" value="{{material.id}}">{{material.material}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="small mb-1">Dòng sản phẩm</label>
+                        <select class="form-select" aria-label="Default select example"
+                            ng-model="createProduct.productLine">
+                            <option ng-repeat="line in line" value="{{line.id}}">{{line.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small mb-1">Nhà sản xuất</label>
+                        <select class="form-select" aria-label="Default select example"
+                            ng-model="createProduct.producer">
+                            <option ng-repeat="producer in producer" value="{{producer.id}}">{{producer.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="small mb-1">Số lượng</label>
+                        <input class="form-control" id="quantity" type="text" placeholder="Enter quantity"
+                            ng-model="createProduct.quantity">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small mb-1">Trạng thái</label>
+                        <!-- <input class="form-control" id="status" type="text" placeholder="Enter status"
+                            ng-model="createProduct.status"> -->
+                        <div class="acs">
+                            <input type="radio" class="form-check-input" id="radio1" name="status" value="0"
+                                ng-model="createProduct.status" checked>
+                            <label class="form-check-label" for="radio1">Còn</label>
+                            <div class="statusabcd">
+                                <input type="radio" class="form-check-input" id="radio2" name="status" value="1"
+                                    ng-model="createProduct.status">
+                                <label class="form-check-label" for="radio1">Hết</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" type="button" ng-click="reLoad()">Return</button>
+                <button class="btn btn-primary" type="button" ng-click="saveCreate()">Save changes</button>
+            </form>
+        </div>
+        <div ng-controller="ProductController" id="productList">
+            <h2 style="text-align: center;">Product details</h2>
+            <hr>
+            <div>
+                <table class="table align-middle mb-1 bg-white">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Trạng thái</th>
+                            <th>Màu sắc</th>
+                            <th>Kích cỡ</th>
+                            <th>Giá bán</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="details in details">
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ details.product.name }}</td>
+                            <td>{{ details.quantity }}</td>
+                            <td>{{ details.product.status }}</td>
+                            <td>{{ details.productColor.color}}</td>
+                            <td>{{ details.productSize.shoeSize }}</td>
+                            <td>{{ details.product.price }}</td>
+                            <!-- <td>
+                                <div class="button-group">
+                                    <button type="button" class="btn btn-link" ng-click="saveEdit(details)">
+                                        <i class="bx bx-edit me-2"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-link btn-sm btn-rounded"
+                                        ng-click="delete(details)">
+                                        <i class="bx bx-trash me-2"></i>
+                                    </button>
+
+                                    <div class="modal fade" ng-attr-id="confirmDeleteModal_{{ details.id }}"
+                                        tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Bạn có chắc chắn muốn xóa?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Hủy</button>
+                                                    <button type="button" class="btn btn-danger"
+                                                        id="confirmDeleteButton">Xóa</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td> -->
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <div class="col-4">
+                    <div class="mb-3">
+                        <input class="form-control" type="file" accept="image/*" id="formFile" multiple
+                            onchange="angular.element(this).scope().setSelectedFile(this)" />
+                    </div>
+                </div> -->
+                <button class="btn btn-primary" type="button" ng-click="" style="float: right">Change
+                    image</button>
+            </div>
+        </div>
+    </div>
+</div>
