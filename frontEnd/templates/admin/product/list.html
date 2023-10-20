@@ -31,7 +31,9 @@
             <tr ng-repeat="promotion in pager.promotions">
                 <td>{{ $index + 1 }}</td>
                 <td>
-                    <img src="https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*" width="100px" height="100px">
+                    <!-- <img src="https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*"
+                        width="100px" height="100px"> -->
+                        <span>{{ promotion.img }}</span>
                     <div>
                         <span>{{ promotion.name }}</span>
                     </div>
@@ -45,7 +47,7 @@
                 </td>
                 <td>
                     <div class="button-group">
-                        <button type="button" class="btn btn-link" ng-click="edit(promotion)">
+                        <button type="button" class="btn btn-link" ng-click="showDetails(promotion)">
                             <i class="bx bx-edit me-2"></i>
                         </button>
 

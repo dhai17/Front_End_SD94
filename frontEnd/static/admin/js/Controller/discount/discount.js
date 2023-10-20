@@ -238,6 +238,7 @@ app.controller("EditDiscountController", function ($scope, $routeParams, $http) 
 
 //Create controller
 app.controller("CreateDiscountController", function ($scope, $http) {
+
     $scope.saveCreateDiscount = function () {
 
         if ($scope.createDiscount === undefined) {

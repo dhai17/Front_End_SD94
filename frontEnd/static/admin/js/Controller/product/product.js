@@ -8,7 +8,7 @@ app.controller("ProductController", function ($scope, $http) {
             });
             $scope.promotions = promotions;
         });
-        
+
 
     function getStatusText(status) {
         if (status == 0) {
@@ -66,7 +66,7 @@ app.controller("ProductController", function ($scope, $http) {
         $http.delete("http://localhost:8080/api/product/deleteProduct/" + idPro)
             .then(function (response) {
                 const promotions = response.data;
-                
+
                 promotions.forEach(function (promotion) {
                     promotion.status2 = getStatusText(promotion.status);
                 });
@@ -86,48 +86,6 @@ app.controller("ProductController", function ($scope, $http) {
                 console.log("Error");
             });
     }
-
-    //Tìm kiếm
-    // $scope.search = function (searchTerm) {
-    //     $http.get("http://localhost:8080/api/product/search=" + searchTerm)
-    //         .then(function (response) {
-    //             const promotions = response.data;
-    //             promotions.forEach(function (promotion) {
-    //                 promotion.status2 = getStatusText(promotion.status);
-    //             });
-
-    //             // Cập nhật lại dữ liệu trong table nhưng không load lại trang by hduong25
-    //             $scope.$evalAsync(function () {
-    //                 $scope.promotions = promotions;
-    //             });
-    //         });
-    // }
-
-    //Tìm kiếm ngày bắt đầu
-    // $scope.searchDate = function (selectedDate) {
-    //     let formattedDate = formatDate(selectedDate);
-
-    //     // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-    //     $http.get("http://localhost:8080/api/product/searchDate=" + formattedDate)
-    //         .then(function (response) {
-    //             const promotions = response.data;
-    //             promotions.forEach(function (promotion) {
-    //                 promotion.status2 = getStatusText(promotion.status);
-    //             });
-
-    //             $scope.$evalAsync(function () {
-    //                 $scope.promotions = promotions;
-    //             })
-    //         });
-    // }
-
-    // function formatDate(dateString) {
-    //     let date = new Date(dateString);
-    //     let year = date.getFullYear();
-    //     let month = ("0" + (date.getMonth() + 1)).slice(-2);
-    //     let day = ("0" + date.getDate()).slice(-2);
-    //     return year + "-" + month + "-" + day;
-    // }
 
     // Re load
     $scope.reLoad = function () {
@@ -153,44 +111,6 @@ app.controller("EditProductController", function ($scope, $routeParams, $http) {
             const editproduct = response.data;
             $scope.editproduct = editproduct;
         });
-
-    //Lưu edit
-    // $scope.saveEdit = function () {
-    //     let maxValue = $scope.editproduct.fomatMaximumValue;
-    //     let numericValue = parseFloat(maxValue.replace(/[^\d.-]/g, ''));
-
-    //     let editproduct = {
-    //         id: idPro,
-    //         name: $scope.editproduct.name,
-    //         startedDate: $scope.editproduct.startedDate,
-    //         endDate: $scope.editproduct.endDate,
-    //         percentproduct: $scope.editproduct.percentproduct,
-    //     };
-
-    //     $http.put("http://localhost:8080/api/product/saveUpdate", editproduct)
-    //         .then(function (response) {
-    //             Swal.fire({
-    //                 icon: "success",
-    //                 title: "Sửa thành công",
-    //                 showConfirmButton: false,
-    //                 timer: 2000,
-    //             }).then(function () {
-    //                 sessionStorage.setItem("isConfirmed", true);
-    //                 window.location.href = "#!/list-Product";
-    //             });
-    //         })
-    //         .catch(function (errorResponse) {
-    //             if (errorResponse.status === 400) {
-    //                 const errorMassage = errorResponse.data.message;
-    //                 Swal.fire({
-    //                     icon: "error",
-    //                     title: errorMassage + "",
-    //                     showConfirmButton: false,
-    //                     timer: 2000,
-    //                 });
-    //             }
-    //         });
-    // };
 
     //Return
     $scope.returnEdit = function () {
@@ -257,6 +177,7 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
 
 
     $scope.saveCreate = function () {
+
         let createProduct = {
             id: idPro,
             name: $scope.createProduct.name,
@@ -272,6 +193,17 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
                 id: $scope.createProduct.producer
             },
         };
+
+        // if ($scope.createProduct === undefined) {
+        //     Swal.fire({
+        //         icon: "error",
+        //         title: "Vui lòng nhập đầy đủ thông tin",
+        //         showConfirmButton: false,
+        //         timer: 2000,
+        //     });
+        //     return;
+        // }
+
 
         console.log(id_size);
         $http.post("http://localhost:8080/api/product/saveCreate",
@@ -289,9 +221,15 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             }
         )
             .then(function (response) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Thêm mới thành công",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
                 const details = response.data;
-                console.log(details);
-                $scope.details = details;
+                console.log(response.data);
+                $scope.details = details;~
             })
             .catch(function (errorResponse) {
                 if (errorResponse.status === 400) {
@@ -310,8 +248,4 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
     $scope.returnCreate = function () {
         window.location.href = "#!/list-Product"
     };
-});
-
-
-
-
+})

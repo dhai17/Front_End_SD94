@@ -146,6 +146,9 @@ app.controller("ProductDetailsController", function ($scope, $http) {
             })
         });
     }
+
+
+    
 });
 
 //Edit controller

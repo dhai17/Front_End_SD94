@@ -29,26 +29,14 @@ app.config(function ($routeProvider) {
         .when("/list-Customer", {
             templateUrl: "/templates/admin/customer/list.html",
             controller: "CustomerController",
-        // })
-        // .when("/edit-Discount", {
-        //     templateUrl: "/templates/admin/discount/edit.html",
-        //     controller: "EditDiscountController",
         })
         .when("/create-Customer", {
             templateUrl: "/templates/admin/customer/create.html",
             controller: "CreateCustomerController",
         })
-        .when("/list-ProductDetails", {
-            templateUrl: "/templates/admin/productDetails/list.html",
-            controller: "ProductDetailsController",
-        })
-        .when("/create-ProductDetails", {
-            templateUrl: "/templates/admin/productDetails/create.html",
-            controller: "EditProductDetailsController",
-        })
-        .when("/edit-ProductDetails", {
-            templateUrl: "/templates/admin/productDetails/edit.html",
-            controller: "EditProductDetailsController",
+        .when("/edit-Product", {
+            templateUrl: "/templates/admin/product/edit.html",
+            controller: "EditProductController",
         })
         .when("/list-Product", {
             templateUrl: "/templates/admin/product/list.html",
@@ -65,6 +53,37 @@ app.config(function ($routeProvider) {
         .when("/details-product", {
             templateUrl: "/templates/admin/sales/details.html",
             controller: "detailsController",
+        })
+        .otherwise({
+            redirectTo: "/",
+        });
+});
+
+app.config(function ($routeProvider) {
+    $routeProvider
+        .when("/list-Color", {
+            templateUrl: "/templates/admin/colorr/list.html",
+            controller: "ColorrController",
+        })
+        .when("/create-Color", {
+            templateUrl: "/templates/admin/colorr/create.html",
+            controller: "CreateColorController",
+        })
+        .when("/list-Size", {
+            templateUrl: "/templates/admin/size/list.html",
+            controller: "SizeController",
+        })
+        .when("/create-Size", {
+            templateUrl: "/templates/admin/size/create.html",
+            controller: "CreateSizeController",
+        })
+        .when("/edit-Size", {
+            templateUrl: "/templates/admin/size/edit.html",
+            controller: "EditSizeController",
+        })
+        .when("/list-Img", {
+            templateUrl: "/templates/admin/imagess/list.html",
+            controller: "ImgController",
         })
         .otherwise({
             redirectTo: "/",

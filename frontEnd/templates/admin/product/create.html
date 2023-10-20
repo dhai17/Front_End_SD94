@@ -6,12 +6,12 @@
             <form>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
-                        <label class="small mb-1">Ten san pham</label>
+                        <label class="small mb-1">Tên sản phẩm</label>
                         <input class="form-control" id="name" type="text" placeholder="Enter name"
-                            ng-model="createProduct.name">
+                            ng-model="createProduct.name" required>
                     </div>
                     <div class="col-md-6">
-                        <label class="small mb-1">Gia</label>
+                        <label class="small mb-1">Giá bán</label>
                         <input class="form-control" id="price" type="text" placeholder="Enter price"
                             ng-model="createProduct.price">
                     </div>
@@ -39,12 +39,12 @@
 
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
-                        <label class="small mb-1">Xuat xu</label>
+                        <label class="small mb-1">Xuất xứ</label>
                         <input class="form-control" id="origin" type="text" placeholder="Enter origin"
                             ng-model="createProduct.origin">
                     </div>
                     <div class="col-md-6">
-                        <label class="small mb-1">Chat lieu</label>
+                        <label class="small mb-1">Chất liệu</label>
                         <select class="form-select" aria-label="Default select example"
                             ng-model="createProduct.productMaterial">
                             <option ng-repeat="material in material" value="{{material.id}}">{{material.material}}
@@ -54,14 +54,14 @@
                 </div>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
-                        <label class="small mb-1">Dong san pham</label>
+                        <label class="small mb-1">Dòng sản phẩm</label>
                         <select class="form-select" aria-label="Default select example"
                             ng-model="createProduct.productLine">
                             <option ng-repeat="line in line" value="{{line.id}}">{{line.name}}</option>
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label class="small mb-1">Nha san xuat</label>
+                        <label class="small mb-1">Nhà sản xuất</label>
                         <select class="form-select" aria-label="Default select example"
                             ng-model="createProduct.producer">
                             <option ng-repeat="producer in producer" value="{{producer.id}}">{{producer.name}}</option>
@@ -79,19 +79,20 @@
                         <label class="small mb-1">Trạng thái</label>
                         <!-- <input class="form-control" id="status" type="text" placeholder="Enter status"
                             ng-model="createProduct.status"> -->
-                        <div>
+                        <div class="acs">
                             <input type="radio" class="form-check-input" id="radio1" name="status" value="0"
                                 ng-model="createProduct.status" checked>
-                            <label class="form-check-label" for="radio1">Active</label>
-                            <input type="radio" class="form-check-input" id="radio2" name="status" value="1"
-                                ng-model="createProduct.status">
-                            <label class="form-check-label" for="radio1">Expired</label>
+                            <label class="form-check-label" for="radio1">Còn</label>
+                            <div class="statusabcd">
+                                <input type="radio" class="form-check-input" id="radio2" name="status" value="1"
+                                    ng-model="createProduct.status">
+                                <label class="form-check-label" for="radio1">Hết</label>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-
-                <button class="btn btn-primary" type="button" ng-click="returnCreate()">Return</button>
+                <button class="btn btn-primary" type="button" ng-click="reLoad()">Return</button>
                 <button class="btn btn-primary" type="button" ng-click="saveCreate()">Save changes</button>
             </form>
         </div>
@@ -108,20 +109,22 @@
                             <th>Trạng thái</th>
                             <th>Màu sắc</th>
                             <th>Kích cỡ</th>
+                            <th>Giá bán</th>
                             <th>Thao tác</th>
-                        </tr>s
+                        </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="details in details">
                             <td>{{ $index + 1 }}</td>
                             <td>{{ details.product.name }}</td>
                             <td>{{ details.quantity }}</td>
-                            <td>{{ details.status }}</td>
+                            <td>{{ details.product.status }}</td>
                             <td>{{ details.productColor.color}}</td>
                             <td>{{ details.productSize.shoeSize }}</td>
-                            <td>
+                            <td>{{ details.product.price }}</td>
+                            <!-- <td>
                                 <div class="button-group">
-                                    <button type="button" class="btn btn-link" ng-click="edit(details)">
+                                    <button type="button" class="btn btn-link" ng-click="saveEdit(details)">
                                         <i class="bx bx-edit me-2"></i>
                                     </button>
 
@@ -156,11 +159,17 @@
                                         </div>
                                     </div>
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
                     </tbody>
                 </table>
-                <button class="btn btn-primary" type="button" ng-click="saveCreate()" style="float: right">Change
+                <!-- <div class="col-4">
+                    <div class="mb-3">
+                        <input class="form-control" type="file" accept="image/*" id="formFile" multiple
+                            onchange="angular.element(this).scope().setSelectedFile(this)" />
+                    </div>
+                </div> -->
+                <button class="btn btn-primary" type="button" ng-click="" style="float: right">Change
                     image</button>
             </div>
         </div>
