@@ -229,7 +229,7 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
                 });
                 const details = response.data;
                 console.log(response.data);
-                $scope.details = details;~
+                $scope.details = details;
             })
             .catch(function (errorResponse) {
                 if (errorResponse.status === 400) {
