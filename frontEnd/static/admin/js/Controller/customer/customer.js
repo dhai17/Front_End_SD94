@@ -184,9 +184,15 @@ app.controller("CreateCustomerController", function ($scope, $http) {
     };
 });
 // ------------------------------------------------------------------------------------------------------------------------------------------
+
+// //Edit controller
+// app.controller("EditStaffController", function ($scope, $routeParams, $http) {
+//     let idDiscount = $routeParams.id;
+
 //Edit controller
 app.controller("EditCustomerController", function ($scope, $routeParams, $http) {
     let idCustomer = $routeParams.id;
+
 
     $http.get("http://localhost:8080/api/customer/edit/customerID=" + idCustomer)
         .then(function (response) {
