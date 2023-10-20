@@ -49,29 +49,39 @@ app.controller("CustomerController", function ($scope, $http) {
     // Xóa trong danh sách
     $scope.deleteCustomer = function (promotion) {
         let idCustomer = promotion.id;
-        $http.put("http://localhost:8080/api/customer/deleteCustomer=" + idCustomer)
-            .then(function (response) {
-                const promotions = response.data;
-                promotions.forEach(function (promotion) {
-                });
-
-                // Cập nhật lại dữ liệu trong table nhưng không load lại trang by hduong25
-                $scope.$evalAsync(function () {
-                    $scope.promotions = promotions;
-                    Swal.fire({
-                        icon: "success",
-                        title: "Xóa thành công",
-                        showConfirmButton: false,
-                        timer: 2000,
+        Swal.fire({
+            title: 'Xác nhận xóa khách hàng',
+            text: 'Bạn có chắc chắn muốn xóa khách hàng này?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $http.put("http://localhost:8080/api/customer/deleteCustomer=" + idCustomer)
+                    .then(function (response) {
+                        const promotions = response.data;
+                        promotions.forEach(function (promotion) {
+                        });
+    
+                        // Cập nhật lại dữ liệu trong bảng mà không load lại trang
+                        $scope.$evalAsync(function () {
+                            $scope.promotions = promotions;
+                            Swal.fire({
+                                icon: "success",
+                                title: "Xóa thành công",
+                                showConfirmButton: false,
+                                timer: 2000,
+                            });
+                        });
+                    })
+                    .catch(function (error) {
+                        console.log("Lỗi");
                     });
-                });
-
-            })
-            .catch(function (error) {
-                console.log("Error");
-            });
+            }
+        });
     }
-
+    
     // Tìm kiếm
     $scope.searchAllCustomer = function (searchTerm) {
         $http.get("http://localhost:8080/api/customer/search=" + searchTerm)
