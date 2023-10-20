@@ -198,11 +198,12 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
 
 app.controller("DetailsController", function ($scope, $routeParams, $http) {
     const id = $routeParams.id;
+    console.log(id);
     $scope.loadData = function(){
         $http.get("http://localhost:8080/api/detailedInvoice/pending1/id="+id)
         .then(function (response) {
             const invoice = response.data;
-            console.log(invoice);
+
             $scope.invoice = invoice;
         });
     }
