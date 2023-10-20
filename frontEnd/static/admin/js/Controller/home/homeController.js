@@ -132,3 +132,9 @@ app.config(function ($routeProvider) {
             redirectTo: "/",
         });
 });
+app.config(['$routeProvider', function($routeProvider) {
+    $routeProvider.when('/logout', {
+        templateUrl: 'templates/admin/login/login.html',
+        controller: "loginController",
+    });
+}]);
