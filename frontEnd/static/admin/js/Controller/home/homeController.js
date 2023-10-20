@@ -16,7 +16,6 @@ app.config(function ($routeProvider) {
         })
         .when("/list-PurchaseBill", {
             templateUrl: "/templates/admin/purchasebill/list.html",
-
             controller: "PurchaseBillController",
         })
         .otherwise({
@@ -29,10 +28,10 @@ app.config(function ($routeProvider) {
         .when("/list-Customer", {
             templateUrl: "/templates/admin/customer/list.html",
             controller: "CustomerController",
-        // })
-        // .when("/edit-Discount", {
-        //     templateUrl: "/templates/admin/discount/edit.html",
-        //     controller: "EditDiscountController",
+            // })
+            // .when("/edit-Discount", {
+            //     templateUrl: "/templates/admin/discount/edit.html",
+            //     controller: "EditDiscountController",
         })
         .when("/create-Customer", {
             templateUrl: "/templates/admin/customer/create.html",
@@ -42,3 +41,9 @@ app.config(function ($routeProvider) {
             redirectTo: "/",
         });
 });
+app.config(['$routeProvider', function($routeProvider) {
+    $routeProvider.when('/logout', {
+        templateUrl: 'templates/admin/login/login.html',
+        controller: "loginController",
+    });
+}]);

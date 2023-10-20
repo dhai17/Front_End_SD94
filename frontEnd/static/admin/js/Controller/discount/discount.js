@@ -45,7 +45,7 @@ app.controller("DiscountController", function ($scope, $http) {
     //Phân trang
     $scope.pager = {
         page: 1,
-        size: 8,
+        size: 5,
         get promotions() {
             if ($scope.promotions && $scope.promotions.length > 0) {
                 let start = (this.page - 1) * this.size;
