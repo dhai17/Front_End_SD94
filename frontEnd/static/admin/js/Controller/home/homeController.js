@@ -35,6 +35,10 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/purchasebill/DaHuyDon.html",
             controller: "DaHuyDonController",
         })
+        .when("/detailed-invoice", {
+            templateUrl: "/templates/admin/detailedInvoice/detailedInvoice.html",
+            controller: "DetailsController",
+        })
         .otherwise({
             redirectTo: "/",
         });

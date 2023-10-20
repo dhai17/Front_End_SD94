@@ -21,7 +21,6 @@
             <div class="d-flex">
                 <input class="form-control me-1" type="search" placeholder="Search" aria-label="Search"
                     ng-model="search">
-                <button class="btn btn-primary btn-sm" type="submit" ng-click="searchBill(search)">Search</button>
 
                 <input class="form-control me-1" type="date" placeholder="Search" aria-label="Search"
                     ng-model="searchDate">
@@ -52,6 +51,7 @@
                 <th>Created date</th>
                 <th>Total Order Price</th>
                 <th>Customer</th>
+                <th>Phone</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -65,7 +65,8 @@
                 <td>{{ pending.code }}</td>
                 <td>{{ pending.createdDate | date:'dd/MM/yyyy' }}</td>
                 <td>{{ pending.totalOrderPrice}}</td>
-                <td>{{ pending.customer.email}}</td>
+                <td>{{ pending.email}}</td>
+                <td>{{ pending.phoneNumber}}</td>
 
                 <td>
                     <div class="button-group">

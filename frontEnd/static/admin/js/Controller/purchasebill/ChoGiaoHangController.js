@@ -98,31 +98,6 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
         });
     };
 
-    // từ chối xác nhận ( trạng thái đã huỷ đơn 5)
-    $scope.refuseBill = function (pending) {
-        const id_bill = pending.id;
-        // console.log(id_bill);
-        
-        Swal.fire({
-            title: 'Xác nhận huỷ đơn hàng',
-            text: 'Bạn có muốn huỷ đơn hàng này không?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Có',
-            cancelButtonText: 'Không'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $http.post("http://localhost:8080/api/bill/refuse", {id_bill: id_bill})
-                .then(function (response) {
-                    $scope.loadData();
-                })
-                .catch(function (error) {
-                })
-                Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
-            };
-        });
-        
-    };
 
 
 });

@@ -18,7 +18,7 @@
     </div>
     <div class="container-fluid">
         <div class="d-flex justify-content-between fromSearchBill">
-            <div class="d-flex">
+            <!-- <div class="d-flex">
                 <input class="form-control me-1" type="search" placeholder="Search" aria-label="Search"
                     ng-model="search">
                 <button class="btn btn-primary btn-sm" type="submit" ng-click="searchBill(search)">Search</button>
@@ -32,7 +32,7 @@
                     data-toggle="tooltip" title='Tải lại dữ liệu' ng-click="reLoad()">
                     <span> <i class="fas fa-sync-alt"></i></span>
                 </button>
-            </div>
+            </div> -->
 
 
         </div>
@@ -45,6 +45,7 @@
                 <th>Created date</th>
                 <th>Total Order Price</th>
                 <th>Customer</th>
+                <th>Phone</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -55,6 +56,7 @@
                 <td>{{ pending.createdDate | date:'dd/MM/yyyy' }}</td>
                 <td>{{ pending.totalOrderPrice}}</td>
                 <td>{{ pending.customer.email}}</td>
+                <td>{{ pending.customer.phoneNumber}}</td>
 
                 <td>
                     <div class="button-group">
