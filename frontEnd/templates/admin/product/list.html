@@ -3,8 +3,11 @@
         <div class="mx-auto">
             <h1>Product</h1>
         </div>
+        <button type="button" class="btn btn-link" ng-click="create(promotion)">
+            Thêm sản phẩm
+        </button>
     </div>
-    <div class="d-flex">
+    <!-- <div class="d-flex">
         <input class="form-control me-1" type="search" placeholder="Search" aria-label="Search" ng-model="searchTerm">
         <button class="btn btn-primary btn-sm" type="submit" ng-click="searchDiscount(searchTerm)">Search</button>
 
@@ -15,7 +18,7 @@
             title='Tải lại dữ liệu' ng-click="reLoad()">
             <span> <i class="fas fa-sync-alt"></i></span>
         </button>
-    </div>
+    </div> -->
     <br>
     <table class="table align-middle mb-1 bg-white">
         <thead class="bg-light">
@@ -47,9 +50,9 @@
                 </td>
                 <td>
                     <div class="button-group">
-                        <button type="button" class="btn btn-link" ng-click="showDetails(promotion)">
+                        <!-- <button type="button" class="btn btn-link" ng-click="edit(promotion)">
                             <i class="bx bx-edit me-2"></i>
-                        </button>
+                        </button> -->
 
                         <button type="button" class="btn btn-link btn-sm btn-rounded" ng-click="delete(promotion)">
                             <i class="bx bx-trash me-2"></i>

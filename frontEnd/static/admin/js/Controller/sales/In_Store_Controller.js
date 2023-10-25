@@ -66,49 +66,4 @@ app.controller("detailsController", function ($scope, $routeParams, $http) {
             const size = response.data;
             $scope.size = size;
         });
-
-        // let detailProduct = {
-        //     name: $scope.createProduct.name,
-        //     price: $scope.createProduct.price,
-        //     origin: $scope.createProduct.origin,
-        // };
-});
-
-app.controller("CreateBillController", function ($scope, $http) {
-
-    $scope.saveCreate = function () {
-
-        $http.post("http://localhost:8080/api/discount/saveCreate", $scope.createDiscountBill)
-            .then(function (response) {
-                // Xử lý thành công nếu có
-                Swal.fire({
-                    icon: "success",
-                    title: "Thêm mới thành công",
-                    showConfirmButton: false,
-                    timer: 2000,
-                }).then(function () {
-                    sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-Bill";
-                });
-            })
-            .catch(function (error) {
-                if (error.status === 400) {
-                    const errorMessage = error.data.message;
-                    Swal.fire({
-                        icon: "error",
-                        title: errorMessage + "",
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
-                } else {
-                    // Xử lý lỗi khác nếu cần
-                    console.error(error);
-                }
-            });
-
-    };
-
-    $scope.returnCreate = function () {
-        window.location.href = "#!/list-Bill"
-    };
 });

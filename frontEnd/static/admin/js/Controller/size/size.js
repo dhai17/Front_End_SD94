@@ -27,6 +27,15 @@ app.controller("SizeController", function ($scope, $http) {
             });
     }
 
+    $scope.editSize = function (promotion) {
+        let idSize = promotion.id;
+        window.location.href = '#!/edit-Size?id=' + idSize;
+    };
+
+    $scope.createSizee = function (promotion) {
+        window.location.href = '#!/create-Size?id=';
+    };
+
 });
 
 app.controller("CreateSizeController", function ($scope, $http) {
@@ -71,6 +80,10 @@ app.controller("CreateSizeController", function ($scope, $http) {
             });
     };
 
+    $scope.returnCreate = function () {
+        window.location.href = "#!/list-Size"
+    };
+
 });
 
 
@@ -88,7 +101,7 @@ app.controller("EditSizeController", function ($scope, $routeParams, $http) {
     $scope.saveEdits = function () {
 
         let editSize = {
-            id: id,
+            id: idSize,
             shoeSize: $scope.editSize.shoeSize,
         };
 

@@ -58,6 +58,10 @@ app.controller("ProductController", function ($scope, $http) {
         window.location.href = '#!/edit-Product?id=' + idPro;
     };
 
+    $scope.create = function (promotion) {
+        window.location.href = '#!/create-Product?id=';
+    };
+
 
     //Xóa trong danh sách
     $scope.delete = function (promotion) {
@@ -104,13 +108,55 @@ app.controller("ProductController", function ($scope, $http) {
 
 //Edit controller
 app.controller("EditProductController", function ($scope, $routeParams, $http) {
+
     let idPro = $routeParams.id;
 
-    $http.get("http://localhost:8080/api/product/edit/" + idPro)
+    $http.get("http://localhost:8080/api/product/edit=" + idPro)
         .then(function (response) {
             const editproduct = response.data;
             $scope.editproduct = editproduct;
         });
+
+    $scope.saveEdits = function () {
+
+        let editProduct = {
+            id: idProduct,
+            name: $scope.createProduct.name,
+            price: $scope.createProduct.price,
+            origin: $scope.createProduct.origin,
+            id_metarial: $scope.createProduct.productMaterial,
+            id_line: $scope.createProduct.productLine,
+            producer: $scope.createProduct.producer,
+            color: id_color,
+            size: id_size,
+            quantity: $scope.createProduct.quantity,
+            status: $scope.createProduct.status,
+        };
+
+        $http.put("http://localhost:8080/api/product/saveUpdate", editProduct)
+            .then(function (response) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Sửa thành công",
+                    showConfirmButton: false,
+                    timer: 2000,
+                }).then(function () {
+                    sessionStorage.setItem("isConfirmed", true);
+                    window.location.href = "#!/list-Product";
+                });
+            })
+            .catch(function (errorResponse) {
+                if (errorResponse.status === 400) {
+                    const errorMassage = errorResponse.data.message;
+                    Swal.fire({
+                        icon: "error",
+                        title: errorMassage + "",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                }
+            });
+    };
 
     //Return
     $scope.returnEdit = function () {

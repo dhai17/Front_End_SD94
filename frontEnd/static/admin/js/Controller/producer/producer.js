@@ -1,17 +1,16 @@
-app.controller("ColorrController", function ($scope, $http) {
+app.controller("ProducerController", function ($scope, $http) {
 
-    $http.get("http://localhost:8080/api/product/color/list")
+    $http.get("http://localhost:8080/api/product/producer/list")
         .then(function (response) {
             const promotions = response.data;
             $scope.promotions = promotions;
         });
 
-
-    $scope.delete = function (promotion) {
-        let idColor = promotion.id;
-        $http.put("http://localhost:8080/api/product/color/delete/" + idColor)
+    $scope.deleteProducer = function (promotion) {
+        let idProducer = promotion.id;
+        $http.put("http://localhost:8080/api/product/producer/delete/" + idProducer)
             .then(function (response) {
-                const promotions = response.data;
+                const promotions = response.data;            
                 $scope.$evalAsync(function () {
                     $scope.promotions = promotions;
                     Swal.fire({
@@ -28,39 +27,23 @@ app.controller("ColorrController", function ($scope, $http) {
             });
     }
 
-    $scope.editColor = function (promotion) {
-        let idColor = promotion.id;
-        window.location.href = '#!/edit-Color?id=' + idColor;
+    $scope.editProducer = function (promotion) {
+        let idProducer = promotion.id;
+        window.location.href = '#!/edit-Producer?id=' + idProducer;
     };
 
-    $scope.createColorr = function (promotion) {
-        window.location.href = '#!/create-Color?id=';
+    $scope.createProducer = function (promotion) {
+        window.location.href = '#!/create-Producer?id=';
     };
 
 });
 
-app.controller("CreateColorController", function ($scope, $http) {
+app.controller("CreateProducerController", function ($scope, $http) {
 
-    const colorPicker = new iro.ColorPicker("#colorPicker", {
-        width: 280,
-        color: "rgb(255, 0, 0)",
-        borderWidth: 1,
-        borderColor: "#fff",
-    });
 
-    const hexInput = document.getElementById("hexInput");
+    $scope.saveCreate = function () {
 
-    colorPicker.on("color:change", function (color) {
-        hexInput.value = color.hexString;
-    });
-
-    hexInput.addEventListener('change', function () {
-        colorPicker.color.hexString = this.value;
-    });
-
-    $scope.saveCreateColor = function () {
-
-        if ($scope.createColor === undefined) {
+        if ($scope.createProducer === undefined) {
             Swal.fire({
                 icon: "error",
                 title: "Vui lòng nhập đầy đủ thông tin",
@@ -69,14 +52,9 @@ app.controller("CreateColorController", function ($scope, $http) {
             });
             return;
         }
-        let data = {
-            color: $("#inputUsername").val(),
-            code: $("#hexInput").val()
-        }
 
-        $http.post("http://localhost:8080/api/product/color/saveCreate", data)
+        $http.post("http://localhost:8080/api/product/producer/saveCreate", $scope.createProducer)
             .then(function (response) {
-                // Xử lý thành công nếu có
                 Swal.fire({
                     icon: "success",
                     title: "Thêm mới thành công",
@@ -84,7 +62,7 @@ app.controller("CreateColorController", function ($scope, $http) {
                     timer: 2000,
                 }).then(function () {
                     sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-Color";
+                    window.location.href = "#!/list-Producer";
                 });
             })
             .catch(function (error) {
@@ -103,48 +81,32 @@ app.controller("CreateColorController", function ($scope, $http) {
     };
 
     $scope.returnCreate = function () {
-        window.location.href = "#!/list-Color"
+        window.location.href = "#!/list-Producer"
     };
 
 });
 
 
-app.controller("EditColorController", function ($scope, $routeParams, $http) {
-    let idColor = $routeParams.id;
+//
+app.controller("EditProducerController", function ($scope, $routeParams, $http) {
+    let idProducer = $routeParams.id;
 
-    const colorPicker = new iro.ColorPicker("#colorPicker", {
-        width: 280,
-        color: "rgb(255, 0, 0)",
-        borderWidth: 1,
-        borderColor: "#fff",
-    });
-
-    const hexInput = document.getElementById("hexInput");
-
-    colorPicker.on("color:change", function (color) {
-        hexInput.value = color.hexString;
-    });
-
-    hexInput.addEventListener('change', function () {
-        colorPicker.color.hexString = this.value;
-    });
-
-    $http.get("http://localhost:8080/api/product/color/edit=" + idColor)
+    $http.get("http://localhost:8080/api/product/producer/edit=" + idProducer)
         .then(function (response) {
-            let editColor = response.data;
-            $scope.editColor = editColor;
+            let editProducer = response.data;
+            $scope.editProducer = editProducer;
         });
 
 
     $scope.saveEdits = function () {
 
-        let editColor = {
-            id: idColor,
-            color: $("#inputUsername").val(),
-            code: $("#hexInput").val()
+        let editProducer = {
+            id: idProducer,
+            name: $scope.editProducer.name,
+            address: $scope.editProducer.address,
         };
 
-        $http.put("http://localhost:8080/api/product/color/saveUpdate", editColor)
+        $http.put("http://localhost:8080/api/product/producer/saveUpdate", editProducer)
             .then(function (response) {
                 Swal.fire({
                     icon: "success",
@@ -153,7 +115,7 @@ app.controller("EditColorController", function ($scope, $routeParams, $http) {
                     timer: 2000,
                 }).then(function () {
                     sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-Color";
+                    window.location.href = "#!/list-Producer";
                 });
             })
             .catch(function (errorResponse) {
@@ -171,6 +133,6 @@ app.controller("EditColorController", function ($scope, $routeParams, $http) {
 
     //Return
     $scope.returnEdit = function () {
-        window.location.href = "#!/list-Color"
+        window.location.href = "#!/list-Producer"
     };
 });

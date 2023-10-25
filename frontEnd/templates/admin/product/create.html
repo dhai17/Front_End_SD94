@@ -36,7 +36,6 @@
                     </div>
                 </div>
 
-
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="small mb-1">Xuất xứ</label>
@@ -82,17 +81,17 @@
                         <div class="acs">
                             <input type="radio" class="form-check-input" id="radio1" name="status" value="0"
                                 ng-model="createProduct.status" checked>
-                            <label class="form-check-label" for="radio1">Còn</label>
+                            <label class="form-check-label" for="radio1">Active</label>
                             <div class="statusabcd">
                                 <input type="radio" class="form-check-input" id="radio2" name="status" value="1"
                                     ng-model="createProduct.status">
-                                <label class="form-check-label" for="radio1">Hết</label>
+                                <label class="form-check-label" for="radio1">Expired</label>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <button class="btn btn-primary" type="button" ng-click="reLoad()">Return</button>
+                <button class="btn btn-primary" type="button" ng-click="returnCreate()">Return</button>
                 <button class="btn btn-primary" type="button" ng-click="saveCreate()">Save changes</button>
             </form>
         </div>
