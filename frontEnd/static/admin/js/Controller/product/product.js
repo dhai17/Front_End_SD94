@@ -66,7 +66,7 @@ app.controller("ProductController", function ($scope, $http) {
     //Xóa trong danh sách
     $scope.delete = function (promotion) {
         let idPro = promotion.id;
-        console.log(idPro)
+        // console.log(idPro)
         $http.delete("http://localhost:8080/api/product/deleteProduct/" + idPro)
             .then(function (response) {
                 const promotions = response.data;
@@ -108,6 +108,60 @@ app.controller("ProductController", function ($scope, $http) {
 
 //Edit controller
 app.controller("EditProductController", function ($scope, $routeParams, $http) {
+
+    $http.get("http://localhost:8080/api/product/material/list")
+        .then(function (response) {
+            const material = response.data;
+            $scope.material = material;
+        })
+
+    $http.get("http://localhost:8080/api/product/line/list")
+        .then(function (response) {
+            const line = response.data;
+            $scope.line = line;
+        })
+
+    $http.get("http://localhost:8080/api/product/producer/list")
+        .then(function (response) {
+            const producer = response.data;
+            $scope.producer = producer;
+        })
+
+    $http.get("http://localhost:8080/api/product/color/list")
+        .then(function (response) {
+            const color = response.data;
+            $scope.color = color;
+        })
+
+    $http.get("http://localhost:8080/api/product/size/list")
+        .then(function (response) {
+            const size = response.data;
+            $scope.size = size;
+        })
+
+    // let idPro = $routeParams.id;
+
+    let id_color = [];
+    $scope.getIdColor = function (color) {
+        if (id_color.indexOf(color.id) === -1) {
+            id_color.push(color.id);
+            console.log(id_color);
+        } else {
+            console.log("ID already exists in the array");
+        }
+    };
+
+    let selectedSizeId;
+    let id_size = [];
+    $scope.getIdSize = function (size) {
+        console.log(size.id);
+        if (id_size.indexOf(size.id) === -1) {
+            id_size.push(size.id);
+            console.log(id_size);
+        } else {
+            console.log("ID already exists in the array");
+        }
+    };
 
     let idPro = $routeParams.id;
 

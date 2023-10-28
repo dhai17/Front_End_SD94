@@ -66,4 +66,12 @@ app.controller("detailsController", function ($scope, $routeParams, $http) {
             const size = response.data;
             $scope.size = size;
         });
+
+    // let idPro = $routeParams.id;
+
+    $http.get("http://localhost:8080/api/product/edit=" + id)
+        .then(function (response) {
+            const editsales = response.data;
+            $scope.editsales = editsales;
+        });
 });
