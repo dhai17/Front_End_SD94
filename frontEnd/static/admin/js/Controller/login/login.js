@@ -25,4 +25,16 @@ app.controller('loginCtrl', function ($scope, $http) {
                 console.log(error);
             });
     }
+
+    $scope.logout = function () {
+        localStorage.removeItem("token")
+        Swal.fire({
+            icon: "success",
+            title: "logout sccuessfully",
+            showConfirmButton: false,
+            timer: 2000,
+        }).then(function () {
+            window.location.href = "#!/login"
+        });
+    }
 });
