@@ -1,0 +1,39 @@
+
+<div  class="container-fluid" ng-controller="DetailsController">
+    <div class="container-fluid my-auto d-flex align-items-center">
+        <div class="mx-auto">
+            <h1>Hoá đơn chi tiết</h1>
+        </div>
+    </div>
+    <a href="#!/da-giao" class="button back-button">Trở lại</a>
+    <table class="table align-middle mb-1 bg-white" id="tableBillĐetail">
+        <thead class="bg-light">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Color</th>
+                <th>Size</th>
+                <th>UnitPrice</th>
+                <th>Quantity</th>
+                <th>TotalPayment</th>  
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="invoice1 in pager.invoice">
+                <td>{{$index + 1}}</td>
+                <td>{{ invoice1.productDetails.product.name}}</td>
+                <td>{{ invoice1.productDetails.productColor.color}}</td>
+                <td>{{ invoice1.productDetails.productSize.shoeSize}}</td>
+                <td>{{ invoice1.unitPrice}}</td>
+                <td>{{ invoice1.quantity}}</td>
+                <td>{{ invoice1.totalPayment}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="card-footer text-center">
+        <button class="btn active" ng-repeat="pageNumber in pager.pageNumbers" ng-click="pager.page = pageNumber">
+            {{pageNumber}}
+        </button>
+    </div>
+</div>
