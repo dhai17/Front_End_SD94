@@ -1,5 +1,12 @@
+let token = localStorage.getItem("token");
+let headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + token
+}
+
 app.controller("StaffController", function ($scope, $http) {
-    $http.get("http://localhost:8080/api/staff/list").then(function (response) {
+
+    $http.get("http://localhost:8080/api/staff/list", {headers}).then(function (response) {
         const promotions = response.data;
 
         // Thêm trường status2 vào từng đối tượng promotion
@@ -8,6 +15,8 @@ app.controller("StaffController", function ($scope, $http) {
             promotion.status5 = getStatusText(promotion.status);
 
         });
+
+        $scope.promotions = promotions;
 
         $scope.promotions = promotions;
 
