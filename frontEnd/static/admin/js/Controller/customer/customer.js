@@ -1,7 +1,7 @@
 let token = localStorage.getItem("token");
 let headers = {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + token
+    // 'Authorization': 'Bearer ' + token
 }
 app.controller("CustomerController", function ($scope, $http) {
 
@@ -23,16 +23,19 @@ app.controller("CustomerController", function ($scope, $http) {
         const promotions = response.data;
         $scope.promotions = promotions;
     }).catch(e => {
-        // console.log("e =><", e);
+        console.log("e =><", e);
         Swal.fire({
             icon: "error",
             title: "Token inval",
             showConfirmButton: false,
             timer: 2000,
         }).then(function () {
-            sessionStorage.setItem("isConfirmed", true);
-            window.location.href = "#!/list-Customer";
+            window.location.href = "#!/login"
+
+            // sessionStorage.setItem("isConfirmed", true);
+            // window.location.href = "#!/list-Customer";
         });
+        // if()
     });
 
     //Phân trang
