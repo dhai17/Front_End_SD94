@@ -39,6 +39,22 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/detailedInvoice/detailedInvoice.html",
             controller: "DetailsController",
         })
+        .when("/detailed-invoice2", {
+            templateUrl: "/templates/admin/detailedInvoice/details2.html",
+            controller: "Details2Controller",
+        })
+        .when("/detailed-invoice3", {
+            templateUrl: "/templates/admin/detailedInvoice/details3.html",
+            controller: "Details3Controller",
+        })
+        .when("/detailed-invoice4", {
+            templateUrl: "/templates/admin/detailedInvoice/details2.html",
+            controller: "Details4Controller",
+        })
+        .when("/detailed-invoice5", {
+            templateUrl: "/templates/admin/detailedInvoice/details5.html",
+            controller: "Details5Controller",
+        })
         .otherwise({
             redirectTo: "/",
         });
