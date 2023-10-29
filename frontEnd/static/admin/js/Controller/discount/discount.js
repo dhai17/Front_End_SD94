@@ -1,5 +1,14 @@
+
 app.controller("DiscountController", function ($scope, $http) {
-    $http.get("http://localhost:8080/api/discount/list").then(function (response) {
+    let token = localStorage.getItem("token");
+    console.log(token);
+    let headers = { 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
+    console.log("token ---->", token);
+
+    $http.get("http://localhost:8080/api/discount/list", { headers }).then(function (response) {
         const promotions = response.data;
 
         // Thêm trường status2 vào từng đối tượng promotion
@@ -9,6 +18,16 @@ app.controller("DiscountController", function ($scope, $http) {
         });
 
         $scope.promotions = promotions;
+    }).catch(e => {
+        // console.log("e =><", e);
+        Swal.fire({
+            icon: "error",
+            title: "Token inval",
+            showConfirmButton: false,
+            timer: 2000,
+        }).then(function () {
+
+        });
     });
 
     // $http.get("http://localhost:3000/api/v1/discount/").then(function (response) {
@@ -251,7 +270,7 @@ app.controller("CreateDiscountController", function ($scope, $http) {
             return;
         }
 
-        $http.post("http://localhost:8080/api/discount/saveCreate", $scope.createDiscount)
+        $http.post("http://localhost:8080/api/discount/saveCreate", $scope.createDiscount, { headers })
             .then(function (response) {
                 // Xử lý thành công nếu có
                 Swal.fire({
