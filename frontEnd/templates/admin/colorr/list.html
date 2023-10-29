@@ -1,8 +1,11 @@
 <div ng-controller="ColorrController" id="colorrList">
     <div class="container-fluid my-auto d-flex align-items-center">
         <div class="mx-auto">
-            <h1>Color</h1>
+            <h1>Product Color</h1>
         </div>
+        <button type="button" class="btn btn-link" ng-click="createColorr(promotion)">
+            Thêm màu
+        </button>
     </div>
     <br>
     <table class="table align-middle mb-1 bg-white">
@@ -21,9 +24,9 @@
                 <td>{{ promotion.code}}</td>
                 <td>
                     <div class="button-group">
-                        <!-- <button type="button" class="btn btn-link" ng-click="editDiscount(promotion)">
+                        <button type="button" class="btn btn-link" ng-click="editColor(promotion)">
                             <i class="bx bx-edit me-2"></i>
-                        </button> -->
+                        </button>
 
                         <button type="button" class="btn btn-link btn-sm btn-rounded"
                             ng-click="delete(promotion)">

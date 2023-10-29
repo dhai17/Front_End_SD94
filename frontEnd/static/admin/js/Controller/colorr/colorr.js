@@ -28,6 +28,15 @@ app.controller("ColorrController", function ($scope, $http) {
             });
     }
 
+    $scope.editColor = function (promotion) {
+        let idColor = promotion.id;
+        window.location.href = '#!/edit-Color?id=' + idColor;
+    };
+
+    $scope.createColorr = function (promotion) {
+        window.location.href = '#!/create-Color?id=';
+    };
+
 });
 
 app.controller("CreateColorController", function ($scope, $http) {
@@ -93,4 +102,75 @@ app.controller("CreateColorController", function ($scope, $http) {
             });
     };
 
+    $scope.returnCreate = function () {
+        window.location.href = "#!/list-Color"
+    };
+
+});
+
+
+app.controller("EditColorController", function ($scope, $routeParams, $http) {
+    let idColor = $routeParams.id;
+
+    const colorPicker = new iro.ColorPicker("#colorPicker", {
+        width: 280,
+        color: "rgb(255, 0, 0)",
+        borderWidth: 1,
+        borderColor: "#fff",
+    });
+
+    const hexInput = document.getElementById("hexInput");
+
+    colorPicker.on("color:change", function (color) {
+        hexInput.value = color.hexString;
+    });
+
+    hexInput.addEventListener('change', function () {
+        colorPicker.color.hexString = this.value;
+    });
+
+    $http.get("http://localhost:8080/api/product/color/edit=" + idColor)
+        .then(function (response) {
+            let editColor = response.data;
+            $scope.editColor = editColor;
+        });
+
+
+    $scope.saveEdits = function () {
+
+        let editColor = {
+            id: idColor,
+            color: $("#inputUsername").val(),
+            code: $("#hexInput").val()
+        };
+
+        $http.put("http://localhost:8080/api/product/color/saveUpdate", editColor)
+            .then(function (response) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Sửa thành công",
+                    showConfirmButton: false,
+                    timer: 2000,
+                }).then(function () {
+                    sessionStorage.setItem("isConfirmed", true);
+                    window.location.href = "#!/list-Color";
+                });
+            })
+            .catch(function (errorResponse) {
+                if (errorResponse.status === 400) {
+                    const errorMassage = errorResponse.data.message;
+                    Swal.fire({
+                        icon: "error",
+                        title: errorMassage + "",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                }
+            });
+    };
+
+    //Return
+    $scope.returnEdit = function () {
+        window.location.href = "#!/list-Color"
+    };
 });

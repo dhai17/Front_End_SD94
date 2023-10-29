@@ -1,7 +1,38 @@
+let token = localStorage.getItem("token");
+let headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + token
+}
 app.controller("CustomerController", function ($scope, $http) {
-    $http.get("http://localhost:8080/api/customer/list").then(function (response) {
+
+    console.log("token ---->", token);
+    // $http({
+    //     method: 'GET',
+    //     url: "http://localhost:8080/api/customer/list",
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': `Bearer ${token}`
+    //     }
+    // }).then(function (response) {
+    //     const promotions = response.data;
+    //     $scope.promotions = promotions;
+    // }).catch(e => {
+    //     console.log("e =><", e);
+    // });
+    $http.get("http://localhost:8080/api/customer/list", { headers }).then(function (response) {
         const promotions = response.data;
         $scope.promotions = promotions;
+    }).catch(e => {
+        // console.log("e =><", e);
+        Swal.fire({
+            icon: "error",
+            title: "Token inval",
+            showConfirmButton: false,
+            timer: 2000,
+        }).then(function () {
+            sessionStorage.setItem("isConfirmed", true);
+            window.location.href = "#!/list-Customer";
+        });
     });
 
     //Phân trang
@@ -63,7 +94,7 @@ app.controller("CustomerController", function ($scope, $http) {
                         const promotions = response.data;
                         promotions.forEach(function (promotion) {
                         });
-    
+
                         // Cập nhật lại dữ liệu trong bảng mà không load lại trang
                         $scope.$evalAsync(function () {
                             $scope.promotions = promotions;
@@ -81,7 +112,7 @@ app.controller("CustomerController", function ($scope, $http) {
             }
         });
     }
-    
+
     // Tìm kiếm
     $scope.searchAllCustomer = function (searchTerm) {
         $http.get("http://localhost:8080/api/customer/search=" + searchTerm)
@@ -149,7 +180,7 @@ app.controller("CreateCustomerController", function ($scope, $http) {
             return;
         }
 
-        $http.post("http://localhost:8080/api/customer/createCustomer", $scope.createCustomer)
+        $http.post("http://localhost:8080/api/customer/createCustomer", $scope.createCustomer, { headers })
             .then(function (response) {
                 // Xử lý thành công nếu có
                 Swal.fire({

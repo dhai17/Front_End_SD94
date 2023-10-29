@@ -39,6 +39,26 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/detailedInvoice/detailedInvoice.html",
             controller: "DetailsController",
         })
+        .when("/login", {
+            templateUrl: "/templates/admin/login/index.html",
+            controller: "loginCtrl",
+        })
+        .when("/detailed-invoice2", {
+            templateUrl: "/templates/admin/detailedInvoice/details2.html",
+            controller: "Details2Controller",
+        })
+        .when("/detailed-invoice3", {
+            templateUrl: "/templates/admin/detailedInvoice/details3.html",
+            controller: "Details3Controller",
+        })
+        .when("/detailed-invoice4", {
+            templateUrl: "/templates/admin/detailedInvoice/details2.html",
+            controller: "Details4Controller",
+        })
+        .when("/detailed-invoice5", {
+            templateUrl: "/templates/admin/detailedInvoice/details5.html",
+            controller: "Details5Controller",
+        })
         .otherwise({
             redirectTo: "/",
         });
@@ -93,6 +113,10 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/colorr/create.html",
             controller: "CreateColorController",
         })
+        .when("/edit-Color", {
+            templateUrl: "/templates/admin/colorr/edit.html",
+            controller: "EditColorController",
+        })
         .when("/list-Size", {
             templateUrl: "/templates/admin/size/list.html",
             controller: "SizeController",
@@ -108,6 +132,42 @@ app.config(function ($routeProvider) {
         .when("/list-Img", {
             templateUrl: "/templates/admin/imagess/list.html",
             controller: "ImgController",
+        })
+        .when("/list-Line", {
+            templateUrl: "/templates/admin/line/list.html",
+            controller: "LineController",
+        })
+        .when("/create-Line", {
+            templateUrl: "/templates/admin/line/create.html",
+            controller: "CreateLineController",
+        })
+        .when("/edit-Line", {
+            templateUrl: "/templates/admin/line/edit.html",
+            controller: "EditLineController",
+        })
+        .when("/list-Material", {
+            templateUrl: "/templates/admin/material/list.html",
+            controller: "MaterialController",
+        })
+        .when("/create-Material", {
+            templateUrl: "/templates/admin/material/create.html",
+            controller: "CreateMaterialController",
+        })
+        .when("/edit-Material", {
+            templateUrl: "/templates/admin/material/edit.html",
+            controller: "EditMaterialController",
+        })
+        .when("/list-Producer", {
+            templateUrl: "/templates/admin/producer/list.html",
+            controller: "ProducerController",
+        })
+        .when("/create-Producer", {
+            templateUrl: "/templates/admin/producer/create.html",
+            controller: "CreateProducerController",
+        })
+        .when("/edit-Producer", {
+            templateUrl: "/templates/admin/producer/edit.html",
+            controller: "EditProducerController",
         })
         .otherwise({
             redirectTo: "/",
