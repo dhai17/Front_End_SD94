@@ -1,10 +1,10 @@
-<div ng-controller="ColorrController" id="colorrList">
+<div ng-controller="LineController" id="lineList">
     <div class="container-fluid my-auto d-flex align-items-center">
         <div class="mx-auto">
-            <h1>Product Color</h1>
+            <h1>Product Line</h1>
         </div>
-        <button type="button" class="btn btn-link" ng-click="createColorr(promotion)">
-            Thêm màu
+        <button type="button" class="btn btn-link" ng-click="createLinee(promotion)">
+            Thêm dòng sản phẩm
         </button>
     </div>
     <br>
@@ -12,24 +12,22 @@
         <thead class="bg-light">
             <tr>
                 <th>#</th>
-                <th>Tên màu</th>
-                <th>Mã màu</th>
+                <th>Dòng sản phẩm</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="promotion in promotions">
                 <td>{{$index + 1}}</td>
-                <td>{{ promotion.color }}</td>
-                <td>{{ promotion.code}}</td>
+                <td>{{ promotion.name }}</td>
                 <td>
                     <div class="button-group">
-                        <button type="button" class="btn btn-link" ng-click="editColor(promotion)">
+                        <button type="button" class="btn btn-link" ng-click="editLine(promotion)">
                             <i class="bx bx-edit me-2"></i>
                         </button>
 
                         <button type="button" class="btn btn-link btn-sm btn-rounded"
-                            ng-click="delete(promotion)">
+                            ng-click="deleteLine(promotion)">
                             <i class="bx bx-trash me-2"></i>
                         </button>
 

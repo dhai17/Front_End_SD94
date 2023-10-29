@@ -3,6 +3,9 @@
         <div class="mx-auto">
             <h1>Size</h1>
         </div>
+        <button type="button" class="btn btn-link" ng-click="createSizee(promotion)">
+            Thêm size
+        </button>
     </div>
     <br>
     <table class="table align-middle mb-1 bg-white">
@@ -19,7 +22,7 @@
                 <td>{{ promotion.shoeSize }}</td>
                 <td>
                     <div class="button-group">
-                        <button type="button" class="btn btn-link" ng-click="saveEdits(promotion)">
+                        <button type="button" class="btn btn-link" ng-click="editSize(promotion)">
                             <i class="bx bx-edit me-2"></i>
                         </button>
 

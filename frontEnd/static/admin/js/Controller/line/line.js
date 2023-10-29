@@ -1,17 +1,16 @@
-app.controller("ColorrController", function ($scope, $http) {
+app.controller("LineController", function ($scope, $http) {
 
-    $http.get("http://localhost:8080/api/product/color/list")
+    $http.get("http://localhost:8080/api/product/line/list")
         .then(function (response) {
             const promotions = response.data;
             $scope.promotions = promotions;
         });
 
-
-    $scope.delete = function (promotion) {
-        let idColor = promotion.id;
-        $http.put("http://localhost:8080/api/product/color/delete/" + idColor)
+    $scope.deleteLine = function (promotion) {
+        let idLine = promotion.id;
+        $http.put("http://localhost:8080/api/product/line/delete/" + idLine)
             .then(function (response) {
-                const promotions = response.data;
+                const promotions = response.data;            
                 $scope.$evalAsync(function () {
                     $scope.promotions = promotions;
                     Swal.fire({
@@ -28,39 +27,23 @@ app.controller("ColorrController", function ($scope, $http) {
             });
     }
 
-    $scope.editColor = function (promotion) {
-        let idColor = promotion.id;
-        window.location.href = '#!/edit-Color?id=' + idColor;
+    $scope.editLine = function (promotion) {
+        let idLine = promotion.id;
+        window.location.href = '#!/edit-Line?id=' + idLine;
     };
 
-    $scope.createColorr = function (promotion) {
-        window.location.href = '#!/create-Color?id=';
+    $scope.createLinee = function (promotion) {
+        window.location.href = '#!/create-Line?id=';
     };
 
 });
 
-app.controller("CreateColorController", function ($scope, $http) {
+app.controller("CreateLineController", function ($scope, $http) {
 
-    const colorPicker = new iro.ColorPicker("#colorPicker", {
-        width: 280,
-        color: "rgb(255, 0, 0)",
-        borderWidth: 1,
-        borderColor: "#fff",
-    });
 
-    const hexInput = document.getElementById("hexInput");
+    $scope.saveCreate = function () {
 
-    colorPicker.on("color:change", function (color) {
-        hexInput.value = color.hexString;
-    });
-
-    hexInput.addEventListener('change', function () {
-        colorPicker.color.hexString = this.value;
-    });
-
-    $scope.saveCreateColor = function () {
-
-        if ($scope.createColor === undefined) {
+        if ($scope.createLine === undefined) {
             Swal.fire({
                 icon: "error",
                 title: "Vui lòng nhập đầy đủ thông tin",
@@ -69,14 +52,9 @@ app.controller("CreateColorController", function ($scope, $http) {
             });
             return;
         }
-        let data = {
-            color: $("#inputUsername").val(),
-            code: $("#hexInput").val()
-        }
 
-        $http.post("http://localhost:8080/api/product/color/saveCreate", data)
+        $http.post("http://localhost:8080/api/product/line/saveCreate", $scope.createLine)
             .then(function (response) {
-                // Xử lý thành công nếu có
                 Swal.fire({
                     icon: "success",
                     title: "Thêm mới thành công",
@@ -84,7 +62,7 @@ app.controller("CreateColorController", function ($scope, $http) {
                     timer: 2000,
                 }).then(function () {
                     sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-Color";
+                    window.location.href = "#!/list-Line";
                 });
             })
             .catch(function (error) {
@@ -103,48 +81,31 @@ app.controller("CreateColorController", function ($scope, $http) {
     };
 
     $scope.returnCreate = function () {
-        window.location.href = "#!/list-Color"
+        window.location.href = "#!/list-Line"
     };
 
 });
 
 
-app.controller("EditColorController", function ($scope, $routeParams, $http) {
-    let idColor = $routeParams.id;
+//
+app.controller("EditLineController", function ($scope, $routeParams, $http) {
+    let idLine = $routeParams.id;
 
-    const colorPicker = new iro.ColorPicker("#colorPicker", {
-        width: 280,
-        color: "rgb(255, 0, 0)",
-        borderWidth: 1,
-        borderColor: "#fff",
-    });
-
-    const hexInput = document.getElementById("hexInput");
-
-    colorPicker.on("color:change", function (color) {
-        hexInput.value = color.hexString;
-    });
-
-    hexInput.addEventListener('change', function () {
-        colorPicker.color.hexString = this.value;
-    });
-
-    $http.get("http://localhost:8080/api/product/color/edit=" + idColor)
+    $http.get("http://localhost:8080/api/product/line/edit=" + idLine)
         .then(function (response) {
-            let editColor = response.data;
-            $scope.editColor = editColor;
+            let editLine = response.data;
+            $scope.editLine = editLine;
         });
 
 
     $scope.saveEdits = function () {
 
-        let editColor = {
-            id: idColor,
-            color: $("#inputUsername").val(),
-            code: $("#hexInput").val()
+        let editLine = {
+            id: idLine,
+            name: $scope.editLine.name,
         };
 
-        $http.put("http://localhost:8080/api/product/color/saveUpdate", editColor)
+        $http.put("http://localhost:8080/api/product/line/saveUpdate", editLine)
             .then(function (response) {
                 Swal.fire({
                     icon: "success",
@@ -153,7 +114,7 @@ app.controller("EditColorController", function ($scope, $routeParams, $http) {
                     timer: 2000,
                 }).then(function () {
                     sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-Color";
+                    window.location.href = "#!/list-Line";
                 });
             })
             .catch(function (errorResponse) {
@@ -171,6 +132,6 @@ app.controller("EditColorController", function ($scope, $routeParams, $http) {
 
     //Return
     $scope.returnEdit = function () {
-        window.location.href = "#!/list-Color"
+        window.location.href = "#!/list-Line"
     };
 });

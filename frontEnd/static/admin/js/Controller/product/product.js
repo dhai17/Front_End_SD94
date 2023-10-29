@@ -58,11 +58,15 @@ app.controller("ProductController", function ($scope, $http) {
         window.location.href = '#!/edit-Product?id=' + idPro;
     };
 
+    $scope.create = function (promotion) {
+        window.location.href = '#!/create-Product?id=';
+    };
+
 
     //Xóa trong danh sách
     $scope.delete = function (promotion) {
         let idPro = promotion.id;
-        console.log(idPro)
+        // console.log(idPro)
         $http.delete("http://localhost:8080/api/product/deleteProduct/" + idPro)
             .then(function (response) {
                 const promotions = response.data;
@@ -104,13 +108,109 @@ app.controller("ProductController", function ($scope, $http) {
 
 //Edit controller
 app.controller("EditProductController", function ($scope, $routeParams, $http) {
+
+    $http.get("http://localhost:8080/api/product/material/list")
+        .then(function (response) {
+            const material = response.data;
+            $scope.material = material;
+        })
+
+    $http.get("http://localhost:8080/api/product/line/list")
+        .then(function (response) {
+            const line = response.data;
+            $scope.line = line;
+        })
+
+    $http.get("http://localhost:8080/api/product/producer/list")
+        .then(function (response) {
+            const producer = response.data;
+            $scope.producer = producer;
+        })
+
+    $http.get("http://localhost:8080/api/product/color/list")
+        .then(function (response) {
+            const color = response.data;
+            $scope.color = color;
+        })
+
+    $http.get("http://localhost:8080/api/product/size/list")
+        .then(function (response) {
+            const size = response.data;
+            $scope.size = size;
+        })
+
+    // let idPro = $routeParams.id;
+
+    let id_color = [];
+    $scope.getIdColor = function (color) {
+        if (id_color.indexOf(color.id) === -1) {
+            id_color.push(color.id);
+            console.log(id_color);
+        } else {
+            console.log("ID already exists in the array");
+        }
+    };
+
+    let selectedSizeId;
+    let id_size = [];
+    $scope.getIdSize = function (size) {
+        console.log(size.id);
+        if (id_size.indexOf(size.id) === -1) {
+            id_size.push(size.id);
+            console.log(id_size);
+        } else {
+            console.log("ID already exists in the array");
+        }
+    };
+
     let idPro = $routeParams.id;
 
-    $http.get("http://localhost:8080/api/product/edit/" + idPro)
+    $http.get("http://localhost:8080/api/product/edit=" + idPro)
         .then(function (response) {
             const editproduct = response.data;
             $scope.editproduct = editproduct;
         });
+
+    $scope.saveEdits = function () {
+
+        let editProduct = {
+            id: idProduct,
+            name: $scope.createProduct.name,
+            price: $scope.createProduct.price,
+            origin: $scope.createProduct.origin,
+            id_metarial: $scope.createProduct.productMaterial,
+            id_line: $scope.createProduct.productLine,
+            producer: $scope.createProduct.producer,
+            color: id_color,
+            size: id_size,
+            quantity: $scope.createProduct.quantity,
+            status: $scope.createProduct.status,
+        };
+
+        $http.put("http://localhost:8080/api/product/saveUpdate", editProduct)
+            .then(function (response) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Sửa thành công",
+                    showConfirmButton: false,
+                    timer: 2000,
+                }).then(function () {
+                    sessionStorage.setItem("isConfirmed", true);
+                    window.location.href = "#!/list-Product";
+                });
+            })
+            .catch(function (errorResponse) {
+                if (errorResponse.status === 400) {
+                    const errorMassage = errorResponse.data.message;
+                    Swal.fire({
+                        icon: "error",
+                        title: errorMassage + "",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                }
+            });
+    };
 
     //Return
     $scope.returnEdit = function () {
