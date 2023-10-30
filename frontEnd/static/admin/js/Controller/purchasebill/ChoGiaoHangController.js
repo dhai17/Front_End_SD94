@@ -1,13 +1,18 @@
 
 app.controller("ChoGiaoHangController", function ($scope, $http) {
+    let token = localStorage.getItem("token");
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
 
-    $scope.loadData = function(){
-        $http.get("http://localhost:8080/api/purchasebill/list2").then(function (response) {
+    $scope.loadData = function () {
+        $http.get("http://localhost:8080/api/purchasebill/list2", { headers }).then(function (response) {
             const pending = response.data;
             $scope.pending = pending;
         });
     }
-    
+
     $scope.loadData();
     $scope.toggleSelectAll = function () {
         angular.forEach($scope.pending, function (item) {
@@ -26,7 +31,7 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
             cancelButtonText: 'Chưa'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.put("http://localhost:8080/api/bill/pending3/confirm-all3")
+                $http.put("http://localhost:8080/api/bill/pending3/confirm-all3", { headers })
                     .then(function (response) {
                         const pending = response.data;
                         $scope.$evalAsync(function () {
@@ -37,7 +42,7 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
             };
         });
     };
- 
+
 
     //Phân trang
     $scope.pager = {
@@ -74,7 +79,7 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
 
 
 
-// xác nhận đơn
+    // xác nhận đơn
     $scope.confirm = function (pending) {
         const id_bill = pending.id;
         Swal.fire({
@@ -86,14 +91,14 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
             cancelButtonText: 'Không'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.post("http://localhost:8080/api/bill/pending3", {id_bill: id_bill})
-            .then(function (response) {
-                    $scope.loadData();
-            })
-            .catch(function (error) {
+                $http.post("http://localhost:8080/api/bill/pending3", { id_bill: id_bill }, { headers })
+                    .then(function (response) {
+                        $scope.loadData();
+                    })
+                    .catch(function (error) {
 
-            })
-            
+                    })
+
                 Swal.fire('Xác nhận thành công!', '', 'success');
             };
         });
@@ -101,7 +106,7 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
     //Tìm kiếm
     $scope.$watch('search', function (newVal) {
         if (newVal) {
-            $http.get("http://localhost:8080/api/bill/pending2/search=" + newVal)
+            $http.get("http://localhost:8080/api/bill/pending2/search=" + newVal, { headers })
                 .then(function (response) {
                     const pending = response.data;
 
@@ -120,7 +125,7 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
         let formattedDate = formatDate(searchDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http.get("http://localhost:8080/api/bill/pending2/searchDate=" + formattedDate)
+        $http.get("http://localhost:8080/api/bill/pending2/searchDate=" + formattedDate, { headers })
             .then(function (response) {
                 const pending = response.data;
 
@@ -149,21 +154,26 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
         const id = pending.id;
         window.location.href = "#!/detailed-invoice2?id=" + id;
     };
-    
+
 
 });
 
 
 app.controller("Details2Controller", function ($scope, $routeParams, $http) {
-    const id = $routeParams.id;
-    $scope.loadData = function(){
-        $http.get("http://localhost:8080/api/detailedInvoice/pending1/id="+id)
-        .then(function (response) {
-            const invoice = response.data;
-            $scope.invoice = invoice;
-        });
+    let token = localStorage.getItem("token");
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
     }
-    
+    const id = $routeParams.id;
+    $scope.loadData = function () {
+        $http.get("http://localhost:8080/api/detailedInvoice/pending1/id=" + id, { headers })
+            .then(function (response) {
+                const invoice = response.data;
+                $scope.invoice = invoice;
+            });
+    }
+
     $scope.loadData();
     //Phân trang
     $scope.pager = {
@@ -196,24 +206,24 @@ app.controller("Details2Controller", function ($scope, $routeParams, $http) {
             return pageNumbers;
         }
     };
-    
-    $scope.downloadAsPDF = function() {
+
+    $scope.downloadAsPDF = function () {
 
         // tạo đối tượng jsPDF
         // const doc = new jsPDF(); 
-      
+
         // // Lấy thẻ table
         // const table = document.getElementById('tableBillĐetail2');  
-      
+
         // // In table ra PDF
         // doc.autoTable( {
         //   head: table.tHead.rows,
         //   body: table.tBodies 
         // });
-      
+
         // // Save PDF
         // doc.save('table.pdf');
-      
+
     }
 });
 
