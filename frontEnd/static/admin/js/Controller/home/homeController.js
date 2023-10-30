@@ -2,6 +2,9 @@ const app = angular.module("myApp", ["ngRoute"]);
 
 app.config(function ($routeProvider) {
     $routeProvider
+        .when('/', {
+            redirectTo: "/login"
+        })
         .when("/list-Discount", {
             templateUrl: "/templates/admin/discount/list.html",
             controller: "DiscountController",
@@ -60,7 +63,7 @@ app.config(function ($routeProvider) {
             controller: "Details5Controller",
         })
         .otherwise({
-            redirectTo: "/",
+            redirectTo: "/login",
         });
 });
 
@@ -192,7 +195,7 @@ app.config(function ($routeProvider) {
             redirectTo: "/",
         });
 });
-app.config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/logout', {
         templateUrl: 'templates/admin/login/login.html',
         controller: "loginController",
