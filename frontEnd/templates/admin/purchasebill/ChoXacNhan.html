@@ -19,13 +19,13 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between fromSearchBill">
             <div class="d-flex">
-                <input class="form-control me-1" type="search" placeholder="Search" aria-label="Search"
+                <input class="form-control me-1" type="search" placeholder="Tìm kiếm" aria-label="search"
                     ng-model="search">
 
-                <input class="form-control me-1" type="date" placeholder="Search" aria-label="Search"
+                <input class="form-control me-1" type="date" placeholder="search" aria-label="search"
                     ng-model="searchDate">
                 <button class="btn btn-primary btn-sm" type="submit"
-                    ng-click="searchDateBill(searchDate)">Search</button>
+                    ng-click="searchDateBill(searchDate)">Tìm kiếm</button>
 
                 <button type="button" class="dt-button buttons-html5 btn btn-white btn-success btn-bold"
                     data-toggle="tooltip" title='Tải lại dữ liệu' ng-click="reLoad()">
@@ -47,12 +47,13 @@
                     <input type="checkbox" class="form-check-input" ng-model="selectAll" ng-change="toggleSelectAll()">
                 </th>
                 <th>#</th>
-                <th>Code</th>
-                <th>Created date</th>
-                <th>Total Order Price</th>
-                <th>Customer</th>
-                <th>Phone</th>
-                <th>Actions</th>
+                <th>Mã HD</th>
+                <th>Ngày Tạo</th>
+                <th>Tổng tiền</th>
+                <th>Khách hàng</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Thao tác</th>
             </tr>
         </thead>
         <tbody>
@@ -62,11 +63,12 @@
                         ng-change="updateSelectAll()">
                 </td>
                 <td>{{$index + 1}}</td>
-                <td>{{ pending.code }}</td>
+                <td>{{ pending.maHoaDon }}</td>
                 <td>{{ pending.createdDate | date:'dd/MM/yyyy' }}</td>
-                <td>{{ pending.totalOrderPrice}}</td>
-                <td>{{ pending.email}}</td>
-                <td>{{ pending.phoneNumber}}</td>
+                <td>{{ pending.tongTienDonHang}}</td>
+                <td>{{ pending.nguoiNhan}}</td>
+                <td>{{ pending.emailNguoiNhan}}</td>
+                <td>{{ pending.SDTNguoiNhan}}</td>
 
                 <td>
                     <div class="button-group">
