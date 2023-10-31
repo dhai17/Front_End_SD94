@@ -1,7 +1,11 @@
 app.controller("ChoXacNhanController", function ($scope, $http) {
-
+    let token = localStorage.getItem("token");
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
     $scope.loadData = function () {
-        $http.get("http://localhost:8080/api/purchasebill/list1").then(function (response) {
+        $http.get("http://localhost:8080/api/purchasebill/list1", { headers }).then(function (response) {
             const pending = response.data;
             $scope.pending = pending;
         });
@@ -26,7 +30,7 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
             cancelButtonText: 'Không'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.put("http://localhost:8080/api/bill/pending2/confirm-all2")
+                $http.put("http://localhost:8080/api/bill/pending2/confirm-all2", { headers })
                     .then(function (response) {
                         const pending = response.data;
                         $scope.$evalAsync(function () {
@@ -95,7 +99,7 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
             cancelButtonText: 'Không'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.post("http://localhost:8080/api/bill/pending2", { id_bill: id_bill })
+                $http.post("http://localhost:8080/api/bill/pending2", { id_bill: id_bill }, { headers })
                     .then(function (response) {
                         $scope.loadData();
                     })
@@ -121,7 +125,7 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
             cancelButtonText: 'Không'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.post("http://localhost:8080/api/bill/refuse", { id_bill: id_bill })
+                $http.post("http://localhost:8080/api/bill/refuse", { id_bill: id_bill }, { headers })
                     .then(function (response) {
                         $scope.loadData();
                     })
@@ -136,7 +140,7 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
     //Tìm kiếm
     $scope.$watch('search', function (newVal) {
         if (newVal) {
-            $http.get("http://localhost:8080/api/bill/pending1/search=" + newVal)
+            $http.get("http://localhost:8080/api/bill/pending1/search=" + newVal, { headers })
                 .then(function (response) {
                     const pending = response.data;
 
@@ -171,7 +175,7 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
         let formattedDate = formatDate(searchDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http.get("http://localhost:8080/api/bill/pending1/searchDate=" + formattedDate)
+        $http.get("http://localhost:8080/api/bill/pending1/searchDate=" + formattedDate, { headers })
             .then(function (response) {
                 const pending = response.data;
 
@@ -197,9 +201,14 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
 });
 
 app.controller("DetailsController", function ($scope, $routeParams, $http) {
+    let token = localStorage.getItem("token");
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
     const id = $routeParams.id;
     $scope.loadData = function(){
-        $http.get("http://localhost:8080/api/detailedInvoice/pending1/id="+id)
+        $http.get("http://localhost:8080/api/detailedInvoice/pending1/id="+id, { headers })
         .then(function (response) {
             const invoice = response.data;
             $scope.invoice = invoice;
