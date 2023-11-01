@@ -37,4 +37,4 @@ app.controller('loginCtrl', function ($scope, $http) {
             window.location.href = "#!/login"
         });
     }
-});
+}); 

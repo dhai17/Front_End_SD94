@@ -20,24 +20,24 @@
         <thead class="bg-light">
             <tr>
                 <th></th>
-                <th>Name</th>
-                <th>Phone number</th>
+                <th>Họ tên</th>
+                <th>Số điện thoại</th>
                 <th>Email</th>
-                <th>Date birth</th>
-                <th>Add ress</th>
+                <th>Ngày sinh</th>
+                <th>Địa chỉ</th>
                 <th>Password</th>
-                <th>Actions</th>
+                <th>Thao tác</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="promotion in pager.promotions">
                 <td>{{$index + 1}}</td>
-                <td>{{ promotion.name }}</td>
-                <td>{{ promotion.phoneNumber }}</td>
+                <td>{{ promotion.hoTen }}</td>
+                <td>{{ promotion.soDienThoai }}</td>
                 <td>{{ promotion.email }}</td>
-                <td>{{ promotion.dateBirth }}</td>
-                <td>{{ promotion.addRess}}</td>
-                <td>{{ promotion.passWord}}</td>
+                <td>{{ promotion.ngaySinh }}</td>
+                <td>{{ promotion.diaChi}}</td>
+                <td>{{ promotion.matKhau}}</td>
                 <td>
                     <div class="button-group">
                         <button type="button" class="btn btn-link" ng-click="editCustomer(promotion)">
