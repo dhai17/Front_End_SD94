@@ -2,17 +2,17 @@ const app = angular.module("myApp", ["ngRoute"]);
 
 app.config(function ($routeProvider) {
     $routeProvider
-        .when("/list-Discount", {
-            templateUrl: "/templates/admin/discount/list.html",
-            controller: "DiscountController",
+        .when("/list-khuyenMai", {
+            templateUrl: "/templates/admin/KhuyenMai/DanhSach.html",
+            controller: "KhuyenMaiController",
         })
-        .when("/edit-Discount", {
-            templateUrl: "/templates/admin/discount/edit.html",
-            controller: "EditDiscountController",
+        .when("/edit-khuyenMai", {
+            templateUrl: "/templates/admin/KhuyenMai/ChinhSua.html",
+            controller: "EditKhuyenMaiController",
         })
-        .when("/create-Discount", {
-            templateUrl: "/templates/admin/discount/create.html",
-            controller: "CreateDiscountController",
+        .when("/create-khuyenMai", {
+            templateUrl: "/templates/admin/KhuyenMai/ThemMoi.html",
+            controller: "CreateKhuyenMaiController",
         })
         .when("/list-PurchaseBill", {
 
