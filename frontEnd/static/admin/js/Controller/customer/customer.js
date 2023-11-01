@@ -1,11 +1,11 @@
-let token = localStorage.getItem("token");
-let headers = {
-    'Content-Type': 'application/json',
-    // 'Authorization': 'Bearer ' + token
-}
-app.controller("CustomerController", function ($scope, $http) {
 
-    console.log("token ---->", token);
+app.controller("CustomerController", function ($scope, $http) {
+    let token = localStorage.getItem("token");
+    let headers = {
+        'Content-Type': 'application/json',
+        // 'Authorization': 'Bearer ' + token
+    }
+
     // $http({
     //     method: 'GET',
     //     url: "http://localhost:8080/api/customer/list",
@@ -168,9 +168,14 @@ app.controller("CustomerController", function ($scope, $http) {
         });
     }
 });
-// ------------------------------------------------------------------------------------------------------------------------------------------
+
 // Create controller
 app.controller("CreateCustomerController", function ($scope, $http) {
+    let token = localStorage.getItem("token");
+    let headers = {
+        'Content-Type': 'application/json',
+        // 'Authorization': 'Bearer ' + token
+    }
     $scope.saveCreateCustomer = function () {
 
         if ($scope.createCustomer === undefined) {
@@ -217,16 +222,15 @@ app.controller("CreateCustomerController", function ($scope, $http) {
         window.location.href = "#!/list-Customer"
     };
 });
-// ------------------------------------------------------------------------------------------------------------------------------------------
-
-// //Edit controller
-// app.controller("EditStaffController", function ($scope, $routeParams, $http) {
-//     let idDiscount = $routeParams.id;
 
 //Edit controller
 app.controller("EditCustomerController", function ($scope, $routeParams, $http) {
     let idCustomer = $routeParams.id;
-
+    let token = localStorage.getItem("token");
+    let headers = {
+        'Content-Type': 'application/json',
+        // 'Authorization': 'Bearer ' + token
+    }
 
     $http.get("http://localhost:8080/api/customer/edit/customerID=" + idCustomer)
         .then(function (response) {

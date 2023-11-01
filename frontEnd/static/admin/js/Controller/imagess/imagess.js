@@ -31,7 +31,6 @@ window.ImgController = function ($scope, $http) {
         };
 
         var url = "http://localhost:8080/api/productImg/add";
-        console.log($scope.anh);
         var promise1 = $http.post(url, data, config);
         promise1.then(function (response) {
             $scope.loadLaiBanPhim();
