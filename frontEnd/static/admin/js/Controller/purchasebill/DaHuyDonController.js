@@ -5,7 +5,7 @@ app.controller("DaHuyDonController", function ($scope, $http) {
         'Authorization': 'Bearer ' + token
     }
     $scope.loadData = function(){
-        $http.get("http://localhost:8080/api/purchasebill/list5", { headers }).then(function (response) {
+        $http.get("http://localhost:8080/hoaDon/datHang/daHuy/danhSach", { headers }).then(function (response) {
             const pending = response.data;
             $scope.pending = pending;
         });
@@ -49,33 +49,10 @@ app.controller("DaHuyDonController", function ($scope, $http) {
 
 
 
-// xác nhận tạo lại đơn
-    $scope.confirm = function (pending) {
-        const id_bill = pending.id;
-        Swal.fire({
-            title: 'Xác nhận tạo lại đơn hàng',
-            text: 'Tạo lại hàng này?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Có',
-            cancelButtonText: 'Không'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $http.post("http://localhost:8080/api/bill/pending1", {id_bill: id_bill}, { headers })
-            .then(function (response) {
-                    $scope.loadData();
-            })
-            .catch(function (error) {
-
-            })
-                Swal.fire('Tạo lại đơn thành công!', '', 'success');
-            };
-        });
-    };
     //Tìm kiếm
     $scope.$watch('search', function (newVal) {
         if (newVal) {
-            $http.get("http://localhost:8080/api/bill/pending5/search=" + newVal, { headers })
+            $http.get("http://localhost:8080/hoaDon/datHang/daHuy/timKiem=" + newVal, { headers })
                 .then(function (response) {
                     const pending = response.data;
 
@@ -94,7 +71,7 @@ app.controller("DaHuyDonController", function ($scope, $http) {
         let formattedDate = formatDate(searchDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http.get("http://localhost:8080/api/bill/pending5/searchDate=" + formattedDate, { headers })
+        $http.get("http://localhost:8080/hoaDon/datHang/daHuy/timKiemNgay=" + formattedDate, { headers })
             .then(function (response) {
                 const pending = response.data;
 
@@ -134,7 +111,7 @@ app.controller("Details5Controller", function ($scope, $routeParams, $http) {
     }
     const id = $routeParams.id;
     $scope.loadData = function(){
-        $http.get("http://localhost:8080/api/detailedInvoice/pending1/id="+id, { headers })
+        $http.get("http://localhost:8080/hoaDon/chiTietHoaDon/choXacNhan/id="+id, { headers })
         .then(function (response) {
             const invoice = response.data;
             $scope.invoice = invoice;
