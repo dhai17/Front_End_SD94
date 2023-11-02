@@ -1,12 +1,11 @@
-let token = localStorage.getItem("token");
-let headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + token
-}
-
 app.controller("StaffController", function ($scope, $http) {
+    let token = localStorage.getItem("token");
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
 
-    $http.get("http://localhost:8080/api/staff/list", {headers}).then(function (response) {
+    $http.get("http://localhost:8080/api/staff/list", { headers }).then(function (response) {
         const promotions = response.data;
 
         // Thêm trường status2 vào từng đối tượng promotion
@@ -126,7 +125,7 @@ app.controller("StaffController", function ($scope, $http) {
                     });
                     promotions.forEach(function (promotion) {
                         promotion.status5 = getStatusText(promotion.status);
-            
+
                     });
 
                     // Cập nhật lại dữ liệu trong table nhưng không load lại trang by hduong25
@@ -205,8 +204,12 @@ app.controller("StaffController", function ($scope, $http) {
 
 // Create controller
 app.controller("CreateStaffController", function ($scope, $http) {
+    let token = localStorage.getItem("token");
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
     $scope.saveCreateStaff = function () {
-        console.log($scope.createStaff.gender);
         if ($scope.createStaff === undefined) {
             Swal.fire({
                 icon: "error",
@@ -226,8 +229,6 @@ app.controller("CreateStaffController", function ($scope, $http) {
             } else if (radioBtn2.checked) {
                 gender = false;
             }
-
-            console.log(gender);
 
             let createStaff = {
                 name: $scope.createStaff.name,
@@ -278,9 +279,13 @@ app.controller("CreateStaffController", function ($scope, $http) {
 });
 
 
-
 //Edit Staff
 app.controller("EditStaffController", function ($scope, $routeParams, $http) {
+    let token = localStorage.getItem("token");
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
     let idStaff = $routeParams.id;
     $http.get("http://localhost:8080/api/staff/edit/staffID=" + idStaff)
         .then(function (response) {
@@ -310,7 +315,6 @@ app.controller("EditStaffController", function ($scope, $routeParams, $http) {
             password: $scope.editStaff.password
 
         };
-        console.log($scope.editStaff.gender);
 
 
         $http.put("http://localhost:8080/api/staff/saveUpdate", editStaff)

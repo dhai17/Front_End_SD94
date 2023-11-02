@@ -7,18 +7,13 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
     $scope.loadData = function () {
         $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/danhSach", { headers }).then(function (response) {
             const pending = response.data;
-            $scope.pending = pending;
+                $scope.pending = pending;
         });
     }
 
     $scope.loadData();
 
-    $scope.toggleSelectAll = function () {
-        angular.forEach($scope.pending, function (item) {
-            item.selected = $scope.selectAll;
-        });
-        $scope.checkTatCaDaChon();
-    };
+    
 
     $scope.GiaoTatCa = function () {
         Swal.fire({
@@ -30,14 +25,20 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
             cancelButtonText: 'Không'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.put("http://localhost:8080/hoaDon/datHang/choXacNhan/xacNhanDon/tatCa", { headers })
+                $http.delete("http://localhost:8080/hoaDon/datHang/choXacNhan/xacNhanDon/tatCa", { headers })
                     .then(function (response) {
                         const pending = response.data;
+                        
                         $scope.$evalAsync(function () {
                             $scope.pending = pending;
                         });
+                        Swal.fire('Xác nhận thành công!', '', 'success');
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        Swal.fire('Đã xảy ra lỗi!', '', 'error');
                     });
-                Swal.fire('Xác nhận thành công!', '', 'success');
+                
             };
         });
     };
@@ -81,7 +82,10 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
 
     // xác nhận đơn
     $scope.confirm = function (pending) {
-        const id_bill = pending.id;
+        const id = pending.id;
+        let data = {
+            id
+        }
         Swal.fire({
             title: 'Xác nhận đơn hàng',
             text: 'Bạn có muốn giao đơn hàng này không?',
@@ -91,9 +95,14 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
             cancelButtonText: 'Không'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/daXacNhan", { id_bill: id_bill }, { headers })
+                $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/daXacNhan", data, { headers })
                     .then(function (response) {
-                        $scope.loadData();
+                        console.log(response.data);
+                        const pending = response.data;
+                        
+                        $scope.$evalAsync(function () {
+                            $scope.pending = pending;
+                        });
                     })
                     .catch(function (error) {
 
@@ -180,6 +189,88 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
     $scope.reLoad = function () {
         $scope.loadData();
     }
+    // check don da chon
+    $scope.coCheckboxDaChon = false;
+
+    $scope.toggleSelectAll = function () {
+        angular.forEach($scope.pending, function (item) {
+            item.selected = $scope.selectAll;
+        });
+        $scope.checkTatCaDaChon();
+    };
+
+    $scope.updateSelectAll = function () {
+        $scope.selectAll = $scope.pending.every(function (item) {
+            return item.selected;
+        });
+        $scope.checkTatCaDaChon();
+    };
+
+    $scope.checkTatCaDaChon = function () {
+        $scope.coCheckboxDaChon = $scope.pending.some(function (item) {
+            return item.selected;
+        });
+    };
+
+    $scope.xacNhanDonDaChon = function () {
+        let danhSachDonDuocChon = [];
+        angular.forEach($scope.pending, function (item) {
+            if (item.selected) {
+                danhSachDonDuocChon.push(item.id);
+                Swal.fire({
+                    title: 'Xác nhận những đơn đã chọn',
+                    text: 'Bạn có muốn xác nhận những đơn đã chọn không?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Có',
+                    cancelButtonText: 'Không'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $http.put("http://localhost:8080/hoaDon/datHang/choXacNhan/xacNhanDon/daChon", { id: danhSachDonDuocChon }, { headers })
+                            .then(function (response) {
+                                const pending = response.data;
+                                $scope.$evalAsync(function () {
+                                    $scope.pending = pending;
+                                    $scope.coCheckboxDaChon = false;
+                                    $scope.selectAll = false
+                                });
+                            });
+                        Swal.fire('Xác nhận đơn thành công!', '', 'success');
+                    };
+                });
+
+            };
+        });
+    };
+    $scope.huyDonDaChon = function () {
+        const danhSachDonDuocChon = [];
+        angular.forEach($scope.pending, function (item) {
+            if (item.selected) {
+                danhSachDonDuocChon.push(item.id);
+                Swal.fire({
+                    title: 'Hủy những đơn đã chọn',
+                    text: 'Bạn có muốn hủy những đơn đã chọn không?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Có',
+                    cancelButtonText: 'Không'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $http.put("http://localhost:8080/hoaDon/datHang/choXacNhan/huyDon/daChon", { id: danhSachDonDuocChon }, { headers })
+                            .then(function (response) {
+                                const pending = response.data;
+                                $scope.$evalAsync(function () {
+                                    $scope.pending = pending;
+                                    $scope.coCheckboxDaChon = false;
+                                    $scope.selectAll = false
+                                });
+                            });
+                        Swal.fire('Hủy tất cả đơn thành công!', '', 'success');
+                    };
+                });
+            };
+        });
+    };
 });
 
 app.controller("DetailsController", function ($scope, $routeParams, $http) {

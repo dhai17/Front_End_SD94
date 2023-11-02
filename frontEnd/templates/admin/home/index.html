@@ -34,8 +34,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap-tpls.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="/static/admin/js/Controller/home/homeController.js"></script>
-    <script src="/static/admin/js/Controller/discount/discount.js"></script>
     <script src="/static/admin/js/Controller/sales/In_Store_Controller.js"></script>
+    <script src="../../../static/admin/js/Controller/khuyenMai/khuyenMai.js"></script>
     <script src="/static/admin/js/Controller/product/product.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../../static/admin/js/Controller/login/login.js"></script>
@@ -43,21 +43,18 @@
 
     <script src="/static/admin/js/Controller/staff/staff.js"></script>
 
-    <!-- purchasebill con troller -->
     <script src="/static/admin/js/Controller/purchasebill/ChoGiaoHangController.js"></script>
     <script src="/static/admin/js/Controller/purchasebill/ChoXacNhanController.js"></script>
     <script src="/static/admin/js/Controller/purchasebill/DangGiaoHangController.js"></script>
     <script src="/static/admin/js/Controller/purchasebill/DaGiaoHangController.js"></script>
     <script src="/static/admin/js/Controller/purchasebill/DaHuyDonController.js"></script>
 
-    <!--  -->
     <script src="/static/admin/js/Controller/colorr/colorr.js"></script>
     <script src="/static/admin/js/Controller/size/size.js"></script>
     <script src="/static/admin/js/Controller/line/line.js"></script>
     <script src="/static/admin/js/Controller/material/material.js"></script>
     <script src="/static/admin/js/Controller/producer/producer.js"></script>
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script> -->
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -66,12 +63,15 @@
     <script src="/static/admin/js/Controller/product/product.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/static/admin/js/Controller/customer/customer.js"></script>
+
+    <!-- <script src="/static/admin/js/Controller/purchasebill/purchaseBill.js"></script> -->
     <script src="/static/admin/js/Controller/staff/staff.js"></script>
+    <script src="/static/admin/js/Controller/khuyenMai/khuyenMai.js"></script>
+
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
     <style>
         a {
             text-decoration: none !important;
@@ -197,7 +197,7 @@
                                 </g>
                             </svg>
                         </span>
-                        <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneacker</span>
+                        <span class="app-brand-text demo menu-text fw-bolder ms-2">Adudas</span>
                     </a>
 
                     <a href="javascript:void(0);"
@@ -209,7 +209,7 @@
                 <div class="menu-inner-shadow"></div>
 
                 <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Home</span>
+                    <span class="menu-header-text">Trang chủ</span>
                 </li>
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
@@ -217,30 +217,18 @@
                     <li class="menu-item active">
                         <a href="#!/list-Discount" class="menu-link">
                             <i class="menu-icon tf-icons b`x bx-home-circle"></i>
-                            <div data-i18n="Analytics">Home page</div>
+                            <div data-i18n="Analytics">Trang chủ</div>
                         </a>
                     </li>
-
                     <!-- Layouts -->
                     <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text">Statistical</span>
+                        <span class="menu-header-text">Bán hàng</span>
                     </li>
                     <li class="menu-item">
                         <a href="#!/in-store" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-chart"></i>
 
-                            <div data-i18n="Analytics">Sales</div>
-                        </a>
-                    </li>
-
-                    <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text">Counter sales</span>
-                    </li>
-                    <li class="menu-item">
-                        <a href="#!/" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-store"></i>
-
-                            <div data-i18n="Analytics">Counter sales</div>
+                            <div data-i18n="Analytics">Bán hàng</div>
                         </a>
                     </li>
 
@@ -254,37 +242,37 @@
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-package"></i>
-                            <div data-i18n="Account Settings">Product</div>
+                            <div data-i18n="Account Settings">Sản phẩm</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
                                 <a href="#!/list-Product" class="menu-link">
-                                    <div data-i18n="Error">List Product</div>
+                                    <div data-i18n="Error">Danh sách sản phẩm</div>
                                 </a>
                             </li>
                             <li class="menu-item">
                                 <a href="#!/create-Product" class="menu-link">
-                                    <div data-i18n="Notifications">Size</div>
+                                    <div data-i18n="Notifications">Kích cỡ</div>
                                 </a>
                             </li>
                             <li class="menu-item">
                                 <a href="#!/list-Line" class="menu-link">
-                                    <div data-i18n="Notifications">Line</div>
+                                    <div data-i18n="Notifications">Loại sản phẩm</div>
                                 </a>
                             </li>
                             <li class="menu-item">
                                 <a href="#!/list-Material" class="menu-link">
-                                    <div data-i18n="Notifications">Material</div>
+                                    <div data-i18n="Notifications">Chất liệu</div>
                                 </a>
                             </li>
                             <li class="menu-item">
                                 <a href="#!/list-Producer" class="menu-link">
-                                    <div data-i18n="Notifications">Producer</div>
+                                    <div data-i18n="Notifications">Nhà sản xuất</div>
                                 </a>
                             </li>
                             <li class="menu-item">
                                 <a href="#!/create-Product" class="menu-link">
-                                    <div data-i18n="Notifications">Color</div>
+                                    <div data-i18n="Notifications">Màu sắc</div>
                                 </a>
                             </li>
                         </ul>
@@ -292,78 +280,80 @@
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-receipt"></i>
-                            <div data-i18n="Authentications">Bill</div>
+                            <div data-i18n="Authentications">Hóa đơn</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
                                 <a href="#!/list-CounterBill" class="menu-link">
-                                    <div data-i18n="Basic">Counter Bill</div>
+                                    <div data-i18n="Basic">Đơn tại quầy</div>
                                 </a>
                             </li>
                             <li class="menu-item">
                                 <a href="#!/list-PurchaseBill" class="menu-link">
 
-                                    <div data-i18n="Basic">Purchase Order</div>
+                                    <div data-i18n="Basic">Đơn đặt hàng</div>
                                 </a>
                             </li>
-                        </ul>
-                    </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-user"></i>
 
-                            <div data-i18n="Misc">Staff</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="#!/list-Staff" class="menu-link">
-                                    <div data-i18n="Error">List</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="#!/create-Staff" class="menu-link">
-                                    <div data-i18n="Under Maintenance">Create</div>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-face"></i>
-                            <div data-i18n="Misc">Customer</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="#!/list-Customer" class="menu-link">
-                                    <div data-i18n="Error">List</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="#!/create-Customer" class="menu-link">
-                                    <div data-i18n="Under Maintenance">Create</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-gift"></i>
+                </ul>
 
-                            <div data-i18n="Misc">Voucher</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="#!/list-Discount" class="menu-link">
-                                    <div data-i18n="Error">List</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="#!/create-Discount" class="menu-link">
-                                    <div data-i18n="Under Maintenance">Create</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-user"></i>
+
+                        <div data-i18n="Misc">Nhân viên</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="#!/list-Staff" class="menu-link">
+                                <div data-i18n="Error">Danh sách</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#!/create-Staff" class="menu-link">
+                                <div data-i18n="Under Maintenance">Thêm mới</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-face"></i>
+                        <div data-i18n="Misc">Khách hàng</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="#!/list-Customer" class="menu-link">
+                                <div data-i18n="Error">Danh sách</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#!/create-Customer" class="menu-link">
+                                <div data-i18n="Under Maintenance">Thêm mới</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-gift"></i>
+
+                        <div data-i18n="Misc">Khuyến Mại</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="#!/list-khuyenMai" class="menu-link">
+                                <div data-i18n="Error">Danh Sách</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#!/create-khuyenMai" class="menu-link">
+                                <div data-i18n="Under Maintenance">Thêm mới</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 </ul>
             </aside>
             <!-- / Menu -->
@@ -429,13 +419,13 @@
                                     <li>
                                         <a class="dropdown-item" href="#!/login">
                                             <i class="bx bx-user me-2"></i>
-                                            <span class="align-middle">login</span>
+                                            <span class="align-middle">Đăng nhập</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="#">
                                             <i class="bx bx-cog me-2"></i>
-                                            <span class="align-middle">Settings</span>
+                                            <span class="align-middle">Cài Đặt</span>
                                         </a>
                                     </li>
                                     <li>
@@ -453,8 +443,8 @@
                                     </li>
                                     <li ng-controller="loginCtrl">
                                         <div>
-                                            <button class="btn btn-primary" type="button"
-                                                ng-click="logout()">Logout</button>
+                                            <button class="btn btn-primary" type="button" ng-click="logout()">Đăng
+                                                Xuất</button>
                                         </div>
                                     </li>
                                 </ul>

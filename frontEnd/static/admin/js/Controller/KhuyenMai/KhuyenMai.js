@@ -1,23 +1,38 @@
-app.controller("DiscountController", function ($scope, $http) {
-    $http.get("http://localhost:8080/api/discount/list").then(function (response) {
+app.controller("KhuyenMaiController", function ($scope, $http) {
+    let token = localStorage.getItem("token");
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
+
+    $http.get("http://localhost:8080/khuyenMai/danhSach", { headers }).then(function (response) {
         const promotions = response.data;
 
         // Thêm trường status2 vào từng đối tượng promotion
         promotions.forEach(function (promotion) {
             promotion.status2 = getStatusText(promotion.status);
-            promotion.fomatMaximumValue = fomatMaxValue(promotion.maximumvalue);
+            promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
         });
 
         $scope.promotions = promotions;
+    }).catch(e => {
+        Swal.fire({
+            icon: "error",
+            title: "Token inval",
+            showConfirmButton: false,
+            timer: 2000,
+        }).then(function () {
+
+        });
     });
 
-    // $http.get("http://localhost:3000/api/v1/discount/").then(function (response) {
+    // $http.get("http://localhost:3000/api/v1/khuyenMai/").then(function (response) {
     //     const promotions = response.data;
 
     //     // Thêm trường status2 vào từng đối tượng promotion
     //     promotions.forEach(function (promotion) {
     //         promotion.status2 = getStatusText(promotion.status);
-    //         promotion.fomatMaximumValue = fomatMaxValue(promotion.maximumvalue);
+    //         promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
     //     });
 
     //     $scope.promotions = promotions;
@@ -75,27 +90,31 @@ app.controller("DiscountController", function ($scope, $http) {
     };
 
 
-    function fomatMaxValue(maximumvalue) {
-        return maximumvalue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    function fomatMaxValue(tienGiamToiDa) {
+        return tienGiamToiDa.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     }
 
     //Chuyển hướng đến trang edit theo id
-    $scope.editDiscount = function (promotion) {
-        let idDiscount = promotion.id;
-        window.location.href = '#!/edit-Discount?id=' + idDiscount;
+    $scope.editKhuyenMai = function (promotion) {
+        let idkhuyenMai = promotion.id;
+        window.location.href = '#!/edit-khuyenMai?id=' + idkhuyenMai;
     };
 
     //Xóa trong danh sách
-    $scope.deleteDiscount = function (promotion) {
-        let idDiscount = promotion.id;
-        $http.put("http://localhost:8080/api/discount/deleteDiscount" + idDiscount)
+    $scope.deletekhuyenMai = function (promotion) {
+        let id = promotion.id;
+        let data = {
+            id
+        }
+
+        $http.put("http://localhost:8080/khuyenMai/xoa" ,data, { headers })
             .then(function (response) {
                 const promotions = response.data;
 
-                // Thêm trường status2 và fomatMaximumValue vào từng đối tượng promotion
+                // Thêm trường status2 và fomattienGiamToiDa vào từng đối tượng promotion
                 promotions.forEach(function (promotion) {
                     promotion.status2 = getStatusText(promotion.status);
-                    promotion.fomatMaximumValue = fomatMaxValue(promotion.maximumvalue);
+                    promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
                 });
 
                 // Cập nhật lại dữ liệu trong table nhưng không load lại trang by hduong25
@@ -116,13 +135,13 @@ app.controller("DiscountController", function ($scope, $http) {
     }
 
     //Tìm kiếm
-    $scope.searchDiscount = function (searchTerm) {
-        $http.get("http://localhost:8080/api/discount/search=" + searchTerm)
+    $scope.searchkhuyenMai = function (searchTerm) {
+        $http.get("http://localhost:8080/khuyenMai/timKiem=" + searchTerm, { headers })
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {
                     promotion.status2 = getStatusText(promotion.status);
-                    promotion.fomatMaximumValue = fomatMaxValue(promotion.maximumvalue);
+                    promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
                 });
 
                 // Cập nhật lại dữ liệu trong table nhưng không load lại trang by hduong25
@@ -133,16 +152,16 @@ app.controller("DiscountController", function ($scope, $http) {
     }
 
     //Tìm kiếm ngày bắt đầu
-    $scope.searchDateDiscount = function (selectedDate) {
+    $scope.searchDatekhuyenMai = function (selectedDate) {
         let formattedDate = formatDate(selectedDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http.get("http://localhost:8080/api/discount/searchDate=" + formattedDate)
+        $http.get("http://localhost:8080/khuyenMai/timKiemNgay=" + formattedDate, { headers })
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {
                     promotion.status2 = getStatusText(promotion.status);
-                    promotion.fomatMaximumValue = fomatMaxValue(promotion.maximumvalue);
+                    promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
                 });
 
                 $scope.$evalAsync(function () {
@@ -159,14 +178,15 @@ app.controller("DiscountController", function ($scope, $http) {
         let day = ("0" + date.getDate()).slice(-2);
         return year + "-" + month + "-" + day;
     }
+   
 
     //Re load
     $scope.reLoad = function () {
-        $http.get("http://localhost:8080/api/discount/list").then(function (response) {
+        $http.get("http://localhost:8080/khuyenMai/danhSach", { headers }).then(function (response) {
             const promotions = response.data;
             promotions.forEach(function (promotion) {
                 promotion.status2 = getStatusText(promotion.status);
-                promotion.fomatMaximumValue = fomatMaxValue(promotion.maximumvalue);
+                promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
             });
 
             $scope.$evalAsync(function () {
@@ -177,35 +197,47 @@ app.controller("DiscountController", function ($scope, $http) {
 });
 
 //Edit controller
-app.controller("EditDiscountController", function ($scope, $routeParams, $http) {
-    let idDiscount = $routeParams.id;
+app.controller("EditKhuyenMaiController", function ($scope, $routeParams, $http) {
+    let idkhuyenMai = $routeParams.id;
+    let token = localStorage.getItem("token");
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
 
-    $http.get("http://localhost:8080/api/discount/edit/discountID=" + idDiscount)
+    $http.get("http://localhost:8080/khuyenMai/chinhSua/" + idkhuyenMai, { headers })
         .then(function (response) {
-            const editDiscount = response.data;
-            editDiscount.fomatMaximumValue = fomatMaxValue(editDiscount.maximumvalue);
-            $scope.editDiscount = editDiscount;
+            const editkhuyenMai = response.data;
+            editkhuyenMai.fomattienGiamToiDa = fomatMaxValue(editkhuyenMai.tienGiamToiDa);
+            $scope.editkhuyenMai = editkhuyenMai;
         });
 
-    function fomatMaxValue(maximumvalue) {
-        return maximumvalue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    function fomatMaxValue(tienGiamToiDa) {
+        return tienGiamToiDa.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     }
 
     //Lưu edit
-    $scope.saveEditDiscount = function () {
-        let maxValue = $scope.editDiscount.fomatMaximumValue;
-        let numericValue = parseFloat(maxValue.replace(/[^\d.-]/g, ''));
+    $scope.saveEditkhuyenMai = function () {
+        let token = localStorage.getItem("token");
+        let headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+        let idkhuyenMai = $routeParams.id;
 
-        let editDiscount = {
-            id: idDiscount,
-            name: $scope.editDiscount.name,
-            startedDate: $scope.editDiscount.startedDate,
-            endDate: $scope.editDiscount.endDate,
-            percentDiscount: $scope.editDiscount.percentDiscount,
-            maximumvalue: numericValue
+        let maxValue = $scope.editkhuyenMai.fomattienGiamToiDa;
+        let tienGiamToiDa = parseFloat(maxValue.replace(/[^\d.-]/g, ''));
+
+        let editkhuyenMai = {
+            id: idkhuyenMai,
+            tenKhuyenMai: $scope.editkhuyenMai.tenKhuyenMai,
+            ngayBatDau: $scope.editkhuyenMai.ngayBatDau,
+            ngayKetThuc: $scope.editkhuyenMai.ngayKetThuc,
+            phanTramGiam: $scope.editkhuyenMai.phanTramGiam,
+            tienGiamToiDa: $scope.editkhuyenMai.tienGiamToiDa,
         };
 
-        $http.put("http://localhost:8080/api/discount/saveUpdate", editDiscount)
+        $http.put("http://localhost:8080/khuyenMai/luuChinhSua", editkhuyenMai, { headers })
             .then(function (response) {
                 Swal.fire({
                     icon: "success",
@@ -214,7 +246,7 @@ app.controller("EditDiscountController", function ($scope, $routeParams, $http) 
                     timer: 2000,
                 }).then(function () {
                     sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-Discount";
+                    window.location.href = "#!/list-khuyenMai";
                 });
             })
             .catch(function (errorResponse) {
@@ -232,16 +264,28 @@ app.controller("EditDiscountController", function ($scope, $routeParams, $http) 
 
     //Return
     $scope.returnEdit = function () {
-        window.location.href = "#!/list-Discount"
+        window.location.href = "#!/list-khuyenMai"
     };
 });
 
 //Create controller
-app.controller("CreateDiscountController", function ($scope, $http) {
+app.controller("CreateKhuyenMaiController", function ($scope, $http) {
+    let token = localStorage.getItem("token");
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
 
-    $scope.saveCreateDiscount = function () {
+    $scope.saveCreatekhuyenMai = function () {
+        let createKhuyenMai = {
+            tenKhuyenMai: $scope.createkhuyenMai.tenKhuyenMai,
+            ngayBatDau: $scope.createkhuyenMai.ngayBatDau,
+            ngayKetThuc: $scope.createkhuyenMai.ngayKetThuc,
+            phanTramGiam: $scope.createkhuyenMai.phanTramGiam,
+            tienGiamToiDa: $scope.createkhuyenMai.tienGiamToiDa
+        }
 
-        if ($scope.createDiscount === undefined) {
+        if ($scope.createkhuyenMai === undefined) {
             Swal.fire({
                 icon: "error",
                 title: "Vui lòng nhập đầy đủ thông tin",
@@ -251,7 +295,7 @@ app.controller("CreateDiscountController", function ($scope, $http) {
             return;
         }
 
-        $http.post("http://localhost:8080/api/discount/saveCreate", $scope.createDiscount)
+        $http.post("http://localhost:8080/khuyenMai/themMoi", createKhuyenMai, { headers })
             .then(function (response) {
                 // Xử lý thành công nếu có
                 Swal.fire({
@@ -261,7 +305,7 @@ app.controller("CreateDiscountController", function ($scope, $http) {
                     timer: 2000,
                 }).then(function () {
                     sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-Discount";
+                    window.location.href = "#!/list-khuyenMai";
                 });
             })
             .catch(function (error) {
@@ -282,7 +326,7 @@ app.controller("CreateDiscountController", function ($scope, $http) {
     };
 
     $scope.returnCreate = function () {
-        window.location.href = "#!/list-Discount"
+        window.location.href = "#!/list-khuyenMai"
     };
 });
 

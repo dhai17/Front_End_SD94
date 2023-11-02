@@ -35,7 +35,12 @@
 
 
             <div class="button-bill">
-
+                <button class="btn btn-primary btn-sm" type="submit" ng-click="xacNhanDonDaChon()"
+                    ng-show="coCheckboxDaChon"
+                    >Xác nhận đơn đã chọn</button>
+                <button class="btn btn-primary btn-sm" type="submit" ng-click="huyDonDaChon()"
+                    ng-show="coCheckboxDaChon"
+                    >Hủy đơn đã chọn</button>
                 <button class="btn btn-primary btn-sm" type="submit" ng-click="GiaoTatCa()">Giao tất cả</button>
             </div>
         </div>

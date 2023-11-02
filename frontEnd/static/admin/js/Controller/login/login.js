@@ -18,8 +18,7 @@ app.controller('loginCtrl', function ($scope, $http) {
                 // handle success
                 localStorage.setItem("token", response.data.token)
                 let token = localStorage.getItem("token");
-                console.log(token);
-                window.location.href = "#!/list-Discount"
+                window.location.href = "#!/list-khuyenMai"
             }).catch(function (error) {
                 // handle error  
                 console.log(error);
