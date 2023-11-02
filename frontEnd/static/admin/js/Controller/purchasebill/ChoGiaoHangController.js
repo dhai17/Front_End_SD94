@@ -7,7 +7,7 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
     }
 
     $scope.loadData = function () {
-        $http.get("http://localhost:8080/api/purchasebill/list2", { headers }).then(function (response) {
+        $http.get("http://localhost:8080/hoaDon/datHang/choGiaoHang/danhSach", { headers }).then(function (response) {
             const pending = response.data;
             $scope.pending = pending;
         });
@@ -31,7 +31,7 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
             cancelButtonText: 'Chưa'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.put("http://localhost:8080/api/bill/pending3/confirm-all3", { headers })
+                $http.delete("http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang-tatCa", { headers })
                     .then(function (response) {
                         const pending = response.data;
                         $scope.$evalAsync(function () {
@@ -91,7 +91,7 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
             cancelButtonText: 'Không'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.post("http://localhost:8080/api/bill/pending3", { id_bill: id_bill }, { headers })
+                $http.post("http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang", { id_bill: id_bill }, { headers })
                     .then(function (response) {
                         $scope.loadData();
                     })
@@ -106,7 +106,7 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
     //Tìm kiếm
     $scope.$watch('search', function (newVal) {
         if (newVal) {
-            $http.get("http://localhost:8080/api/bill/pending2/search=" + newVal, { headers })
+            $http.get("http://localhost:8080/hoaDon/datHang/choGiaoHang/timKiem=" + newVal, { headers })
                 .then(function (response) {
                     const pending = response.data;
 
@@ -125,7 +125,7 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
         let formattedDate = formatDate(searchDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http.get("http://localhost:8080/api/bill/pending2/searchDate=" + formattedDate, { headers })
+        $http.get("http://localhost:8080/hoaDon/datHang/choGiaoHang/timKiemNgay=" + formattedDate, { headers })
             .then(function (response) {
                 const pending = response.data;
 
@@ -167,7 +167,7 @@ app.controller("Details2Controller", function ($scope, $routeParams, $http) {
     }
     const id = $routeParams.id;
     $scope.loadData = function () {
-        $http.get("http://localhost:8080/api/detailedInvoice/pending1/id=" + id, { headers })
+        $http.get("http://localhost:8080/hoaDon/chiTietHoaDon/choXacNhan/id=" + id, { headers })
             .then(function (response) {
                 const invoice = response.data;
                 $scope.invoice = invoice;
