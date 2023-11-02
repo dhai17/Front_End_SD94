@@ -1,0 +1,43 @@
+<div ng-controller="ImgController" id="productList">
+    <form enctype="multipart/form-data" ng-submit="uploadImage()" class="form-container">
+        <h2 class="text-center">Thêm ảnh</h2>
+        <hr>
+        <!-- <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span>
+                            <input type="file" name="file" ng-model="image" accept="image/*" class="file-input"
+                            onchange="angular.element(this).scope().loadImage(this)" />
+                            <img ng-src="{{imagePreview}}" alt="Hình ảnh" class="preview-image" />
+                        </span>
+                        <div>
+                            <span>{{ promotion.tenSanPham }}</span>
+                        </div>
+                    </td>
+                    <td>{{ promotion.mauSac }}</td>
+                    <td>
+                        <button class="btn btn-outline-light text-dark" type="submit">Tải ảnh lên</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table> -->
+
+        <div class="row gx-3 mb-3">
+            <div class="col-md-4">
+                <label class="small mb-1">Tên sản phẩm</label>
+                <input class="form-control" id="name" type="text" ng-model="createProduct.tenSanPham">
+            </div>
+            <div class="col-md-4">
+                <label class="small mb-1">Thêm sản phẩm</label>
+                <input class="form-control" id="price" type="text" ng-model="createProduct.gia">
+            </div>
+        </div>
+    </form>
+</div>

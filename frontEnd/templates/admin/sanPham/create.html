@@ -1,0 +1,111 @@
+<div class="container-fluid" ng-controller="CreateProductController">
+    <div class="card mb-4">
+        <div class="card-header">Thêm sản phẩm</div>
+        <div class="card-body">
+            <form>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-4">
+                        <label class="small mb-1">Tên sản phẩm</label>
+                        <input class="form-control" id="name" type="text" ng-model="createProduct.tenSanPham">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="small mb-1">Giá bán</label>
+                        <input class="form-control" id="price" type="text" ng-model="createProduct.gia">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="small mb-1">Số lượng</label>
+                        <input class="form-control" id="quantity" type="text" ng-model="createProduct.soLuong">
+                    </div>
+                </div>
+
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="sel2" class="small mb-1">Màu sắc</label>
+                        <select id="sel2" class="form-select" aria-label="Default select example"
+                            ng-model="selectedColor" multiple>
+                            <option selected ng-repeat="mauSac in mauSac" value="{{mauSac.id}}"
+                                ng-click="getIdColor(mauSac)">{{mauSac.tenMauSac}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small mb-1">Kích cỡ</label>
+                        <select class="form-select" aria-label="Default select example" ng-model="selectedSizes"
+                            multiple>
+                            <option ng-repeat="kichCo in kichCo" ng-value="kichCo.id" ng-click="getIdSize(kichCo)">
+                                {{kichCo.kichCo}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-4">
+                        <label class="small mb-1">Chất liệu</label>
+                        <select class="form-select" aria-label="Default select example"
+                            ng-model="createProduct.chatLieu">
+                            <option ng-repeat="chatLieu in chatLieu" value="{{chatLieu.id}}">{{chatLieu.chatLieu}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="small mb-1">Dòng sản phẩm</label>
+                        <select class="form-select" aria-label="Default select example"
+                            ng-model="createProduct.loaiSanPham">
+                            <option ng-repeat="loaiSanPham in loaiSanPham" value="{{loaiSanPham.id}}">
+                                {{loaiSanPham.loaiSanPham}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="small mb-1">Nhà sản xuất</label>
+                        <select class="form-select" aria-label="Default select example"
+                            ng-model="createProduct.nhaSanXuat">
+                            <option ng-repeat="nhaSanXuat in nhaSanXuat" value="{{nhaSanXuat.id}}">{{nhaSanXuat.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" type="button" ng-click="returnCreate()">Return</button>
+                <button class="btn btn-primary" type="button" ng-click="saveCreate()">Save</button>
+            </form>
+        </div>
+        <div ng-controller="ProductController" id="productList">
+            <!-- <h2 style="text-align: center;">Chi tiết sản phẩm</h2> -->
+            <hr>
+            <div>
+                <table class="table align-middle mb-1 bg-white">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Màu sắc</th>
+                            <th>Kích cỡ</th>
+                            <th>Giá bán</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="details in details">
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ details.sanPham.tenSanPham }}</td>
+                            <td>{{ details.soLuong }}</td>
+                            <td>{{ details.mauSac.tenMauSac}}</td>
+                            <td>{{ details.kichCo.kichCo }}</td>
+                            <td>{{ details.sanPham.gia }}</td>
+                            <td>
+                                <button type="button" class="btn btn-link" ng-click="editProducer(details)">
+                                    <i class="bx bx-edit me-2"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link btn-sm btn-rounded"
+                                    ng-click="deleteProducer(details)">
+                                    <i class="bx bx-trash me-2"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" type="button" ng-click="updateImg(details)">Tải ảnh</button>
+            </div>
+        </div>
+    </div>
+</div>

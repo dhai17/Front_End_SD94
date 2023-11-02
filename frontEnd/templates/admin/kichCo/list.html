@@ -1,0 +1,61 @@
+<div ng-controller="SizeController" id="sizeList">
+    <div class="container-fluid my-auto d-flex align-items-center">
+        <div class="mx-auto">
+            <h1>Size</h1>
+        </div>
+        <button type="button" class="btn btn-link" ng-click="createSizee(promotion)">
+            Thêm size
+        </button>
+    </div>
+    <br>
+    <table class="table align-middle mb-1 bg-white">
+        <thead class="bg-light">
+            <tr>
+                <th>#</th>
+                <th>Cỡ giày</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="promotion in promotions">
+                <td>{{$index + 1}}</td>
+                <td>{{ promotion.kichCo }}</td>
+                <td>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-link" ng-click="editSize(promotion)">
+                            <i class="bx bx-edit me-2"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-link btn-sm btn-rounded"
+                            ng-click="delete(promotion)">
+                            <i class="bx bx-trash me-2"></i>
+                        </button>
+
+                        <div class="modal fade" ng-attr-id="confirmDeleteModal_{{ promotion.id }}" tabindex="-1"
+                            role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Bạn có chắc chắn muốn xóa?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Hủy</button>
+                                        <button type="button" class="btn btn-danger"
+                                            id="confirmDeleteButton">Xóa</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

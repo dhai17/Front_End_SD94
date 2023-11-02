@@ -166,15 +166,6 @@ app.controller("CreateCustomerController", function ($scope, $http) {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
-    // Swal.fire({
-    //     icon: "warning",
-    //     title: "Bạn cần đăng nhập trước khi tiếp tục.",
-    //     showConfirmButton: false,
-    //     timer:2000,
-    // }).then(function() {
-    //         // Người dùng chọn "Đăng nhập"
-    //         window.location.href = "#!/login";
-    // });
     $scope.saveCreateCustomer = function () {
 
         if ($scope.createCustomer === undefined) {
