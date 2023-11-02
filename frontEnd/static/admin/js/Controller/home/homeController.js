@@ -67,15 +67,15 @@ app.config(function ($routeProvider) {
 app.config(function ($routeProvider) {
     $routeProvider
         .when("/list-Customer", {
-            templateUrl: "/templates/admin/customer/list.html",
+            templateUrl: "/templates/admin/khachHang/list.html",
             controller: "CustomerController",
         })
         .when("/edit-Customer", {
-            templateUrl: "/templates/admin/customer/edit.html",
+            templateUrl: "/templates/admin/khachHang/edit.html",
             controller: "EditCustomerController",
         })
         .when("/create-Customer", {
-            templateUrl: "/templates/admin/customer/create.html",
+            templateUrl: "/templates/admin/khachHang/create.html",
             controller: "CreateCustomerController",
         })
         .when("/edit-Product", {
