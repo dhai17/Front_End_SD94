@@ -18,10 +18,22 @@ app.controller('loginCtrl', function ($scope, $http) {
                 // handle success
                 localStorage.setItem("token", response.data.token)
                 let token = localStorage.getItem("token");
-                console.log(token);
+                window.location.href = "#!/list-khuyenMai"
             }).catch(function (error) {
                 // handle error  
                 console.log(error);
             });
+    }
+
+    $scope.logout = function () {
+        localStorage.removeItem("token")
+        Swal.fire({
+            icon: "success",
+            title: "logout sccuessfully",
+            showConfirmButton: false,
+            timer: 2000,
+        }).then(function () {
+            window.location.href = "#!/login"
+        });
     }
 });

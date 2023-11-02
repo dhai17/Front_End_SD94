@@ -1,0 +1,10 @@
+<form enctype="multipart/form-data" ng-submit="uploadImage()">
+    <input type="file" name="file" ng-model="image" accept="image/*" />
+    <button type="submit">Upload</button>
+</form>
+
+<div ng-controller="detailsController" id="productList">
+    <div id="div-big-product-details">
+        <h4 class="product-description">{{promotions.images}}</h4>
+    </div>
+</div>
