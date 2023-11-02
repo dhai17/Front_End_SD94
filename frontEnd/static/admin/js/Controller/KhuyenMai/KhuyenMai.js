@@ -106,32 +106,42 @@ app.controller("KhuyenMaiController", function ($scope, $http) {
         let data = {
             id
         }
+        Swal.fire({
+            title: 'Xác nhận xóa khuyến Mại',
+            text: 'Bạn có chắc chắn muốn xóa khuyến mại này?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $http.put("http://localhost:8080/khuyenMai/xoa", data, { headers })
+                    .then(function (response) {
+                        const promotions = response.data;
 
-        $http.put("http://localhost:8080/khuyenMai/xoa" ,data, { headers })
-            .then(function (response) {
-                const promotions = response.data;
+                        // Thêm trường status2 và fomattienGiamToiDa vào từng đối tượng promotion
+                        promotions.forEach(function (promotion) {
+                            promotion.status2 = getStatusText(promotion.status);
+                            promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
+                        });
 
-                // Thêm trường status2 và fomattienGiamToiDa vào từng đối tượng promotion
-                promotions.forEach(function (promotion) {
-                    promotion.status2 = getStatusText(promotion.status);
-                    promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
-                });
+                        // Cập nhật lại dữ liệu trong table nhưng không load lại trang by hduong25
+                        $scope.$evalAsync(function () {
+                            $scope.promotions = promotions;
+                            Swal.fire({
+                                icon: "success",
+                                title: "Xóa thành công",
+                                showConfirmButton: false,
+                                timer: 2000,
+                            });
+                        });
 
-                // Cập nhật lại dữ liệu trong table nhưng không load lại trang by hduong25
-                $scope.$evalAsync(function () {
-                    $scope.promotions = promotions;
-                    Swal.fire({
-                        icon: "success",
-                        title: "Xóa thành công",
-                        showConfirmButton: false,
-                        timer: 2000,
+                    })
+                    .catch(function (error) {
+                        console.log("Error");
                     });
-                });
-
-            })
-            .catch(function (error) {
-                console.log("Error");
-            });
+            }
+        });
     }
 
     //Tìm kiếm
@@ -178,7 +188,7 @@ app.controller("KhuyenMaiController", function ($scope, $http) {
         let day = ("0" + date.getDate()).slice(-2);
         return year + "-" + month + "-" + day;
     }
-   
+
 
     //Re load
     $scope.reLoad = function () {
@@ -237,29 +247,40 @@ app.controller("EditKhuyenMaiController", function ($scope, $routeParams, $http)
             tienGiamToiDa: $scope.editkhuyenMai.tienGiamToiDa,
         };
 
-        $http.put("http://localhost:8080/khuyenMai/luuChinhSua", editkhuyenMai, { headers })
-            .then(function (response) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Sửa thành công",
-                    showConfirmButton: false,
-                    timer: 2000,
-                }).then(function () {
-                    sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-khuyenMai";
-                });
-            })
-            .catch(function (errorResponse) {
-                if (errorResponse.status === 400) {
-                    const errorMassage = errorResponse.data.message;
-                    Swal.fire({
-                        icon: "error",
-                        title: errorMassage + "",
-                        showConfirmButton: false,
-                        timer: 2000,
+        Swal.fire({
+            title: 'Xác nhận cập nhập khuyến Mại',
+            text: 'Bạn có chắc chắn muốn cập nhập khuyến mại này?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Cập nhập',
+            cancelButtonText: 'Không',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $http.put("http://localhost:8080/khuyenMai/luuChinhSua", editkhuyenMai, { headers })
+                    .then(function (response) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Sửa thành công",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        }).then(function () {
+                            sessionStorage.setItem("isConfirmed", true);
+                            window.location.href = "#!/list-khuyenMai";
+                        });
+                    })
+                    .catch(function (errorResponse) {
+                        if (errorResponse.status === 400) {
+                            const errorMassage = errorResponse.data.message;
+                            Swal.fire({
+                                icon: "error",
+                                title: errorMassage + "",
+                                showConfirmButton: false,
+                                timer: 2000,
+                            });
+                        }
                     });
-                }
-            });
+            }
+        });
     };
 
     //Return
