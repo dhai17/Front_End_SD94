@@ -79,15 +79,15 @@ app.config(function ($routeProvider) {
             controller: "CreateCustomerController",
         })
         .when("/edit-Product", {
-            templateUrl: "/templates/admin/product/edit.html",
+            templateUrl: "/templates/admin/sanPham/edit.html",
             controller: "EditProductController",
         })
         .when("/list-Product", {
-            templateUrl: "/templates/admin/product/list.html",
+            templateUrl: "/templates/admin/sanPham/list.html",
             controller: "ProductController",
         })
         .when("/create-Product", {
-            templateUrl: "/templates/admin/product/create.html",
+            templateUrl: "/templates/admin/sanPham/create.html",
             controller: "CreateProductController",
         })
         .when("/in-store", {
@@ -106,67 +106,67 @@ app.config(function ($routeProvider) {
 app.config(function ($routeProvider) {
     $routeProvider
         .when("/list-Color", {
-            templateUrl: "/templates/admin/colorr/list.html",
+            templateUrl: "/templates/admin/mauSac/list.html",
             controller: "ColorrController",
         })
         .when("/create-Color", {
-            templateUrl: "/templates/admin/colorr/create.html",
+            templateUrl: "/templates/admin/mauSac/create.html",
             controller: "CreateColorController",
         })
         .when("/edit-Color", {
-            templateUrl: "/templates/admin/colorr/edit.html",
+            templateUrl: "/templates/admin/mauSac/edit.html",
             controller: "EditColorController",
         })
         .when("/list-Size", {
-            templateUrl: "/templates/admin/size/list.html",
+            templateUrl: "/templates/admin/kichCo/list.html",
             controller: "SizeController",
         })
         .when("/create-Size", {
-            templateUrl: "/templates/admin/size/create.html",
+            templateUrl: "/templates/admin/kichCo/create.html",
             controller: "CreateSizeController",
         })
         .when("/edit-Size", {
-            templateUrl: "/templates/admin/size/edit.html",
+            templateUrl: "/templates/admin/kichCo/edit.html",
             controller: "EditSizeController",
         })
         .when("/list-Img", {
-            templateUrl: "/templates/admin/imagess/list.html",
+            templateUrl: "/templates/admin/sanPham/themHinhAnh.html",
             controller: "ImgController",
         })
         .when("/list-Line", {
-            templateUrl: "/templates/admin/line/list.html",
+            templateUrl: "/templates/admin/loaiSanPham/list.html",
             controller: "LineController",
         })
         .when("/create-Line", {
-            templateUrl: "/templates/admin/line/create.html",
+            templateUrl: "/templates/admin/loaiSanPham/create.html",
             controller: "CreateLineController",
         })
         .when("/edit-Line", {
-            templateUrl: "/templates/admin/line/edit.html",
+            templateUrl: "/templates/admin/loaiSanPham/edit.html",
             controller: "EditLineController",
         })
         .when("/list-Material", {
-            templateUrl: "/templates/admin/material/list.html",
+            templateUrl: "/templates/admin/chatLieu/list.html",
             controller: "MaterialController",
         })
         .when("/create-Material", {
-            templateUrl: "/templates/admin/material/create.html",
+            templateUrl: "/templates/admin/chatLieu/create.html",
             controller: "CreateMaterialController",
         })
         .when("/edit-Material", {
-            templateUrl: "/templates/admin/material/edit.html",
+            templateUrl: "/templates/admin/chatLieu/edit.html",
             controller: "EditMaterialController",
         })
         .when("/list-Producer", {
-            templateUrl: "/templates/admin/producer/list.html",
+            templateUrl: "/templates/admin/nhaSanXuat/list.html",
             controller: "ProducerController",
         })
         .when("/create-Producer", {
-            templateUrl: "/templates/admin/producer/create.html",
+            templateUrl: "/templates/admin/nhaSanXuat/create.html",
             controller: "CreateProducerController",
         })
         .when("/edit-Producer", {
-            templateUrl: "/templates/admin/producer/edit.html",
+            templateUrl: "/templates/admin/nhaSanXuat/edit.html",
             controller: "EditProducerController",
         })
         .otherwise({
@@ -192,7 +192,7 @@ app.config(function ($routeProvider) {
             redirectTo: "/",
         });
 });
-app.config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/logout', {
         templateUrl: 'templates/admin/login/login.html',
         controller: "loginController",
