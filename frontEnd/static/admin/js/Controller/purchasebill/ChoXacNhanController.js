@@ -97,7 +97,6 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
             if (result.isConfirmed) {
                 $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/daXacNhan", data, { headers })
                     .then(function (response) {
-                        console.log(response.data);
                         const pending = response.data;
                         
                         $scope.$evalAsync(function () {

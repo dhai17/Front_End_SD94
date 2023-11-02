@@ -171,24 +171,12 @@ app.controller("CustomerController", function ($scope, $http) {
 
 // Create controller
 app.controller("CreateCustomerController", function ($scope, $http) {
-<<<<<<< HEAD
+
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
         // 'Authorization': 'Bearer ' + token
     }
-=======
-    console.log("token ---->", token);
-    Swal.fire({
-        icon: "warning",
-        title: "Bạn cần đăng nhập trước khi tiếp tục.",
-        showConfirmButton: false,
-        timer:2000,
-    }).then(function() {
-            // Người dùng chọn "Đăng nhập"
-            window.location.href = "#!/login";
-    });
->>>>>>> 6d98afde585d205ccbf985ad1110b51f96cb8696
     $scope.saveCreateCustomer = function () {
 
         if ($scope.createCustomer === undefined) {
