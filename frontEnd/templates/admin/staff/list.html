@@ -20,33 +20,35 @@
         <thead  class="bg-label-info" style="font-weight: 30px;">
             <tr>
                 <th>STT</th>
-                <th>Name</th>
+                <th>Ho Ten</th>
                 <th>Phone number</th>
                 <th>Email</th>
+                <th>Password</th>
+                <th>GenDer</th>
                 <th>Date birth</th>
                 <th>Address</th>
-                <th>GenDer</th>
                 <th>Status</th>
-                <th>Password</th>
+               
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="promotion in pager.promotions">
                 <td>{{$index + 1}}</td>
-                <td>{{ promotion.name }}</td>
-                <td>{{ promotion.phoneNumber }}</td>
+                <td>{{ promotion.hoTen }}</td>
+                <td>{{ promotion.soDienThoai }}</td>
                 <td>{{ promotion.email }}</td>
-                <td>{{ promotion.dateOfBirth | date:'dd/MM/yyyy' }}</td>
-                <td>{{ promotion.address}}</td>
-                <td>{{ promotion.gender == true ? 'Male' :'Female'}}</td>
+                <td>{{ promotion.matKhau }}</td>
+                <td>{{ promotion.gioiTinh == true ? 'Nam' :'Nu'}}</td>
+                <td>{{ promotion.ngaySinh  | date:'dd/MM/yyyy'}}</td>
+                <td>{{ promotion.diaChi}}</td>
                 <td ng-class="{
-                    'text-success': promotion.status5 === 'Active',
-                    'text-danger': promotion.status5 === 'Expired',
-                    'text-warning': promotion.status5 === 'Awaiting'}">
-                    {{ promotion.status5 }}
+                    'text-success': promotion.trangThai5 === 'Active',
+                    'text-danger': promotion.trangThai5 === 'Expired',
+                    'text-warning': promotion.trangThai5 === 'Awaiting'}">
+                    {{ promotion.trangThai5 }}
                 </td>
-                <td>{{ promotion.password}}</td>
+               
                 <td>
                     <div class="button-group">
                         <button type="button" class="btn btn-link" ng-click="editStaff(promotion)" data-bs-toggle="tooltip" data-bs-placement="top" title="edit">
