@@ -6,6 +6,7 @@ app.controller("StaffController", function ($scope, $http) {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
+
     $http.get("http://localhost:8080/nhanVien/danhSach", { headers }).then(function (response) {
         const promotions = response.data;
 
@@ -16,8 +17,7 @@ app.controller("StaffController", function ($scope, $http) {
 
         });
 
-        $scope.promotions = promotions;
-
+        
         $scope.promotions = promotions;
 
     });
@@ -95,7 +95,7 @@ app.controller("StaffController", function ($scope, $http) {
             cancelButtonText: 'Cancel',
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.post("http://localhost:8080/nhanVien/xoa=" + data, { headers })
+                $http.delete("http://localhost:8080/nhanVien/xoa/" + data, { headers })
                     .then(function (response) {
                         const promotions = response.data;
                         promotions.forEach(function (promotion) {
@@ -214,7 +214,7 @@ app.controller("CreateStaffController", function ($scope, $http) {
         'Authorization': 'Bearer ' + token
     }
     $scope.saveCreateStaff = function () {
-        console.log($scope.createStaff.gender);
+        console.log($scope.createStaff.gioiTinh);
         if ($scope.createStaff === undefined) {
             Swal.fire({
                 icon: "error",
@@ -227,24 +227,24 @@ app.controller("CreateStaffController", function ($scope, $http) {
         $scope.saveCreateStaff = function () {
             let radioBtn1 = document.getElementById("inlineRadio1");
             let radioBtn2 = document.getElementById("inlineRadio2");
-            let gender;
+            let gioiTinh;
 
             if (radioBtn1.checked) {
-                gender = true;
+                gioiTinh = true;
             } else if (radioBtn2.checked) {
-                gender = false;
+                gioiTinh = false;
             }
 
-            console.log(gender);
+            console.log(gioiTinh);
 
             let createStaff = {
-                name: $scope.createStaff.name,
-                phoneNumber: $scope.createStaff.phoneNumber,
+                hoTen: $scope.createStaff.hoTen,
+                soDienThoai: $scope.createStaff.soDienThoai,
                 email: $scope.createStaff.email,
-                dateOfBirth: $scope.createStaff.dateOfBirth,
-                address: $scope.createStaff.address,
-                gender: gender,
-                password: $scope.createStaff.password
+                ngaySinh: $scope.createStaff.ngaySinh,
+                diaChi: $scope.createStaff.diaChi,
+                gioiTinh: gioiTinh,
+                matKhau:  $scope.createStaff.matKhau,
             };
 
             $http.post("http://localhost:8080/nhanVien/themMoi", createStaff, { headers })
@@ -261,7 +261,7 @@ app.controller("CreateStaffController", function ($scope, $http) {
                     });
                 })
                 .catch(function (error) {
-                    if (error.status === 400) {
+                    if (error.status == 400) {
                         const errorMessage = error.data.message;
                         Swal.fire({
                             icon: "error",

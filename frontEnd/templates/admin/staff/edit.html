@@ -10,14 +10,14 @@
             <form>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
-                        <label class="form-check-label" for="inputUsername">Name Staff</label>
-                        <input class="form-control" id="inputUsername" type="text" placeholder="Enter staff name"
-                            ng-model="editStaff.name">
+                        <label class="form-check-label" for="inputUsername">Họ Tên</label>
+                        <input class="form-control" id="inputUsername" type="text" placeholder="Enter ho ten"
+                            ng-model="editStaff.hoTen">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-check-label" for="inputLocation">Phone number</label>
-                        <input class="form-control" id="inputLocation" type="text" placeholder="Enter phone number"
-                            ng-model="editStaff.phoneNumber">
+                        <label class="form-check-label" for="inputLocation">Số điện thoại</label>
+                        <input class="form-control" id="inputLocation" type="text" placeholder="Enter so dien thoai"
+                            ng-model="editStaff.soDienThoai">
                     </div>
                 </div>
                 <div class="row gx-3 mb-3">
@@ -27,41 +27,37 @@
                             ng-model="editStaff.email">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-check-label" for="inputDateOfBirth">Date birth</label>
-                        <input class="form-control" id="inputDateOfBirth" type="date" placeholder="Enter date birth"
-                            ng-model="editStaff.dateOfBirth">
+                        <label class="form-check-label" for="inputDateOfBirth">Ngày sinh</label>
+                        <input class="form-control" id="inputDateOfBirth" type="date" placeholder="nhập ngày sinh"
+                            ng-model="editStaff.ngaySinh">
                     </div>
                 </div>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
-                        <label class="form-check-label" for="inputAddress">Address</label>
-                        <input class="form-control" id="inputAddress" type="text" placeholder="Enter address" ng-model="editStaff.address">
+                        <label class="form-check-label" for="inputAddress">Địa chỉ</label>
+                        <input class="form-control" id="inputAddress" type="text" placeholder="Enter dia chỉ" ng-model="editStaff.diaChi">
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-check-label" for="inputLastName">Password</label>
-                        <input class="form-control" id="inputLastName" type="text" placeholder="Enter password"
-                            ng-model="editStaff.password">
-                    </div>
+                  
                 </div>
                 <br>
                 <div class="form-check-inline">
-                    <label class="form-check-label" for="inputLastName">GenDer</label>
+                    <label class="form-check-label" for="inputLastName">Giới tính</label>
                     <br>
                     <div class="form-check form-check-inline" style="margin-left: 30px;">
                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                            value="true" ng-model="editStaff.gender">
+                            value="true" ng-model="editStaff.gioiTinh">
                         <label class="form-check-label" for="inlineRadio1">Male</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                            value="false" ng-model="editStaff.gender">
+                            value="false" ng-model="editStaff.gioiTinh">
                         <label class="form-check-label" for="inlineRadio2">Female</label>
                     </div>
                 </div>
                 <br>
                 <br>
-                    <button class="btn btn-primary" type="button" ng-click="returnEdit(editStaff)">Return</button>
-                    <button class="btn btn-primary" type="button" ng-click="saveEditStaff(editStaff)">Save changes</button>
+                    <button class="btn btn-primary" type="button" ng-click="returnEdit(editStaff)">Trở về</button>
+                    <button class="btn btn-primary" type="button" ng-click="saveEditStaff(editStaff)">Lưu</button>
               
              
             </form>

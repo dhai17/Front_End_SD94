@@ -20,15 +20,13 @@
         <thead  class="bg-label-info" style="font-weight: 30px;">
             <tr>
                 <th>STT</th>
-                <th>Ho Ten</th>
-                <th>Phone number</th>
+                <th>Họ Tên</th>
                 <th>Email</th>
-                <th>Password</th>
+                <th>Ngày sinh</th>
+                <th>Số điện thoại</th>
                 <th>GenDer</th>
-                <th>Date birth</th>
                 <th>Address</th>
                 <th>Status</th>
-               
                 <th>Action</th>
             </tr>
         </thead>
@@ -36,11 +34,10 @@
             <tr ng-repeat="promotion in pager.promotions">
                 <td>{{$index + 1}}</td>
                 <td>{{ promotion.hoTen }}</td>
-                <td>{{ promotion.soDienThoai }}</td>
                 <td>{{ promotion.email }}</td>
-                <td>{{ promotion.matKhau }}</td>
-                <td>{{ promotion.gioiTinh == true ? 'Nam' :'Nu'}}</td>
                 <td>{{ promotion.ngaySinh  | date:'dd/MM/yyyy'}}</td>
+                <td>{{ promotion.soDienThoai }}</td>
+                <td>{{ promotion.gioiTinh == true ? 'Nam' :'Nu'}}</td>
                 <td>{{ promotion.diaChi}}</td>
                 <td ng-class="{
                     'text-success': promotion.trangThai5 === 'Active',
