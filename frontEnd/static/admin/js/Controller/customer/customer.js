@@ -6,20 +6,7 @@ app.controller("CustomerController", function ($scope, $http) {
         'Authorization': 'Bearer ' + token
     }
 
-    // $http({
-    //     method: 'GET',
-    //     url: "http://localhost:8080/api/customer/list",
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': `Bearer ${token}`
-    //     }
-    // }).then(function (response) {
-    //     const promotions = response.data;
-    //     $scope.promotions = promotions;
-    // }).catch(e => {
-    //     console.log("e =><", e);
-    // });
-    $http.get("http://localhost:8080/api/customer/list", { headers }).then(function (response) {
+    $http.get("http://localhost:8080/khachHang/danhSach", { headers }).then(function (response) {
         const promotions = response.data;
         $scope.promotions = promotions;
     }).catch(e => {
@@ -82,7 +69,10 @@ app.controller("CustomerController", function ($scope, $http) {
 
     // Xóa trong danh sách
     $scope.deleteCustomer = function (promotion) {
-        let idCustomer = promotion.id;
+                        let id = promotion.id;
+                let data = {
+                    id
+                }
         Swal.fire({
             title: 'Xác nhận xóa khách hàng',
             text: 'Bạn có chắc chắn muốn xóa khách hàng này?',
@@ -92,7 +82,8 @@ app.controller("CustomerController", function ($scope, $http) {
             cancelButtonText: 'Hủy',
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.put("http://localhost:8080/api/customer/deleteCustomer=" + idCustomer, {}, { headers })
+
+                $http.post("http://localhost:8080/khachHang/xoaKhachHang", data, { headers })
                     .then(function (response) {
                         const promotions = response.data;
                         promotions.forEach(function (promotion) {
@@ -118,7 +109,7 @@ app.controller("CustomerController", function ($scope, $http) {
 
     // Tìm kiếm
     $scope.searchAllCustomer = function (searchTerm) {
-        $http.get("http://localhost:8080/api/customer/search=" + searchTerm, { headers })
+        $http.get("http://localhost:8080/khachHang/timKiem=" + searchTerm, { headers })
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {
@@ -135,7 +126,7 @@ app.controller("CustomerController", function ($scope, $http) {
         let formattedDate = formatDate(selectedDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http.get("http://localhost:8080/api/customer/searchDate=" + formattedDate, { headers })
+        $http.get("http://localhost:8080/timKiemNgay=" + formattedDate, { headers })
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {
@@ -157,7 +148,7 @@ app.controller("CustomerController", function ($scope, $http) {
 
     // Re load
     $scope.reLoad = function () {
-        $http.get("http://localhost:8080/api/customer/list", { headers }).then(function (response) {
+        $http.get("http://localhost:8080/khachHang/danhSach", { headers }).then(function (response) {
             const promotions = response.data;
             promotions.forEach(function (promotion) {
             });
@@ -168,14 +159,12 @@ app.controller("CustomerController", function ($scope, $http) {
         });
     }
 });
-
 // Create controller
 app.controller("CreateCustomerController", function ($scope, $http) {
-
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
-        // 'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + token
     }
     $scope.saveCreateCustomer = function () {
 
@@ -189,7 +178,7 @@ app.controller("CreateCustomerController", function ($scope, $http) {
             return;
         }
 
-        $http.post("http://localhost:8080/api/customer/createCustomer", $scope.createCustomer, { headers })
+        $http.post("http://localhost:8080/khachHang/themMoi", $scope.createCustomer, { headers })
             .then(function (response) {
                 // Xử lý thành công nếu có
                 Swal.fire({
@@ -226,14 +215,15 @@ app.controller("CreateCustomerController", function ($scope, $http) {
 
 //Edit controller
 app.controller("EditCustomerController", function ($scope, $routeParams, $http) {
-    let idCustomer = $routeParams.id;
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
-        // 'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + token
     }
+    let idCustomer = $routeParams.id;
 
-    $http.get("http://localhost:8080/api/customer/edit/customerID=" + idCustomer, { headers })
+
+    $http.get("http://localhost:8080/khachHang/chinhSua/" + idCustomer, { headers })
         .then(function (response) {
             const editCustomer = response.data;
             $scope.editCustomer = editCustomer;
@@ -243,15 +233,15 @@ app.controller("EditCustomerController", function ($scope, $routeParams, $http) 
     $scope.saveEditCustomer = function () {
         let editCustomer = {
             id: idCustomer,
-            name: $scope.editCustomer.name,
-            phoneNumber: $scope.editCustomer.phoneNumber,
+            hoTen: $scope.editCustomer.hoTen,
+            soDienThoai: $scope.editCustomer.soDienThoai,
             email: $scope.editCustomer.email,
-            dateBirth: $scope.editCustomer.dateBirth,
-            addRess: $scope.editCustomer.addRess,
-            passWord: $scope.editCustomer.passWord
+            ngaySinh: $scope.editCustomer.ngaySinh,
+            diaChi: $scope.editCustomer.diaChi,
+            matKhau: $scope.editCustomer.matKhau
         };
 
-        $http.put("http://localhost:8080/api/customer/saveUpdate", editCustomer, { headers })
+        $http.put("http://localhost:8080/khachHang/luu-chinh-sua", editCustomer, { headers })
             .then(function (response) {
                 Swal.fire({
                     icon: "success",

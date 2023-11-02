@@ -1,51 +1,35 @@
-<div ng-controller="CustomerController" id="customerList">
+<div ng-controller="ProducerController" id="lineList">
     <div class="container-fluid my-auto d-flex align-items-center">
         <div class="mx-auto">
-            <h1>Customer</h1>
+            <h1>Nhà sản xuất</h1>
         </div>
-    </div>
-    <div class="d-flex">
-        <input class="form-control me-1" type="search" placeholder="Search" aria-label="Search" ng-model="searchTerm">
-        <button class="btn btn-primary btn-sm" type="submit" ng-click="searchAllCustomer(searchTerm)">Search</button>
-
-        <input class="form-control me-1" type="date" placeholder="Search" aria-label="Search" ng-model="searchDate">
-        <button class="btn btn-primary btn-sm" type="submit" ng-click="searchDateCustomer(searchDate)">Search</button>
-
-        <button type="button" class="dt-button buttons-html5 btn btn-white btn-success btn-bold" data-toggle="tooltip" title='Tải lại dữ liệu' ng-click="reLoad()">
-            <span> <i class="fas fa-sync-alt"></i></span>
+        <button type="button" class="btn btn-link" ng-click="createProducer(promotion)">
+            Thêm nsx
         </button>
     </div>
     <br>
     <table class="table align-middle mb-1 bg-white">
         <thead class="bg-light">
             <tr>
-                <th></th>
-                <th>Họ tên</th>
-                <th>Số điện thoại</th>
-                <th>Email</th>
-                <th>Ngày sinh</th>
+                <th>#</th>
+                <th>Nhà sản xuất</th>
                 <th>Địa chỉ</th>
-                <th>Password</th>
-                <th>Thao tác</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="promotion in pager.promotions">
+            <tr ng-repeat="promotion in promotions">
                 <td>{{$index + 1}}</td>
-                <td>{{ promotion.hoTen }}</td>
-                <td>{{ promotion.soDienThoai }}</td>
-                <td>{{ promotion.email }}</td>
-                <td>{{ promotion.ngaySinh }}</td>
-                <td>{{ promotion.diaChi}}</td>
-                <td>{{ promotion.matKhau}}</td>
+                <td>{{ promotion.name }}</td>
+                <td>{{ promotion.diaChi }}</td>
                 <td>
                     <div class="button-group">
-                        <button type="button" class="btn btn-link" ng-click="editCustomer(promotion)">
+                        <button type="button" class="btn btn-link" ng-click="editProducer(promotion)">
                             <i class="bx bx-edit me-2"></i>
                         </button>
 
                         <button type="button" class="btn btn-link btn-sm btn-rounded"
-                            ng-click="deleteCustomer(promotion)">
+                            ng-click="deleteProducer(promotion)">
                             <i class="bx bx-trash me-2"></i>
                         </button>
 
@@ -76,9 +60,4 @@
             </tr>
         </tbody>
     </table>
-    <div class="card-footer text-center">
-        <button class="btn" ng-repeat="pageNumber in pager.pageNumbers" ng-click="pager.page = pageNumber">
-            {{pageNumber}}
-        </button>
-    </div>
 </div>
