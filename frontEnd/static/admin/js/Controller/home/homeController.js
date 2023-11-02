@@ -5,6 +5,7 @@ app.config(function ($routeProvider) {
         .when("/list-khuyenMai", {
             templateUrl: "/templates/admin/KhuyenMai/DanhSach.html",
             controller: "KhuyenMaiController",
+
         })
         .when("/edit-khuyenMai", {
             templateUrl: "/templates/admin/KhuyenMai/ChinhSua.html",
@@ -60,7 +61,7 @@ app.config(function ($routeProvider) {
             controller: "Details5Controller",
         })
         .otherwise({
-            redirectTo: "/",
+            redirectTo: "/login",
         });
 });
 
@@ -192,7 +193,7 @@ app.config(function ($routeProvider) {
             redirectTo: "/",
         });
 });
-app.config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/logout', {
         templateUrl: 'templates/admin/login/login.html',
         controller: "loginController",
