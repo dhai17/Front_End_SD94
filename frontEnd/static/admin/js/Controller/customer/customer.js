@@ -3,7 +3,7 @@ app.controller("CustomerController", function ($scope, $http) {
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
-        // 'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + token
     }
 
     // $http({
@@ -92,7 +92,7 @@ app.controller("CustomerController", function ($scope, $http) {
             cancelButtonText: 'Hủy',
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.put("http://localhost:8080/api/customer/deleteCustomer=" + idCustomer)
+                $http.put("http://localhost:8080/api/customer/deleteCustomer=" + idCustomer, {}, { headers })
                     .then(function (response) {
                         const promotions = response.data;
                         promotions.forEach(function (promotion) {
@@ -118,7 +118,7 @@ app.controller("CustomerController", function ($scope, $http) {
 
     // Tìm kiếm
     $scope.searchAllCustomer = function (searchTerm) {
-        $http.get("http://localhost:8080/api/customer/search=" + searchTerm)
+        $http.get("http://localhost:8080/api/customer/search=" + searchTerm, { headers })
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {
@@ -135,7 +135,7 @@ app.controller("CustomerController", function ($scope, $http) {
         let formattedDate = formatDate(selectedDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http.get("http://localhost:8080/api/customer/searchDate=" + formattedDate)
+        $http.get("http://localhost:8080/api/customer/searchDate=" + formattedDate, { headers })
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {
@@ -157,7 +157,7 @@ app.controller("CustomerController", function ($scope, $http) {
 
     // Re load
     $scope.reLoad = function () {
-        $http.get("http://localhost:8080/api/customer/list").then(function (response) {
+        $http.get("http://localhost:8080/api/customer/list", { headers }).then(function (response) {
             const promotions = response.data;
             promotions.forEach(function (promotion) {
             });
@@ -171,6 +171,7 @@ app.controller("CustomerController", function ($scope, $http) {
 
 // Create controller
 app.controller("CreateCustomerController", function ($scope, $http) {
+
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
@@ -232,7 +233,7 @@ app.controller("EditCustomerController", function ($scope, $routeParams, $http) 
         // 'Authorization': 'Bearer ' + token
     }
 
-    $http.get("http://localhost:8080/api/customer/edit/customerID=" + idCustomer)
+    $http.get("http://localhost:8080/api/customer/edit/customerID=" + idCustomer, { headers })
         .then(function (response) {
             const editCustomer = response.data;
             $scope.editCustomer = editCustomer;
@@ -250,7 +251,7 @@ app.controller("EditCustomerController", function ($scope, $routeParams, $http) 
             passWord: $scope.editCustomer.passWord
         };
 
-        $http.put("http://localhost:8080/api/customer/saveUpdate", editCustomer)
+        $http.put("http://localhost:8080/api/customer/saveUpdate", editCustomer, { headers })
             .then(function (response) {
                 Swal.fire({
                     icon: "success",

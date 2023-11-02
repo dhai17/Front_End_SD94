@@ -1,10 +1,11 @@
-const app = angular.module("myApp", ["ngRoute"]);
+const app = angular.module("myApp", ["ngRoute", 'ui.bootstrap']);
 
 app.config(function ($routeProvider) {
     $routeProvider
         .when("/list-khuyenMai", {
             templateUrl: "/templates/admin/KhuyenMai/DanhSach.html",
             controller: "KhuyenMaiController",
+
         })
         .when("/edit-khuyenMai", {
             templateUrl: "/templates/admin/KhuyenMai/ChinhSua.html",
@@ -60,7 +61,7 @@ app.config(function ($routeProvider) {
             controller: "Details5Controller",
         })
         .otherwise({
-            redirectTo: "/",
+            redirectTo: "/login",
         });
 });
 
