@@ -69,10 +69,10 @@ app.controller("CustomerController", function ($scope, $http) {
 
     // Xóa trong danh sách
     $scope.deleteCustomer = function (promotion) {
-        let id = promotion.id;
-        let data = {
-            id
-        }
+                        let id = promotion.id;
+                let data = {
+                    id
+                }
         Swal.fire({
             title: 'Xác nhận xóa khách hàng',
             text: 'Bạn có chắc chắn muốn xóa khách hàng này?',

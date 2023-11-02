@@ -64,7 +64,6 @@ app.controller("ProductDetailsController", function ($scope, $http) {
     //Xóa trong danh sách
     $scope.delete = function (promotion) {
         let idProDetails = promotion.id;
-        console.log(idProDetails)
         $http.delete("http://localhost:8080/api/productDetails/deleteprodtuctDetails/" + idProDetails)
             .then(function (response) {
                 const promotions = response.data;
@@ -218,7 +217,6 @@ app.controller("CreateProductDetailsController", function ($scope, $http) {
                 break;
             }
         }
-        console.log("Selected color ID: " + selectedColorId);
     };
 
     $scope.saveCreate = function () {
@@ -236,7 +234,6 @@ app.controller("CreateProductDetailsController", function ($scope, $http) {
         $http.post("http://localhost:8080/api/productDetails/saveCreate/" + selectedColorId)
 
             .then(function (response) {
-                console.log(selectedColorId + "sakjhdasu");
                 // Xử lý thành công nếu có
                 Swal.fire({
                     icon: "success",
@@ -267,8 +264,7 @@ app.controller("CreateProductDetailsController", function ($scope, $http) {
 
 
     $scope.saveS = function () {
-        var object = $scope.create;
-        console.log(object)
+        let object = $scope.create;
         $http.post("http://localhost:8080/api/productDetails/saveCreate",object)
 
             .then(function (response) {

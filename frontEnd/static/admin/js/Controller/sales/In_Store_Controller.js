@@ -26,7 +26,6 @@ app.controller("ListProductController", function ($scope, $http) {
 
     $scope.delete = function (promotion) {
         let idPro = promotion.id;
-        console.log(idPro)
         $http.delete("http://localhost:8080/api/product/deleteProduct/" + idPro)
             .then(function (response) {
                 const promotions = response.data;
@@ -57,7 +56,6 @@ app.controller("detailsController", function ($scope, $routeParams, $http) {
     $http.get("http://localhost:8080/api/getColor", { params: { product_id: id } })
         .then(function (response) {
             const color = response.data;
-            console.log(color);
             $scope.color = color;
         });
 

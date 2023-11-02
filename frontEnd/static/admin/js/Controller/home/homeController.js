@@ -2,20 +2,17 @@ const app = angular.module("myApp", ["ngRoute"]);
 
 app.config(function ($routeProvider) {
     $routeProvider
-        .when('/', {
-            redirectTo: "/login"
+        .when("/list-khuyenMai", {
+            templateUrl: "/templates/admin/KhuyenMai/DanhSach.html",
+            controller: "KhuyenMaiController",
         })
-        .when("/list-Discount", {
-            templateUrl: "/templates/admin/discount/list.html",
-            controller: "DiscountController",
+        .when("/edit-khuyenMai", {
+            templateUrl: "/templates/admin/KhuyenMai/ChinhSua.html",
+            controller: "EditKhuyenMaiController",
         })
-        .when("/edit-Discount", {
-            templateUrl: "/templates/admin/discount/edit.html",
-            controller: "EditDiscountController",
-        })
-        .when("/create-Discount", {
-            templateUrl: "/templates/admin/discount/create.html",
-            controller: "CreateDiscountController",
+        .when("/create-khuyenMai", {
+            templateUrl: "/templates/admin/KhuyenMai/ThemMoi.html",
+            controller: "CreateKhuyenMaiController",
         })
         .when("/list-PurchaseBill", {
 
