@@ -268,60 +268,37 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             $scope.kichCo = kichCo;
         })
 
-    let idPro = $routeParams.id;
 
     let mauSac_id = [];
     $scope.getIdColor = function (mauSac) {
         if (mauSac_id.indexOf(mauSac.id) === -1) {
             mauSac_id.push(mauSac.id);
-            console.log(mauSac_id);
-        } else {
-            console.log("ID already exists in the array");
         }
     };
 
-    let selectedSizeId;
     let kichCo_id = [];
     $scope.getIdSize = function (kichCo) {
-        console.log(kichCo.id);
         if (kichCo_id.indexOf(kichCo.id) === -1) {
             kichCo_id.push(kichCo.id);
-            console.log(kichCo_id);
-        } else {
-            console.log("ID already exists in the array");
         }
     };
 
 
     $scope.saveCreate = function () {
 
-        let createProduct = {
-            id: idPro,
-            tenSanPham: $scope.createProduct.tenSanPham,
-            gia: $scope.createProduct.gia,
-            chatLieu: {
-                id: $scope.createProduct.chatLieu
-            },
-            loaiSanPham: {
-                id: $scope.createProduct.loaiSanPham
-            },
-            nhaSanXuat: {
-                id: $scope.createProduct.nhaSanXuat
-            },
-        };
-
-        console.log(kichCo_id);
-        $http.post("http://localhost:8080/sanPham/themMoi", {
+        let data = {
             tenSanPham: $scope.createProduct.tenSanPham,
             gia: $scope.createProduct.gia,
             chatLieu_id: $scope.createProduct.chatLieu,
             loaiSanPham_id: $scope.createProduct.loaiSanPham,
             nhaSanXuat_id: $scope.createProduct.nhaSanXuat,
-            tenMauSac: mauSac_id,
+            mauSac: mauSac_id,
             kichCo: kichCo_id,
             soLuong: $scope.createProduct.soLuong,
-            trangThai: $scope.createProduct.trangThai,
-        }, { headers })
+        }
+
+
+        $http.post("http://localhost:8080/sanPham/TaoSanPham", data, { headers })
             .then(function (response) {
                 Swal.fire({
                     icon: "success",
@@ -330,7 +307,6 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
                     timer: 2000,
                 });
                 const details = response.data;
-                console.log(response.data);
                 $scope.details = details;
             })
             .catch(function (response) {
