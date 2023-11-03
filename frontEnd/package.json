@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "angular-jwt": "^0.1.11",
     "jspdf": "^2.5.1",
     "ng-dialog": "^1.4.0"
   }

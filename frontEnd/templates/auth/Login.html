@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html ng-app = "AuthApp">
+
+<head>
+    <title>Siêu cấp vjp pro</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/static/auth/images/icons/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" href="/static/auth/vendor/bootstrap/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css"
+        href="/static/auth/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css"
+        href="/static/auth/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/static/auth/vendor/animate/animate.css">
+
+    <link rel="stylesheet" type="text/css" href="/static/auth/vendor/css-hamburgers/hamburgers.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/static/auth/vendor/animsition/css/animsition.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/static/auth/vendor/select2/select2.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/static/auth/vendor/daterangepicker/daterangepicker.css">
+
+    <link rel="stylesheet" type="text/css" href="/static/auth/css/util.css">
+    <link rel="stylesheet" type="text/css" href="/static/auth/css/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-route.js"></script>
+    <script src="/static/auth/js/controller/Auth.Controller.js"></script>
+    <script src="/static/auth/js/controller/Login.Controller.js"></script>
+
+</head>
+
+<body>
+
+    <div class="limiter" ng-controller="LoginController">
+        <div class="container-login100" style="background-image: url('/static/img/1.jpg');">
+            <div class="wrap-login100 p-t-30 p-b-50">
+                <span class="login100-form-title p-b-41">
+                    Đăng nhập
+                </span>
+                <form class="login100-form validate-form p-b-33 p-t-5">
+
+                    <div class="wrap-input100 validate-input" data-validate="Enter username">
+                        <input class="input100" type="text" name="username" placeholder="Nhập email" ng-model="email">
+                        <span class="focus-input100" data-placeholder="&#xe82a;"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+                        <input class="input100" type="password" name="pass" placeholder="Nhập mật khẩu" ng-model="password">
+                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                    </div>
+
+                    <div class="container-login100-form-btn m-t-32">
+                        <button class="login100-form-btn" ng-click = "login()">
+                            Đăng nhập
+                        </button>
+                    </div>
+                    <p class="text-DangKy">Nếu bạn chưa có tài khoản? <span><a href="#" class="text-DangKy2">Đăng
+                                ký</a></span></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dropDownSelect1"></div>
+
+
+    <script src="/static/auth/vendor/jquery/jquery-3.2.1.min.js"></script>
+
+    <script src="/static/auth/vendor/animsition/js/animsition.min.js"></script>
+
+    <script src="/static/auth/vendor/bootstrap/js/popper.js"></script>
+    <script src="/static/auth/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="/static/auth/vendor/select2/select2.min.js"></script>
+
+    <script src="/static/auth/vendor/daterangepicker/moment.min.js"></script>
+    <script src="/static/auth/vendor/daterangepicker/daterangepicker.js"></script>
+
+    <script src="/static/auth/vendor/countdowntime/countdowntime.js"></script>
+
+    <script src="/static/auth/js/main.js"></script>
+
+</body>
+
+</html>

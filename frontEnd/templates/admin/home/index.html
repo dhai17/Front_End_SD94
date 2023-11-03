@@ -37,17 +37,14 @@
     <script src="/static/admin/js/Controller/sales/In_Store_Controller.js"></script>
     <script src="../../../static/admin/js/Controller/khuyenMai/khuyenMai.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../../../static/admin/js/Controller/login/login.js"></script>
+    <script src="../../../static/admin/js/Controller/logOut/LogOut.js"></script>
     <script src="/static/admin/js/Controller/khachHang/KhachHang.js"></script>
-
-    <script src="/static/admin/js/Controller/nhanVien/nhanVien.js"></script>
-
+    <script src="/static/admin/js/Controller/nhanVien/NhanVien.js"></script>
     <script src="/static/admin/js/Controller/purchasebill/ChoGiaoHangController.js"></script>
     <script src="/static/admin/js/Controller/purchasebill/ChoXacNhanController.js"></script>
     <script src="/static/admin/js/Controller/purchasebill/DangGiaoHangController.js"></script>
     <script src="/static/admin/js/Controller/purchasebill/DaGiaoHangController.js"></script>
     <script src="/static/admin/js/Controller/purchasebill/DaHuyDonController.js"></script>
-
     <script src="/static/admin/js/Controller/sanPham/chatLieu.js"></script>
     <script src="/static/admin/js/Controller/sanPham/hinhAnh.js"></script>
     <script src="/static/admin/js/Controller/sanPham/kichCo.js"></script>
@@ -56,88 +53,19 @@
     <script src="/static/admin/js/Controller/sanPham/nhaSanXuat.js"></script>
     <script src="/static/admin/js/Controller/sanPham/sanPham.js"></script>
     <script src="/static/admin/js/Controller/sanPham/sanPhamChiTiet.js"></script>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
     <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/static/admin/js/Controller/customer/customer.js"></script>
-    <script src="/static/admin/js/Controller/nhanVien/nhanVien.js"></script>
+    <script src="/static/admin/js/Controller/nhanVien/NhanVien.js"></script>
     <script src="/static/admin/js/Controller/khuyenMai/khuyenMai.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style>
-        a {
-            text-decoration: none !important;
-        }
 
-        .d-flex {
-            display: flex;
-            align-items: center;
-        }
-
-        /* Đặt khoảng cách 5px giữa các phần tử con */
-        .d-flex>* {
-            margin-right: 5px;
-        }
-
-        .d-flex input {
-            width: 200px;
-        }
-
-        .d-flex button {
-            height: 32px;
-        }
-
-        #color-product-details {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            margin-left: 5px;
-            margin-bottom: 15px;
-        }
-
-        #size-product-details {
-            width: 30px;
-            height: 30px;
-            /* border-radius: 50%; */
-            display: flex;
-            margin-left: 5px;
-            margin-bottom: 15px;
-        }
-
-        #div-color-product {
-            display: flex;
-        }
-
-        #div-size-product {
-            display: flex;
-        }
-
-        #div-big-product-details {
-            margin-bottom: 50px;
-        }
-
-        .acs {
-            display: flex;
-            padding-left: 15px;
-        }
-
-        .statusabcd {
-            padding-left: 35px;
-        }
-    </style>
-
-    <style>
-        .form-select option:checked {
-            background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23007bff" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>');
-            background-repeat: no-repeat;
-            background-position: right center;
-            padding-right: 18px;
-        }
-    </style>
+    <link href="/static/home/assets/css/style.css" rel="stylesheet">
+    <link href="/static/admin/css/index.css" rel="stylesheet">
+    <script src="/static/admin/js/index.js"></script>
 </head>
 
 <body>
@@ -351,29 +279,11 @@
                 </li>
                 </ul>
             </aside>
-            <!-- / Menu -->
 
-            <!-- Layout container -->
             <div class="layout-page">
-                <!-- Navbar -->
-
-                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center"
                     id="layout-navbar">
-                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                            <i class="bx bx-menu bx-sm"></i>
-                        </a>
-                    </div>
-
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                        <!-- Search -->
-                        <div class="navbar-nav align-items-center">
-                            <div class="nav-item d-flex align-items-center">
-                                <i class="bx bx-search fs-4 lh-0"></i>
-                                <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                                    aria-label="Search..." />
-                            </div>
-                        </div>
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
                             <!-- User -->
@@ -396,51 +306,27 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">Nguyễn Đức Hải</span>
-                                                    <small class="text-muted">Admin</small>
+                                                    <span class="fw-semibold d-block" id="userName"></span>
+                                                    <small class="text-muted" id="userRole"></small>
                                                 </div>
                                             </div>
                                         </a>
                                     </li>
+
                                     <li>
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href=">
-                                            <i class=" bx bx-user me-2"></i>
-                                            <span class="align-middle">My Profile</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#!/login">
+                                        <a class="dropdown-item" href="">
                                             <i class="bx bx-user me-2"></i>
-                                            <span class="align-middle">Đăng nhập</span>
+                                            <span class="align-middle">Thông tin</span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bx bx-cog me-2"></i>
-                                            <span class="align-middle">Cài Đặt</span>
+                                    <li ng-controller="LogoutController">
+                                        <a class="dropdown-item" href="#!/" id="dangXuat-homeAdmin" ng-click="logout()">
+                                            <i class="fas fa-sign-out-alt me-2"></i>
+                                            <span class="align-middle">Đăng xuất</span>
                                         </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <span class="d-flex align-items-center align-middle">
-                                                <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                                                <span class="flex-grow-1 align-middle">Billing</span>
-                                                <span
-                                                    class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li ng-controller="loginCtrl">
-                                        <div>
-                                            <button class="btn btn-primary" type="button" ng-click="logout()">Đăng
-                                                Xuất</button>
-                                        </div>
                                     </li>
                                 </ul>
                             </li>
@@ -454,19 +340,6 @@
 
                     </div>
                 </div>
-
-                <footer class="content-footer footer bg-footer-theme">
-                    <div
-                        class="container-xxl d-flex flex-wrap justify-content-center justify-content-md-between py-2 flex-md-row flex-column text-center">
-                        <div class="container my-auto" style="text-align: center;">
-                            ©
-                            <script>
-                                document.write(new Date().getFullYear());
-                            </script> Dự án tốt nghiệp, made with ❤️ by
-                            <a href="https://themeselection.com" target="_blank" class="footer-link">SD_94</a>
-                        </div>
-                    </div>
-                </footer>
             </div>
         </div>
 
@@ -482,24 +355,5 @@
     <script src="/static/admin/assets/js/dashboards-analytics.js"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </html>

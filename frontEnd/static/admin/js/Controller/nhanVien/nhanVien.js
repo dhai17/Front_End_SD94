@@ -1,11 +1,23 @@
+// function parseJwt(token) {
+//     let base64Url = token.split('.')[1];
+//     let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+//     let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+//         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+//     }).join(''));
 
+//     let payload = JSON.parse(jsonPayload);
+//     return payload;
+// }
 
-app.controller("StaffController", function ($scope, $http) {
+app.controller("NhanVienController", function ($scope, $http) {
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
+
+    let decodedToken = parseJwt(token);
+    // console.log(decodedToken);
 
     $http.get("http://localhost:8080/nhanVien/danhSach", { headers }).then(function (response) {
         const promotions = response.data;
@@ -17,7 +29,7 @@ app.controller("StaffController", function ($scope, $http) {
 
         });
 
-        
+
         $scope.promotions = promotions;
 
     });
@@ -207,14 +219,40 @@ app.controller("StaffController", function ($scope, $http) {
 });
 
 // Create controller
-app.controller("CreateStaffController", function ($scope, $http) {
+app.controller("CreateNhanVienController", function ($scope, $http) {
+
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
     $scope.saveCreateStaff = function () {
+
         console.log($scope.createStaff.gioiTinh);
+        
+        let radioBtn1 = document.getElementById("inlineRadio1");
+        let radioBtn2 = document.getElementById("inlineRadio2");
+        let gioiTinh = false;
+
+        if (radioBtn1.checked) {
+            gioiTinh = true;
+        } else if (radioBtn2.checked) {
+            gioiTinh = false;
+        }
+    
+
+        let data = {
+            hoTen: $scope.createStaff.hoTen,
+            soDienThoai: $scope.createStaff.soDienThoai,
+            email: $scope.createStaff.email,
+            ngaySinh: $scope.createStaff.ngaySinh,
+            diaChi: $scope.createStaff.diaChi,
+            gioiTinh: gioiTinh,
+            // matKhau: $scope.createStaff.matKhau,
+
+        };
+
+
         if ($scope.createStaff === undefined) {
             Swal.fire({
                 icon: "error",
@@ -224,60 +262,34 @@ app.controller("CreateStaffController", function ($scope, $http) {
             });
             return;
         }
-        $scope.saveCreateStaff = function () {
-            let radioBtn1 = document.getElementById("inlineRadio1");
-            let radioBtn2 = document.getElementById("inlineRadio2");
-            let gioiTinh;
 
-            if (radioBtn1.checked) {
-                gioiTinh = true;
-            } else if (radioBtn2.checked) {
-                gioiTinh = false;
-            }
-
-            console.log(gioiTinh);
-
-            let createStaff = {
-                hoTen: $scope.createStaff.hoTen,
-                soDienThoai: $scope.createStaff.soDienThoai,
-                email: $scope.createStaff.email,
-                ngaySinh: $scope.createStaff.ngaySinh,
-                diaChi: $scope.createStaff.diaChi,
-                gioiTinh: gioiTinh,
-                matKhau:  $scope.createStaff.matKhau,
-            };
-
-            $http.post("http://localhost:8080/nhanVien/themMoi", createStaff, { headers })
-                .then(function (response) {
-                    // Xử lý thành công nếu có
+        $http.post("http://localhost:8080/nhanVien/themMoi", data, { headers })
+            .then(function (response) {
+                // Xử lý thành công nếu có
+                Swal.fire({
+                    icon: "success",
+                    title: "Added successfully",
+                    showConfirmButton: false,
+                    timer: 2000,
+                }).then(function () {
+                    sessionStorage.setItem("isConfirmed", true);
+                    window.location.href = "#!/";
+                });
+            })
+            .catch(function (error) {
+                if (error.status == 400) {
+                    const errorMessage = error.data.message;
                     Swal.fire({
-                        icon: "success",
-                        title: "Added successfully",
+                        icon: "error",
+                        title: errorMessage + "",
                         showConfirmButton: false,
                         timer: 2000,
-                    }).then(function () {
-                        sessionStorage.setItem("isConfirmed", true);
-                        window.location.href = "#!/list-Staff";
                     });
-                })
-                .catch(function (error) {
-                    if (error.status == 400) {
-                        const errorMessage = error.data.message;
-                        Swal.fire({
-                            icon: "error",
-                            title: errorMessage + "",
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
-                    } else {
-                        // Xử lý lỗi khác nếu cần
-                        console.error(error);
-                    }
-                });
-        };
-
-
-
+                } else {
+                    // Xử lý lỗi khác nếu cần
+                    console.error(error);
+                }
+            });
     };
 
     $scope.returnCreate = function () {
@@ -288,14 +300,14 @@ app.controller("CreateStaffController", function ($scope, $http) {
 
 
 //Edit Staff
-app.controller("EditStaffController", function ($scope, $routeParams, $http) {
+app.controller("EditNhanVienController", function ($scope, $routeParams, $http) {
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
     let idStaff = $routeParams.id;
-    $http.get("http://localhost:8080/nhanVien/chinhSua/" + idStaff,{ headers })
+    $http.get("http://localhost:8080/nhanVien/chinhSua/" + idStaff, { headers })
         .then(function (response) {
             const editStaff = response.data;
             $scope.editStaff = editStaff;
@@ -326,7 +338,7 @@ app.controller("EditStaffController", function ($scope, $routeParams, $http) {
         console.log($scope.editStaff.gender);
 
 
-        $http.put("http://localhost:8080/nhanVien/luuChinhSua", editStaff,{ headers })
+        $http.put("http://localhost:8080/nhanVien/luuChinhSua", editStaff, { headers })
             .then(function (response) {
                 Swal.fire({
                     icon: "success",
