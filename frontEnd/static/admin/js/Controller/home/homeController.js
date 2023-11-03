@@ -78,18 +78,7 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/customer/create.html",
             controller: "CreateCustomerController",
         })
-        .when("/edit-Product", {
-            templateUrl: "/templates/admin/sanPham/edit.html",
-            controller: "EditProductController",
-        })
-        .when("/list-Product", {
-            templateUrl: "/templates/admin/sanPham/list.html",
-            controller: "ProductController",
-        })
-        .when("/create-Product", {
-            templateUrl: "/templates/admin/sanPham/create.html",
-            controller: "CreateProductController",
-        })
+        
         .when("/in-store", {
             templateUrl: "/templates/admin/sales/product_list.html",
             controller: "ListProductController",
@@ -106,68 +95,80 @@ app.config(function ($routeProvider) {
 app.config(function ($routeProvider) {
     $routeProvider
         .when("/list-Color", {
-            templateUrl: "/templates/admin/mauSac/list.html",
+            templateUrl: "/templates/admin/sanPham/mau_sac/list.html",
             controller: "ColorrController",
         })
         .when("/create-Color", {
-            templateUrl: "/templates/admin/mauSac/create.html",
+            templateUrl: "/templates/admin/sanPham/mau_sac/create.html",
             controller: "CreateColorController",
         })
         .when("/edit-Color", {
-            templateUrl: "/templates/admin/mauSac/edit.html",
+            templateUrl: "/templates/admin/sanPham/mau_sac/edit.html",
             controller: "EditColorController",
         })
         .when("/list-Size", {
-            templateUrl: "/templates/admin/kichCo/list.html",
+            templateUrl: "/templates/admin/sanPham/kich_co/list.html",
             controller: "SizeController",
         })
         .when("/create-Size", {
-            templateUrl: "/templates/admin/kichCo/create.html",
+            templateUrl: "/templates/admin/sanPham/kich_co/create.html",
             controller: "CreateSizeController",
         })
         .when("/edit-Size", {
-            templateUrl: "/templates/admin/kichCo/edit.html",
+            templateUrl: "/templates/admin/sanPham/kich_co/edit.html",
             controller: "EditSizeController",
         })
         .when("/list-Img", {
-            templateUrl: "/templates/admin/sanPham/themHinhAnh.html",
+            templateUrl: "/templates/admin/sanPham/hinh_anh/list.html",
             controller: "ImgController",
         })
         .when("/list-Line", {
-            templateUrl: "/templates/admin/loaiSanPham/list.html",
+            templateUrl: "/templates/admin/sanPham/loai_san_pham/list.html",
             controller: "LineController",
         })
         .when("/create-Line", {
-            templateUrl: "/templates/admin/loaiSanPham/create.html",
+            templateUrl: "/templates/admin/sanPham/loai_san_pham/create.html",
             controller: "CreateLineController",
         })
         .when("/edit-Line", {
-            templateUrl: "/templates/admin/loaiSanPham/edit.html",
+            templateUrl: "/templates/admin/sanPham/loai_san_pham/edit.html",
             controller: "EditLineController",
         })
         .when("/list-Material", {
-            templateUrl: "/templates/admin/chatLieu/list.html",
+            templateUrl: "/templates/admin/sanPham/chat_lieu/list.html",
             controller: "MaterialController",
         })
         .when("/create-Material", {
-            templateUrl: "/templates/admin/chatLieu/create.html",
+            templateUrl: "/templates/admin/sanPham/chat_lieu/create.html",
             controller: "CreateMaterialController",
         })
         .when("/edit-Material", {
-            templateUrl: "/templates/admin/chatLieu/edit.html",
+            templateUrl: "/templates/admin/sanPham/chat_lieu/edit.html",
             controller: "EditMaterialController",
         })
         .when("/list-Producer", {
-            templateUrl: "/templates/admin/nhaSanXuat/list.html",
+            templateUrl: "/templates/admin/sanPham/nha_san_xuat/list.html",
             controller: "ProducerController",
         })
         .when("/create-Producer", {
-            templateUrl: "/templates/admin/nhaSanXuat/create.html",
+            templateUrl: "/templates/admin/sanPham/nha_san_xuat/create.html",
             controller: "CreateProducerController",
         })
         .when("/edit-Producer", {
-            templateUrl: "/templates/admin/nhaSanXuat/edit.html",
+            templateUrl: "/templates/admin/sanPham/nha_san_xuat/edit.html",
             controller: "EditProducerController",
+        })
+        .when("/edit-Product", {
+            templateUrl: "/templates/admin/sanPham/san_pham/edit.html",
+            controller: "EditProductController",
+        })
+        .when("/list-Product", {
+            templateUrl: "/templates/admin/sanPham/san_pham/list.html",
+            controller: "ProductController",
+        })
+        .when("/create-Product", {
+            templateUrl: "/templates/admin/sanPham/san_pham/create.html",
+            controller: "CreateProductController",
         })
         .otherwise({
             redirectTo: "/",

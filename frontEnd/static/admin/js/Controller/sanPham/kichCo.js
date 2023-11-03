@@ -110,7 +110,8 @@ app.controller("EditSizeController", function ($scope, $routeParams, $http) {
 
     $http.get("http://localhost:8080/kichCo/chinhSua/" + idSize, { headers })
         .then(function (response) {
-            let editSize = response.data;
+            const editSize = response.data;
+
             $scope.editSize = editSize;
         });
 
