@@ -323,6 +323,7 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
                     timer: 2000,
                 });
                 const details = response.data;
+                console.log(details)
                 $scope.details = details;
             })
             .catch(function (response) {
@@ -336,29 +337,27 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
                     });
                 }
             })
-
-        $scope.deleteCTSP = function (promotion) {
-            let idPro = promotion.id;
-            $http.delete("http://localhost:8080/sanPham/xoa-san-pham-chi-tiet/" + idPro, { headers })
-                .then(function (response) {
-                    const details = response.data;
-                    $scope.$evalAsync(function () {
-                        $scope.details = details;
-                        Swal.fire({
-                            icon: "success",
-                            title: "Xóa thành công",
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
-                    });
-                })
-                .catch(function (error) {
-                    console.log("Error");
-                });
-        }
-
-
     };
+
+    $scope.deleteCTSP = function (promotion) {
+        let idPro = promotion.id;
+        $http.delete("http://localhost:8080/sanPhamChiTiet/xoa/" + idPro, { headers })
+            .then(function (response) {
+                const details = response.data;
+                $scope.$evalAsync(function () {
+                    $scope.details = details; // Cập nhật danh sách sản phẩm chi tiết với các sản phẩm chi tiết mới
+                    Swal.fire({
+                        icon: "success",
+                        title: "Xóa thành công",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                });
+            })
+            .catch(function (error) {
+                console.log("Error");
+            });
+    }
 
     $scope.returnCreate = function () {
         window.location.href = "#!/list-Product"
