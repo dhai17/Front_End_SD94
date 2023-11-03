@@ -15833,20 +15833,20 @@ html:not(.layout-footer-fixed) .content-wrapper {
 }
 
 .avatar-lg {
-  width: 4rem;
-  height: 4rem;
+  width: 10rem;
+  height: 10rem;
 }
 .avatar-lg .avatar-initial {
   font-size: 1.5rem;
 }
 .avatar-lg.avatar-online:after, .avatar-lg.avatar-offline:after, .avatar-lg.avatar-away:after, .avatar-lg.avatar-busy:after {
-  width: 0.8rem;
-  height: 0.8rem;
+  width: 30px;
+  height: 30px;
   right: 5px;
 }
 
 .avatar-xl {
-  width: 4.5rem;
+  width: 10rem;
   height: 4.5rem;
 }
 .avatar-xl .avatar-initial {

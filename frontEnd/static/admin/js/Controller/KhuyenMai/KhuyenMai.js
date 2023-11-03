@@ -10,7 +10,7 @@ app.controller("KhuyenMaiController", function ($scope, $http) {
 
         // Thêm trường status2 vào từng đối tượng promotion
         promotions.forEach(function (promotion) {
-            promotion.status2 = getStatusText(promotion.status);
+            promotion.trangThai2 = getStatusText(promotion.trangThai);
             promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
         });
 
@@ -26,34 +26,13 @@ app.controller("KhuyenMaiController", function ($scope, $http) {
         });
     });
 
-    // $http.get("http://localhost:3000/api/v1/khuyenMai/").then(function (response) {
-    //     const promotions = response.data;
-
-    //     // Thêm trường status2 vào từng đối tượng promotion
-    //     promotions.forEach(function (promotion) {
-    //         promotion.status2 = getStatusText(promotion.status);
-    //         promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
-    //     });
-
-    //     $scope.promotions = promotions;
-    //     console.log(promotions);
-    // }).catch(e => {
-    //     console.log(e);
-    //     Swal.fire({
-    //         icon: "error",
-    //         title: "System error",
-    //         showConfirmButton: false,
-    //         timer: 2000,
-    //     });
-    // });
-
     function getStatusText(status) {
         if (status == 0) {
-            return "Active";
+            return "Đang hoạt động";
         } else if (status == 1) {
-            return "Expired";
+            return "Chờ";
         } else {
-            return "Awaiting";
+            return "Hết hạn";
         }
     }
 

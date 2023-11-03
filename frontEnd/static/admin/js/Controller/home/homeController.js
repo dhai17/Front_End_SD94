@@ -59,8 +59,11 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/detailedInvoice/details5.html",
             controller: "Details5Controller",
         })
+        .when('/', {
+            templateUrl: "/templates/admin/home.html",
+        })
         .otherwise({
-            redirectTo: "/login",
+            redirectTo: "/",
         });
 });
 
@@ -179,15 +182,15 @@ app.config(function ($routeProvider) {
     $routeProvider
         .when("/list-Staff", {
             templateUrl: "/templates/admin/staff/list.html",
-            controller: "StaffController",
+            controller: "NhanVienController",
         })
         .when("/edit-Staff", {
             templateUrl: "/templates/admin/staff/edit.html",
-            controller: "EditStaffController",
+            controller: "EditNhanVienController",
         })
         .when("/create-Staff", {
             templateUrl: "/templates/admin/staff/create.html",
-            controller: "CreateStaffController",
+            controller: "CreateNhanVienController",
         })
         .otherwise({
             redirectTo: "/",

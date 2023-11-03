@@ -263,30 +263,36 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             $scope.kichCo = kichCo;
         })
 
-    let idPro = $routeParams.id;
 
     let mauSac_id = [];
     $scope.getIdColor = function (mauSac) {
         if (mauSac_id.indexOf(mauSac.id) === -1) {
             mauSac_id.push(mauSac.id);
+<<<<<<< HEAD
+=======
         } else {
             console.log("ID already exists in the array");
+>>>>>>> 541b7d248dd3f3d714a8b57be0c15dd6bc7b2a5d
         }
     };
 
-    let selectedSizeId;
     let kichCo_id = [];
     $scope.getIdSize = function (kichCo) {
         if (kichCo_id.indexOf(kichCo.id) === -1) {
             kichCo_id.push(kichCo.id);
+<<<<<<< HEAD
+=======
         } else {
             console.log("ID already exists in the array");
+>>>>>>> 541b7d248dd3f3d714a8b57be0c15dd6bc7b2a5d
         }
     };
 
 
     $scope.saveCreate = function () {
 
+<<<<<<< HEAD
+=======
         let createProduct = {
             id: idPro,
             tenSanPham: $scope.createProduct.tenSanPham,
@@ -302,6 +308,7 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             },
         };
 
+>>>>>>> 541b7d248dd3f3d714a8b57be0c15dd6bc7b2a5d
         let data = {
             tenSanPham: $scope.createProduct.tenSanPham,
             gia: $scope.createProduct.gia,
@@ -311,9 +318,15 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             mauSac: mauSac_id,
             kichCo: kichCo_id,
             soLuong: $scope.createProduct.soLuong,
+<<<<<<< HEAD
+        }
+
+
+=======
             // trangThai: $scope.createProduct.trangThai,
         }
 
+>>>>>>> 541b7d248dd3f3d714a8b57be0c15dd6bc7b2a5d
         $http.post("http://localhost:8080/sanPham/TaoSanPham", data, { headers })
             .then(function (response) {
                 Swal.fire({
