@@ -18,11 +18,11 @@ app.controller("ProductController", function ($scope, $http) {
 
     function getStatusText(trangThai) {
         if (trangThai == 0) {
-            return "Active";
+            return "Còn hàng";
         } else if (trangThai == 1) {
-            return "Expired";
+            return "Hết hàng";
         } else {
-            return "Awaiting";
+            return "Lưu kho";
         }
     }
 
@@ -66,17 +66,15 @@ app.controller("ProductController", function ($scope, $http) {
         window.location.href = '#!/create-Product?id=';
     };
 
-
     //Xóa trong danh sách
     $scope.delete = function (promotion) {
         let idPro = promotion.id;
-        // console.log(idPro)
-        $http.delete("http://localhost:8080/api/product/deleteProduct/" + idPro, { headers })
+        $http.delete("http://localhost:8080/sanPham/xoa/" + idPro, { headers })
             .then(function (response) {
                 const promotions = response.data;
 
                 promotions.forEach(function (promotion) {
-                    promotion.status2 = getStatusText(promotion.status);
+                    promotion.status2 = getStatusText(promotion.trangThai);
                 });
 
                 $scope.$evalAsync(function () {
@@ -156,7 +154,6 @@ app.controller("EditProductController", function ($scope, $routeParams, $http) {
     $scope.getIdColor = function (color) {
         if (id_color.indexOf(color.id) === -1) {
             id_color.push(color.id);
-            console.log(id_color);
         } else {
             console.log("ID already exists in the array");
         }
@@ -165,10 +162,8 @@ app.controller("EditProductController", function ($scope, $routeParams, $http) {
     let selectedSizeId;
     let id_size = [];
     $scope.getIdSize = function (size) {
-        console.log(size.id);
         if (id_size.indexOf(size.id) === -1) {
             id_size.push(size.id);
-            console.log(id_size);
         } else {
             console.log("ID already exists in the array");
         }
@@ -274,7 +269,6 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
     $scope.getIdColor = function (mauSac) {
         if (mauSac_id.indexOf(mauSac.id) === -1) {
             mauSac_id.push(mauSac.id);
-            console.log(mauSac_id);
         } else {
             console.log("ID already exists in the array");
         }
@@ -283,10 +277,8 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
     let selectedSizeId;
     let kichCo_id = [];
     $scope.getIdSize = function (kichCo) {
-        console.log(kichCo.id);
         if (kichCo_id.indexOf(kichCo.id) === -1) {
             kichCo_id.push(kichCo.id);
-            console.log(kichCo_id);
         } else {
             console.log("ID already exists in the array");
         }
@@ -310,18 +302,19 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             },
         };
 
-        console.log(kichCo_id);
-        $http.post("http://localhost:8080/sanPham/themMoi", {
+        let data = {
             tenSanPham: $scope.createProduct.tenSanPham,
             gia: $scope.createProduct.gia,
             chatLieu_id: $scope.createProduct.chatLieu,
             loaiSanPham_id: $scope.createProduct.loaiSanPham,
             nhaSanXuat_id: $scope.createProduct.nhaSanXuat,
-            tenMauSac: mauSac_id,
+            mauSac: mauSac_id,
             kichCo: kichCo_id,
             soLuong: $scope.createProduct.soLuong,
-            trangThai: $scope.createProduct.trangThai,
-        }, { headers })
+            // trangThai: $scope.createProduct.trangThai,
+        }
+
+        $http.post("http://localhost:8080/sanPham/TaoSanPham", data, { headers })
             .then(function (response) {
                 Swal.fire({
                     icon: "success",
@@ -330,7 +323,6 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
                     timer: 2000,
                 });
                 const details = response.data;
-                console.log(response.data);
                 $scope.details = details;
             })
             .catch(function (response) {
@@ -344,6 +336,28 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
                     });
                 }
             })
+
+        $scope.deleteCTSP = function (promotion) {
+            let idPro = promotion.id;
+            $http.delete("http://localhost:8080/sanPham/xoa-san-pham-chi-tiet/" + idPro, { headers })
+                .then(function (response) {
+                    const details = response.data;
+                    $scope.$evalAsync(function () {
+                        $scope.details = details;
+                        Swal.fire({
+                            icon: "success",
+                            title: "Xóa thành công",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                    });
+                })
+                .catch(function (error) {
+                    console.log("Error");
+                });
+        }
+
+
     };
 
     $scope.returnCreate = function () {

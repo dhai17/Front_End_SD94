@@ -29,9 +29,9 @@
                 </td>
                 <td>{{ promotion.gia }}</td>
                 <td ng-class="{
-                    'text-success': promotion.status2 === 'Active',
-                    'text-warning': promotion.status2 === 'Expired',
-                    'text-danger': promotion.status2 === 'Awaiting'}">
+                    'text-success': promotion.status2 === 'Còn hàng',
+                    'text-warning': promotion.status2 === 'Hết hàng',
+                    'text-danger': promotion.status2 === 'Lưu kho'}">
                     {{ promotion.status2 }}
                 </td>
                 <td>
