@@ -70,6 +70,12 @@ app.controller("CreateColorController", function ($scope, $http) {
         colorPicker.color.hexString = this.value;
     });
 
+    var mau = document.getElementsByClassName("IroColorPicker");
+    if (mau.length > 0) {
+        mau[0].style.display = "none";
+    }
+
+
     $scope.saveCreateColor = function () {
 
         if ($scope.createColor === undefined) {
@@ -145,6 +151,11 @@ app.controller("EditColorController", function ($scope, $routeParams, $http) {
     hexInput.addEventListener('change', function () {
         colorPicker.color.hexString = this.value;
     });
+
+    var mau = document.getElementsByClassName("IroColorPicker");
+    if (mau.length > 0) {
+        mau[0].style.display = "none";
+    }
 
     $http.get("http://localhost:8080/mauSac/chinhSua/" + idColor, { headers })
         .then(function (response) {

@@ -6,6 +6,12 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/customer/cart/cart.html",
             controller: "cartController",
         })
+
+        .when("/product-details", {
+            templateUrl: "/templates/banHang/online/ChiTietSanPham.html",
+            controller: "ChiTietSanPhamController",
+        })
+
         .otherwise({
             redirectTo: "/",
         });

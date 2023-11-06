@@ -1,5 +1,5 @@
 app.controller("cartController", function ($scope, $http) {
-    $http.get("http://localhost:8080/api/cart/list", { params: { customer_id: 14 } }).then(function (response) {
+    $http.get("http://localhost:8080/gioHang/danhSach", { params: { customer_id: 14 } }).then(function (response) {
         const promotions = response.data;
         $scope.promotions = promotions;
     });
@@ -19,7 +19,7 @@ app.controller("cartController", function ($scope, $http) {
             id: idCart,
             quanTity: quantity
         }
-        $http.post("http://localhost:8080/api/cart/update/quantity/product", data).then(function (response) {
+        $http.post("http://localhost:8080/gioHang/sua/soLuong/sanPham", data).then(function (response) {
             const promotions = response.data;
             $scope.promotions = promotions;
             $scope.$evalAsync(function () {
@@ -37,7 +37,7 @@ app.controller("cartController", function ($scope, $http) {
     };
 
     $scope.cancelUpdate = function (promotion) {
-        $http.get("http://localhost:8080/api/cart/list", { params: { customer_id: 14 } }).then(function (response) {
+        $http.get("http://localhost:8080/gioHang/danhSach", { params: { customer_id: 14 } }).then(function (response) {
             const promotions = response.data;
             $scope.promotions = promotions;
         });
@@ -47,8 +47,8 @@ app.controller("cartController", function ($scope, $http) {
     $scope.deletecart = function (promotion) {
         let id_cart_details = promotion.id;
         Swal.fire({
-            title: 'Xác nhận xóa khách hàng',
-            text: 'Bạn có chắc chắn muốn xóa khách hàng này?',
+            title: 'Xác nhận xóa ',
+            text: 'Bạn có chắc chắn muốn xóa ?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Xóa',
@@ -59,7 +59,7 @@ app.controller("cartController", function ($scope, $http) {
                     id: id_cart_details,
                     // unitPrice: promotion.unitPrice
                 }
-                $http.post("http://localhost:8080/api/cart/delete/cartDetails", data)
+                $http.post("http://localhost:8080/gioHang/xoa/gioHangChiTiet", data)
 
                     .then(function (response) {
                         const promotions = response.data;
@@ -82,5 +82,9 @@ app.controller("cartController", function ($scope, $http) {
                     });
             }
         });
+    }
+
+    $scope.checkOut = function(){
+        window.location.href = "http://127.0.0.1:5501/templates/banHang/online/BanHangOnline.html";
     }
 });
