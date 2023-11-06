@@ -66,6 +66,22 @@
     <link href="/static/home/assets/css/style.css" rel="stylesheet">
     <link href="/static/admin/css/index.css" rel="stylesheet">
     <script src="/static/admin/js/index.js"></script>
+    <style>
+        .running-text {
+          white-space: nowrap; /* Ngăn ngừng xuống dòng */
+          overflow: hidden; /* Ẩn nội dung vượt ra khỏi phạm vi của phần tử */
+          animation: runText 10s linear infinite; /* Sử dụng animation để chạy dòng chữ */
+        }
+      
+        @keyframes runText {
+          from {
+            transform: translateX(100%); /* Bắt đầu từ bên phải và di chuyển sang trái */
+          }
+          to {
+            transform: translateX(-100%); /* Di chuyển đến bên trái */
+          }
+        }
+      </style>
 </head>
 
 <body>
@@ -336,6 +352,9 @@
                 </nav><br>
 
                 <div class="content-wrapper">
+                    <div class="running-text">
+                        Bạn đang bị mất địa bàn internet
+                      </div>
                     <div class="container-fluid" ng-view>
 
                     </div>
