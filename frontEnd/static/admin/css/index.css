@@ -1,0 +1,68 @@
+
+a {
+    text-decoration: none !important;
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+}
+
+/* Đặt khoảng cách 5px giữa các phần tử con */
+.d-flex>* {
+    margin-right: 5px;
+}
+
+.d-flex input {
+    width: 200px;
+}
+
+.d-flex button {
+    height: 32px;
+}
+
+#color-product-details {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    margin-left: 5px;
+    margin-bottom: 15px;
+}
+
+#size-product-details {
+    width: 30px;
+    height: 30px;
+    /* border-radius: 50%; */
+    display: flex;
+    margin-left: 5px;
+    margin-bottom: 15px;
+}
+
+#div-color-product {
+    display: flex;
+}
+
+#div-size-product {
+    display: flex;
+}
+
+#div-big-product-details {
+    margin-bottom: 50px;
+}
+
+.acs {
+    display: flex;
+    padding-left: 15px;
+}
+
+.statusabcd {
+    padding-left: 35px;
+}
+
+.form-select option:checked {
+    background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23007bff" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right center;
+    padding-right: 18px;
+}

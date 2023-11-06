@@ -38,10 +38,10 @@
                 <td>{{ promotion.phanTramGiam}}%</td>
                 <td>{{ promotion.tienGiamToiDa}}đ</td>
                 <td ng-class="{
-                    'text-success': promotion.status2 === 'Hoạt Động',
-                    'text-warning': promotion.status2 === 'Sắp Hoạt Động',
-                    'text-danger': promotion.status2 === 'Ngừng Hoạt Động'}">
-                    {{ promotion.status2 }}
+                    'text-success': promotion.trangThai2 === 'Đang hoạt động',
+                    'text-warning': promotion.trangThai2 === 'Chờ',
+                    'text-danger': promotion.trangThai2 === 'Hết hạn'}">
+                    {{ promotion.trangThai2 }}
                 </td>
                 <td>
                     <div class="button-group">
