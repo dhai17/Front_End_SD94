@@ -15,7 +15,6 @@ app.controller("ProductController", function ($scope, $http) {
             $scope.promotions = promotions;
         });
 
-
     function getStatusText(trangThai) {
         if (trangThai == 0) {
             return "Còn hàng";
@@ -56,10 +55,9 @@ app.controller("ProductController", function ($scope, $http) {
         }
     };
 
-    //Chuyển hướng đến trang edit theo id
-    $scope.edit = function (promotion) {
-        let idPro = promotion.id;
-        window.location.href = '#!/edit-Product?id=' + idPro;
+    $scope.dsCTSP = function (promotion) {
+        let idSPCT = promotion.id;
+        window.location.href = '#!/list-CTSP?id=' + idSPCT;
     };
 
     $scope.create = function (promotion) {
@@ -118,60 +116,58 @@ app.controller("EditProductController", function ($scope, $routeParams, $http) {
         'Authorization': 'Bearer ' + token
     }
 
-    $http.get("http://localhost:8080/api/product/material/list", { headers })
+    $http.get("http://localhost:8080/chatLieu/danhSach", { headers })
         .then(function (response) {
-            const material = response.data;
-            $scope.material = material;
+            const chatLieu = response.data;
+            $scope.chatLieu = chatLieu;
         })
 
-    $http.get("http://localhost:8080/api/product/line/list", { headers })
+    $http.get("http://localhost:8080/loaiSanPham/danhSach", { headers })
         .then(function (response) {
-            const line = response.data;
-            $scope.line = line;
+            const loaiSanPham = response.data;
+            $scope.loaiSanPham = loaiSanPham;
         })
 
-    $http.get("http://localhost:8080/api/product/producer/list", { headers })
+    $http.get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
         .then(function (response) {
-            const producer = response.data;
-            $scope.producer = producer;
+            const nhaSanXuat = response.data;
+            $scope.nhaSanXuat = nhaSanXuat;
         })
 
-    $http.get("http://localhost:8080/api/product/color/list", { headers })
+    $http.get("http://localhost:8080/mauSac/danhSach", { headers })
         .then(function (response) {
-            const color = response.data;
-            $scope.color = color;
+            const mauSac = response.data;
+            $scope.mauSac = mauSac;
         })
 
-    $http.get("http://localhost:8080/api/product/size/list", { headers })
+    $http.get("http://localhost:8080/kichCo/danhSach", { headers })
         .then(function (response) {
-            const size = response.data;
-            $scope.size = size;
+            const kichCo = response.data;
+            $scope.kichCo = kichCo;
         })
 
-    // let idPro = $routeParams.id;
 
-    let id_color = [];
-    $scope.getIdColor = function (color) {
-        if (id_color.indexOf(color.id) === -1) {
-            id_color.push(color.id);
+    let mauSac_id = [];
+    $scope.getIdColor = function (mauSac) {
+        if (mauSac_id.indexOf(mauSac.id) === -1) {
+            mauSac_id.push(mauSac.id);
         } else {
             console.log("ID already exists in the array");
         }
     };
 
-    let selectedSizeId;
-    let id_size = [];
-    $scope.getIdSize = function (size) {
-        if (id_size.indexOf(size.id) === -1) {
-            id_size.push(size.id);
+    let kichCo_id = [];
+    $scope.getIdSize = function (kichCo) {
+        if (kichCo_id.indexOf(kichCo.id) === -1) {
+            kichCo_id.push(kichCo.id);
         } else {
             console.log("ID already exists in the array");
         }
     };
-
+    //or
     let idPro = $routeParams.id;
 
-    $http.get("http://localhost:8080/api/product/edit=" + idPro, { headers })
+    $http.get("http://localhost:8080/sanPham/chinhSua/" + idPro, { headers })
         .then(function (response) {
             const editproduct = response.data;
             $scope.editproduct = editproduct;
@@ -179,18 +175,17 @@ app.controller("EditProductController", function ($scope, $routeParams, $http) {
 
     $scope.saveEdits = function () {
 
+        // let idProduct = $routeParams.id;
         let editProduct = {
             id: idProduct,
-            name: $scope.createProduct.name,
-            price: $scope.createProduct.price,
-            origin: $scope.createProduct.origin,
-            id_metarial: $scope.createProduct.productMaterial,
-            id_line: $scope.createProduct.productLine,
-            producer: $scope.createProduct.producer,
-            color: id_color,
-            size: id_size,
-            quantity: $scope.createProduct.quantity,
-            status: $scope.createProduct.status,
+            tenSanPham: $scope.editproduct.tenSanPham,
+            gia: $scope.editproduct.gia,
+            chatLieu_id: $scope.editproduct.chatLieu,
+            loaiSanPham_id: $scope.editproduct.loaiSanPham,
+            nhaSanXuat_id: $scope.editproduct.nhaSanXuat,
+            mauSac: mauSac_id,
+            kichCo: kichCo_id,
+            soLuong: $scope.editproduct.soLuong,
         };
 
         $http.put("http://localhost:8080/api/product/saveUpdate", editProduct, { headers })
@@ -268,11 +263,8 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
     $scope.getIdColor = function (mauSac) {
         if (mauSac_id.indexOf(mauSac.id) === -1) {
             mauSac_id.push(mauSac.id);
-<<<<<<< HEAD
-=======
         } else {
             console.log("ID already exists in the array");
->>>>>>> 541b7d248dd3f3d714a8b57be0c15dd6bc7b2a5d
         }
     };
 
@@ -280,35 +272,14 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
     $scope.getIdSize = function (kichCo) {
         if (kichCo_id.indexOf(kichCo.id) === -1) {
             kichCo_id.push(kichCo.id);
-<<<<<<< HEAD
-=======
         } else {
             console.log("ID already exists in the array");
->>>>>>> 541b7d248dd3f3d714a8b57be0c15dd6bc7b2a5d
         }
     };
 
 
     $scope.saveCreate = function () {
 
-<<<<<<< HEAD
-=======
-        let createProduct = {
-            id: idPro,
-            tenSanPham: $scope.createProduct.tenSanPham,
-            gia: $scope.createProduct.gia,
-            chatLieu: {
-                id: $scope.createProduct.chatLieu
-            },
-            loaiSanPham: {
-                id: $scope.createProduct.loaiSanPham
-            },
-            nhaSanXuat: {
-                id: $scope.createProduct.nhaSanXuat
-            },
-        };
-
->>>>>>> 541b7d248dd3f3d714a8b57be0c15dd6bc7b2a5d
         let data = {
             tenSanPham: $scope.createProduct.tenSanPham,
             gia: $scope.createProduct.gia,
@@ -318,15 +289,9 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             mauSac: mauSac_id,
             kichCo: kichCo_id,
             soLuong: $scope.createProduct.soLuong,
-<<<<<<< HEAD
         }
 
 
-=======
-            // trangThai: $scope.createProduct.trangThai,
-        }
-
->>>>>>> 541b7d248dd3f3d714a8b57be0c15dd6bc7b2a5d
         $http.post("http://localhost:8080/sanPham/TaoSanPham", data, { headers })
             .then(function (response) {
                 Swal.fire({
@@ -336,7 +301,6 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
                     timer: 2000,
                 });
                 const details = response.data;
-                console.log(details)
                 $scope.details = details;
             })
             .catch(function (response) {
@@ -358,7 +322,7 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             .then(function (response) {
                 const details = response.data;
                 $scope.$evalAsync(function () {
-                    $scope.details = details; // Cập nhật danh sách sản phẩm chi tiết với các sản phẩm chi tiết mới
+                    $scope.details = details;
                     Swal.fire({
                         icon: "success",
                         title: "Xóa thành công",
@@ -424,4 +388,27 @@ app.controller('ImgController', function ($scope, $http) {
             reader.readAsDataURL(input.files[0]);
         }
     };
+});
+
+app.controller("CTSPController", function ($scope, $routeParams, $http) {
+    let token = localStorage.getItem("token");
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
+
+    let id = $routeParams.id;
+    $http.get("http://localhost:8080/sanPhamChiTiet/dsCTSP", {
+        params: { san_pham_id: id },
+        headers: headers
+    }).then(function (response) {
+        const details = response.data;
+        $scope.details = details;
+    });
+
+    $scope.edit = function (promotion) {
+        let idPro = promotion.id;
+        window.location.href = '#!/edit-Product?id=' + idPro;
+    };
+
 });
