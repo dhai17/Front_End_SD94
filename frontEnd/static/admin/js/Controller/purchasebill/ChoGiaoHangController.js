@@ -170,7 +170,10 @@ app.controller("Details2Controller", function ($scope, $routeParams, $http) {
         $http.get("http://localhost:8080/hoaDon/chiTietHoaDon/choXacNhan/id=" + id, { headers })
             .then(function (response) {
                 const invoice = response.data;
-                $scope.invoice = invoice;
+                const hdct = invoice.hoaDonChiTiets;
+                $scope.hdct = hdct;
+                const lshd = invoice.lichSuHoaDons;
+                $scope.lshd = lshd;
             });
     }
 

@@ -52,7 +52,7 @@ app.config(function ($routeProvider) {
             controller: "Details3Controller",
         })
         .when("/detailed-invoice4", {
-            templateUrl: "/templates/admin/detailedInvoice/details2.html",
+            templateUrl: "/templates/admin/detailedInvoice/details4.html",
             controller: "Details4Controller",
         })
         .when("/detailed-invoice5", {

@@ -12,9 +12,6 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
     }
 
     $scope.loadData();
-
-    
-
     $scope.GiaoTatCa = function () {
         Swal.fire({
             title: 'Xác nhận giao hàng',
@@ -75,17 +72,13 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
             return pageNumbers;
         }
     };
-
-
-
-
-
     // xác nhận đơn
     $scope.confirm = function (pending) {
         const id = pending.id;
         let data = {
             id
         }
+        console.log(data);
         Swal.fire({
             title: 'Xác nhận đơn hàng',
             text: 'Bạn có muốn giao đơn hàng này không?',
@@ -98,15 +91,14 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
                 $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/daXacNhan", data, { headers })
                     .then(function (response) {
                         const pending = response.data;
-                        
-                        $scope.$evalAsync(function () {
+                        $scope.$evalAsync(function () {                           
                             $scope.pending = pending;
                         });
+                        Swal.fire('Xác nhận thành công!', '', 'success');
                     })
                     .catch(function (error) {
-
+                        console.log(error);
                     })
-                Swal.fire('Xác nhận thành công!', '', 'success');
             };
         });
     };
@@ -115,7 +107,6 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
     $scope.refuseBill = function (pending) {
         const id_bill = pending.id;
         // console.log(id_bill);
-
         Swal.fire({
             title: 'Xác nhận huỷ đơn hàng',
             text: 'Bạn có muốn huỷ đơn hàng này không?',
@@ -128,10 +119,12 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
                 $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/huyDon", { id_bill: id_bill }, { headers })
                     .then(function (response) {
                         $scope.loadData();
+                        Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
                     })
                     .catch(function (error) {
+                        console.log(error);
                     })
-                Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
+                
             };
         });
 
@@ -153,12 +146,6 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
             $scope.loadData();
         }
     });
-
-    $scope.look = function (pending) {
-        const id = pending.id;
-        window.location.href = "#!/detailed-invoice?id=" + id;
-    };
-
 
     //Tìm kiếm ngày bắt đầu
     $scope.searchDateBill = function (searchDate) {
@@ -212,10 +199,10 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
     };
 
     $scope.xacNhanDonDaChon = function () {
-        let danhSachDonDuocChon = [];
+        let id_hoaDon = [];
         angular.forEach($scope.pending, function (item) {
             if (item.selected) {
-                danhSachDonDuocChon.push(item.id);
+                id_hoaDon.push(item.id);
                 Swal.fire({
                     title: 'Xác nhận những đơn đã chọn',
                     text: 'Bạn có muốn xác nhận những đơn đã chọn không?',
@@ -225,7 +212,10 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
                     cancelButtonText: 'Không'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $http.put("http://localhost:8080/hoaDon/datHang/choXacNhan/xacNhanDon/daChon", { id: danhSachDonDuocChon }, { headers })
+                        let data = {
+                            id_hoaDon
+                        }
+                        $http.put("http://localhost:8080/hoaDon/datHang/choXacNhan/xacNhanDon/daChon", data, { headers })
                             .then(function (response) {
                                 const pending = response.data;
                                 $scope.$evalAsync(function () {
@@ -242,10 +232,10 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
         });
     };
     $scope.huyDonDaChon = function () {
-        const danhSachDonDuocChon = [];
+        let id_hoaDon = [];
         angular.forEach($scope.pending, function (item) {
             if (item.selected) {
-                danhSachDonDuocChon.push(item.id);
+                id_hoaDon.push(item.id);
                 Swal.fire({
                     title: 'Hủy những đơn đã chọn',
                     text: 'Bạn có muốn hủy những đơn đã chọn không?',
@@ -255,7 +245,10 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
                     cancelButtonText: 'Không'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $http.put("http://localhost:8080/hoaDon/datHang/choXacNhan/huyDon/daChon", { id: danhSachDonDuocChon }, { headers })
+                        let data = {
+                            id_hoaDon
+                        }
+                        $http.put("http://localhost:8080/hoaDon/datHang/choXacNhan/huyDon/daChon", data, { headers })
                             .then(function (response) {
                                 const pending = response.data;
                                 $scope.$evalAsync(function () {
@@ -270,6 +263,10 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
             };
         });
     };
+    $scope.look = function (pending) {
+        const id = pending.id;
+        window.location.href = "#!/detailed-invoice?id=" + id; 
+    };
 });
 
 app.controller("DetailsController", function ($scope, $routeParams, $http) {
@@ -282,8 +279,12 @@ app.controller("DetailsController", function ($scope, $routeParams, $http) {
     $scope.loadData = function(){
         $http.get("http://localhost:8080/hoaDon/chiTietHoaDon/choXacNhan/id="+id, { headers })
         .then(function (response) {
+
             const invoice = response.data;
-            $scope.invoice = invoice;
+            const hdct = invoice.hoaDonChiTiets;
+            $scope.hdct = hdct;
+            const lshd = invoice.lichSuHoaDons;
+            $scope.lshd = lshd;
         });
     }
     
