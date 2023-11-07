@@ -96,7 +96,7 @@ body {
 }
 
 .table-wrapper {
-    max-height: 400px;
+    max-height: 180px;
     overflow-y: auto;
 }
 

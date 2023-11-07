@@ -56,6 +56,19 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
         'Authorization': 'Bearer ' + token
     }
 
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        let payload = JSON.parse(jsonPayload);
+        return payload;
+    }
+
+    let decodedToken = parseJwt(token);
+
     $http.get("http://localhost:8080/customer/sanPham/getSanPham/id=" + id_sanPham, { headers })
         .then(function (response) {
             const sanPham = response.data;
@@ -83,6 +96,10 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
         $scope.selectedMauSac = mauSac;
     };
 
+    let soLuongGet;
+    let kichCo;
+    let maMauSac;
+
     $scope.$watchGroup(['selectedKichCo', 'selectedMauSac'], function (newValues, oldValues) {
         if (newValues[0] !== undefined && newValues[1] !== undefined) {
             let data = {
@@ -90,14 +107,37 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
                 maMauSac: newValues[1],
                 sanPhamId: $scope.sanPham.id
             }
+            kichCo = newValues[0];
+            maMauSac = newValues[1];
             $http.post("http://localhost:8080/customer/sanPham/api/getSoLuong", data, { headers })
                 .then(function (response) {
-                    let soLuongGet = document.getElementById('customer-sanPham-soLuongHienCo');
+                    soLuongGet = document.getElementById('customer-sanPham-soLuongHienCo');
                     if (soLuongGet) {
                         soLuongGet.innerText = response.data;
                     }
                 });
         }
+
     });
 
+    $scope.addToCart = function (sanPham) {
+        let data = {
+            kichCo: kichCo,
+            maMauSac: maMauSac,
+            san_pham_id: sanPham.id,
+            email: decodedToken.email,
+            soLuong: $scope.chonSoLuong,
+            donGia: sanPham.gia
+        }
+
+        $http.post("http://localhost:8080/customer/cart/addToCart", data, { headers })
+            .then(function (response) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Thêm vào giỏ hàng thành công",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            });
+    };
 });
