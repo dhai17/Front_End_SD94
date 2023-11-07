@@ -1,42 +1,38 @@
 <div class="container-fluid" ng-controller="EditCustomerController">
     <!-- Account details card-->
     <div class="card mb-4">
-        <div class="card-header">Update customer</div>
+        <div class="card-header">Sửa khách hàng</div>
         <div class="card-body" >
             <form>
                 <div class="row gx-3 mb-3">   
                     <div class="col-md-6">
-                        <label class="small mb-1" for="inputUsername">Name customer</label>
-                        <input class="form-control" id="inputUsername" type="text" placeholder="Enter customer name" ng-model="editCustomer.hoTen">
+                        <label class="small mb-1" for="inputUsername">Tên khách hàn</label>
+                        <input class="form-control" id="inputUsername" type="text" placeholder="Nhập tên khách hàng" ng-model="editCustomer.hoTen">
                     </div>
                     <div class="col-md-6">
-                        <label class="small mb-1" for="inputLocation">Phone number</label>
-                        <input class="form-control" id="inputLocation" type="text" placeholder="Enter phone number" ng-model="editCustomer.soDienThoai">
+                        <label class="small mb-1" for="inputLocation">Số điện thoại</label>
+                        <input class="form-control" id="inputLocation" type="text" placeholder="Nhập số điện thoại" ng-model="editCustomer.soDienThoai">
                     </div>
                 </div>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="small mb-1" for="inputFirstName">Email</label>
-                        <input class="form-control" id="inputFirstName" type="text" placeholder="Enter email" ng-model="editCustomer.email">
+                        <input class="form-control" id="inputFirstName" type="text" placeholder="Nhập email" ng-model="editCustomer.email">
                     </div>
                     <div class="col-md-6">
-                        <label class="small mb-1" for="inputLastName">Date birth</label>
-                        <input class="form-control" id="inputLastName" type="text" placeholder="Enter date birth" ng-model="editCustomer.ngaySinh">
+                        <label class="small mb-1" for="inputLastName">Ngày sinh</label>
+                        <input class="form-control" id="inputLastName" type="text" placeholder="Nhập ngày sinh" ng-model="editCustomer.ngaySinh">
                     </div>
                 </div>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
-                        <label class="small mb-1" for="inputLastName">Add ress</label>
-                        <input class="form-control" id="inputLastName" type="text" placeholder="Enter add ress" ng-model="editCustomer.diaChi">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="small mb-1" for="inputLastName">Password</label>
-                        <input class="form-control" id="inputLastName" type="text" placeholder="Enter password" ng-model="editCustomer.matKhau">
+                        <label class="small mb-1" for="inputLastName">Địa chỉ</label>
+                        <input class="form-control" id="inputLastName" type="text" placeholder="Nhập địa chỉ" ng-model="editCustomer.diaChi">
                     </div>
                 </div>
 
-                <button class="btn btn-primary" type="button" ng-click="returnEdit()">Return</button>
-                <button class="btn btn-primary" type="button" ng-click="saveEditCustomer()">Save changes</button>
+                <button class="btn btn-primary" type="button" ng-click="returnEdit()">Quay lại</button>
+                <button class="btn btn-primary" type="button" ng-click="saveEditCustomer()">Lưu cập nhật</button>
             </form>
         </div>
     </div>

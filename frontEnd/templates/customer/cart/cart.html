@@ -5,7 +5,7 @@
 		</div>
 	</div>
 	<div class="untree_co-section before-footer-section">
-		<div class="container">
+		<div class="container-fluid">
 			<div class="row mb-5">
 				<form class="col-md-12" method="post">
 					<div class="site-blocks-table">
@@ -25,26 +25,28 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="promotion in promotions">
+								<tr ng-repeat="gioHangChiTiet in gioHangChiTiet">
 									<td>
-										<input type="checkbox" class="form-check-input" ng-model="promotion.selected"
-											ng-change="updateSelectAll()">
+										<input type="checkbox" class="form-check-input" ng-model="gioHangChiTiet.selected" ng-change="selectedGioHangChiTiet(gioHangChiTiet)">
 									</td>
-									<td>{{ promotion.productDetails.product.name }}</td>
-									<td>{{ promotion.productDetails.product.name }}</td>
-									<td>{{ promotion.unitPrice }} VND</td>
 									<td>
-										<input type="text" class="form-control text-center quantity-amount"
-											ng-model="promotion.quanTity" placeholder=""
+										<img src="https://www.chuphinhsanpham.vn/wp-content/uploads/2021/06/chup-hinh-giay-dincox-shoes-c-photo-studio-5.jpg" width="80px", height="80px">
+									</td>
+									<td>{{ gioHangChiTiet.sanPhamChiTiet.sanPham.tenSanPham }}</td>
+									<td>{{ gioHangChiTiet.sanPhamChiTiet.sanPham.gia }} VND</td>
+									<td>
+										<input type="text" class="form-control text-center quantity-amount" 
+											ng-model="gioHangChiTiet.soLuong" placeholder=""
 											aria-label="Example text with button addon" aria-describedby="button-addon1"
-											ng-change="onInputChange(promotion)" , value="{{promotion.quanTity}}" id="quantityInput">
-										<button class="button" ng-click="updateValue(promotion)"
-											ng-show="promotion.showButtons">Xác nhận</button>
-										<button class="button" ng-click="cancelUpdate(promotion)"
-											ng-show="promotion.showButtons">Hủy</button>
+											ng-change="onInputChange(gioHangChiTiet)" , value="{{gioHangChiTiet.soLuong}}"
+											id="cart-inputSoLuong" style="width: 100px;">
+										<button class="button" ng-click="updateValue(gioHangChiTiet)"
+											ng-show="gioHangChiTiet.showButtons">Xác nhận</button>
+										<button class="button" ng-click="cancelUpdate(gioHangChiTiet)"
+											ng-show="gioHangChiTiet.showButtons">Hủy</button>
 									</td>
 
-									<td>{{ promotion.intoMoney }} VND</td>
+									<td>{{ gioHangChiTiet.thanhTien }} VND</td>
 									<td>
 										<div class="button-group">
 											<button type="button" class="btn btn-link btn-sm btn-rounded"
@@ -55,14 +57,7 @@
 									</td>
 								</tr>
 							</tbody>
-
 						</table>
-						<div class="card-footer text-center">
-							<button class="btn" ng-repeat="pageNumber in pager.pageNumbers"
-								ng-click="pager.page = pageNumber">
-								{{pageNumber}}
-							</button>
-						</div>
 					</div>
 				</form>
 			</div>
@@ -70,16 +65,12 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="row mb-5">
-						<!-- <div class="col-md-6 mb-3 mb-md-0">
-							<button class="btn btn-black btn-sm btn-block">Cập nhật giỏ hàng</button>
-						</div> -->
-
-						<div class="col-md-6">
-							<button class="btn btn-outline-black btn-sm btn-block">Tiếp tục mua sắm</button>
+						<div class="col-md-3 mt-3">
+							<button class="btn btn-outline-black btn-sm btn-block" style="border-radius: 10px;">Tiếp tục mua sắm</button>
 						</div>
 
-						<div class="col-md-6">
-							<button class="btn btn-outline-black btn-sm btn-block" ng-click="updateCart(promotion)">Cập
+						<div class="col-md-3 mt-3">
+							<button class="btn btn-outline-black btn-sm btn-block" ng-click="updateCart(gioHangChiTiet)" style="border-radius: 10px;">Cập
 								nhật giỏ hàng</button>
 						</div>
 
@@ -98,13 +89,14 @@
 									<span class="text-black">Tiền tạm tính</span>
 								</div>
 								<div class="col-md-6 text-right">
-									<strong class="text-black">$</strong>
+									<strong class="text-black"><span id="cart-tienTamTinh" ng-bind="tienTamTinh + ' VNĐ'" ng-model="tienTamTinh"></span></strong>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="col-md-12">
-									<button class="btn btn-black btn-lg py-3 btn-block" ng-click = "checkOut()">Đặt hàng</button>
+									<button class="btn btn-black btn-lg py-3 btn-block" ng-click="checkOut()">Đặt
+										hàng</button>
 								</div>
 							</div>
 						</div>
