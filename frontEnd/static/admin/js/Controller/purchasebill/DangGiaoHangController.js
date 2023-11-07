@@ -171,6 +171,8 @@ app.controller("Details3Controller", function ($scope, $routeParams, $http) {
             $scope.hdct = hdct;
             const lshd = invoice.lichSuHoaDons;
             $scope.lshd = lshd;
+            const hoaDon = invoice.hoaDon;
+            $scope.hoaDon = hoaDon;
         });
     }
     

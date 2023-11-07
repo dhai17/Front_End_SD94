@@ -6,6 +6,9 @@
         </div>
     </div>
     <a href="#!/da-giao" class="button back-button">Trở lại</a>
+    <P>Mã hoá đơn: {{hoaDon.maHoaDon}} </P>
+    <P>Tên khách hàng: {{hoaDon.nguoiNhan}} </P>
+    <P>Thời gian tạo : {{hoaDon.createdDate| date:'hh:mm|dd/MM/yyyy'}} </P>
     <table class="table align-middle mb-1 bg-white" id="tableBillĐetail">
         <thead class="bg-light">
             <tr>
@@ -75,41 +78,30 @@
         
                         <div class="hori-timeline" dir="ltr">
                             <ul class="list-inline events">
-                                <li class="list-inline-item event-list">
+                                <li class="list-inline-item event-list" >
                                     <div class="px-4">
-                                        <div class="event-date bg-soft-primary text-primary">1 June</div>
+                                        <div class="event-date bg-soft-primary text-primary">{{hoaDon.createdDate| date:'hh:mm|dd/MM/yyyy'}}</div>
                                         <h5 class="font-size-16">Đặt hàng</h5>
                                         <p class="text-muted">Thời gian khách hàng đặt hàng</p>
                                     </div>
                                 </li>
-                                <li class="list-inline-item event-list">
-                                    <div class="px-4">
-                                        <div class="event-date bg-soft-primary text-primary">2 June</div>
+                                <li class="list-inline-item event-list" ng-repeat="lshd1 in lshd| orderBy:'+id'">
+                                    <div class="px-4"  ng-if="lshd1.trangThai.id==4">
+                                        <div class="event-date bg-soft-warning text-warning">{{lshd1.createdDate| date:'hh:mm|dd/MM/yyyy'}}</div>
+                                        <h5 class="font-size-16">Đã giao đơn hàng</h5>
+                                        <p class="text-muted">Đơn hàng đã được giao tới tay khách hàng</p>
+                                    </div>
+                                    <div class="px-4"  ng-if="lshd1.trangThai.id==3">
+                                        <div class="event-date bg-soft-success text-success">{{lshd1.createdDate| date:'hh:mm|dd/MM/yyyy'}}</div>
+                                        <h5 class="font-size-16">Giao đơn hàng</h5>
+                                        <p class="text-muted">Đơn hàng đang được vận chuyển tới khách hàng</p>
+                                    </div>
+                                    <div class="px-4" ng-if="lshd1.trangThai.id==2">
+                                        <div class="event-date bg-soft-primary text-primary">{{lshd1.createdDate| date:'hh:mm|dd/MM/yyyy'}}</div>
                                         <h5 class="font-size-16">Xác nhận đơn</h5>
                                         <p class="text-muted">Đơn hàng đã được xác nhận bởi cửa hàng</p>
                                     </div>
                                 </li>
-                                <li class="list-inline-item event-list">
-                                    <div class="px-4">
-                                        <div class="event-date bg-soft-success text-success">5 June</div>
-                                        <h5 class="font-size-16">Giao đơn hàng</h5>
-                                        <p class="text-muted">Đơn hàng đã được giao cho đơn vị vận chuyển</p>
-                                    </div>
-                                </li>
-                                <li class="list-inline-item event-list">
-                                    <div class="px-4">
-                                        <div class="event-date bg-soft-danger text-danger">7 June</div>
-                                        <h5 class="font-size-16">Đã giao đơn hàng</h5>
-                                        <p class="text-muted">Đơn hàng đã được giao tới tay khách hàng</p>
-                                    </div>
-                                </li>
-                                <!-- <li class="list-inline-item event-list">
-                                    <div class="px-4">
-                                        <div class="event-date bg-soft-warning text-warning">8 June</div>
-                                        <h5 class="font-size-16">Đã huỷ đơn</h5>
-                                        <p class="text-muted">Languages only differ in their pronunciation and their most common words.</p>
-                                    </div>
-                                </li> -->
                             </ul>
                         </div>
                     </div>

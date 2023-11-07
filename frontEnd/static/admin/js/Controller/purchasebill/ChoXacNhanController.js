@@ -223,8 +223,9 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
                                     $scope.coCheckboxDaChon = false;
                                     $scope.selectAll = false
                                 });
+                                Swal.fire('Xác nhận đơn thành công!', '', 'success');
                             });
-                        Swal.fire('Xác nhận đơn thành công!', '', 'success');
+                        
                     };
                 });
 
@@ -285,10 +286,13 @@ app.controller("DetailsController", function ($scope, $routeParams, $http) {
             $scope.hdct = hdct;
             const lshd = invoice.lichSuHoaDons;
             $scope.lshd = lshd;
+            const hoaDon = invoice.hoaDon;
+            $scope.hoaDon = hoaDon;
         });
     }
     
     $scope.loadData();
+
     //Phân trang
     $scope.pager = {
         page: 1,
