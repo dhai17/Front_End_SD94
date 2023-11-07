@@ -15,7 +15,6 @@ app.controller('LoginController', function ($scope, $http) {
 
         $http.post('http://localhost:8080/login', data, config)
             .then(function (response) {
-                // handle success
                 localStorage.setItem("token", response.data.token)
                 let token = localStorage.getItem("token");
 
@@ -30,7 +29,6 @@ app.controller('LoginController', function ($scope, $http) {
                     return payload;
                 }
                 let decodedToken = parseJwt(token);
-                console.log(decodedToken);
 
                 if (decodedToken.role === 'ADMIN' || decodedToken.role === 'STAFF') {
                     window.location.href = "http://127.0.0.1:5501/templates/admin/home/index.html#!/";

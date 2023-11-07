@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (userInfo.role === "STAFF") {
-        console.log(userInfo.role);
         const menuToHide = document.getElementById('nhanVienMenuItem');
 
         if (menuToHide) {
@@ -42,13 +41,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    
+
     if (userInfo.role === "STAFF") {
-        console.log(userInfo.role);
         const menuToHide = document.getElementById('SanPhamMenuItem');
 
         if (menuToHide) {
             menuToHide.style.display = "none";
         }
     }
+
+    window.addEventListener('offline', e => {
+        const textHide = document.getElementById('running-text');
+        if (textHide) {
+            textHide.style.display = "block"; 
+        }
+    });
 });
