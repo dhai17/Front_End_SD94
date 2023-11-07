@@ -1,15 +1,15 @@
 <div ng-controller="CustomerController" id="customerList">
     <div class="container-fluid my-auto d-flex align-items-center">
         <div class="mx-auto">
-            <h1>Customer</h1>
+            <h1>Khách Hàng</h1>
         </div>
     </div>
     <div class="d-flex">
         <input class="form-control me-1" type="search" placeholder="Search" aria-label="Search" ng-model="searchTerm">
-        <button class="btn btn-primary btn-sm" type="submit" ng-click="searchAllCustomer(searchTerm)">Search</button>
+        <button class="btn btn-primary btn-sm" type="submit" ng-click="searchAllCustomer(searchTerm)">Tìm kiếm</button>
 
-        <input class="form-control me-1" type="date" placeholder="Search" aria-label="Search" ng-model="searchDate">
-        <button class="btn btn-primary btn-sm" type="submit" ng-click="searchDateCustomer(searchDate)">Search</button>
+        <input class="form-control me-1" type="date" placeholder="Search" aria-label="Search" ng-model="formattedDate">
+        <button class="btn btn-primary btn-sm" type="submit" ng-click="searchDateCustomer(formattedDate)">Tìm kiếm</button>
 
         <button type="button" class="dt-button buttons-html5 btn btn-white btn-success btn-bold" data-toggle="tooltip" title='Tải lại dữ liệu' ng-click="reLoad()">
             <span> <i class="fas fa-sync-alt"></i></span>
@@ -25,7 +25,6 @@
                 <th>Email</th>
                 <th>Ngày sinh</th>
                 <th>Địa chỉ</th>
-                <th>Password</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
@@ -37,7 +36,6 @@
                 <td>{{ promotion.email }}</td>
                 <td>{{ promotion.ngaySinh }}</td>
                 <td>{{ promotion.diaChi}}</td>
-                <td>{{ promotion.matKhau}}</td>
                 <td>
                     <div class="button-group">
                         <button type="button" class="btn btn-link" ng-click="editCustomer(promotion)">
