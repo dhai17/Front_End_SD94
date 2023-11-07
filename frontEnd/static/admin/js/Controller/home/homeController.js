@@ -173,6 +173,10 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/sanPham/san_pham/create.html",
             controller: "CreateProductController",
         })
+        .when("/list-CTSP", {
+            templateUrl: "/templates/admin/sanPham/san_pham/listSPCT.html",
+            controller: "CTSPController",
+        })
         .otherwise({
             redirectTo: "/",
         });
@@ -196,9 +200,18 @@ app.config(function ($routeProvider) {
             redirectTo: "/",
         });
 });
+
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/logout', {
         templateUrl: 'templates/admin/login/login.html',
         controller: "loginController",
+    });
+}]);
+
+//Bán hàng
+app.config(['$routeProvider', function ($routeProvider) {
+    $routeProvider.when('/banHangTaiQuay', {
+        templateUrl: '/templates/banHang/taiQuay/BanHang.html',
+        controller: "BanHangTaiQuayController",
     });
 }]);

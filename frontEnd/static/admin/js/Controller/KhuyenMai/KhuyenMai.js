@@ -30,7 +30,7 @@ app.controller("KhuyenMaiController", function ($scope, $http) {
         if (status == 0) {
             return "Đang hoạt động";
         } else if (status == 1) {
-            return "Chờ";
+            return "Chờ hoạt động";
         } else {
             return "Hết hạn";
         }
@@ -100,7 +100,7 @@ app.controller("KhuyenMaiController", function ($scope, $http) {
 
                         // Thêm trường status2 và fomattienGiamToiDa vào từng đối tượng promotion
                         promotions.forEach(function (promotion) {
-                            promotion.status2 = getStatusText(promotion.status);
+                            promotion.trangThai2 = getStatusText(promotion.trangThai);
                             promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
                         });
 

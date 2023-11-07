@@ -106,7 +106,7 @@ app.controller("EditLineController", function ($scope, $routeParams, $http) {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
-        let idLine = $routeParams.id;
+    let idLine = $routeParams.id;
 
     $http.get("http://localhost:8080/loaiSanPham/chinhSua/" + idLine, { headers })
         .then(function (response) {

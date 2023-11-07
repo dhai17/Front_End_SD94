@@ -68,7 +68,6 @@
             </form>
         </div>
         <div ng-controller="ProductController" id="productList">
-            <!-- <h2 style="text-align: center;">Chi tiết sản phẩm</h2> -->
             <hr>
             <div>
                 <table class="table align-middle mb-1 bg-white">
@@ -92,10 +91,6 @@
                             <td>{{ details.kichCo.kichCo }}</td>
                             <td>{{ details.sanPham.gia }}</td>
                             <td>
-                                <button type="button" class="btn btn-link" ng-click="editProducer(details)">
-                                    <i class="bx bx-edit me-2"></i>
-                                </button>
-
                                 <button type="button" class="btn btn-link btn-sm btn-rounded"
                                     ng-click="deleteCTSP(details)">
                                     <i class="bx bx-trash me-2"></i>
