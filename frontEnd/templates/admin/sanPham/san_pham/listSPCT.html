@@ -2,6 +2,51 @@
     <h2 style="text-align: center;">Chi tiết sản phẩm</h2>
     <hr>
     <div>
+        <form>
+            <div class="row gx-3 mb-3">
+                <div class="col-md-6">
+                    <label class="small mb-1">Tên sản phẩm</label>
+                    <input class="form-control" id="tenSp" type="text" ng-model="editproduct.tenSanPham">
+                </div>
+                <div class="col-md-6">
+                    <label class="small mb-1">Giá bán</label>
+                    <input class="form-control" id="gia" type="text" ng-model="editproduct.gia">
+                </div>
+            </div>
+            <div class="row gx-3 mb-3">
+                <div class="col-md-4">
+                    <label class="small mb-1">Chất liệu</label>
+                    <select class="form-select" aria-label="Default select example" ng-model="editproduct.chatLieu">
+                        <option ng-repeat="x in chatLieu" value="{{x.id}}"
+                            ng-selected="x.id == editproduct.chatLieu.id">
+                            {{x.chatLieu}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="small mb-1">Loại sản phẩm</label>
+                    <select class="form-select" aria-label="Default select example" ng-model="editproduct.loaiSanPham">
+                        <option ng-repeat="lsp in loaiSanPham" value="{{lsp.id}}"
+                            ng-selected="lsp.id == editproduct.loaiSanPham.id">
+                            {{lsp.loaiSanPham}}</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="small mb-1">Hãng</label>
+                    <select class="form-select" aria-label="Default select example" ng-model="editproduct.nhaSanXuat">
+                        <option ng-repeat="nsx in nhaSanXuat" value="{{nsx.id}}"
+                            ng-selected="nsx.id == editproduct.nhaSanXuat.id">
+                            {{nsx.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary" type="button" ng-click="returnEdit(editProduct)">Return</button>
+            <button class="btn btn-primary" type="button" ng-click="saveEditProduct(editProduct)">Update</button>
+        </form>
+    </div>
+    <br>
+    <div>
         <table class="table align-middle mb-1 bg-white">
             <thead class="bg-light">
                 <tr>
@@ -11,6 +56,7 @@
                     <th>Màu sắc</th>
                     <th>Kích cỡ</th>
                     <th>Giá bán</th>
+                    <!-- <th>Chất liệu</th> -->
                     <th>Thao tác</th>
                 </tr>
             </thead>
@@ -22,8 +68,9 @@
                     <td>{{ details.mauSac.tenMauSac }}</td>
                     <td>{{ details.kichCo.kichCo }}</td>
                     <td>{{ details.sanPham.gia }}</td>
+                    <!-- <td>{{ details.chatLieu.chatLieu }}</td> -->
                     <td>
-                        <button type="button" class="btn btn-link" ng-click="edit(details)">
+                        <button type="button" class="btn btn-link" ng-click="editSPCT(details)">
                             <i class="bx bx-edit me-2"></i>
                         </button>
                         <button type="button" class="btn btn-link btn-sm btn-rounded" ng-click="deleteCTSP(details)">

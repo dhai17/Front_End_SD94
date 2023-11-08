@@ -5,40 +5,29 @@
             <form>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-4">
-                        <label class="small mb-1">Tên sản phẩm</label>
-                        <input class="form-control" id="name" type="text" ng-model="editproduct.tenSanPham">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="small mb-1">Giá bán</label>
-                        <input class="form-control" id="price" type="text" ng-model="editproduct.gia">
-                    </div>
-                    <div class="col-md-4">
                         <label class="small mb-1">Số lượng</label>
                         <input class="form-control" id="quantity" type="text" ng-model="editproduct.soLuong">
                     </div>
-                </div>
-
-                <div class="row gx-3 mb-3">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="sel2" class="small mb-1">Màu sắc</label>
-                        <select id="sel2" class="form-select" aria-label="Default select example"
-                            ng-model="selectedColor" multiple>
-                            <option selected ng-repeat="mauSac in mauSac" value="{{mauSac.id}}"
-                                ng-click="getIdColor(mauSac)">{{mauSac.tenMauSac}}</option>
+                        <select class="form-select" aria-label="Default select example" ng-model="editproduct.mauSac">
+                            <option ng-repeat="ms in mauSac" value="{{ms.id}}"
+                                ng-selected="ms.id == editproduct.mauSac.id">
+                                {{ms.tenMauSac}}</option>
                         </select>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label class="small mb-1">Kích cỡ</label>
-                        <select class="form-select" aria-label="Default select example" ng-model="selectedSizes"
-                            multiple>
-                            <option ng-repeat="kichCo in kichCo" ng-value="kichCo.id" ng-click="getIdSize(kichCo)">
-                                {{kichCo.kichCo}}</option>
+                        <select class="form-select" aria-label="Default select example" ng-model="editproduct.kichCo">
+                            <option ng-repeat="kc in kichCo" value="{{kc.id}}"
+                                ng-selected="kc.id == editproduct.kichCo.id">
+                                {{kc.kichCo}}</option>
                         </select>
                     </div>
                 </div>
 
-                <button class="btn btn-primary" type="button" ng-click="returnEdit(edit)">Return</button>
-                <button class="btn btn-primary" type="button" ng-click="saveEdit(edit)">Update</button>
+                <button class="btn btn-primary" type="button" ng-click="returnEdit(editProduct)">Return</button>
+                <button class="btn btn-primary" type="button" ng-click="saveEdits(editProduct)">Update</button>
             </form>
         </div>
     </div>
