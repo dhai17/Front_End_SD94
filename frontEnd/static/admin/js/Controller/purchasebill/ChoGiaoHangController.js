@@ -20,8 +20,24 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
         });
         $scope.checkTatCaDaChon();
     };
+    // lay ra thong tin nguoi dang nhap
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        let payload = JSON.parse(jsonPayload);
+        return payload;
+    }
+
+    let decodedToken = parseJwt(token);
+
+
 
     $scope.GiaoTatCa = function () {
+        const checkOut_email = decodedToken.email;
         Swal.fire({
             title: 'Xác nhận giao hàng',
             text: 'Các đơn hàng đã được gửi đến đơn vị vận chuyển?',
@@ -31,7 +47,10 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
             cancelButtonText: 'Chưa'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.delete("http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang-tatCa", { headers })
+                let data = {
+                    checkOut_email
+                }
+                $http.post("http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang-tatCa", data, { headers })
                     .then(function (response) {
                         const pending = response.data;
                         $scope.$evalAsync(function () {
@@ -81,7 +100,8 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
 
     // xác nhận đơn
     $scope.confirm = function (pending) {
-        const id_bill = pending.id;
+        const id = pending.id;
+        const checkOut_email = decodedToken.email;
         Swal.fire({
             title: 'Xác nhận giao đơn hàng',
             text: 'Giao đơn hàng này cho đơn vị vận chuyển?',
@@ -91,7 +111,11 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
             cancelButtonText: 'Không'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.post("http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang", { id_bill: id_bill }, { headers })
+                let data = {
+                    id,
+                    checkOut_email
+                }
+                $http.post("http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang", data, { headers })
                     .then(function (response) {
                         $scope.loadData();
                     })
@@ -175,6 +199,7 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
  
      $scope.xacNhanDonDaChon = function () {
          let id_hoaDon = [];
+         const checkOut_email = decodedToken.email;
          angular.forEach($scope.pending, function (item) {
              if (item.selected) {
                  id_hoaDon.push(item.id);
@@ -188,7 +213,8 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
                  }).then((result) => {
                      if (result.isConfirmed) {
                          let data = {
-                             id_hoaDon
+                             id_hoaDon,
+                             checkOut_email
                          }
                          $http.put("http://localhost:8080/hoaDon/datHang/choGiaoHang/giaoDonHang/daChon", data, { headers })
                              .then(function (response) {
