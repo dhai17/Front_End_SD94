@@ -148,6 +148,64 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
     $scope.reLoad = function () {
         $scope.loadData();
     }
+    //Xác nhận đã chọn
+
+     // check don da chon
+     $scope.coCheckboxDaChon = false;
+
+     $scope.toggleSelectAll = function () {
+         angular.forEach($scope.pending, function (item) {
+             item.selected = $scope.selectAll;
+         });
+         $scope.checkTatCaDaChon();
+     };
+ 
+     $scope.updateSelectAll = function () {
+         $scope.selectAll = $scope.pending.every(function (item) {
+             return item.selected;
+         });
+         $scope.checkTatCaDaChon();
+     };
+ 
+     $scope.checkTatCaDaChon = function () {
+         $scope.coCheckboxDaChon = $scope.pending.some(function (item) {
+             return item.selected;
+         });
+     };
+ 
+     $scope.xacNhanDonDaChon = function () {
+         let id_hoaDon = [];
+         angular.forEach($scope.pending, function (item) {
+             if (item.selected) {
+                 id_hoaDon.push(item.id);
+                 Swal.fire({
+                     title: 'Xác nhận giao những đơn đã chọn',
+                     text: 'Bạn có muốn giao những đơn đã chọn không?',
+                     icon: 'question',
+                     showCancelButton: true,
+                     confirmButtonText: 'Có',
+                     cancelButtonText: 'Không'
+                 }).then((result) => {
+                     if (result.isConfirmed) {
+                         let data = {
+                             id_hoaDon
+                         }
+                         $http.put("http://localhost:8080/hoaDon/datHang/choGiaoHang/giaoDonHang/daChon", data, { headers })
+                             .then(function (response) {
+                                 const pending = response.data;
+                                 $scope.$evalAsync(function () {
+                                     $scope.pending = pending;
+                                     $scope.coCheckboxDaChon = false;
+                                     $scope.selectAll = false;
+                                     Swal.fire('Xác nhận giao đơn thành công!', '', 'success');
+                                 });
+                             });          
+                     };
+                 });
+ 
+             };
+         });
+     };
 
     // Hoá đơn chi tiết
     $scope.look = function (pending) {
@@ -170,11 +228,17 @@ app.controller("Details2Controller", function ($scope, $routeParams, $http) {
         $http.get("http://localhost:8080/hoaDon/chiTietHoaDon/choXacNhan/id=" + id, { headers })
             .then(function (response) {
                 const invoice = response.data;
-                $scope.invoice = invoice;
+                const hdct = invoice.hoaDonChiTiets;
+                $scope.hdct = hdct;
+                const lshd = invoice.lichSuHoaDons;
+                $scope.lshd = lshd;
+                const hoaDon = invoice.hoaDon;
+                $scope.hoaDon = hoaDon;
             });
     }
 
     $scope.loadData();
+
     //Phân trang
     $scope.pager = {
         page: 1,

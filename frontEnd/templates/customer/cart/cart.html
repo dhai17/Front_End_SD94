@@ -33,7 +33,7 @@
 										<img src="https://www.chuphinhsanpham.vn/wp-content/uploads/2021/06/chup-hinh-giay-dincox-shoes-c-photo-studio-5.jpg" width="80px", height="80px">
 									</td>
 									<td>{{ gioHangChiTiet.sanPhamChiTiet.sanPham.tenSanPham }}</td>
-									<td>{{ gioHangChiTiet.sanPhamChiTiet.sanPham.gia }} VND</td>
+									<td>{{ gioHangChiTiet.sanPhamChiTiet.sanPham.gia.toLocaleString('vi-VN')}} VNĐ</td>
 									<td>
 										<input type="text" class="form-control text-center quantity-amount" 
 											ng-model="gioHangChiTiet.soLuong" placeholder=""
@@ -46,7 +46,7 @@
 											ng-show="gioHangChiTiet.showButtons">Hủy</button>
 									</td>
 
-									<td>{{ gioHangChiTiet.thanhTien }} VND</td>
+									<td>{{ gioHangChiTiet.thanhTien.toLocaleString('vi-VN')}} VNĐ</td>
 									<td>
 										<div class="button-group">
 											<button type="button" class="btn btn-link btn-sm btn-rounded"
@@ -89,7 +89,7 @@
 									<span class="text-black">Tiền tạm tính</span>
 								</div>
 								<div class="col-md-6 text-right">
-									<strong class="text-black"><span id="cart-tienTamTinh" ng-bind="tienTamTinh + ' VNĐ'" ng-model="tienTamTinh"></span></strong>
+									<strong class="text-black"><span id="cart-tienTamTinh" ng-bind="tienTamTinh.toLocaleString('vi-VN') + ' VNĐ'" ng-model="tienTamTinh"></span></strong>
 								</div>
 							</div>
 

@@ -1,33 +1,65 @@
 
-<div  class="container-fluid" ng-controller="DetailsController">
+<div  class="container-fluid" ng-controller="Details4Controller">
     <div class="container-fluid my-auto d-flex align-items-center">
         <div class="mx-auto">
             <h1>Hoá đơn chi tiết</h1>
         </div>
     </div>
     <a href="#!/da-giao" class="button back-button">Trở lại</a>
+    <P>Mã hoá đơn: {{hoaDon.maHoaDon}} </P>
+    <P>Tên khách hàng: {{hoaDon.nguoiNhan}} </P>
+    <P>Thời gian tạo : {{hoaDon.createdDate| date:'hh:mm|dd/MM/yyyy'}} </P>
     <table class="table align-middle mb-1 bg-white" id="tableBillĐetail">
         <thead class="bg-light">
             <tr>
                 <th>#</th>
-                <th>Name</th>
-                <th>Color</th>
-                <th>Size</th>
-                <th>UnitPrice</th>
-                <th>Quantity</th>
-                <th>TotalPayment</th>  
-                <th>Actions</th>
+                <th>Tên sản phẩm</th>
+                <th>Màu sắc</th>
+                <th>Kích cỡ</th>
+                <th>Đơn giá</th>
+                <th>Số lượng</th>
+                <th>thành tiềnn</th>  
+                <th>Thao tác</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="invoice1 in pager.invoice">
+            <tr ng-repeat="invoice1 in hdct">
                 <td>{{$index + 1}}</td>
-                <td>{{ invoice1.productDetails.product.name}}</td>
-                <td>{{ invoice1.productDetails.productColor.color}}</td>
-                <td>{{ invoice1.productDetails.productSize.shoeSize}}</td>
-                <td>{{ invoice1.unitPrice}}</td>
-                <td>{{ invoice1.quantity}}</td>
-                <td>{{ invoice1.totalPayment}}</td>
+                <td>{{ invoice1.sanPhamChiTiet.sanPham.tenSanPham}}11</td>
+                <td>{{ invoice1.sanPhamChiTiet.mauSac.tenMauSac}}</td>
+                <td>{{ invoice1.sanPhamChiTiet.kichCo.kichCo}}</td>
+                <td>{{ invoice1.donGia}}</td>
+                <td>{{ invoice1.soLuong}}</td>
+                <td>{{ invoice1.thanhTien}}</td>
+                <td>
+                    <button type="button" class="btn btn-link btn-sm btn-rounded"
+                            ng-click="xoa(invoice1)">
+                            <i class="bx bx-trash me-2"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="container-fluid my-auto d-flex align-items-center">
+        <div class="mx-auto">
+            <h2>Lịch sử hoá đơn</h2>
+        </div>
+    </div>
+    <table class="table align-middle mb-1 bg-white" id="tableLSHD">
+        <thead class="bg-light">
+            <tr>
+                <th>#</th>
+                <th>Người tạo</th>
+                <th>Ngày tạo</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="lshd1 in lshd">
+                <td>{{$index + 1}}</td>
+                <td> {{ lshd1.nhanVien.hoTen}}</td>
+                <td>{{ lshd1.createdDate| date:'hh:mm:dd/MM/yyyy'}}</td>
+                <td>{{ lshd1.thaoTac}}</td>
             </tr>
         </tbody>
     </table>
@@ -35,5 +67,47 @@
         <button class="btn active" ng-repeat="pageNumber in pager.pageNumbers" ng-click="pager.page = pageNumber">
             {{pageNumber}}
         </button>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title mb-5">Mốc thời gian</h4>
+        
+                        <div class="hori-timeline" dir="ltr">
+                            <ul class="list-inline events">
+                                <li class="list-inline-item event-list" >
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-primary text-primary">{{hoaDon.createdDate| date:'hh:mm|dd/MM/yyyy'}}</div>
+                                        <h5 class="font-size-16">Đặt hàng</h5>
+                                        <p class="text-muted">Thời gian khách hàng đặt hàng</p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list" ng-repeat="lshd1 in lshd| orderBy:'+id'">
+                                    <div class="px-4"  ng-if="lshd1.trangThai.id==4">
+                                        <div class="event-date bg-soft-warning text-warning">{{lshd1.createdDate| date:'hh:mm|dd/MM/yyyy'}}</div>
+                                        <h5 class="font-size-16">Đã giao đơn hàng</h5>
+                                        <p class="text-muted">Đơn hàng đã được giao tới tay khách hàng</p>
+                                    </div>
+                                    <div class="px-4"  ng-if="lshd1.trangThai.id==3">
+                                        <div class="event-date bg-soft-success text-success">{{lshd1.createdDate| date:'hh:mm|dd/MM/yyyy'}}</div>
+                                        <h5 class="font-size-16">Giao đơn hàng</h5>
+                                        <p class="text-muted">Đơn hàng đang được vận chuyển tới khách hàng</p>
+                                    </div>
+                                    <div class="px-4" ng-if="lshd1.trangThai.id==2">
+                                        <div class="event-date bg-soft-primary text-primary">{{lshd1.createdDate| date:'hh:mm|dd/MM/yyyy'}}</div>
+                                        <h5 class="font-size-16">Xác nhận đơn</h5>
+                                        <p class="text-muted">Đơn hàng đã được xác nhận bởi cửa hàng</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- end card -->
+            </div>
+        </div>
     </div>
 </div>
