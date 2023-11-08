@@ -48,7 +48,7 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = {
-                    checkOut_email
+                    email_user: checkOut_email
                 }
                 $http.post("http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang-tatCa", data, { headers })
                     .then(function (response) {
@@ -112,8 +112,8 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = {
-                    id,
-                    checkOut_email
+                    id:id,
+                    email_user: checkOut_email
                 }
                 $http.post("http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang", data, { headers })
                     .then(function (response) {
@@ -213,8 +213,8 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
                  }).then((result) => {
                      if (result.isConfirmed) {
                          let data = {
-                             id_hoaDon,
-                             checkOut_email
+                             id_hoaDon:id_hoaDon,
+                             email_user: checkOut_email
                          }
                          $http.put("http://localhost:8080/hoaDon/datHang/choGiaoHang/giaoDonHang/daChon", data, { headers })
                              .then(function (response) {

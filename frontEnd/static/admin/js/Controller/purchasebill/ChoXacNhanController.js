@@ -38,7 +38,8 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = {
-                    checkOut_email
+                    email_user: checkOut_email,
+
                 }
                 $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/xacNhanDon/tatCa", data, { headers })
                     .then(function (response) {
@@ -104,8 +105,8 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = {
-                    id,
-                    checkOut_email
+                    id :id,
+                    email_user: checkOut_email
                 }
                 $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/daXacNhan", data, { headers })
                     .then(function (response) {
@@ -136,8 +137,8 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = {
-                    id,
-                    checkOut_email
+                    id:id,
+                    email_user: checkOut_email
                 }
                 $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/huyDon", data, { headers })
                     .then(function (response) {
@@ -237,8 +238,8 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         let data = {
-                            id_hoaDon,
-                            checkOut_email
+                            id_hoaDon:id_hoaDon,
+                            email_user: checkOut_email
                         }
                         $http.put("http://localhost:8080/hoaDon/datHang/choXacNhan/xacNhanDon/daChon", data, { headers })
                             .then(function (response) {
@@ -273,8 +274,8 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         let data = {
-                            id_hoaDon,
-                            checkOut_email
+                            id_hoaDon:id_hoaDon,
+                            email_user: checkOut_email
                         }
                         $http.put("http://localhost:8080/hoaDon/datHang/choXacNhan/huyDon/daChon", data, { headers })
                             .then(function (response) {

@@ -76,8 +76,8 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = {
-                    id,
-                    checkOut_email
+                    id:id,
+                    email_user: checkOut_email
                 }
                 $http.post("http://localhost:8080/hoaDon/datHang/dangGiaoHang/capNhatTrangThai/daGiaoHang", data, { headers })
             .then(function (response) {
@@ -106,8 +106,8 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = {
-                    id,
-                    checkOut_email
+                    id:id,
+                    email_user: checkOut_email
                 }
                 $http.post("http://localhost:8080/hoaDon/datHang/dangGiaoHang/capNhatTrangThai/huyDon5", data, { headers })
                 .then(function (response) {
