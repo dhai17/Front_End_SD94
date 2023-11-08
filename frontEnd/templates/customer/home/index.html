@@ -120,6 +120,7 @@
 			transform: scale(1.1);
 		}
 	</style>
+	<script src="/static/admin/js/Controller/logOut/LogOut.js"></script>
 
 
 </head>
@@ -146,7 +147,33 @@
 					<li><a class="nav-link" href="about.html">Đơn hàng</a></li>
 				</ul>
 				<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-					<li><a class="nav-link" href="#"><img src="/static/customer/images/user.svg"></a></li>
+					<ul class="navbar-nav flex-row align-items-center ms-auto">
+						<!-- User -->
+						<li class="nav-item navbar-dropdown dropdown-user dropdown">
+							<a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+								data-bs-toggle="dropdown">
+								<div class="avatar avatar-online">
+									<img src="/static/customer/images/user.svg" alt
+										class="w-px-40 h-auto rounded-circle" />
+								</div>
+							</a>
+							<ul class="dropdown-menu dropdown-menu-end">
+								<li>
+									<a class="dropdown-item" href="">
+										<i class="bx bx-user me-2"></i>
+										<span class="align-middle">Thông tin</span>
+									</a>
+								</li>
+								<li ng-controller="LogoutController">
+									<a class="dropdown-item" href="#!/" id="dangXuat-homeAdmin" ng-click="logout()">
+										<i class="fas fa-sign-out-alt me-2"></i>
+										<span class="align-middle">Đăng xuất</span>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<!--/ User -->
+					</ul>
 					<li><a class="nav-link" href="#!/cart-list"><img src="/static/customer/images/cart.svg"></a></li>
 				</ul>
 			</div>
