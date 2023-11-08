@@ -27,8 +27,33 @@ document.addEventListener("DOMContentLoaded", function () {
     if (userNameElement) {
         userNameElement.innerText = userInfo.username;
     }
+
     let userRoleElement = document.getElementById('userRole');
     if (userRoleElement) {
         userRoleElement.innerText = userInfo.role;
     }
+
+    if (userInfo.role === "STAFF") {
+        const menuToHide = document.getElementById('nhanVienMenuItem');
+
+        if (menuToHide) {
+            menuToHide.style.display = "none";
+        }
+    }
+
+
+    if (userInfo.role === "STAFF") {
+        const menuToHide = document.getElementById('SanPhamMenuItem');
+
+        if (menuToHide) {
+            menuToHide.style.display = "none";
+        }
+    }
+
+    window.addEventListener('offline', e => {
+        const textHide = document.getElementById('running-text');
+        if (textHide) {
+            textHide.style.display = "block"; 
+        }
+    });
 });

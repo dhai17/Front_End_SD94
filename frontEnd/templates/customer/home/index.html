@@ -1,30 +1,127 @@
 <!doctype html>
-<html ng-app = "myAppCustomer">
+<html ng-app="myAppCustomer">
 
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="Untree.co">
-	<link rel="shortcut icon" href="favicon.png">
+	<link rel="shortcut icon" href="/static/customer/">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-route.js"></script>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-route.js"></script>
 	<meta name="description" content="" />
 	<meta name="keywords" content="bootstrap, bootstrap4" />
-
-	<!-- Bootstrap CSS -->
 	<link href="/static/customer/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 	<link href="/static/customer/css/tiny-slider.css" rel="stylesheet">
 	<link href="/static/customer/css/style.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <link rel="stylesheet" href="/static/admin/assets/vendor/fonts/boxicons.css" />
-	
-	
+	<link rel="stylesheet" href="/static/admin/assets/vendor/fonts/boxicons.css" />
 	<script src="/static/customer/js/home/homeControllerCustomer.js"></script>
-	<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
+	<link rel="stylesheet" href="/static/sales/online/sanPham/ChiTGietSanPham.css">
+	<script src="/static/sales/online/sanPham/ChiTietSanPham.js"></script>
+	<script src="/static/sales/online/sanPham/CTSP.Controller.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="/static/customer/js/sanPham/DSSP.Controller.js"></script>
+	<title>SD_94</title>
+	<style>
+		.kichCo-sanPhamcustomer {
+			display: inline-block;
+			padding: 10px 20px;
+			margin: 4px;
+			border: none;
+			border-radius: 20px;
+			background-color: black;
+			color: #fff;
+			cursor: pointer;
+			font-size: 13px;
+			text-align: center;
+			text-decoration: none;
+			transition: background-color 0.3s ease, transform 0.2s ease;
+		}
+
+		.kichCo-sanPhamcustomer:hover {
+			background-color: #2980b9;
+			transform: scale(1.1);
+		}
+
+		.kichCo-sanPhamcustomer.selected {
+			background-color: #2980b9;
+			transform: scale(1.1);
+		}
+
+		.kichCo-sanPhamcustomer.selected span {
+			color: #2980b9;
+			color: #fff;
+		}
+
+		.mauSac-sanPhamcustome {
+			display: inline-block;
+			width: 35px;
+			height: 35px;
+			border: none;
+			border-radius: 50%;
+			margin-left: 6px;
+			/* Biến thành hình tròn */
+			cursor: pointer;
+			transition: background-color 0.3s ease, transform 0.2s ease;
+		}
+
+		.mauSac-sanPhamcustome:hover {
+			background-color: #2980b9;
+			transform: scale(1.1);
+		}
+
+		.mauSac-sanPhamcustome.selected {
+			background-color: #27ae60;
+			border: solid #2980b9 2px;
+			transform: scale(1.1);
+		}
+
+		#div-kichCoCustomer {
+			display: flex;
+		}
+
+		#div-inputSoLuong {
+			display: flex;
+		}
+
+		#div-inputSoLuong {
+			display: flex;
+			align-items: center;
+		}
+
+		#input-chonSoLuong {
+			width: 300px;
+			height: 30px;
+			margin-left: 15px;
+		}
+
+		#text-inputSoLuong {
+			margin-right: 10px;
+		}
+
+		#cart-inputSoLuong {
+			width: 100%;
+			text-align: center;
+			display: block;
+			margin: 0 auto;
+			border: none !important;
+			outline: none;
+		}
+
+		td button {
+			display: block;
+			margin: 0 auto;
+		}
+
+		td button:hover {
+			transform: scale(1.1);
+		}
+	</style>
+
+
 </head>
 
 <body>
@@ -33,7 +130,7 @@
 	<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
 		<div class="container">
-			<a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+			<a class="navbar-brand" href="index.html">Adudas<span>.</span></a>
 
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
 				aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,15 +140,11 @@
 			<div class="collapse navbar-collapse" id="navbarsFurni">
 				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
 					<li class="nav-item active">
-						<a class="nav-link" href="index.html">Home</a>
+						<a class="nav-link" href="index.html">Trang chủ</a>
 					</li>
-					<li><a class="nav-link" href="shop.html">Shop</a></li>
-					<li><a class="nav-link" href="about.html">About us</a></li>
-					<li><a class="nav-link" href="services.html">Services</a></li>
-					<li><a class="nav-link" href="blog.html">Blog</a></li>
-					<li><a class="nav-link" href="contact.html">Contact us</a></li>
+					<li><a class="nav-link" href="#!/product-list">Sản phẩm</a></li>
+					<li><a class="nav-link" href="about.html">Đơn hàng</a></li>
 				</ul>
-
 				<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 					<li><a class="nav-link" href="#"><img src="/static/customer/images/user.svg"></a></li>
 					<li><a class="nav-link" href="#!/cart-list"><img src="/static/customer/images/cart.svg"></a></li>
@@ -68,11 +161,10 @@
 			<div class="row justify-content-between">
 				<div class="col-lg-5">
 					<div class="intro-excerpt">
-						<h1>Modern Interior <span clsas="d-block">Design Studio</span></h1>
-						<p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam
-							vulputate velit imperdiet dolor tempor tristique.</p>
-						<p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#"
-								class="btn btn-white-outline">Explore</a></p>
+						<h1>Cửa hàng bán giày trực tuyến <span clsas="d-block">Adudas</span></h1>
+						<p class="mb-4">Đối với chúng tôi, mỗi khách hàng là một thượng đế. Chúng tôi đặt ra một mục
+							tiêu duy nhất là làm hài lòng tất cả khách hàng</p>
+						<p><a href="" class="btn btn-secondary me-2">Khám phá sản phẩm</a>
 					</div>
 				</div>
 				<div class="col-lg-7">
@@ -92,7 +184,7 @@
 
 
 	<footer class="footer-section">
-		<div class="container relative">
+		<div class="container-fluid relative">
 
 			<div class="sofa-img">
 				<img src="/static/customer/images/sofa.png" alt="Image" class="img-fluid">
@@ -100,16 +192,15 @@
 
 			<div class="row g-5 mb-5">
 				<div class="col-lg-4">
-					<div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Furni<span>.</span></a></div>
-					<p class="mb-4">Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus
-						malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.
-						Pellentesque habitant</p>
+					<div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Adudas<span>.</span></a></div>
+					<p class="mb-4">Chúng tôi luôn mang đến cho khách hàng những trải nghiệm mau sắm tuyệt vời nhất.
+						Chúng tôi ở đây để đem đến cho các bạn những sản phẩm chất lượng cũng như với giá thành phải
+						chăng
+					</p>
 
 					<ul class="list-unstyled custom-social">
-						<li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
-						<li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
-						<li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
-						<li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+						<li><a href="https://www.facebook.com/hduon25"><span
+									class="fa fa-brands fa-facebook-f"></span></a></li>
 					</ul>
 				</div>
 
@@ -117,35 +208,23 @@
 					<div class="row links-wrap">
 						<div class="col-6 col-sm-6 col-md-3">
 							<ul class="list-unstyled">
-								<li><a href="#">About us</a></li>
-								<li><a href="#">Services</a></li>
-								<li><a href="#">Blog</a></li>
-								<li><a href="#">Contact us</a></li>
+								<li><a href="#">Tìm hiểu về chúng tôi</a></li>
+								<li><a href="#">Sản phẩm</a></li>
+								<li><a href="#">Fanpage</a></li>
+								<li><a href="#">Liên hệ</a></li>
 							</ul>
 						</div>
 
 						<div class="col-6 col-sm-6 col-md-3">
 							<ul class="list-unstyled">
-								<li><a href="#">Support</a></li>
-								<li><a href="#">Knowledge base</a></li>
-								<li><a href="#">Live chat</a></li>
+								<li><a href="#">Hỗ trợ</a></li>
 							</ul>
 						</div>
 
 						<div class="col-6 col-sm-6 col-md-3">
 							<ul class="list-unstyled">
-								<li><a href="#">Jobs</a></li>
-								<li><a href="#">Our team</a></li>
-								<li><a href="#">Leadership</a></li>
-								<li><a href="#">Privacy Policy</a></li>
-							</ul>
-						</div>
-
-						<div class="col-6 col-sm-6 col-md-3">
-							<ul class="list-unstyled">
-								<li><a href="#">Nordic Chair</a></li>
-								<li><a href="#">Kruzo Aero</a></li>
-								<li><a href="#">Ergonomic Chair</a></li>
+								<li><a href="#">Công việc</a></li>
+								<li><a href="#">Thành viên</a></li>
 							</ul>
 						</div>
 					</div>
@@ -153,25 +232,11 @@
 
 			</div>
 
-			<div class="border-top copyright">
-				<div class="row pt-4">
-					<div class="col-lg-6">
-						<p class="mb-2 text-center text-lg-start">Copyright &copy;
-							<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash;
-							Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a
-								hreff="https://themewagon.com">ThemeWagon</a>
-							<!-- License information: https://untree.co/license/ -->
-						</p>
-					</div>
-
-					<div class="col-lg-6 text-center text-lg-end">
-						<ul class="list-unstyled d-inline-flex ms-auto">
-							<li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
-							<li><a href="#">Privacy Policy</a></li>
-						</ul>
-					</div>
-
-				</div>
+			<div>
+				<p class="mt-5 text-center text-lg-start">Dự án tốt nghiệp &copy;
+					<script>document.write(new Date().getFullYear());</script>Nhóm SD94 <a
+						href="https://untree.co">Website bán giày</a> Adudas
+				</p>
 			</div>
 
 		</div>
@@ -183,6 +248,7 @@
 	<script src="/static/customer/js/tiny-slider.js"></script>
 	<script src="/static/customer/js/custom.js"></script>
 	<script src="/static/customer/js/cart/cart.js"></script>
+
 </body>
 
 </html>

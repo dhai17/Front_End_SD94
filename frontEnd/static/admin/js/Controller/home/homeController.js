@@ -52,7 +52,7 @@ app.config(function ($routeProvider) {
             controller: "Details3Controller",
         })
         .when("/detailed-invoice4", {
-            templateUrl: "/templates/admin/detailedInvoice/details2.html",
+            templateUrl: "/templates/admin/detailedInvoice/details4.html",
             controller: "Details4Controller",
         })
         .when("/detailed-invoice5", {
@@ -200,9 +200,18 @@ app.config(function ($routeProvider) {
             redirectTo: "/",
         });
 });
+
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/logout', {
         templateUrl: 'templates/admin/login/login.html',
         controller: "loginController",
+    });
+}]);
+
+//Bán hàng
+app.config(['$routeProvider', function ($routeProvider) {
+    $routeProvider.when('/banHangTaiQuay', {
+        templateUrl: '/templates/banHang/taiQuay/BanHang.html',
+        controller: "BanHangTaiQuayController",
     });
 }]);

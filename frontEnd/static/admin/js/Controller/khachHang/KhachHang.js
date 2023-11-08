@@ -69,10 +69,10 @@ app.controller("CustomerController", function ($scope, $http) {
 
     // Xóa trong danh sách
     $scope.deleteCustomer = function (promotion) {
-                        let id = promotion.id;
-                let data = {
-                    id
-                }
+        let id = promotion.id;
+        let data = {
+            id
+        }
         Swal.fire({
             title: 'Xác nhận xóa khách hàng',
             text: 'Bạn có chắc chắn muốn xóa khách hàng này?',
@@ -107,6 +107,34 @@ app.controller("CustomerController", function ($scope, $http) {
         });
     }
 
+
+    $scope.$watch('searchTerm', function (newVal) {
+        if (newVal) {
+            $http.get("http://localhost:8080/khachHang/timKiem=" + newVal, { headers })
+                .then(function (response) {
+                    const promotions = response.data;
+                    promotions.forEach(function (promotion) {
+                    });
+                    promotions.forEach(function (promotion) {
+                        promotion.status5 = getStatusText(promotion.status);
+
+                    });
+
+                    // Cập nhật lại dữ liệu trong table nhưng không load lại trang by hduong25
+                    $scope.$evalAsync(function () {
+                        $scope.promotions = promotions;
+                    });
+                });
+        } else {
+            $http.get("http://localhost:8080/khachHang/danhSach", { headers }).then(function (response) {
+                const promotions = response.data;
+
+                $scope.promotions = promotions;
+
+            });
+        }
+    });
+
     // Tìm kiếm
     $scope.searchAllCustomer = function (searchTerm) {
         $http.get("http://localhost:8080/khachHang/timKiem=" + searchTerm, { headers })
@@ -126,7 +154,7 @@ app.controller("CustomerController", function ($scope, $http) {
         let formattedDate = formatDate(selectedDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http.get("http://localhost:8080/timKiemNgay=" + formattedDate, { headers })
+        $http.get("http://localhost:8080/khachHang/timKiemNgay=" + formattedDate, { headers })
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {

@@ -1,0 +1,22 @@
+<div class="untree_co-section product-section before-footer-section" ng-controller="danhSachSanPhamController">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-3 mb-5" ng-repeat="sanPham in pager.sanPham">
+                <a class="product-item" ng-click = "getSanPhamChiTiet(sanPham)">
+                    <img src="/static/customer/images/bowl-2.png" class="img-fluid product-thumbnail">
+                    <h3 class="product-title">{{ sanPham.tenSanPham }}</h3>
+                    <strong class="product-price">{{ sanPham.gia }} VNĐ</strong>
+
+                    <span class="icon-cross">
+                        <img src="/static/customer/images/cross.svg" class="img-fluid">
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-center">
+        <button class="btn" ng-repeat="pageNumber in pager.pageNumbers" ng-click="pager.page = pageNumber">
+            {{pageNumber}}
+        </button>
+    </div>
+</div>
