@@ -20,7 +20,7 @@
     <script src="/static/sales/online/checkOut/checkOut.App.js"></script>
     <script src="/static/sales/online/checkOut/checkOutController.js"></script>
     <style>
-        
+
     </style>
 </head>
 
@@ -140,22 +140,24 @@
                     <div class="div-maGiamGia">
                         <input type="text" id="maGiamGia" class="maGiamGia" name="maGiamGia"
                             placeholder="Thêm mã giảm giá">
-                        <button class="btn-apply themMaGiamGiaOnline" type="submit" th:attr="data-id=${hoaDon.id}">SỬ
+                        <button class="btn-apply themMaGiamGiaOnline" type="submit" ng-click="addKhuyenMai()">SỬ
                             DỤNG</button>
                     </div>
                     <br>
                     <hr>
 
-                    <p class="cart__discount">Tạm tính: <span id="subtotal">{{tienTamTinh.toLocaleString('vi-VN') + ' VNĐ' }}</span>
+                    <p class="cart__discount">Tạm tính: <span id="subtotal">{{tienTamTinh.toLocaleString('vi-VN') + '
+                            VNĐ' }}</span>
                     </p>
 
                     <p class="cart__discount">
                         <label for="shippingFee">Phí vận chuyển: </label>
-                        <label type="text" id="shippingFee" readonly>{{tienShip.toLocaleString('vi-VN') + ' VNĐ' }}</label>
+                        <label type="text" id="shippingFee" readonly>{{tienShip.toLocaleString('vi-VN') + ' VNĐ'
+                            }}</label>
                     </p>
 
-                    <p class="cart__discount">Giảm giá đã áp dụng: <span id="tenGiamGia"></span></p>
-                    <p class="cart__discount">Giảm giá: <span id="discount">0 đ</span></p>
+                    <p class="cart__discount">Giảm giá đã áp dụng: <span id="tenGiamGia">{{hoaDon.khuyenMai.tenKhuyenMai}}</span></p>
+                    <p class="cart__discount">Giảm giá: <span id="discount">{{hoaDon.tienGiam.toLocaleString('vi-VN') + ' VNĐ' }}</span></p>
 
                     <hr>
                     <p class="tongCongTien">Tổng cộng: <span id="total">{{tongTienHoaDon.toLocaleString('vi-VN') + ' VNĐ' }}</span></p>

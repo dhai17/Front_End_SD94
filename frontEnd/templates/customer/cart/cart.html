@@ -32,7 +32,23 @@
 									<td>
 										<img src="https://www.chuphinhsanpham.vn/wp-content/uploads/2021/06/chup-hinh-giay-dincox-shoes-c-photo-studio-5.jpg" width="80px", height="80px">
 									</td>
-									<td>{{ gioHangChiTiet.sanPhamChiTiet.sanPham.tenSanPham }}</td>
+									<td>
+										<div>
+                                            <h6>
+                                                <strong>
+                                                    <span style="text-transform: uppercase"
+                                                        class="TenSP">{{ gioHangChiTiet.sanPhamChiTiet.sanPham.tenSanPham }}</span>
+                                                </strong>
+                                            </h6>
+                                            <div class="ThongTinSP">
+                                                <span>{{gioHangChiTiet.sanPhamChiTiet.mauSac.tenMauSac}}</span>
+                                                <span>/</span>
+                                                <span>{{gioHangChiTiet.sanPhamChiTiet.kichCo.kichCo}}</span>
+                                                <br>
+                                            </div>
+                                        </div>
+
+									</td>
 									<td>{{ gioHangChiTiet.sanPhamChiTiet.sanPham.gia.toLocaleString('vi-VN')}} VNĐ</td>
 									<td>
 										<input type="text" class="form-control text-center quantity-amount" 
@@ -68,12 +84,6 @@
 						<div class="col-md-3 mt-3">
 							<button class="btn btn-outline-black btn-sm btn-block" style="border-radius: 10px;">Tiếp tục mua sắm</button>
 						</div>
-
-						<div class="col-md-3 mt-3">
-							<button class="btn btn-outline-black btn-sm btn-block" ng-click="updateCart(gioHangChiTiet)" style="border-radius: 10px;">Cập
-								nhật giỏ hàng</button>
-						</div>
-
 					</div>
 				</div>
 				<div class="col-md-6 pl-5">

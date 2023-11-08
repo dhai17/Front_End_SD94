@@ -58,6 +58,12 @@ app.controller("checkOutController", function ($scope, $http) {
                 let b = $("#shippingFee").text();
                 let c = $("#subtotal").text();
 
+                let tinhThanhPho = $("#province option:selected").text();
+                let quanHuyen = $("#district option:selected").text();
+                let phuongXa = $("#ward option:selected").text();
+                let diaChiNhap = $scope.diaChi;
+                let diaChi = diaChiNhap + " - " + phuongXa + " - " + quanHuyen + " - " + tinhThanhPho
+
                 const tongTienHoaDon = fomatTien(c);
                 const tienShip = fomatTien(b);
                 const tongTienDonHang = fomatTien(a);
@@ -70,7 +76,8 @@ app.controller("checkOutController", function ($scope, $http) {
                     tienShip: tienShip,
                     tongTienHoaDon: tongTienHoaDon,
                     tongTienDonHang: tongTienDonHang,
-                    email_user: decodedToken.email
+                    email_user: decodedToken.email,
+                    diaChi: diaChi
                 }
                 $http.post("http://localhost:8080/api/banHang/online/datHang", data, { headers })
                     .then(function (response) {
@@ -79,12 +86,93 @@ app.controller("checkOutController", function ($scope, $http) {
                             title: "Đặt hàng thành công",
                             showConfirmButton: false,
                             timer: 2000,
-                        }).then(()=>{
+                        }).then(() => {
                             window.location.href = "http://127.0.0.1:5501/templates/customer/home/index.html#!/";
                         })
 
                     });
             }
         });
+    }
+
+    $scope.thanhToan = function () {
+        Swal.fire({
+            title: 'Xác nhận đặt hàng',
+            text: 'Bạn có muốn đặt hàng không?',
+            icon: 'success',
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let a = $("#total").text();
+                let b = $("#shippingFee").text();
+                let c = $("#subtotal").text();
+
+                let tinhThanhPho = $("#province option:selected").text();
+                let quanHuyen = $("#district option:selected").text();
+                let phuongXa = $("#ward option:selected").text();
+                let diaChiNhap = $scope.diaChi;
+                let diaChi = diaChiNhap + " - " + phuongXa + " - " + quanHuyen + " - " + tinhThanhPho
+
+                const tongTienHoaDon = fomatTien(c);
+                const tienShip = fomatTien(b);
+                const tongTienDonHang = fomatTien(a);
+
+                let data = {
+                    id: id_HoaDon,
+                    ghiChu: $scope.ghiChu,
+                    email: $scope.email,
+                    soDienThoai: $scope.soDienThoai,
+                    tienShip: tienShip,
+                    tongTienHoaDon: tongTienHoaDon,
+                    tongTienDonHang: tongTienDonHang,
+                    email_user: decodedToken.email,
+                    diaChi: diaChi
+                }
+
+                $http.post("http://localhost:8080/payment/create", data)
+                    .then(function (response) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Đang chuyển hướng sang trang thanh toán",
+                            showConfirmButton: false,
+                            timer: 2000
+                        }).then(() => {
+                            window.location.href = response.data.createURL;
+                        });
+                    })
+                    .catch(function (e) {
+                        console.log(e);
+                    })
+            }
+        });
+    }
+
+    $scope.addKhuyenMai = function () {
+        let a = $("#maGiamGia").val();
+        let data = {
+            id: id_HoaDon,
+            tenMaGiamGia: a
+        }
+
+        $http.post("http://localhost:8080/api/banHang/online/add/khuyenMai", data, { headers })
+            .then(function (response) {
+                const hoaDon = response.data;
+                $scope.$evalAsync(function () {
+                    $scope.tienTamTinh = hoaDon.tongTienHoaDon;
+                    $scope.tongTienHoaDon = hoaDon.tongTienDonHang;
+                    $scope.hoaDon = hoaDon;
+                    Swal.fire({
+                        icon: "success",
+                        title: "Thêm mã giảm giá thành công",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                });
+            })
+            .catch(function (e) {
+                console.log(e);
+            })
     }
 });
