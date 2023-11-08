@@ -19,6 +19,9 @@
     <script src="/static/sales/online/BanHangOnline.js"></script>
     <script src="/static/sales/online/checkOut/checkOut.App.js"></script>
     <script src="/static/sales/online/checkOut/checkOutController.js"></script>
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -35,10 +38,14 @@
                         <p class="cac-title" id="thongTinGiaohang">Thông tin giao hàng</p>
 
                         <div>
-                            <input type="text" id="checkOut-HoTen" name="hoTen" placeholder="Nhập họ và tên">
-                            <input type="text" id="checkOut-SDT" name="sdt" placeholder="Nhập số điện thoại">
-                            <input type="text" id="checkOut-email" name="nhapEmail" placeholder="Nhập email">
-                            <input type="text" id="checkOut-diaChi" name="addressInput" placeholder="Nhập địa chỉ">
+                            <input type="text" id="checkOut-HoTen" name="hoTen" placeholder="Nhập họ và tên"
+                                ng-model="hoTen">
+                            <input type="text" id="checkOut-SDT" name="sdt" placeholder="Nhập số điện thoại"
+                                ng-model="soDienThoai">
+                            <input type="text" id="checkOut-email" name="nhapEmail" placeholder="Nhập email"
+                                ng-model="email">
+                            <input type="text" id="checkOut-diaChi" name="addressInput" placeholder="Nhập địa chỉ"
+                                ng-model="diaChi">
                         </div>
 
                         <div class="chon-dia-chi">
@@ -59,8 +66,8 @@
                             </div>
                         </div>
 
-                        <textarea id="note" name="note" th:text="${hoaDon.ghiChu}"
-                            placeholder="Nhập ghi chú cho đơn hàng"></textarea>
+                        <textarea id="note" name="note" placeholder="Nhập ghi chú cho đơn hàng"
+                            ng-model="ghiChu"></textarea>
                     </div>
 
                     <hr>
@@ -100,11 +107,13 @@
                                     <div style="display: flex; align-items: center;">
                                         <!-- <img th:src="${'/customer/images/' + tenAnhChinhList[iter.index]}" alt=""
                                             style="margin-right: 10px;" width="100px" height="100px"> -->
-                                            <img src="https://giaycaosmartmen.com/wp-content/uploads/2020/12/cach-chup-giay-dep-9.jpg" style="margin-right: 10px;" width="100px" height="100px">
+                                        <img src="https://giaycaosmartmen.com/wp-content/uploads/2020/12/cach-chup-giay-dep-9.jpg"
+                                            style="margin-right: 10px;" width="100px" height="100px">
                                         <div>
                                             <h6>
                                                 <strong>
-                                                    <span style="text-transform: uppercase" class="TenSP">{{hoaDonChiTiet.sanPhamChiTiet.sanPham.tenSanPham}}</span>
+                                                    <span style="text-transform: uppercase"
+                                                        class="TenSP">{{hoaDonChiTiet.sanPhamChiTiet.sanPham.tenSanPham}}</span>
                                                 </strong>
                                             </h6>
                                             <div class="ThongTinSP">
@@ -112,15 +121,15 @@
                                                 <span>/</span>
                                                 <span>{{hoaDonChiTiet.sanPhamChiTiet.kichCo.kichCo}}</span>
                                                 <br>
-                                                <span ng-bind="hoaDonChiTiet.sanPhamChiTiet.sanPham.gia + ' VNĐ'"></span>
+                                                <span
+                                                    ng-bind="hoaDonChiTiet.sanPhamChiTiet.sanPham.gia.toLocaleString('vi-VN') + ' VNĐ'"></span>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                                 <td>{{hoaDonChiTiet.soLuong}}</td>
-                                <td>{{hoaDonChiTiet.thanhTien}} VNĐ</td>
+                                <td>{{hoaDonChiTiet.thanhTien.toLocaleString('vi-VN')}} VNĐ</td>
                             </tr>
-
                         </tbody>
                     </table>
                 </div>
@@ -131,109 +140,38 @@
                     <div class="div-maGiamGia">
                         <input type="text" id="maGiamGia" class="maGiamGia" name="maGiamGia"
                             placeholder="Thêm mã giảm giá">
-                        <button class="btn-apply themMaGiamGiaOnline" type="submit" th:attr="data-id=${hoaDon.id}">SỬ
-                            DỤNG
-                        </button>
+                        <button class="btn-apply themMaGiamGiaOnline" type="submit" ng-click="addKhuyenMai()">SỬ
+                            DỤNG</button>
                     </div>
                     <br>
                     <hr>
 
-                    <p class="cart__discount">Tạm tính: <span id="subtotal"
-                        ng-bind="hoaDon.tongTienHoaDon + ' VNĐ'"></span>
+                    <p class="cart__discount">Tạm tính: <span id="subtotal">{{tienTamTinh.toLocaleString('vi-VN') + '
+                            VNĐ' }}</span>
                     </p>
-
 
                     <p class="cart__discount">
                         <label for="shippingFee">Phí vận chuyển: </label>
-                        <label type="text" id="shippingFee" readonly></label>
+                        <label type="text" id="shippingFee" readonly>{{tienShip.toLocaleString('vi-VN') + ' VNĐ'
+                            }}</label>
                     </p>
 
-                    <p class="cart__discount">Giảm giá đã áp dụng: <span id="tenGiamGia"></span></p>
-                    <p class="cart__discount">Giảm giá: <span id="discount">0 đ</span></p>
+                    <p class="cart__discount">Giảm giá đã áp dụng: <span id="tenGiamGia">{{hoaDon.khuyenMai.tenKhuyenMai}}</span></p>
+                    <p class="cart__discount">Giảm giá: <span id="discount">{{hoaDon.tienGiam.toLocaleString('vi-VN') + ' VNĐ' }}</span></p>
 
                     <hr>
-                    <p class="tongCongTien">Tổng cộng: <span id="total" ng-bind="hoaDon.tongTienHoaDon + ' VNĐ'">0 đ</span></p>
+                    <p class="tongCongTien">Tổng cộng: <span id="total">{{tongTienHoaDon.toLocaleString('vi-VN') + ' VNĐ' }}</span></p>
                 </div>
 
-                <a th:href="@{/customer/gio-hang-chi-tiet}" class="cart-link2">Giỏ hàng</a>
+                <a th:href="#" class="cart-link2">Giỏ hàng</a>
 
                 <div class="button-container">
                     <div class="button-group">
-                        <form th:action="@{/payment/create}" method="post" id="paymentForm">
-                            <input type="hidden" name="orderCode" th:value="${hoaDon.id}" />
-
-                            <input type="hidden" id="amountInput" name="amount" value="" />
-
-                            <input type="hidden" name="diaChiGiaoHang" id="diaChiGiaoHang" value="">
-
-                            <input type="hidden" name="tienShipHD" id="tienShipHD" value="">
-
-                            <input type="hidden" name="tienGiamGia" id="tienGiamGia" value="">
-
-                            <input type="hidden" name="nameGiamGia" id="nameGiamGia" value="">
-
-                            <input type="hidden" name="nguoiNhan" id="nguoiNhan" value="">
-
-                            <input type="hidden" name="sdtNguoiNhan" id="sdtNguoiNhan" value="">
-
-                            <input type="hidden" name="ghiChu" id="ghiChu" value="">
-
-                            <input type="hidden" name="emailNguoiNhann" id="emailNguoiNhann" value="">
-
-                        </form>
-
-                        <!--Đặt hàng-->
-                        <button type="submit" id="buttonThanhToan" class="button-thanhToan"
-                            th:attr="data-id=${hoaDon.id}">
+                        <button type="submit" id="buttonThanhToan" class="button-thanhToan" ng-click="thanhToan()">
                             Thanh toán
                         </button>
-                        <div class="modal fade thanhToanVNPAY" tabindex="-1" aria-labelledby="thanhToanVNPAYModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="thanhToanVNPAYModalLabel"> Đặt hàng
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Bạn muốn đặt hàng?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary btn-dong-y">Đồng ý</button>
-                                        <button type="button" class="btn btn-secondary btn-khong"
-                                            data-bs-dismiss="modal">Không
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <button id="buttonDatHang" class="button-datHang" th:data-id="${hoaDon.id}">Đặt hàng</button>
-
-                        <div class="modal fade DatHangShipCod" tabindex="-1" aria-labelledby="DatHangShipCodModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="DatHangShipCodModalLabel"> Đặt hàng
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Bạn muốn đặt hàng?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary btn-dong-y">Đồng ý</button>
-                                        <button type="button" class="btn btn-secondary btn-khong"
-                                            data-bs-dismiss="modal">Không
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <button id="buttonDatHang" class="button-datHang" ng-click="datHang()">Đặt hàng</button>
                     </div>
                 </div>
             </div>

@@ -237,38 +237,50 @@ body {
     margin-bottom: 15px;
 }
 
-.tinhThanhPho {
-    width: 230px;
-    padding: 15px;
-    border: 1px solid #5a6268;
-    border-radius: 5px;
-    font-size: 16px;
-    color: #333;
-    background-color: #FFFFFF;
+.chon-dia-chi {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chon-dia-chi div {
+    display: flex;
+    align-items: center;
+}
+
+.tinhThanhPho,
+.chonQuanHuyen,
+.chonPhuongXa {
+    flex: 1;
     margin-right: 10px;
+}
+
+.tinhThanhPho select,
+.chonQuanHuyen select,
+.chonPhuongXa select {
+    width: 100%;
+}
+.chon-dia-chi {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tinhThanhPho,
+.chonQuanHuyen,
+.chonPhuongXa {
+    width: calc(100% - 10px);
+    margin-bottom: 10px;
 }
 
 .chonQuanHuyen {
-    width: 230px;
     flex-basis: calc(33.33% - 12px);
-    padding: 15px;
-    border: 1px solid #5a6268;
-    border-radius: 5px;
-    font-size: 16px;
-    color: #333;
-    background-color: #FFFFFF;
-    margin-right: 10px;
 }
 
-.chonPhuongXa {
-    width: 230px;
-    padding: 15px;
-    border: 1px solid #5a6268;
-    border-radius: 5px;
-    font-size: 16px;
-    color: #333;
-    background-color: #FFFFFF;
-    float: right;
+@media (min-width: 768px) {
+    .tinhThanhPho,
+    .chonQuanHuyen,
+    .chonPhuongXa {
+        width: 265px;
+    }
 }
 
 /* To remove the margin-right from the last select */

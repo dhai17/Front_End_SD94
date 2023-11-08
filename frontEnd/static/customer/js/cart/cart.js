@@ -34,6 +34,7 @@ app.controller("cartController", function ($scope, $http) {
     $scope.updateValue = function (gioHangChiTiet) {
         const idCart = gioHangChiTiet.id;
         const quantity = $("#cart-inputSoLuong").val();
+
         let data = {
             id: idCart,
             quanTity: quantity
@@ -105,10 +106,10 @@ app.controller("cartController", function ($scope, $http) {
     $scope.gioHangChiTietID = [];
     $scope.selectedGioHangChiTiet = function (gioHangChiTiet) {
         if (gioHangChiTiet.selected) {
-            $scope.tienTamTinh += gioHangChiTiet.sanPhamChiTiet.sanPham.gia;
+            $scope.tienTamTinh += gioHangChiTiet.thanhTien;
             $scope.gioHangChiTietID.push(gioHangChiTiet.id);
         } else {
-            $scope.tienTamTinh -= gioHangChiTiet.sanPhamChiTiet.sanPham.gia;
+            $scope.tienTamTinh -= gioHangChiTiet.thanhTien;
             const index = $scope.gioHangChiTietID.indexOf(gioHangChiTiet.id);
             if (index !== -1) {
                 $scope.gioHangChiTietID.splice(index, 1);
