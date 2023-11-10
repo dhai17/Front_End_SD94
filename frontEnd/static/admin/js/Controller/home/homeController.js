@@ -210,7 +210,13 @@ app.config(['$routeProvider', function ($routeProvider) {
 
 //Bán hàng
 app.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/banHangTaiQuay', {
+    $routeProvider
+    .when('/danhSachHoaDon', {
+        templateUrl: '/templates/banHang/taiQuay/DanhSachHoaDon.html',
+        controller: "danhSachHoaDonController",
+    })
+
+    .when('/banHang', {
         templateUrl: '/templates/banHang/taiQuay/BanHang.html',
         controller: "BanHangTaiQuayController",
     });

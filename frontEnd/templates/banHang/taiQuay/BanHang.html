@@ -28,32 +28,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="hoaDonCT, stt : ${hoaDonChiTiet}">
-                            <td class="border-0 align-middle" th:text="${(pageHDCT - 1) * sizeHDCT + stt.count}"></td>
+                        <tr ng-repeat="hoaDonChiTiet in hoaDonChiTiet">
+                            <td class="border-0 align-middle">{{$index + 1}}</td>
 
                             <th scope="row" class="border-0">
                                 <div class="p-2">
-                                    <img th:src="${'/customer/images/' + tenAnhChinhList[stt.index]}" alt="" width="70"
+                                    <img src="https://www.chuphinhsanpham.vn/wp-content/uploads/2021/06/chup-hinh-giay-dincox-shoes-c-photo-studio-4.jpg" alt="" width="70"
                                         class="img-fluid rounded shadow-sm">
                                     <div class="ml-3 d-inline-block align-middle">
-                                        <h5 class="mb-0" th:text="${hoaDonCT.sanPhamChiTiet.sanPham.tenSanPham}"></h5>
+                                        <h5>{{hoaDonChiTiet.sanPhamChiTiet.sanPham.tenSanPham}}</h5>
                                         <div class="ThongTinSP">
-                                            <span th:text="${hoaDonCT.sanPhamChiTiet.mauSac.tenMauSac}"></span>
+                                            <span>{{hoaDonChiTiet.sanPhamChiTiet.mauSac.tenMauSac}}</span>
                                             <span>/</span>
-                                            <span th:text="${hoaDonCT.sanPhamChiTiet.kichCo.tenKichCo}"></span>
+                                            <span>{{hoaDonChiTiet.sanPhamChiTiet.kichCo.kichCo}}</span>
                                         </div>
                                     </div>
                                 </div>
                             </th>
-                            <td class="border-0 align-middle"><strong
-                                    th:text="${#numbers.formatDecimal(hoaDonCT.donGia, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></strong>
-                            </td>
+                            <td class="border-0 align-middle"><strong>{{hoaDonChiTiet.sanPhamChiTiet.sanPham.gia.toLocaleString('vi-VN')}} VNĐ</strong></td>
                             <td class="border-0 align-middle">
                                 <strong>
                                     <div>
-                                        <input class="quantity-input" type="number" min="1"
-                                            th:value="${hoaDonCT.soLuong}"
-                                            th:attr="data-so-luong-hien-co=${hoaDonCT.sanPhamChiTiet.soLuong}">
+                                        <input class="quantity-input" type="number" ng-model="hoaDonChiTiet.soLuong">
 
                                         <button class="btn btn-dark px-4 rounded-pill save-btn"
                                             th:data-id="${hoaDonCT.id}" style="display: none;">Lưu
@@ -70,8 +66,7 @@
                                     </div>
                                 </strong>
                             </td>
-                            <td class="border-0 align-middle"><strong
-                                    th:text="${#numbers.formatDecimal(hoaDonCT.tongTien, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></strong>
+                            <td class="border-0 align-middle"><strong>{{hoaDonChiTiet.thanhTien.toLocaleString('vi-VN')}} VNĐ</strong>
                             </td>
                             <td class="border-0 align-middle">
                                 <div class="button-group">
@@ -79,37 +74,13 @@
                                         th:data-target="'#modalXoaHDCT-' + ${hoaDonCT.id}">
                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                     </button>
-                                    <br>
-                                    <div class="modal fade XoaHDCT" th:id="'modalXoaHDCT-' + ${hoaDonCT.id}"
-                                        tabindex="-1" aria-labelledby="XoaHDCTModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="XoaHDCTModalLabel">Xóa sản phẩm
-                                                    </h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Xác nhận xóa sản phẩm khỏi giỏ hàng
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary btn-dong-y">Đồng ý
-                                                    </button>
-                                                    <button type="button" class="btn btn-secondary btn-khong"
-                                                        data-bs-dismiss="modal">Không
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
 
-                <div th:if="${hoaDonChiTiet.isEmpty()}" class="full-width-row">
+                <div class="full-width-row" ng-if="hoaDonChiTiet.length === 0">
                     <td colspan="12" class="text-center">
                         <div class="empty-content">
                             <img src="/static/img/noData2.png" alt="Không có sản phẩm">
@@ -120,7 +91,7 @@
 
             <br>
             <div class="button-group" style="float: right">
-                <button class="btn btn-dark px-4 rounded-pill" onclick="quayLai()">
+                <button class="btn btn-dark px-4 rounded-pill" ng-click="quayLai()">
                     <i class="fas fa-arrow-left"></i>
                     Danh sách
                 </button>
@@ -152,53 +123,7 @@
                     </div>
                 </div>
 
-                <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Tiền khách đưa và tiền trả
-                    lại
-                </div>
-                <div class="p-4">
-                    <p class="font-italic mb-4">Nhập tiền khách đưa và hiển thị tiền thiếu và tiền thừa</p>
-                    <div class="input-group mb-4 border rounded-pill p-2">
-                        <input type="text" placeholder="Nhập tiền khách đưa" aria-describedby="button-addon3"
-                            class="form-control border-0 tienKhachDua-input" id="tienKhachDuaInput">
-                    </div>
-                    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tiền
-                            thiếu</strong><strong id="tienThieu">0 VNĐ</strong></li>
-
-                    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tiền trả
-                            lại</strong><strong id="tienTralai">0 VNĐ</strong></li>
-                    <!--Fomat tiền khi nhập-->
-                    <script th:inline="javascript">
-                        const inputElement = document.getElementById('tienKhachDuaInput');
-
-                        inputElement.addEventListener('input', function (event) {
-                            // Lấy giá trị từ input
-                            const inputValue = event.target.value;
-
-                            // Lọc chỉ giữ lại các ký tự số và dấu thập phân
-                            const numericValue = parseFloat(inputValue.replace(/[^\d.]/g, ''));
-
-                            // Kiểm tra nếu giá trị là số hợp lệ
-                            if (!isNaN(numericValue)) {
-                                // Định dạng giá trị thành số giống như tiền tệ
-                                const formattedValue = formatCurrency(numericValue);
-
-                                // Đặt lại giá trị cho input
-                                event.target.value = formattedValue;
-                            }
-                        });
-
-                        function formatCurrency(value) {
-                            // Kiểm tra nếu giá trị là số hợp lệ
-                            if (!isNaN(value)) {
-                                // Định dạng giá trị thành số giống như tiền tệ
-                                const formattedCurrency = numeral(value).format('0,0');
-                                return formattedCurrency;
-                            } else {
-                                return ""; // Trả về chuỗi rỗng nếu không hợp lệ
-                            }
-                        }
-                    </script>
-                </div>
+                
 
                 <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Thông tin khách hàng
                 </div>
@@ -237,41 +162,34 @@
                     <p class="font-italic mb-4">Thông tin của hóa đơn</p>
                     <ul class="list-unstyled mb-4">
                         <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Mã
-                                đơn</strong><strong th:text="${hoaDon.maDon}"></strong></li>
+                                đơn</strong><strong>{{hoaDon.maHoaDon}}</strong></li>
 
                         <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Ngày
-                                tạo</strong><strong th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}"></strong>
+                                tạo</strong><strong>{{hoaDon.createdDate| date:'dd/MM/yyyy' }}</strong>
                         </li>
 
                         <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Giảm
-                                giá đã áp dụng</strong><strong id="tenGiamGia-TaiQuay"
-                                th:text="${hoaDon.khuyenMai != null ? hoaDon.khuyenMai.tenKhuyenMai : 'Không có'}"></strong>
+                                giá đã áp dụng</strong><strong id="tenGiamGia-TaiQuay">{{hoaDon.khuyenMai.tenKhuyenMai}}</strong>
                         </li>
 
                         <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Khách
-                                hàng</strong><strong id="tenKhachHangTaiQuay"
-                                th:text="${hoaDon.khachHang != null ? hoaDon.khachHang.hoTen : (hoaDon.nguoiNhan != null ? hoaDon.nguoiNhan : 'Không có')}"></strong>
+                                hàng</strong><strong id="tenKhachHangTaiQuay">{{hoaDon.khachHang.tenKhachHang}} </strong>
                         </li>
 
-                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Số điện
-                                thoại khách hàng</strong><strong id="SDTKhachHangTaiQuay"
-                                th:text="${hoaDon.khachHang != null ? hoaDon.khachHang.soDienThoai : (hoaDon.sdtNguoiNhan != null ? hoaDon.sdtNguoiNhan : 'Không có')}"></strong>
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Số điện thoại khách hàng</strong><strong id="SDTKhachHangTaiQuay">{{hoaDon.khachHang.soDienThoai}} </strong>
                         </li>
 
-                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tạm
-                                tính</strong><strong id="tongTienHang-taiQuay"
-                                th:text="${#numbers.formatDecimal(hoaDon.tongTienDonHang, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></strong>
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tạm tính</strong><strong id="tongTienHang-taiQuay">{{hoaDon.tongTienHoaDon.toLocaleString('vi-VN')}} VNĐ</strong>
                         </li>
 
                         <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tiền
-                                giảm</strong><strong id="discount-taiQuay"
-                                th:text="${hoaDon.khuyenMai != null ? #numbers.formatDecimal(hoaDon.tongTienDonHang - hoaDon.tongTienHoaDon, 0, 'COMMA', 0, 'POINT') : '0'} + ' VNĐ'"></strong>
+                                giảm</strong><strong id="discount-taiQuay">{{hoaDon.tienGiam.toLocaleString('vi-VN')}} VNĐ</strong>
                         </li>
 
                         <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tiền
                                 thanh toán</strong>
-                            <h5 class="font-weight-bold" id="tongTienHoaDon-taiQuay"
-                                th:text="${#numbers.formatDecimal(hoaDon.tongTienHoaDon, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">
+                            <h5 class="font-weight-bold" id="tongTienHoaDon-taiQuay">
+                                {{hoaDon.tongTienDonHang.toLocaleString('vi-VN')}} VNĐ
                             </h5>
                         </li>
                     </ul>

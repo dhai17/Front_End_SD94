@@ -12,7 +12,19 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
     }
     
     $scope.loadData();
+    // lay ra thong tin nguoi dang nhap
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
 
+        let payload = JSON.parse(jsonPayload);
+        return payload;
+    }
+
+    let decodedToken = parseJwt(token);
 
   
     //Phân trang
@@ -52,7 +64,8 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
 
 // xác nhận đơn
     $scope.confirm = function (pending) {
-        const id_bill = pending.id;
+        const id = pending.id;
+        const checkOut_email = decodedToken.email;
         Swal.fire({
             title: 'Xác nhận đã giao đơn hàng',
             text: 'Đơn hàng này đã tới tay khách hàng?',
@@ -62,7 +75,11 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
             cancelButtonText: 'Chưa'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.post("http://localhost:8080/hoaDon/datHang/dangGiaoHang/capNhatTrangThai/daGiaoHang", {id_bill: id_bill}, { headers })
+                let data = {
+                    id:id,
+                    email_user: checkOut_email
+                }
+                $http.post("http://localhost:8080/hoaDon/datHang/dangGiaoHang/capNhatTrangThai/daGiaoHang", data, { headers })
             .then(function (response) {
                     $scope.loadData();
             })
@@ -76,8 +93,8 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
 
     // từ chối xác nhận ( trạng thái đã huỷ đơn 5)
     $scope.huyDon = function (pending) {
-        const id_bill = pending.id;
-        // console.log(id_bill);
+        const id = pending.id;
+        const checkOut_email = decodedToken.email;
         
         Swal.fire({
             title: 'Xác nhận huỷ đơn hàng',
@@ -88,7 +105,11 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
             cancelButtonText: 'Không'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.post("http://localhost:8080/hoaDon/datHang/dangGiaoHang/capNhatTrangThai/huyDon5", {id_bill: id_bill}, { headers })
+                let data = {
+                    id:id,
+                    email_user: checkOut_email
+                }
+                $http.post("http://localhost:8080/hoaDon/datHang/dangGiaoHang/capNhatTrangThai/huyDon5", data, { headers })
                 .then(function (response) {
                     $scope.loadData();
                     ///end lệnh
