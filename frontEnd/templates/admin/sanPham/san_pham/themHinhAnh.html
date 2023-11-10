@@ -3,27 +3,22 @@
     <form action="">
         <div class="row mb-4">
             <div class="col-4">
-                {{ details.sanPham.tenSanPham }}
+                {{ promotions.sanPham.tenSanPham }}
             </div>
             <div class="col-4">
-                {{ details.mauSac.tenMauSac}}
+                {{ promotions.mauSac.tenMauSac}}
             </div>
             <div class="col-4">
-                {{ details.kichCo.kichCo }}
+                {{ promotions.kichCo.kichCo }}
             </div>
         </div>
         <div class="row mb-4">
-            <div class="col-2"></div>
-            <div class="col-2">
-                <p>Ảnh</p>
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Chọn ảnh</label>
+                <input class="form-control" type="file" accept="image/*" id="formFile" multiple
+                    onchange="showSelectedImage(event)" />
             </div>
-            <div class="col-4">
-                <div class="mb-3">
-                    <label for="formFile" class="form-label">Chọn ảnh</label>
-                    <input class="form-control" type="file" accept="image/*" id="formFile" multiple
-                        onchange="angular.element(this).scope().setSelectedFile(this)" />
-                </div>
-            </div>
+            <div class="mb-3" id="imagePreview"></div>
         </div>
         <!-- -->
         <div class="mt-3 text-center mb-3">
@@ -33,44 +28,3 @@
         </div>
     </form>
 </section>
-<!-- <section>
-    <div class="container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Tên sản phẩm</th>
-                    <th scope="col">Ảnh</th>
-                    <th scope="col">Số lượng</th>
-                    <th scope="col">Giá tiền</th>
-                    <th scope="col">Hãng</th>
-                    <th scope="col">Kiểu bàn phím</th>
-                    <th scope="col">Loại</th>
-                    <th scope="col-2">Funtion</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="x in listBanPhim.content">
-                    <th scope="row">{{x.tenBanPhim}}</th>
-                    <th scope="row">
-                        <img ng-src="{{getImageUrl(x.images)}}" height="50px" width="50px" />
-                    </th>
-                    <td>{{x.soLuong}}</td>
-                    <td>{{x.donGia1}}</td>
-                    <td>{{x.hang.tenHang}}</td>
-                    <td>{{x.kieuKetNoi.tenKieu}}</td>
-                    <td>{{x.loaiBanPhim.tenLoai}}</td>
-                    <td>
-                        <button href="/banphim/detail/{{x.id}}" class="btn btn-outline-primary me-2"
-                            ng-click="detailBanPhim($event,$index)">
-                            Detail
-                        </button>
-                        <button ng-click="deleteBanPhim($event,$index)" class="btn btn-outline-primary me-2 mt-2"
-                            onclick="return confirm('Bạn có muốn xoá không?');">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</section> -->

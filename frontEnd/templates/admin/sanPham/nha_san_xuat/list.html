@@ -1,10 +1,10 @@
 <div ng-controller="ProducerController" id="lineList">
     <div class="container-fluid my-auto d-flex align-items-center">
         <div class="mx-auto">
-            <h1>Nhà sản xuất</h1>
+            <h1>Hãng</h1>
         </div>
         <button type="button" class="btn btn-link" ng-click="createProducer(promotion)">
-            Thêm nsx
+            Thêm Hãng
         </button>
     </div>
     <br>
@@ -12,8 +12,7 @@
         <thead class="bg-light">
             <tr>
                 <th>#</th>
-                <th>Nhà sản xuất</th>
-                <th>Địa chỉ</th>
+                <th>Hãng</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -21,7 +20,6 @@
             <tr ng-repeat="promotion in promotions">
                 <td>{{$index + 1}}</td>
                 <td>{{ promotion.name }}</td>
-                <td>{{ promotion.diaChi }}</td>
                 <td>
                     <div class="button-group">
                         <button type="button" class="btn btn-link" ng-click="editProducer(promotion)">

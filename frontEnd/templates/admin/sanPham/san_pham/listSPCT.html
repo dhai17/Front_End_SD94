@@ -41,8 +41,23 @@
                     </select>
                 </div>
             </div>
-            <button class="btn btn-primary" type="button" ng-click="returnEdit(editProduct)">Return</button>
-            <button class="btn btn-primary" type="button" ng-click="saveEditProduct(editProduct)">Update</button>
+
+            <div class="row mb-4">
+                <div class="col-2"></div>
+                <div class="col-2">
+                    <p>Ảnh</p>
+                </div>
+                <div class="col-4">
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Chọn ảnh</label>
+                        <input class="form-control" type="file" accept="image/*" id="formFile" multiple
+                            onchange="angular.element(this).scope().setSelectedFile(this)" />
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" type="button" ng-click="returnEdit(editProduct)">Quay lại</button>
+            <button class="btn btn-primary" type="button" ng-click="saveEditProduct(editProduct)">Cập nhật</button>
         </form>
     </div>
     <br>

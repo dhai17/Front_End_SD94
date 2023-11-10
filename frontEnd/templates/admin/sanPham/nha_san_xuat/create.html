@@ -1,23 +1,17 @@
 <div class="container-fluid" ng-controller="CreateProducerController">
     <div class="card mb-4">
-        <div class="card-header">Thêm nhà sản xuất</div>
+        <div class="card-header">Thêm hãng</div>
         <div class="card-body">
             <form>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
-                        <label class="small mb-1">Nhà sản xuất</label>
+                        <label class="small mb-1">Hãng</label>
                         <input class="form-control" id="name" type="text" placeholder="Enter name"
                             ng-model="createProducer.name" required>
                     </div>
-                    <div class="col-md-6">
-                        <label class="small mb-1">Địa chỉ</label>
-                        <input class="form-control" id="address" type="text" placeholder="Enter name"
-                            ng-model="createProducer.diaChi" required>
-                    </div>
                 </div>
-                <button class="btn btn-primary" type="button" ng-click="returnCreate()">Return</button>
-                <button class="btn btn-primary" type="button" ng-click="saveCreate(createProducer)">Save
-                    changes</button>
+                <button class="btn btn-primary" type="button" ng-click="returnCreate()">Quay lại</button>
+                <button class="btn btn-primary" type="button" ng-click="saveCreate(createProducer)">Thêm mới</button>
             </form>
         </div>
     </div>

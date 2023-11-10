@@ -150,14 +150,14 @@ app.controller("EditProductController", function ($scope, $routeParams, $http) {
             .then(function (response) {
                 Swal.fire({
                     icon: "success",
-                    title: "Sửa thành công",
+                    title: "Cập nhật thành công",
                     showConfirmButton: false,
                     timer: 2000,
                 })
-                .then(function () {
-                    sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-Product";
-                });
+                    .then(function () {
+                        sessionStorage.setItem("isConfirmed", true);
+                        window.location.href = "#!/list-Product";
+                    });
             })
             .catch(function (errorResponse) {
                 if (errorResponse.status === 400) {
@@ -217,7 +217,6 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             $scope.kichCo = kichCo;
         })
 
-
     let mauSac_id = [];
     $scope.getIdColor = function (mauSac) {
         if (mauSac_id.indexOf(mauSac.id) === -1) {
@@ -235,7 +234,6 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             console.log("ID already exists in the array");
         }
     };
-
 
     $scope.saveCreate = function () {
 
@@ -299,7 +297,8 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
     };
 
     $scope.updateImg = function (promotion) {
-        window.location.href = '#!/list-Img';
+        let idSPCT = promotion.id;
+        window.location.href = '#!/list-Img?id=' + idSPCT;
     };
 });
 
@@ -317,6 +316,23 @@ app.controller('ImgController', function ($scope, $http) {
         .then(function (response) {
             const promotion = response.data;
             $scope.promotion = promotion;
+        });
+
+    let idPro = $routeParams.id;
+
+    $http.get("http://localhost:8080/sanPhamChiTiet/danhSachHinhAnh", {
+        params: { san_pham_id: id },
+        headers: headers
+    })
+        .then(function (response) {
+            const promotions = response.data;
+            $scope.promotions = promotions;
+        });
+
+    $http.get("http://localhost:8080/sanPhamChiTiet/chinhSua/" + idPro, { headers })
+        .then(function (response) {
+            const editproduct = response.data;
+            $scope.editproduct = editproduct;
         });
 
     $scope.addImg = function () {
@@ -452,3 +468,27 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
     };
 
 });
+
+function showSelectedImage(event) {
+    var fileInput = event.target;
+    var files = fileInput.files;
+
+    var imagePreviewDiv = document.getElementById("imagePreview");
+    imagePreviewDiv.innerHTML = ""; // Xóa bất kỳ hình ảnh đã hiển thị trước đó
+
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var img = document.createElement("img");
+            img.src = e.target.result;
+            img.style.maxWidth = "200px";
+            img.style.marginRight = "10px";
+            img.style.marginBottom = "10px";
+            imagePreviewDiv.appendChild(img);
+        };
+
+        reader.readAsDataURL(file);
+    }
+}
