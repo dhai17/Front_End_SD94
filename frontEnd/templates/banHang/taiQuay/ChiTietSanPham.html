@@ -1,4 +1,4 @@
-<div class="container-fluid mt-5 mb-5" ng-controller="ChiTietSanPhamController">
+<div class="container-fluid mt-5 mb-5" ng-controller="ChiTietSanPhamTaiQuayController">
     <div class="card">
         <div class="row g-0">
             <div class="col-md-6 border-end">
@@ -71,15 +71,15 @@
 
                     <div class="mt-5">
                         <div class="colors" id="div-inputSoLuong">
-                            <h6 for="input-chonSoLuong">Chọn số lượng:</h6>
+                            <h6>Chọn số lượng:</h6>
                             <input type="number" id="input-chonSoLuong" class="form-control" ng-model="chonSoLuong"/>
 
                         </div>
                     </div>
 
                     <div class="buttons d-flex flex-row mt-5 gap-3">
-                        <button class="btn btn-outline-dark" ng-click = "muaNgay(sanPham)">Mua ngay</button>
-                        <button class="btn btn-dark" ng-click = "addToCart(sanPham)">Thêm vào giỏ </button>
+                        <button class="btn btn-outline-dark" ng-click = "quayLai(sanPham)">Quay lại</button>
+                        <button class="btn btn-dark" ng-click = "themSanPham(sanPham)">Thêm sản phẩm </button>
                     </div>
 
                 </div>

@@ -13,14 +13,11 @@ app.controller("CustomerController", function ($scope, $http) {
         console.log("e =><", e);
         Swal.fire({
             icon: "error",
-            title: "Token inval",
+            title: "Bạn cần phải đăng nhập để sử dụng chức năng này",
             showConfirmButton: false,
             timer: 2000,
         }).then(function () {
             window.location.href = "#!/login"
-
-            // sessionStorage.setItem("isConfirmed", true);
-            // window.location.href = "#!/list-Customer";
         });
         // if()
     });

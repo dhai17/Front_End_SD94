@@ -219,5 +219,16 @@ app.config(['$routeProvider', function ($routeProvider) {
     .when('/banHang', {
         templateUrl: '/templates/banHang/taiQuay/BanHang.html',
         controller: "BanHangTaiQuayController",
-    });
+    })
+
+    .when('/danhSachSanPham/taiQuay', {
+        templateUrl: '/templates/banHang/taiQuay/DanhSachSanPham.html',
+        controller: "danhSachSanPhamTaiQuayController",
+    })
+
+    .when('/product-details-taiQuay', {
+        templateUrl: '/templates/banHang/taiQuay/ChiTietSanPham.html',
+        controller: "ChiTietSanPhamTaiQuayController",
+    })
 }]);
+

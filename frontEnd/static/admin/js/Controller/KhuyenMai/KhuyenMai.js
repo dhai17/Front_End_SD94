@@ -18,11 +18,11 @@ app.controller("KhuyenMaiController", function ($scope, $http) {
     }).catch(e => {
         Swal.fire({
             icon: "error",
-            title: "Token inval",
+            title: "Bạn cần phải đăng nhập để sử dụng chức năng này",
             showConfirmButton: false,
             timer: 2000,
         }).then(function () {
-
+            window.location.href ="#!/login"
         });
     });
 

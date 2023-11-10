@@ -43,7 +43,15 @@ app.controller("danhSachHoaDonController", function ($scope, $http) {
             .then(function (response) {
                 $scope.updateIdHoaDonTaiQuay(response.data);
                 window.location.href = "#!/banHang?id=" + id_HoaDonTaiQuay;
-            });
+            })
+            .catch(function (e) {
+                Swal.fire({
+                    icon: "error",
+                    title: e.data.message,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            })
     }
 
     $scope.xoaHoaDon = function (hoaDon) {

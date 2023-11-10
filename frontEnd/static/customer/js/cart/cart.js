@@ -5,18 +5,32 @@ app.controller("cartController", function ($scope, $http) {
         'Authorization': 'Bearer ' + token
     }
 
-    function parseJwt(token) {
-        let base64Url = token.split('.')[1];
-        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
+    let decodedToken;
 
-        let payload = JSON.parse(jsonPayload);
-        return payload;
+    if (token) {
+        function parseJwt(token) {
+            let base64Url = token.split('.')[1];
+            let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            let payload = JSON.parse(jsonPayload);
+            return payload;
+        }
+
+        decodedToken = parseJwt(token);
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: "Bạn cần phải đăng nhập để sử dụng chức năng này",
+            showConfirmButton: false,
+            timer: 2000,
+        }).then(function () {
+            window.location.href = "http://127.0.0.1:5501/templates/auth/Login.html#!/login"
+        });
     }
 
-    let decodedToken = parseJwt(token);
 
     $http.get("http://localhost:8080/gioHang/danhSach/" + decodedToken.email, { headers }).then(function (response) {
         const gioHangChiTiet = response.data;
@@ -78,15 +92,13 @@ app.controller("cartController", function ($scope, $http) {
                 let data = {
                     id: id_cart_details,
                 }
-                $http.post("http://localhost:8080/gioHang/xoa/gioHangChiTiet", data)
+                $http.post("http://localhost:8080/gioHang/xoa/gioHangChiTiet", data, { headers })
 
                     .then(function (response) {
-                        const promotions = response.data;
-                        promotions.forEach(function (promotion) {
-                        });
+                        const gioHangChiTiet = response.data;
 
                         $scope.$evalAsync(function () {
-                            $scope.promotions = promotions;
+                            $scope.gioHangChiTiet = promotions;
                             Swal.fire({
                                 icon: "success",
                                 title: "Xóa thành công",
@@ -101,6 +113,20 @@ app.controller("cartController", function ($scope, $http) {
             }
         });
     }
+
+    $scope.checkboxDaChon = false;
+
+    $scope.checkTatCaDaChon = function () {
+        $scope.checkboxDaChon = $scope.pending.some(function (item) {
+            return item.selected;
+        });
+    };
+    $scope.toggleSelectAll = function () {
+        angular.forEach($scope.pending, function (item) {
+            item.selected = $scope.selectAll;
+        });
+        $scope.checkTatCaDaChon();
+    };
 
     $scope.tienTamTinh = 0;
     $scope.gioHangChiTietID = [];

@@ -1,4 +1,4 @@
-app.controller("danhSachSanPhamController", function ($scope, $http) {
+app.controller("danhSachSanPhamTaiQuayController", function ($scope, $http) {
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ app.controller("danhSachSanPhamController", function ($scope, $http) {
 
     $scope.pager = {
         page: 1,
-        size: 8,
+        size: 12,
         get sanPham() {
             if ($scope.sanPham && $scope.sanPham.length > 0) {
                 let start = (this.page - 1) * this.size;
@@ -44,12 +44,13 @@ app.controller("danhSachSanPhamController", function ($scope, $http) {
 
     $scope.getSanPhamChiTiet = function (sanPham) {
         let id_sanPham = sanPham.id;
-        window.location.href = '#!/product-details?id=' + id_sanPham;
+        window.location.href = '#!/product-details-taiQuay?id=' + id_sanPham;
     };
 });
 
-app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http) {
+app.controller("ChiTietSanPhamTaiQuayController", function ($scope, $routeParams, $http, $window) {
     const id_sanPham = $routeParams.id;
+    const id_HD_TaiQuay = localStorage.getItem("id_HD_TaiQuay");
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
@@ -102,6 +103,8 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
     let kichCo;
     let maMauSac;
 
+    let soLuongHienCo;
+
     $scope.$watchGroup(['selectedKichCo', 'selectedMauSac'], function (newValues, oldValues) {
         if (newValues[0] !== undefined && newValues[1] !== undefined) {
             let data = {
@@ -116,54 +119,57 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
                     soLuongGet = document.getElementById('customer-sanPham-soLuongHienCo');
                     if (soLuongGet) {
                         soLuongGet.innerText = response.data;
+                        soLuongHienCo = response.data;
                     }
                 });
         }
 
     });
 
-    $scope.addToCart = function (sanPham) {
-        let data = {
-            kichCo: kichCo,
-            maMauSac: maMauSac,
-            san_pham_id: sanPham.id,
-            email: decodedToken.email,
-            soLuong: $scope.chonSoLuong,
-            donGia: sanPham.gia
-        }
+    $scope.quayLai = function () {
+        $window.history.back();
+    }
 
-        $http.post("http://localhost:8080/customer/cart/addToCart", data, { headers })
-            .then(function (response) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Thêm vào giỏ hàng thành công",
-                    showConfirmButton: false,
-                    timer: 2000,
-                });
+    $scope.themSanPham = function (sanPham) {
+        if ($scope.chonSoLuong > soLuongHienCo) {
+            Swal.fire({
+                icon: "error",
+                title: "Số lượng thêm không được lớn hơn số lượng hiện có",
+                showConfirmButton: false,
+                timer: 2000
             });
-    };
-
-    $scope.muaNgay = function (sanPham) {
-        let data = {
-            kichCoDaChon: kichCo,
-            maMauSac: maMauSac,
-            san_pham_id: sanPham.id,
-            soLuong: $scope.chonSoLuong,
-            donGia: sanPham.gia
-        }
-
-        $http.post("http://localhost:8080/api/muaNgay/check-out", data)
-            .then(function (response) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Đang chuyển hướng hướng đến trang đặt hàng",
-                    showConfirmButton: false,
-                    timer: 2000,
-                }).then(() => {
-                    localStorage.setItem("id_HoaDonMuaNgay", response.data)
-                    const id_HoaDonMuaNgay = localStorage.getItem("id_HoaDonMuaNgay");
-                    window.location.href = "http://127.0.0.1:5501/templates/banHang/muaNgay/CheckOut.html?id_HoaDonMuaNgay=" + id_HoaDonMuaNgay;
-                });
+            $scope.chonSoLuong = soLuongHienCo
+            return;
+        } else if ($scope.chonSoLuong < 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Số lượng thêm không được nhỏ hơn 0",
+                showConfirmButton: false,
+                timer: 2000
             });
+            $scope.chonSoLuong = 1;
+            return;
+        } else {
+            let data = {
+                id_hoaDon: id_HD_TaiQuay,
+                kichCoDaChon: kichCo,
+                maMauSac: maMauSac,
+                san_pham_id: sanPham.id,
+                soLuong: $scope.chonSoLuong,
+                donGia: sanPham.gia
+            }
+
+            $http.post("http://localhost:8080/api/banHang/taiQuay/themSanPham", data, { headers })
+                .then(function (response) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Thêm sản phẩm thành công",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    }).then(() => {
+                        window.location.href = "#!/banHang?id=" + id_HD_TaiQuay;
+                    });
+                });
+        }
     };
 });

@@ -1,43 +1,19 @@
-app.controller("checkOutController", function ($scope, $routeParams, $http) {
-    let id_HoaDon = localStorage.getItem("id_HoaDon");
-    console.log(id_HoaDon);
-    let token = localStorage.getItem("token");
-    let headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    }
+app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
+    let id_HoaDonMuaNgay = localStorage.getItem("id_HoaDonMuaNgay");
+    console.log(id_HoaDonMuaNgay);
 
-    function parseJwt(token) {
-        let base64Url = token.split('.')[1];
-        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-
-        let payload = JSON.parse(jsonPayload);
-        return payload;
-    }
-
-    let decodedToken = parseJwt(token);
-    console.log(decodedToken);
-
-    if (decodedToken) {
-        $scope.hoTen = decodedToken.hoTen;
-        $scope.email = decodedToken.email;
-        $scope.soDienThoai = decodedToken.soDienThoai;
-        $scope.diaChi = decodedToken.diaChi;
-    }
-
-    $http.get("http://localhost:8080/api/banHang/online/getHoaDon/" + id_HoaDon, { headers }).then(function (response) {
+    $http.get("http://localhost:8080/api/muaNgay/getHoaDon/" + id_HoaDonMuaNgay).then(function (response) {
         const hoaDon = response.data;
         $scope.tienTamTinh = hoaDon.tongTienHoaDon;
         $scope.tienShip = hoaDon.tienShip;
         $scope.tongTienHoaDon = hoaDon.tongTienDonHang;
         $scope.hoaDon = hoaDon;
     });
+    
 
-    $http.get("http://localhost:8080/api/banHang/online/getHoaDonChiTiet/" + id_HoaDon, { headers }).then(function (response) {
+    $http.get("http://localhost:8080/api/muaNgay/getHoaDonChiTiet/" + id_HoaDonMuaNgay).then(function (response) {
         const hoaDonChiTiet = response.data;
+        console.log(hoaDonChiTiet);
         $scope.hoaDonChiTiet = hoaDonChiTiet;
     });
 
@@ -71,17 +47,17 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
                 const tongTienDonHang = fomatTien(a);
 
                 let data = {
-                    id: id_HoaDon,
+                    id: id_HoaDonMuaNgay,
                     ghiChu: $scope.ghiChu,
                     email: $scope.email,
                     soDienThoai: $scope.soDienThoai,
                     tienShip: tienShip,
                     tongTienHoaDon: tongTienHoaDon,
                     tongTienDonHang: tongTienDonHang,
-                    email_user: decodedToken.email,
-                    diaChi: diaChi
+                    diaChi: diaChi,
+                    nguoiTao: $scope.hoTen
                 }
-                $http.post("http://localhost:8080/api/banHang/online/datHang", data, { headers })
+                $http.post("http://localhost:8080/api/muaNgay/datHang", data)
                     .then(function (response) {
                         Swal.fire({
                             icon: "success",
@@ -122,18 +98,18 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
                 const tongTienDonHang = fomatTien(a);
 
                 let data = {
-                    id: id_HoaDon,
+                    id: id_HoaDonMuaNgay,
                     ghiChu: $scope.ghiChu,
                     email: $scope.email,
                     soDienThoai: $scope.soDienThoai,
                     tienShip: tienShip,
                     tongTienHoaDon: tongTienHoaDon,
                     tongTienDonHang: tongTienDonHang,
-                    email_user: decodedToken.email,
-                    diaChi: diaChi
+                    diaChi: diaChi,
+                    nguoiTao: $scope.hoTen
                 }
 
-                $http.post("http://localhost:8080/payment/create", data)
+                $http.post("http://localhost:8080/payment/MuaNgay/create", data)
                     .then(function (response) {
                         Swal.fire({
                             icon: "success",
@@ -154,11 +130,11 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
     $scope.addKhuyenMai = function () {
         let a = $("#maGiamGia").val();
         let data = {
-            id: id_HoaDon,
+            id: id_HoaDonMuaNgay,
             tenMaGiamGia: a
         }
 
-        $http.post("http://localhost:8080/api/banHang/online/add/khuyenMai", data, { headers })
+        $http.post("http://localhost:8080/api/muaNgay/add/khuyenMai", data)
             .then(function (response) {
                 const hoaDon = response.data;
                 $scope.$evalAsync(function () {
