@@ -122,7 +122,7 @@ app.config(function ($routeProvider) {
             controller: "EditSizeController",
         })
         .when("/list-Img", {
-            templateUrl: "/templates/admin/sanPham/hinh_anh/list.html",
+            templateUrl: "/templates/admin/sanPham/san_pham/themHinhAnh.html",
             controller: "ImgController",
         })
         .when("/list-Line", {
@@ -161,7 +161,7 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/sanPham/nha_san_xuat/edit.html",
             controller: "EditProducerController",
         })
-        .when("/edit-Product", {
+        .when("/edit-ProductDetails", {
             templateUrl: "/templates/admin/sanPham/san_pham/edit.html",
             controller: "EditProductController",
         })

@@ -111,8 +111,6 @@ app.controller("EditLineController", function ($scope, $routeParams, $http) {
     $http.get("http://localhost:8080/loaiSanPham/chinhSua/" + idLine, { headers })
         .then(function (response) {
             let editLine = response.data;
-            console.log(response.data);
-
             $scope.editLine = editLine;
         });
 

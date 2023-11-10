@@ -116,24 +116,6 @@ app.controller("EditProductController", function ($scope, $routeParams, $http) {
         'Authorization': 'Bearer ' + token
     }
 
-    $http.get("http://localhost:8080/chatLieu/danhSach", { headers })
-        .then(function (response) {
-            const chatLieu = response.data;
-            $scope.chatLieu = chatLieu;
-        })
-
-    $http.get("http://localhost:8080/loaiSanPham/danhSach", { headers })
-        .then(function (response) {
-            const loaiSanPham = response.data;
-            $scope.loaiSanPham = loaiSanPham;
-        })
-
-    $http.get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
-        .then(function (response) {
-            const nhaSanXuat = response.data;
-            $scope.nhaSanXuat = nhaSanXuat;
-        })
-
     $http.get("http://localhost:8080/mauSac/danhSach", { headers })
         .then(function (response) {
             const mauSac = response.data;
@@ -146,59 +128,36 @@ app.controller("EditProductController", function ($scope, $routeParams, $http) {
             $scope.kichCo = kichCo;
         })
 
-
-    let mauSac_id = [];
-    $scope.getIdColor = function (mauSac) {
-        if (mauSac_id.indexOf(mauSac.id) === -1) {
-            mauSac_id.push(mauSac.id);
-        } else {
-            console.log("ID already exists in the array");
-        }
-    };
-
-    let kichCo_id = [];
-    $scope.getIdSize = function (kichCo) {
-        if (kichCo_id.indexOf(kichCo.id) === -1) {
-            kichCo_id.push(kichCo.id);
-        } else {
-            console.log("ID already exists in the array");
-        }
-    };
-    //or
     let idPro = $routeParams.id;
 
-    $http.get("http://localhost:8080/sanPham/chinhSua/" + idPro, { headers })
+    $http.get("http://localhost:8080/sanPhamChiTiet/chinhSua/" + idPro, { headers })
         .then(function (response) {
             const editproduct = response.data;
             $scope.editproduct = editproduct;
         });
 
     $scope.saveEdits = function () {
-
-        // let idProduct = $routeParams.id;
+        let idProduct = $routeParams.id;
         let editProduct = {
             id: idProduct,
-            tenSanPham: $scope.editproduct.tenSanPham,
-            gia: $scope.editproduct.gia,
-            chatLieu_id: $scope.editproduct.chatLieu,
-            loaiSanPham_id: $scope.editproduct.loaiSanPham,
-            nhaSanXuat_id: $scope.editproduct.nhaSanXuat,
-            mauSac: mauSac_id,
-            kichCo: kichCo_id,
+            mauSac: $scope.editproduct.mauSac,
+            kichCo: $scope.editproduct.kichCo,
+            sanPham: $scope.editproduct.sanPham,
             soLuong: $scope.editproduct.soLuong,
         };
 
-        $http.put("http://localhost:8080/api/product/saveUpdate", editProduct, { headers })
+        $http.put("http://localhost:8080/sanPhamChiTiet/luuChinhSua", editProduct, { headers })
             .then(function (response) {
                 Swal.fire({
                     icon: "success",
-                    title: "Sửa thành công",
+                    title: "Cập nhật thành công",
                     showConfirmButton: false,
                     timer: 2000,
-                }).then(function () {
-                    sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-Product";
-                });
+                })
+                    .then(function () {
+                        sessionStorage.setItem("isConfirmed", true);
+                        window.location.href = "#!/list-Product";
+                    });
             })
             .catch(function (errorResponse) {
                 if (errorResponse.status === 400) {
@@ -258,7 +217,6 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             $scope.kichCo = kichCo;
         })
 
-
     let mauSac_id = [];
     $scope.getIdColor = function (mauSac) {
         if (mauSac_id.indexOf(mauSac.id) === -1) {
@@ -277,7 +235,6 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
         }
     };
 
-
     $scope.saveCreate = function () {
 
         let data = {
@@ -290,7 +247,6 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             kichCo: kichCo_id,
             soLuong: $scope.createProduct.soLuong,
         }
-
 
         $http.post("http://localhost:8080/sanPham/TaoSanPham", data, { headers })
             .then(function (response) {
@@ -341,7 +297,8 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
     };
 
     $scope.updateImg = function (promotion) {
-        window.location.href = '#!/list-Img';
+        let idSPCT = promotion.id;
+        window.location.href = '#!/list-Img?id=' + idSPCT;
     };
 });
 
@@ -361,7 +318,24 @@ app.controller('ImgController', function ($scope, $http) {
             $scope.promotion = promotion;
         });
 
-    $scope.uploadImage = function () {
+    let idPro = $routeParams.id;
+
+    $http.get("http://localhost:8080/sanPhamChiTiet/danhSachHinhAnh", {
+        params: { san_pham_id: id },
+        headers: headers
+    })
+        .then(function (response) {
+            const promotions = response.data;
+            $scope.promotions = promotions;
+        });
+
+    $http.get("http://localhost:8080/sanPhamChiTiet/chinhSua/" + idPro, { headers })
+        .then(function (response) {
+            const editproduct = response.data;
+            $scope.editproduct = editproduct;
+        });
+
+    $scope.addImg = function () {
         var formData = new FormData();
         formData.append('file', $scope.image);
 
@@ -369,10 +343,8 @@ app.controller('ImgController', function ($scope, $http) {
             transformRequest: angular.identity,
             headers: { 'Content-Type': undefined }
         }).then(function (response) {
-            // Xử lý thành công
             console.log(response.data);
         }, function (error) {
-            // Xử lý lỗi
             console.error(error);
         });
     };
@@ -398,6 +370,38 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
     }
 
     let id = $routeParams.id;
+
+    $http.get("http://localhost:8080/chatLieu/danhSach", { headers })
+        .then(function (response) {
+            const chatLieu = response.data;
+            $scope.chatLieu = chatLieu;
+        })
+
+    $http.get("http://localhost:8080/loaiSanPham/danhSach", { headers })
+        .then(function (response) {
+            const loaiSanPham = response.data;
+            $scope.loaiSanPham = loaiSanPham;
+        })
+
+    $http.get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
+        .then(function (response) {
+            const nhaSanXuat = response.data;
+            $scope.nhaSanXuat = nhaSanXuat;
+        })
+
+    $http.get("http://localhost:8080/mauSac/danhSach", { headers })
+        .then(function (response) {
+            const mauSac = response.data;
+            $scope.mauSac = mauSac;
+        })
+
+    $http.get("http://localhost:8080/kichCo/danhSach", { headers })
+        .then(function (response) {
+            const kichCo = response.data;
+            $scope.kichCo = kichCo;
+        })
+
+
     $http.get("http://localhost:8080/sanPhamChiTiet/dsCTSP", {
         params: { san_pham_id: id },
         headers: headers
@@ -411,4 +415,80 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
         window.location.href = '#!/edit-Product?id=' + idPro;
     };
 
+    $http.get("http://localhost:8080/sanPham/chinhSua/" + id, { headers })
+        .then(function (response) {
+            const editproduct = response.data;
+            $scope.editproduct = editproduct;
+        });
+
+
+    $scope.saveEditProduct = function () {
+        let id = $routeParams.id;
+        let editProduct = {
+            id: id,
+            tenSanPham: $scope.editproduct.tenSanPham,
+            gia: $scope.editproduct.gia,
+            chatLieu: $scope.editproduct.chatLieu,
+            loaiSanPham: $scope.editproduct.loaiSanPham,
+            nhaSanXuat: $scope.editproduct.nhaSanXuat,
+        };
+
+        $http.put("http://localhost:8080/sanPham/luuChinhSua", editProduct, { headers })
+            .then(function (response) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Sửa thành công",
+                    showConfirmButton: false,
+                    timer: 2000,
+                })
+                $http.get("http://localhost:8080/sanPhamChiTiet/dsCTSP", {
+                    params: { san_pham_id: id },
+                    headers: headers
+                }).then(function (response) {
+                    const details = response.data;
+                    $scope.details = details;
+                });
+            })
+            .catch(function (errorResponse) {
+                if (errorResponse.status === 400) {
+                    const errorMassage = errorResponse.data.message;
+                    Swal.fire({
+                        icon: "error",
+                        title: errorMassage + "",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                }
+            });
+    };
+
+    $scope.editSPCT = function (promotion) {
+        let id = promotion.id;
+        window.location.href = '#!/edit-ProductDetails?id=' + id;
+    };
+
 });
+
+function showSelectedImage(event) {
+    var fileInput = event.target;
+    var files = fileInput.files;
+
+    var imagePreviewDiv = document.getElementById("imagePreview");
+    imagePreviewDiv.innerHTML = ""; // Xóa bất kỳ hình ảnh đã hiển thị trước đó
+
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var img = document.createElement("img");
+            img.src = e.target.result;
+            img.style.maxWidth = "200px";
+            img.style.marginRight = "10px";
+            img.style.marginBottom = "10px";
+            imagePreviewDiv.appendChild(img);
+        };
+
+        reader.readAsDataURL(file);
+    }
+}

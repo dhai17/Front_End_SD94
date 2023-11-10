@@ -1,20 +1,16 @@
 <div class="container-fluid" ng-controller="EditProducerController">
     <div class="card mb-4">
-        <div class="card-header">Cập nhật nsx</div>
+        <div class="card-header">Cập nhật hãng</div>
         <div class="card-body">
             <form>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
-                        <label class="small mb-1">Nhà sản xuất</label>
+                        <label class="small mb-1">Hãng</label>
                         <input class="form-control" id="name" type="text" ng-model="editProducer.name">
                     </div>
-                    <div class="col-md-6">
-                        <label class="small mb-1">Địa chỉ</label>
-                        <input class="form-control" id="address" type="text" ng-model="editProducer.diaChi">
-                    </div>
                 </div>
-                <button class="btn btn-primary" type="button" ng-click="returnEdit(editProducer)">Return</button>
-                <button class="btn btn-primary" type="button" ng-click="saveEdits(editProducer)">Update</button>
+                <button class="btn btn-primary" type="button" ng-click="returnEdit(editProducer)">Quay lại</button>
+                <button class="btn btn-primary" type="button" ng-click="saveEdits(editProducer)">Cập nhật</button>
             </form>
         </div>
     </div>
