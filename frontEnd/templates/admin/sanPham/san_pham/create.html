@@ -122,7 +122,12 @@
                     <tbody>
                         <tr ng-repeat="details in details">
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ details.sanPham.tenSanPham }}</td>
+                            <td>
+                                <!-- <span>{{ details.img }}</span> -->
+                                <div>
+                                    <span>{{ details.sanPham.tenSanPham }}</span>
+                                </div>
+                            </td>
                             <td>{{ details.soLuong }}</td>
                             <td>{{ details.mauSac.tenMauSac}}</td>
                             <td>{{ details.kichCo.kichCo }}</td>
@@ -132,22 +137,15 @@
                                     ng-click="deleteCTSP(details)">
                                     <i class="bx bx-trash me-2"></i>
                                 </button>
-
-                                <button type="button" class="btn btn-primary" ng-click="updateImg(details)">
-                                    Thêm ảnh
-                                </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <br>
                 <button class="btn btn-primary" type="button" id="formFileButton"
-                    onclick="document.getElementById('formFileInput').click()" style="float: right;" ng-click="themAnhMacDinh(details)">
+                    ng-click = "themAnh()" style="float: right;">
                     Thêm ảnh cho toàn bộ sản phẩm
                 </button>
-                <input class="form-control" type="file" accept="image/*" id="formFileInput" multiple
-                    style="display: none;" onchange="showSelectedImage(event)" />
-                <div class="mb-3" id="imagePreview"></div>
             </div>
         </div>
     </div>

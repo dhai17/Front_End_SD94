@@ -260,8 +260,10 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
                     showConfirmButton: false,
                     timer: 2000,
                 });
-                const details = response.data;
+                const details = response.data.list;
                 $scope.details = details;
+
+                localStorage.setItem("id_product", response.data.id_product)
             })
             .catch(function (response) {
                 if (errorResponse.status === 400) {
@@ -296,11 +298,11 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             });
     }
 
-
     $scope.themAnhMacDinh = function () {
         let data = {
-            anhMacDinh: $scope.createProduct.anhMacDinh,
-        }
+            id: $scope.createProduct.id,
+            anhMacDinh: true,
+        };
         $http.put("http://localhost:8080/sanPhamChiTiet/ThemAnhMacDinh", data, { headers })
             .then(function (response) {
                 Swal.fire({
@@ -310,7 +312,7 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
                     timer: 2000,
                 });
             })
-            .catch(function (response) {
+            .catch(function (errorResponse) {
                 if (errorResponse.status === 400) {
                     const errorMessage = errorResponse.data.message;
                     Swal.fire({
@@ -320,42 +322,83 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
                         timer: 2000,
                     });
                 }
-            })
+            });
+    };
+
+    $scope.onImageSelected = function (event) {
+        $scope.product.image = event.target.files[0];
+    };
+
+    $scope.addProduct = function () {
+        let formData = new FormData();
+        let data = {
+            id: $scope.createProduct.id,
+            anhMacDinh: true,
+            image: $scope.product.image
+        };
+
+        $http.post('/api/products', formData, {
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity
+        }).then(
+            function (response) {
+                console.log(response);
+            },
+            function (error) {
+                console.error(error);
+            }
+        );
     };
 
     $scope.returnCreate = function () {
         window.location.href = "#!/list-Product"
     };
+    let id_product = localStorage.getItem("id_product");
 
-    $scope.updateImg = function (promotion) {
-        let idSPCT = promotion.id;
-        window.location.href = '#!/list-Img?id=' + idSPCT;
+    $scope.themAnh = function (promotion) {
+        window.location.href = '#!/list-Img?id=' + id_product;
     };
 
 });
 
 app.controller('ImgController', function ($scope, $http, $routeParams) {
     let token = localStorage.getItem("token");
+    let id_product = localStorage.getItem("id_product");
     let headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
 
-    let id = $routeParams.id;
-
-    $http.get("http://localhost:8080/sanPhamChiTiet/chinhSua/" + id, { headers })
+    $http.get("http://localhost:8080/sanPhamChiTiet/themAnh/" + id_product, { headers })
         .then(function (response) {
             const spct = response.data;
             $scope.spct = spct;
         });
 
-    $scope.themAnh = function () {
-        let data = {
-            tenSanPham: $scope.createProduct.tenSanPham,
-            tenMauSac: $scope.createProduct.tenMauSac,
-            kichCo: $scope.createProduct.kichCo,
-            tenAnh: $scope.createProduct.tenAnh,
+    $scope.loadImage = function (input) {
+        if (input.files && input.files[0]) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                $scope.$apply(function () {
+                    $scope.imagePreview = e.target.result;
+                });
+            };
+            reader.readAsDataURL(input.files[0]);
         }
+    };
+
+    $scope.showSelectedImage = function (event, spcts) {
+        const id = spcts.id;
+        localStorage.setItem("id_product_details", id)
+        let name_img = localStorage.getItem("name_img");
+    };
+
+    function test(id_spct, ten_anh) {
+        let data = {
+            id_spct: id_spct,
+            ten_anh: ten_anh
+        }
+
         $http.post("http://localhost:8080/sanPhamChiTiet/themAnhSanPham", data, { headers })
             .then(function (response) {
                 Swal.fire({
@@ -376,33 +419,7 @@ app.controller('ImgController', function ($scope, $http, $routeParams) {
                     });
                 }
             })
-    };
-
-    $scope.addImg = function () {
-        var formData = new FormData();
-        formData.append('file', $scope.image);
-
-        $http.post('/api/products/' + $scope.productId + '/uploadImage', formData, {
-            transformRequest: angular.identity,
-            headers: { 'Content-Type': undefined }
-        }).then(function (response) {
-            console.log(response.data);
-        }, function (error) {
-            console.error(error);
-        });
-    };
-
-    $scope.loadImage = function (input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $scope.$apply(function () {
-                    $scope.imagePreview = e.target.result;
-                });
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    };
+    }
 });
 
 app.controller("CTSPController", function ($scope, $routeParams, $http) {
@@ -512,26 +529,32 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
 
 });
 
-function showSelectedImage(event) {
-    var fileInput = event.target;
-    var files = fileInput.files;
 
-    var imagePreviewDiv = document.getElementById("imagePreview");
-    imagePreviewDiv.innerHTML = ""; // Xóa bất kỳ hình ảnh đã hiển thị trước đó
+function hienThiAnh(event) {
+    let id = localStorage.getItem("id_product_details");
 
-    for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        var reader = new FileReader();
+    let fileInput = event.target;
+    let files = fileInput.files;
+    let imagePreviewDiv = document.getElementById("imagePreview" + id);
+    imagePreviewDiv.innerHTML = "";
+
+    for (let i = 0; i < files.length; i++) {
+        let file = files[i];
+        let reader = new FileReader();
 
         reader.onload = function (e) {
-            var img = document.createElement("img");
+            let img = document.createElement("img");
             img.src = e.target.result;
             img.style.maxWidth = "200px";
             img.style.marginRight = "10px";
             img.style.marginBottom = "10px";
             imagePreviewDiv.appendChild(img);
+
+            // console.log(file.name); 
+            let a = file.name
         };
 
         reader.readAsDataURL(file);
     }
+
 }
