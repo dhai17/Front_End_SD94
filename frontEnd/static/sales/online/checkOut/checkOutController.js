@@ -79,7 +79,8 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
                     tongTienHoaDon: tongTienHoaDon,
                     tongTienDonHang: tongTienDonHang,
                     email_user: decodedToken.email,
-                    diaChi: diaChi
+                    diaChi: diaChi,
+                    nguoiTao: $scope.hoTen
                 }
                 $http.post("http://localhost:8080/api/banHang/online/datHang", data, { headers })
                     .then(function (response) {
@@ -130,7 +131,8 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
                     tongTienHoaDon: tongTienHoaDon,
                     tongTienDonHang: tongTienDonHang,
                     email_user: decodedToken.email,
-                    diaChi: diaChi
+                    diaChi: diaChi,
+                    nguoiTao: $scope.hoTen
                 }
 
                 $http.post("http://localhost:8080/payment/create", data)

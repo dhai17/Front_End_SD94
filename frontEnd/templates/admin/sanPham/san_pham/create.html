@@ -11,94 +11,104 @@
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="small mb-1">Tên sản phẩm</label>
-                        <input class="form-control" id="name" type="text" placeholder="Nhập tên sản phẩm" ng-model="createProduct.tenSanPham">
+                        <div class="input-group mb-4 border rounded-pill p-2">
+                            <input class="form-control border-0" id="name" type="text" placeholder="Nhập tên sản phẩm"
+                                ng-model="createProduct.tenSanPham">
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label class="small mb-1">Giá bán</label>
-                        <input class="form-control" id="price" type="text" placeholder="Nhập giá tiền" ng-model="createProduct.gia">
+                        <div class="input-group mb-4 border rounded-pill p-2">
+                            <input class="form-control border-0" id="price" type="text" placeholder="Nhập giá tiền"
+                                ng-model="createProduct.gia">
+                        </div>
                     </div>
-
                 </div>
 
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="small mb-1">Số lượng</label>
-                        <input class="form-control" id="quantity" type="text" placeholder="Nhập số lượng" ng-model="createProduct.soLuong">
+                        <div class="input-group mb-4 border rounded-pill p-2">
+                            <input class="form-control border-0" id="quantity" type="text" placeholder="Nhập số lượng"
+                                ng-model="createProduct.soLuong">
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label class="small mb-1">Chất liệu</label>
-                        <select class="form-select" aria-label="Default select example"
-                            ng-model="createProduct.chatLieu">
-                            <option ng-repeat="chatLieu in chatLieu" value="{{chatLieu.id}}">{{chatLieu.chatLieu}}
-                            </option>
-                        </select>
+                        <div class="input-group mb-4 border rounded-pill p-2">
+                            <select class="form-control border-0" ng-model="createProduct.chatLieu">
+                                <option ng-repeat="chatLieu in chatLieu" value="{{chatLieu.id}}">{{chatLieu.chatLieu}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="small mb-1">Loại sản phẩm</label>
-                        <select class="form-select" aria-label="Default select example"
-                            ng-model="createProduct.loaiSanPham">
-                            <option ng-repeat="loaiSanPham in loaiSanPham" value="{{loaiSanPham.id}}">
-                                {{loaiSanPham.loaiSanPham}}</option>
-                        </select>
+                        <div class="input-group mb-4 border rounded-pill p-2">
+                            <select class="form-control border-0" ng-model="createProduct.loaiSanPham">
+                                <option ng-repeat="loaiSanPham in loaiSanPham" value="{{loaiSanPham.id}}">
+                                    {{loaiSanPham.loaiSanPham}}</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label class="small mb-1">Hãng</label>
-                        <select class="form-select" aria-label="Default select example"
-                            ng-model="createProduct.nhaSanXuat">
-                            <option ng-repeat="nhaSanXuat in nhaSanXuat" value="{{nhaSanXuat.id}}">{{nhaSanXuat.name}}
-                            </option>
-                        </select>
+                        <div class="input-group mb-4 border rounded-pill p-2">
+                            <select class="form-control border-0" ng-model="createProduct.nhaSanXuat">
+                                <option ng-repeat="nhaSanXuat in nhaSanXuat" value="{{nhaSanXuat.id}}">
+                                    {{nhaSanXuat.name}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label for="countries" class="small mb-1">Màu sắc</label>
-                        <select id="countries" class="form-select" aria-label="Default select example"
-                            ng-model="selectedColor" multiple>
-                            <option selected ng-repeat="mauSac in mauSac" value="{{mauSac.id}}"
-                                ng-click="getIdColor(mauSac)">{{mauSac.tenMauSac}}</option>
-                        </select>
+                        <div class="input-group mb-4 border rounded-pill p-2">
+                            <select name="mauSac" class="form-control border-0" ng-model="selectedColor"
+                                ng-change="onColorChange()">
+                                <option value="">Chọn màu sắc</option>
+                                <option ng-repeat="mauSac in mauSac" value="{{mauSac}}">{{mauSac.tenMauSac}}</option>
+                            </select>
+                            <div class="input-group-append border-0">
+                                <input type="text" placeholder="Màu sắc đã chọn" aria-describedby="button-addon3"
+                                    class="form-control border-0" id="hoTenKhachHang" ng-model="mauSacDaChon"
+                                    style="width: 400px;">
+                            </div>
+                        </div>
                     </div>
+
                     <div class="col-md-6">
                         <label class="small mb-1">Kích cỡ</label>
-                        <select class="form-select" aria-label="Default select example" ng-model="selectedSizes"
-                            multiple>
-                            <option ng-repeat="kichCo in kichCo" ng-value="kichCo.id" ng-click="getIdSize(kichCo)">
-                                {{kichCo.kichCo}}</option>
-                        </select>
+                        <div class="input-group mb-4 border rounded-pill p-2">
+                            <select name="kichCo" class="form-control border-0" ng-model="selectedSizes"
+                                ng-change="onKichCoChange()" ng-model="selectedSizes">
+                                <option value="">Chọn kích cỡ</option>
+                                <option ng-repeat="kichCos in kichCo" value="{{kichCos}}" ng-click="getIdSize(kichCos)">
+                                    {{kichCos.kichCo}}</option>
+                            </select>
+                            <div class="input-group-append border-0">
+                                <input type="text" placeholder="Kích cỡ đã chọn" aria-describedby="button-addon3"
+                                    class="form-control border-0" ng-model="kichCocDaChon" style="width: 400px;">
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="row mb-4">
-                        <div class="mb-3">
-                            <label for="formFile" class="form-label">Chọn ảnh</label>
-                            <input class="form-control" type="file" accept="image/*" id="formFile" multiple
-                                onchange="showSelectedImage(event)" />
-                        </div>
-                        <div class="mb-3" id="imagePreview"></div>                    
+                <div style="float: right;">
+                    <button class="btn btn-primary" type="button" ng-click="returnCreate()">Quay lại</button>
+                    <button class="btn btn-primary" type="button" ng-click="saveCreate()">Thêm mới</button>
                 </div>
-
-                <select name="countries" id="countries" multiple>
-                    <option value="1">Afghanistan</option>
-                    <option value="2">Australia</option>
-                    <option value="3">Germany</option>
-                    <option value="4">Canada</option>
-                    <option value="5">Russia</option>
-                </select>
-
-                <button class="btn btn-primary" type="button" ng-click="returnCreate()">Quay lại</button>
-                <button class="btn btn-primary" type="button" ng-click="saveCreate()">Thêm mới</button>
             </form>
         </div>
         <div ng-controller="ProductController" id="productList">
-            <hr>
             <div>
-                <table class="table align-middle mb-1 bg-white">
-                    <thead class="bg-light">
+                <table class="table">
+                    <thead>
                         <tr>
                             <th>#</th>
                             <th>Sản phẩm</th>
@@ -122,11 +132,22 @@
                                     ng-click="deleteCTSP(details)">
                                     <i class="bx bx-trash me-2"></i>
                                 </button>
+
+                                <button type="button" class="btn btn-primary" ng-click="updateImg(details)">
+                                    Thêm ảnh
+                                </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <button class="btn btn-primary" type="button" ng-click="updateImg(details)">Tải ảnh</button>
+                <br>
+                <button class="btn btn-primary" type="button" id="formFileButton"
+                    onclick="document.getElementById('formFileInput').click()" style="float: right;" ng-click="themAnhMacDinh(details)">
+                    Thêm ảnh cho toàn bộ sản phẩm
+                </button>
+                <input class="form-control" type="file" accept="image/*" id="formFileInput" multiple
+                    style="display: none;" onchange="showSelectedImage(event)" />
+                <div class="mb-3" id="imagePreview"></div>
             </div>
         </div>
     </div>

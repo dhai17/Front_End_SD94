@@ -217,26 +217,30 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             $scope.kichCo = kichCo;
         })
 
+
     let mauSac_id = [];
-    $scope.getIdColor = function (mauSac) {
+    $scope.mauSacDaChon = "";
+    $scope.onColorChange = function () {
+        let mauSac = JSON.parse($scope.selectedColor)
+
         if (mauSac_id.indexOf(mauSac.id) === -1) {
             mauSac_id.push(mauSac.id);
-        } else {
-            console.log("ID already exists in the array");
+            $scope.mauSacDaChon += mauSac.tenMauSac + ", "
         }
     };
 
     let kichCo_id = [];
-    $scope.getIdSize = function (kichCo) {
+    $scope.kichCocDaChon = "";
+    $scope.onKichCoChange = function () {
+        let kichCo = JSON.parse($scope.selectedSizes)
+
         if (kichCo_id.indexOf(kichCo.id) === -1) {
             kichCo_id.push(kichCo.id);
-        } else {
-            console.log("ID already exists in the array");
+            $scope.kichCocDaChon += kichCo.kichCo + ", "
         }
     };
 
     $scope.saveCreate = function () {
-
         let data = {
             tenSanPham: $scope.createProduct.tenSanPham,
             gia: $scope.createProduct.gia,
@@ -292,6 +296,33 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             });
     }
 
+
+    $scope.themAnhMacDinh = function () {
+        let data = {
+            anhMacDinh: $scope.createProduct.anhMacDinh,
+        }
+        $http.put("http://localhost:8080/sanPhamChiTiet/ThemAnhMacDinh", data, { headers })
+            .then(function (response) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Thêm ảnh thành công",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            })
+            .catch(function (response) {
+                if (errorResponse.status === 400) {
+                    const errorMessage = errorResponse.data.message;
+                    Swal.fire({
+                        icon: "error",
+                        title: errorMessage + "",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                }
+            })
+    };
+
     $scope.returnCreate = function () {
         window.location.href = "#!/list-Product"
     };
@@ -300,40 +331,52 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
         let idSPCT = promotion.id;
         window.location.href = '#!/list-Img?id=' + idSPCT;
     };
+
 });
 
-app.controller('ImgController', function ($scope, $http) {
+app.controller('ImgController', function ($scope, $http, $routeParams) {
+    let token = localStorage.getItem("token");
+    let headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
 
-    const id = $routeParams.id;
+    let id = $routeParams.id;
 
-    $http.get("http://localhost:8080/api/getColor", { params: { product_id: id } }, { headers })
+    $http.get("http://localhost:8080/sanPhamChiTiet/chinhSua/" + id, { headers })
         .then(function (response) {
-            const color = response.data;
-            $scope.color = color;
+            const spct = response.data;
+            $scope.spct = spct;
         });
 
-    $http.get("http://localhost:8080/api/productDetails/edit/prodtuctDetailsID=" + id, { headers })
-        .then(function (response) {
-            const promotion = response.data;
-            $scope.promotion = promotion;
-        });
-
-    let idPro = $routeParams.id;
-
-    $http.get("http://localhost:8080/sanPhamChiTiet/danhSachHinhAnh", {
-        params: { san_pham_id: id },
-        headers: headers
-    })
-        .then(function (response) {
-            const promotions = response.data;
-            $scope.promotions = promotions;
-        });
-
-    $http.get("http://localhost:8080/sanPhamChiTiet/chinhSua/" + idPro, { headers })
-        .then(function (response) {
-            const editproduct = response.data;
-            $scope.editproduct = editproduct;
-        });
+    $scope.themAnh = function () {
+        let data = {
+            tenSanPham: $scope.createProduct.tenSanPham,
+            tenMauSac: $scope.createProduct.tenMauSac,
+            kichCo: $scope.createProduct.kichCo,
+            tenAnh: $scope.createProduct.tenAnh,
+        }
+        $http.post("http://localhost:8080/sanPhamChiTiet/themAnhSanPham", data, { headers })
+            .then(function (response) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Thêm mới thành công",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            })
+            .catch(function (response) {
+                if (errorResponse.status === 400) {
+                    const errorMessage = errorResponse.data.message;
+                    Swal.fire({
+                        icon: "error",
+                        title: errorMessage + "",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                }
+            })
+    };
 
     $scope.addImg = function () {
         var formData = new FormData();
@@ -411,7 +454,7 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
     });
 
     $scope.edit = function (promotion) {
-        let idPro = promotion.id;
+        let id = promotion.id;
         window.location.href = '#!/edit-Product?id=' + idPro;
     };
 
