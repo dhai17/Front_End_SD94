@@ -232,3 +232,19 @@ app.config(['$routeProvider', function ($routeProvider) {
     })
 }]);
 
+app.directive('fileChange', ['$parse', function ($parse) {
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var fn = $parse(attrs.fileChange);
+            element.on('change', function (event) {
+                scope.$apply(function () {
+                    fn(scope, { $event: event });
+                });
+            });
+        }
+    };
+}]);
+
+

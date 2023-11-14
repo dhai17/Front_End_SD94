@@ -17,15 +17,22 @@
             </div>
         </div>
         <div class="row mb-4">
-            <div class="mb-3 col-4">
-                <label for="formFile" class="form-label">Chọn ảnh</label>
-                <input class="form-control" type="file" accept="image/*" id="formFile{{spcts.id}}" multiple
-                    ng-click="showSelectedImage($event, spcts)" ng-model="anhSpct" onchange="hienThiAnh(event)"/>
+            <div class="row mb-4">
+                <div class="mb-3 col-4">
+                    <label for="formFile" class="form-label">Chọn ảnh</label>
+                    <input class="form-control" type="file" accept="image/*" id="formFile{{spcts.id}}" multiple
+                        ng-click="showSelectedImage($event, spcts)" ng-model="fileName"
+                        file-change="hienThiAnh($event, spcts)" />
+                </div>
             </div>
-            <div class="mb-3 col-8">
-                <label for="imagePreview" class="form-label">Xem trước</label>
-                <div id="imagePreview{{spcts.id}}"></div>
-            </div>
+        </div>
+
+        <label for="imagePreview" class="form-label">Xem trước</label>
+        <div class="mb-3 col-8" ng-repeat="hinhAnh in hinhAnh">
+            <img src='/static/admin/assets/img/sanPham/{{hinhAnh.tenAnh}}'
+                style="width: 200px; height: 200px; margin-right: 10px; margin-bottom: 10px;">
+            <button ng-click="setAnhMacDinh(hinhAnh, spcts)">Set anh mac dinh</button>
+            <button ng-click="xoaAnh(hinhAnh, spcts)">Xoa</button>
         </div>
     </div>
     <hr>
