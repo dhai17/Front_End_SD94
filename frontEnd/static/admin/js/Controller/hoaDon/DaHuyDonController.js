@@ -4,13 +4,13 @@ app.controller("DaHuyDonController", function ($scope, $http) {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
-    $scope.loadData = function(){
+    $scope.loadData = function () {
         $http.get("http://localhost:8080/hoaDon/datHang/daHuy/danhSach", { headers }).then(function (response) {
             const pending = response.data;
             $scope.pending = pending;
         });
     }
-    
+
     $scope.loadData();
 
 
@@ -97,32 +97,38 @@ app.controller("DaHuyDonController", function ($scope, $http) {
     // Hoá đơn chi tiết
     $scope.look = function (pending) {
         const id = pending.id;
-        window.location.href = "#!/detailed-invoice5?id=" + id;
+        window.location.href = "#!/CTDaHuy?id=" + id;
     };
-    
+
 
 });
 
-app.controller("Details5Controller", function ($scope, $routeParams, $http) {
+app.controller("CTDaHuy", function ($scope, $routeParams, $http) {
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
     const id = $routeParams.id;
-    $scope.loadData = function(){
-        $http.get("http://localhost:8080/hoaDon/chiTietHoaDon/choXacNhan/id="+id, { headers })
-        .then(function (response) {
-            const invoice = response.data;
-            const hdct = invoice.hoaDonChiTiets;
-            $scope.hdct = hdct;
-            const lshd = invoice.lichSuHoaDons;
-            $scope.lshd = lshd;
-            const hoaDon = invoice.hoaDon;
-            $scope.hoaDon = hoaDon;
-        });
+    $scope.loadData = function () {
+        $http.get("http://localhost:8080/hoaDon/chiTietHoaDon/daHuy/id=" + id, { headers })
+            .then(function (response) {
+                const respone = response.data;
+                const hdct = respone.list_HDCT;
+                $scope.hdct = hdct;
+
+                const timeLine_ChoXacNhan = respone.timeLine_ChoXacNhan;
+                $scope.timeLine_ChoXacNhan = timeLine_ChoXacNhan;
+
+                const timeLine_DaHuy = respone.timeLine_DaHuy;
+                $scope.timeLine_DaHuy = timeLine_DaHuy;
+
+                const hoaDon = respone.hoaDon;
+
+                $scope.hoaDon = hoaDon;
+            });
     }
-    
+
     $scope.loadData();
     //Phân trang
     $scope.pager = {

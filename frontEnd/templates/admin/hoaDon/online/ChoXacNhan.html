@@ -49,7 +49,7 @@
         <thead class="bg-light">
             <tr>
                 <th>
-                    <input type="checkbox" class="form-check-input" ng-model="selectAll" ng-change="toggleSelectAll()">
+                    <input type="checkbox" class="checkbox" ng-model="selectAll" ng-change="toggleSelectAll()">
                 </th>
                 <th>#</th>
                 <th>Mã HD</th>
@@ -64,7 +64,7 @@
         <tbody>
             <tr ng-repeat="pending in pager.pending">
                 <td>
-                    <input type="checkbox" class="form-check-input" ng-model="pending.selected"
+                    <input type="checkbox" class="checkbox" ng-model="pending.selected"
                         ng-change="updateSelectAll()">
                 </td>
                 <td>{{$index + 1}}</td>

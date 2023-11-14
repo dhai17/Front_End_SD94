@@ -1,17 +1,25 @@
-app.controller("ChoXacNhanController", function ($scope, $http) {
+
+app.controller("ChoGiaoHangController", function ($scope, $http) {
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
+
     $scope.loadData = function () {
-        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/danhSach", { headers }).then(function (response) {
+        $http.get("http://localhost:8080/hoaDon/datHang/choGiaoHang/danhSach", { headers }).then(function (response) {
             const pending = response.data;
-                $scope.pending = pending;
+            $scope.pending = pending;
         });
     }
 
     $scope.loadData();
+    $scope.toggleSelectAll = function () {
+        angular.forEach($scope.pending, function (item) {
+            item.selected = $scope.selectAll;
+        });
+        $scope.checkTatCaDaChon();
+    };
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
         let base64Url = token.split('.')[1];
@@ -26,35 +34,30 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
 
     let decodedToken = parseJwt(token);
 
+
+
     $scope.GiaoTatCa = function () {
         const checkOut_email = decodedToken.email;
         Swal.fire({
             title: 'Xác nhận giao hàng',
-            text: 'Bạn có muốn giao tất cả đơn hàng không?',
+            text: 'Các đơn hàng đã được gửi đến đơn vị vận chuyển?',
             icon: 'question',
             showCancelButton: true,
-            confirmButtonText: 'Có',
-            cancelButtonText: 'Không'
+            confirmButtonText: 'Đã bàn giao',
+            cancelButtonText: 'Chưa'
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = {
-                    email_user: checkOut_email,
-
+                    email_user: checkOut_email
                 }
-                $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/xacNhanDon/tatCa", data, { headers })
+                $http.post("http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang-tatCa", data, { headers })
                     .then(function (response) {
                         const pending = response.data;
-                        
                         $scope.$evalAsync(function () {
                             $scope.pending = pending;
                         });
-                        Swal.fire('Xác nhận thành công!', '', 'success');
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                        Swal.fire('Đã xảy ra lỗi!', '', 'error');
                     });
-                
+                Swal.fire('Xác nhận thành công!', '', 'success');
             };
         });
     };
@@ -91,73 +94,43 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
             return pageNumbers;
         }
     };
+
+
+
+
     // xác nhận đơn
     $scope.confirm = function (pending) {
         const id = pending.id;
         const checkOut_email = decodedToken.email;
         Swal.fire({
-            title: 'Xác nhận đơn hàng',
-            text: 'Bạn có muốn giao đơn hàng này không?',
-            icon: 'question',
+            title: 'Xác nhận giao đơn hàng',
+            text: 'Giao đơn hàng này cho đơn vị vận chuyển?',
+            icon: 'info',
             showCancelButton: true,
             confirmButtonText: 'Có',
             cancelButtonText: 'Không'
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = {
-                    id :id,
+                    id: id,
                     email_user: checkOut_email
                 }
-                $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/daXacNhan", data, { headers })
-                    .then(function (response) {
-                        const pending = response.data;
-                        $scope.$evalAsync(function () {                           
-                            $scope.pending = pending;
-                        });
-                        Swal.fire('Xác nhận thành công!', '', 'success');
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    })
-            };
-        });
-    };
-
-    // từ chối xác nhận ( trạng thái đã huỷ đơn 5)
-    $scope.refuseBill = function (pending) {
-        const id = pending.id;
-        const checkOut_email = decodedToken.email;
-        Swal.fire({
-            title: 'Xác nhận huỷ đơn hàng',
-            text: 'Bạn có muốn huỷ đơn hàng này không?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Có',
-            cancelButtonText: 'Không'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let data = {
-                    id:id,
-                    email_user: checkOut_email
-                }
-                $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/huyDon", data, { headers })
+                $http.post("http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang", data, { headers })
                     .then(function (response) {
                         $scope.loadData();
-                        Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
                     })
                     .catch(function (error) {
-                        console.log(error);
+
                     })
-                
+
+                Swal.fire('Xác nhận thành công!', '', 'success');
             };
         });
-
     };
-
     //Tìm kiếm
     $scope.$watch('search', function (newVal) {
         if (newVal) {
-            $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/timKiem=" + newVal, { headers })
+            $http.get("http://localhost:8080/hoaDon/datHang/choGiaoHang/timKiem=" + newVal, { headers })
                 .then(function (response) {
                     const pending = response.data;
 
@@ -176,7 +149,7 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
         let formattedDate = formatDate(searchDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/timKiemNgay=" + formattedDate, { headers })
+        $http.get("http://localhost:8080/hoaDon/datHang/choGiaoHang/timKiemNgay=" + formattedDate, { headers })
             .then(function (response) {
                 const pending = response.data;
 
@@ -199,6 +172,8 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
     $scope.reLoad = function () {
         $scope.loadData();
     }
+    //Xác nhận đã chọn
+
     // check don da chon
     $scope.coCheckboxDaChon = false;
 
@@ -229,8 +204,8 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
             if (item.selected) {
                 id_hoaDon.push(item.id);
                 Swal.fire({
-                    title: 'Xác nhận những đơn đã chọn',
-                    text: 'Bạn có muốn xác nhận những đơn đã chọn không?',
+                    title: 'Xác nhận giao những đơn đã chọn',
+                    text: 'Bạn có muốn giao những đơn đã chọn không?',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Có',
@@ -238,88 +213,60 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         let data = {
-                            id_hoaDon:id_hoaDon,
+                            id_hoaDon: id_hoaDon,
                             email_user: checkOut_email
                         }
-                        $http.put("http://localhost:8080/hoaDon/datHang/choXacNhan/xacNhanDon/daChon", data, { headers })
+                        $http.put("http://localhost:8080/hoaDon/datHang/choGiaoHang/giaoDonHang/daChon", data, { headers })
                             .then(function (response) {
                                 const pending = response.data;
                                 $scope.$evalAsync(function () {
                                     $scope.pending = pending;
                                     $scope.coCheckboxDaChon = false;
-                                    $scope.selectAll = false
+                                    $scope.selectAll = false;
+                                    Swal.fire('Xác nhận giao đơn thành công!', '', 'success');
                                 });
-                                Swal.fire('Xác nhận đơn thành công!', '', 'success');
                             });
-                        
                     };
                 });
 
             };
         });
     };
-    $scope.huyDonDaChon = function () {
-        let id_hoaDon = [];
-        const checkOut_email = decodedToken.email;
-        angular.forEach($scope.pending, function (item) {
-            if (item.selected) {
-                id_hoaDon.push(item.id);
-                Swal.fire({
-                    title: 'Hủy những đơn đã chọn',
-                    text: 'Bạn có muốn hủy những đơn đã chọn không?',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'Có',
-                    cancelButtonText: 'Không'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        let data = {
-                            id_hoaDon:id_hoaDon,
-                            email_user: checkOut_email
-                        }
-                        $http.put("http://localhost:8080/hoaDon/datHang/choXacNhan/huyDon/daChon", data, { headers })
-                            .then(function (response) {
-                                const pending = response.data;
-                                $scope.$evalAsync(function () {
-                                    $scope.pending = pending;
-                                    $scope.coCheckboxDaChon = false;
-                                    $scope.selectAll = false
-                                });
-                            });
-                        Swal.fire('Hủy tất cả đơn thành công!', '', 'success');
-                    };
-                });
-            };
-        });
-    };
+
+    // Hoá đơn chi tiết
     $scope.look = function (pending) {
         const id = pending.id;
-        window.location.href = "#!/detailed-invoice?id=" + id; 
+        window.location.href = "#!/CTChoGiaoHang?id=" + id;
     };
+
+
 });
 
-app.controller("DetailsController", function ($scope, $routeParams, $http) {
+app.controller("CTChoGiaoHang", function ($scope, $routeParams, $http) {
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
-    const id = $routeParams.id;
-    $scope.loadData = function(){
-        $http.get("http://localhost:8080/hoaDon/chiTietHoaDon/choXacNhan/id="+id, { headers })
-        .then(function (response) {
 
-            const invoice = response.data;
-            const hdct = invoice.hoaDonChiTiets;
+    const id = $routeParams.id;
+    $http.get("http://localhost:8080/hoaDon/chiTietHoaDon/choGiaoHang/id=" + id, { headers })
+        .then(function (response) {
+            const respone = response.data;
+            const hdct = respone.list_HDCT;
             $scope.hdct = hdct;
-            const lshd = invoice.lichSuHoaDons;
-            $scope.lshd = lshd;
-            const hoaDon = invoice.hoaDon;
+
+            const timeLine_ChoXacNhan = respone.timeLine_ChoXacNhan;
+            $scope.timeLine_ChoXacNhan = timeLine_ChoXacNhan;
+
+            const timeLine_ChoGiaoHang = respone.timeLine_ChoGiaoHang;
+            $scope.timeLine_ChoGiaoHang = timeLine_ChoGiaoHang;
+
+            const hoaDon = respone.hoaDon;
+
             $scope.hoaDon = hoaDon;
         });
-    }
-    
-    $scope.loadData();
+
 
     //Phân trang
     $scope.pager = {
@@ -352,8 +299,25 @@ app.controller("DetailsController", function ($scope, $routeParams, $http) {
             return pageNumbers;
         }
     };
+
+    $scope.downloadAsPDF = function () {
+
+        // tạo đối tượng jsPDF
+        // const doc = new jsPDF(); 
+
+        // // Lấy thẻ table
+        // const table = document.getElementById('tableBillĐetail2');  
+
+        // // In table ra PDF
+        // doc.autoTable( {
+        //   head: table.tHead.rows,
+        //   body: table.tBodies 
+        // });
+
+        // // Save PDF
+        // doc.save('table.pdf');
+
+    }
 });
-
-
 
 
