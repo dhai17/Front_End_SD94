@@ -42,20 +42,6 @@
                 </div>
             </div>
 
-            <div class="row mb-4">
-                <div class="col-2"></div>
-                <div class="col-2">
-                    <p>Ảnh</p>
-                </div>
-                <div class="col-4">
-                    <div class="mb-3">
-                        <label for="formFile" class="form-label">Chọn ảnh</label>
-                        <input class="form-control" type="file" accept="image/*" id="formFile" multiple
-                            onchange="angular.element(this).scope().setSelectedFile(this)" />
-                    </div>
-                </div>
-            </div>
-
             <button class="btn btn-primary" type="button" ng-click="returnEdit(editProduct)">Quay lại</button>
             <button class="btn btn-primary" type="button" ng-click="saveEditProduct(editProduct)">Cập nhật</button>
         </form>
@@ -71,7 +57,6 @@
                     <th>Màu sắc</th>
                     <th>Kích cỡ</th>
                     <th>Giá bán</th>
-                    <!-- <th>Chất liệu</th> -->
                     <th>Thao tác</th>
                 </tr>
             </thead>
@@ -83,7 +68,6 @@
                     <td>{{ details.mauSac.tenMauSac }}</td>
                     <td>{{ details.kichCo.kichCo }}</td>
                     <td>{{ details.sanPham.gia }}</td>
-                    <!-- <td>{{ details.chatLieu.chatLieu }}</td> -->
                     <td>
                         <button type="button" class="btn btn-link" ng-click="editSPCT(details)">
                             <i class="bx bx-edit me-2"></i>

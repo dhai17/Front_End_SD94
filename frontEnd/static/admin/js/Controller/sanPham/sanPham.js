@@ -140,10 +140,10 @@ app.controller("EditProductController", function ($scope, $routeParams, $http) {
         let idProduct = $routeParams.id;
         let editProduct = {
             id: idProduct,
-            mauSac: $scope.editproduct.mauSac,
-            kichCo: $scope.editproduct.kichCo,
+            mauSac_id: $scope.editproduct.mauSac,
+            kichCo_id: $scope.editproduct.kichCo,
             sanPham: $scope.editproduct.sanPham,
-            soLuong: $scope.editproduct.soLuong,
+            quantity: $scope.editproduct.soLuong,
         };
 
         $http.put("http://localhost:8080/sanPhamChiTiet/luuChinhSua", editProduct, { headers })
@@ -488,9 +488,9 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
             id: id,
             tenSanPham: $scope.editproduct.tenSanPham,
             gia: $scope.editproduct.gia,
-            chatLieu: $scope.editproduct.chatLieu,
-            loaiSanPham: $scope.editproduct.loaiSanPham,
-            nhaSanXuat: $scope.editproduct.nhaSanXuat,
+            chatLieu_id: $scope.editproduct.chatLieu,
+            loaiSanPham_id: $scope.editproduct.loaiSanPham,
+            nhaSanXuat_id: $scope.editproduct.nhaSanXuat,
         };
 
         $http.put("http://localhost:8080/sanPham/luuChinhSua", editProduct, { headers })
@@ -512,12 +512,7 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
             .catch(function (errorResponse) {
                 if (errorResponse.status === 400) {
                     const errorMassage = errorResponse.data.message;
-                    Swal.fire({
-                        icon: "error",
-                        title: errorMassage + "",
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
+                    console.log(errorMassage);
                 }
             });
     };
