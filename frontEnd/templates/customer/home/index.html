@@ -5,16 +5,16 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="Untree.co">
-	<link rel="shortcut icon" href="/static/customer/">
+	<link rel="shortcut icon" href="/static/customer/assets/images/bag.svg">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-route.js"></script>
 	<meta name="description" content="" />
 	<meta name="keywords" content="bootstrap, bootstrap4" />
-	<link href="/static/customer/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/static/customer/assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-	<link href="/static/customer/css/tiny-slider.css" rel="stylesheet">
-	<link href="/static/customer/css/style.css" rel="stylesheet">
+	<link href="/static/customer/assets/css/tiny-slider.css" rel="stylesheet">
+	<link href="/static/customer/assets/css/style.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<link rel="stylesheet" href="/static/admin/assets/vendor/fonts/boxicons.css" />
 	<script src="/static/customer/js/home/homeControllerCustomer.js"></script>
@@ -25,109 +25,11 @@
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="/static/customer/js/sanPham/DSSP.Controller.js"></script>
 	<title>SD_94</title>
-	<style>
-		.kichCo-sanPhamcustomer {
-			display: inline-block;
-			padding: 10px 20px;
-			margin: 4px;
-			border: none;
-			border-radius: 20px;
-			background-color: black;
-			color: #fff;
-			cursor: pointer;
-			font-size: 13px;
-			text-align: center;
-			text-decoration: none;
-			transition: background-color 0.3s ease, transform 0.2s ease;
-		}
-
-		.kichCo-sanPhamcustomer:hover {
-			background-color: #2980b9;
-			transform: scale(1.1);
-		}
-
-		.kichCo-sanPhamcustomer.selected {
-			background-color: #2980b9;
-			transform: scale(1.1);
-		}
-
-		.kichCo-sanPhamcustomer.selected span {
-			color: #2980b9;
-			color: #fff;
-		}
-
-		.mauSac-sanPhamcustome {
-			display: inline-block;
-			width: 35px;
-			height: 35px;
-			border: none;
-			border-radius: 50%;
-			margin-left: 6px;
-			/* Biến thành hình tròn */
-			cursor: pointer;
-			transition: background-color 0.3s ease, transform 0.2s ease;
-		}
-
-		.mauSac-sanPhamcustome:hover {
-			background-color: #2980b9;
-			transform: scale(1.1);
-		}
-
-		.mauSac-sanPhamcustome.selected {
-			background-color: #27ae60;
-			border: solid #2980b9 2px;
-			transform: scale(1.1);
-		}
-
-		#div-kichCoCustomer {
-			display: flex;
-		}
-
-		#div-inputSoLuong {
-			display: flex;
-		}
-
-		#div-inputSoLuong {
-			display: flex;
-			align-items: center;
-		}
-
-		#input-chonSoLuong {
-			width: 300px;
-			height: 30px;
-			margin-left: 15px;
-		}
-
-		#text-inputSoLuong {
-			margin-right: 10px;
-		}
-
-		#cart-inputSoLuong {
-			width: 100%;
-			text-align: center;
-			display: block;
-			margin: 0 auto;
-			border: none !important;
-			outline: none;
-		}
-
-		td button {
-			display: block;
-			margin: 0 auto;
-		}
-
-		td button:hover {
-			transform: scale(1.1);
-		}
-	</style>
+	<link rel="stylesheet" href="../../../static/customer/assets/css/index.css">
 	<script src="/static/admin/js/Controller/logOut/LogOut.js"></script>
-
-
 </head>
 
 <body>
-
-	<!-- Start Header/Navigation -->
 	<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
 		<div class="container">
@@ -153,7 +55,7 @@
 							<a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
 								data-bs-toggle="dropdown">
 								<div class="avatar avatar-online">
-									<img src="/static/customer/images/user.svg" alt
+									<img src="/static/customer/assets/images/user.svg" alt
 										class="w-px-40 h-auto rounded-circle" />
 								</div>
 							</a>
@@ -174,15 +76,14 @@
 						</li>
 						<!--/ User -->
 					</ul>
-					<li><a class="nav-link" href="#!/cart-list"><img src="/static/customer/images/cart.svg"></a></li>
+					<li><a class="nav-link" href="#!/cart-list"><img src="/static/customer/assets/images/cart.svg"></a>
+					</li>
 				</ul>
 			</div>
 		</div>
 
 	</nav>
-	<!-- End Header/Navigation -->
 
-	<!-- Start Hero Section -->
 	<div class="hero">
 		<div class="container">
 			<div class="row justify-content-between">

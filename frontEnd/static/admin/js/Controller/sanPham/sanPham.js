@@ -387,40 +387,90 @@ app.controller('ImgController', function ($scope, $http, $routeParams) {
         }
     };
 
-    $scope.showSelectedImage = function (event, spcts) {
-        const id = spcts.id;
-        localStorage.setItem("id_product_details", id)
-        let name_img = localStorage.getItem("name_img");
+    $scope.img_name = '';
+
+
+    $scope.hienThiAnh = function (event, spcts) {
+        let id = spcts.id;
+        let fileInput = event.target;
+        let files = fileInput.files;
+        let imagePreviewDiv = angular.element(document.getElementById("imagePreview" + id));
+        let fileNameContainer = angular.element(document.getElementById("fileName" + id));
+
+        // Xóa ảnh và đặt lại tên trước khi thêm ảnh mới
+        imagePreviewDiv.empty();
+        fileNameContainer.text('');
+
+        for (let i = 0; i < files.length; i++) {
+            let file = files[i];
+            let reader = new FileReader();
+
+            reader.onload = function (e) {
+                let data = {
+                    id_spct: id,
+                    ten_anh: [file.name]
+                }
+
+                $http.post("http://localhost:8080/sanPhamChiTiet/themAnhSanPham", data, { headers })
+                    .then(function (response) {
+                        Swal.fire({
+                            icon: "success",
+                            title: response.data.mess,
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+
+                        $http.get("http://localhost:8080/sanPhamChiTiet/hienThiAnh/", { headers })
+                            .then(function (response) {
+                                const hinhAnh = response.data;
+                                $scope.hinhAnh = hinhAnh;
+                            });
+                    });
+            };
+            reader.readAsDataURL(file);
+        }
     };
 
-    function test(id_spct, ten_anh) {
+    $scope.setAnhMacDinh = function (hinhAnh, spcts) {
         let data = {
-            id_spct: id_spct,
-            ten_anh: ten_anh
+            id_hinh_anh: hinhAnh.id,
+            id_spct: spcts.id
         }
 
-        $http.post("http://localhost:8080/sanPhamChiTiet/themAnhSanPham", data, { headers })
+        $http.put("http://localhost:8080/sanPhamChiTiet/setAnhMacDinh/", data, { headers })
             .then(function (response) {
                 Swal.fire({
                     icon: "success",
-                    title: "Thêm mới thành công",
+                    title: response.data.mess,
                     showConfirmButton: false,
-                    timer: 2000,
+                    timer: 2000
                 });
-            })
-            .catch(function (response) {
-                if (errorResponse.status === 400) {
-                    const errorMessage = errorResponse.data.message;
-                    Swal.fire({
-                        icon: "error",
-                        title: errorMessage + "",
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
-                }
-            })
+            });
+
     }
+
+    $scope.xoaAnh = function (hinhAnh, spcts) {
+        let data = {
+            id_hinh_anh: hinhAnh.id,
+            id_spct: spcts.id
+        }
+
+        $http.put("http://localhost:8080/sanPhamChiTiet/xoaAnh/", data, { headers })
+            .then(function (response) {
+                const hinhAnh = response.data;
+                $scope.hinhAnh = hinhAnh;
+
+                Swal.fire({
+                    icon: "success",
+                    title: "Xoa anh thanh cong",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            });
+    }
+
 });
+
 
 app.controller("CTSPController", function ($scope, $routeParams, $http) {
     let token = localStorage.getItem("token");
@@ -525,31 +575,3 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
 });
 
 
-function hienThiAnh(event) {
-    let id = localStorage.getItem("id_product_details");
-
-    let fileInput = event.target;
-    let files = fileInput.files;
-    let imagePreviewDiv = document.getElementById("imagePreview" + id);
-    imagePreviewDiv.innerHTML = "";
-
-    for (let i = 0; i < files.length; i++) {
-        let file = files[i];
-        let reader = new FileReader();
-
-        reader.onload = function (e) {
-            let img = document.createElement("img");
-            img.src = e.target.result;
-            img.style.maxWidth = "200px";
-            img.style.marginRight = "10px";
-            img.style.marginBottom = "10px";
-            imagePreviewDiv.appendChild(img);
-
-            // console.log(file.name); 
-            let a = file.name
-        };
-
-        reader.readAsDataURL(file);
-    }
-
-}
