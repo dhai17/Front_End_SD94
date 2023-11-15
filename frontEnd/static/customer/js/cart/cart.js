@@ -48,7 +48,6 @@ app.controller("cartController", function ($scope, $http) {
     $scope.updateValue = function (gioHangChiTiet) {
         const idCart = gioHangChiTiet.id;
         const quantity = $("#cart-inputSoLuong").val();
-
         let data = {
             id: idCart,
             quanTity: quantity
