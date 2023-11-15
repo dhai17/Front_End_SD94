@@ -101,6 +101,7 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
     let soLuongGet;
     let kichCo;
     let maMauSac;
+    $scope.soLuongHienCo = 0;
 
     $scope.$watchGroup(['selectedKichCo', 'selectedMauSac'], function (newValues, oldValues) {
         if (newValues[0] !== undefined && newValues[1] !== undefined) {
@@ -116,6 +117,7 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
                     soLuongGet = document.getElementById('customer-sanPham-soLuongHienCo');
                     if (soLuongGet) {
                         soLuongGet.innerText = response.data;
+                        $scope.soLuongHienCo = response.data;
                     }
                 });
         }
@@ -161,7 +163,8 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
             maMauSac: maMauSac,
             san_pham_id: sanPham.id,
             soLuong: $scope.chonSoLuong,
-            donGia: sanPham.gia
+            donGia: sanPham.gia,
+            soLuongHienCo: $scope.soLuongHienCo
         }
 
         $http.post("http://localhost:8080/api/muaNgay/check-out", data)
@@ -178,9 +181,10 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
                 });
             })
             .catch(function (error) {
+                const errorMessage = error.data[Object.keys(error.data)[0]]
                 Swal.fire({
                     icon: "error",
-                    title: error.data.mess,
+                    title: errorMessage,
                     showConfirmButton: false,
                     timer: 2000
                 })
