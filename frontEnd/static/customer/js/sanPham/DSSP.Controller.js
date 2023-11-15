@@ -123,24 +123,36 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
     });
 
     $scope.addToCart = function (sanPham) {
-        let data = {
-            kichCo: kichCo,
-            maMauSac: maMauSac,
-            san_pham_id: sanPham.id,
-            email: decodedToken.email,
-            soLuong: $scope.chonSoLuong,
-            donGia: sanPham.gia
-        }
-
-        $http.post("http://localhost:8080/customer/cart/addToCart", data, { headers })
-            .then(function (response) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Thêm vào giỏ hàng thành công",
-                    showConfirmButton: false,
-                    timer: 2000,
+        if (token) {
+            let data = {
+                kichCo: kichCo,
+                maMauSac: maMauSac,
+                san_pham_id: sanPham.id,
+                email: decodedToken.email,
+                soLuong: $scope.chonSoLuong,
+                donGia: sanPham.gia
+            }
+    
+            $http.post("http://localhost:8080/customer/cart/addToCart", data, { headers })
+                .then(function (response) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Thêm vào giỏ hàng thành công",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
                 });
+        }else{
+            Swal.fire({
+                icon: "error",
+                title: "Bạn cần đăng nhập để sử dụng tính năng này",
+                showConfirmButton: false,
+                timer: 2000,
+            }).then(() => {
+                window.location.href = "http://127.0.0.1:5501/templates/auth/Login.html#!/login";
             });
+        }
+       
     };
 
     $scope.muaNgay = function (sanPham) {
@@ -168,7 +180,7 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
             .catch(function (error) {
                 Swal.fire({
                     icon: "error",
-                    title: error.data.message,
+                    title: error.data.mess,
                     showConfirmButton: false,
                     timer: 2000
                 })

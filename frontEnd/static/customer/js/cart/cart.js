@@ -98,7 +98,7 @@ app.controller("cartController", function ($scope, $http) {
                         const gioHangChiTiet = response.data;
 
                         $scope.$evalAsync(function () {
-                            $scope.gioHangChiTiet = promotions;
+                            $scope.gioHangChiTiet = gioHangChiTiet;
                             Swal.fire({
                                 icon: "success",
                                 title: "Xóa thành công",
@@ -153,8 +153,23 @@ app.controller("cartController", function ($scope, $http) {
                 .then(function (response) {
                     localStorage.setItem("id_HoaDon", response.data)
                     const id_HoaDon = localStorage.getItem("id_HoaDon");
-                    window.location.href = "http://127.0.0.1:5501/templates/banHang/online/BanHangOnline.html?id_HoaDon=" + id_HoaDon;
-                });
+                    Swal.fire({
+                        icon: "success",
+                        title: "Chuyển hướng đến trang đặt hàng",
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(function(){
+                        window.location.href = "http://127.0.0.1:5501/templates/banHang/online/BanHangOnline.html?id_HoaDon=" + id_HoaDon;
+                    })
+                })
+                .catch(function (error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: error.data.mess,
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                })
         }
     }, true);
 

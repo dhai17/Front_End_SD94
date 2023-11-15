@@ -91,9 +91,17 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
                             timer: 2000,
                         }).then(() => {
                             window.location.href = "http://127.0.0.1:5501/templates/customer/home/index.html#!/";
-                        })
-
-                    });
+                        }) 
+                    })
+                    .catch(function (e) {
+                        console.log(e);
+                        Swal.fire({
+                            icon: "error",
+                            title: e.data.mess,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        }); 
+                    })
             }
         });
     }
@@ -134,6 +142,7 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
                     diaChi: diaChi,
                     nguoiTao: $scope.hoTen
                 }
+
 
                 $http.post("http://localhost:8080/payment/create", data)
                     .then(function (response) {
@@ -176,7 +185,12 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
                 });
             })
             .catch(function (e) {
-                console.log(e);
+                Swal.fire({
+                    icon: "error",
+                    title: e.data.mess,
+                    showConfirmButton: false,
+                    timer: 2000,
+                }); console.log(e);
             })
     }
 });
