@@ -164,6 +164,14 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
                     const id_HoaDonMuaNgay = localStorage.getItem("id_HoaDonMuaNgay");
                     window.location.href = "http://127.0.0.1:5501/templates/banHang/muaNgay/CheckOut.html?id_HoaDonMuaNgay=" + id_HoaDonMuaNgay;
                 });
-            });
+            })
+            .catch(function (error) {
+                Swal.fire({
+                    icon: "error",
+                    title: error.data.message,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            })
     };
 });

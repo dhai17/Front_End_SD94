@@ -16,48 +16,48 @@ app.config(function ($routeProvider) {
         })
         .when("/list-PurchaseBill", {
 
-            templateUrl: "/templates/admin/purchasebill/ChoXacNhan.html",
+            templateUrl: "/templates/admin/hoaDon/online/ChoXacNhan.html",
             controller: "ChoXacNhanController",
         })
         .when("/cho-giao-hang", {
-            templateUrl: "/templates/admin/purchasebill/ChoGiaoHang.html",
+            templateUrl: "/templates/admin/hoaDon/online/ChoGiaoHang.html",
             controller: "ChoGiaoHangController",
         })
         .when("/dang-giao", {
-            templateUrl: "/templates/admin/purchasebill/DangGiaoHang.html",
+            templateUrl: "/templates/admin/hoaDon/online/DangGiaoHang.html",
             controller: "DangGiaoHangController",
         })
         .when("/da-giao", {
-            templateUrl: "/templates/admin/purchasebill/DaGiaoHang.html",
+            templateUrl: "/templates/admin/hoaDon/online/DaGiaoHang.html",
             controller: "DaGiaoHangController",
         })
         .when("/da-huy", {
-            templateUrl: "/templates/admin/purchasebill/DaHuyDon.html",
+            templateUrl: "/templates/admin/hoaDon/online/DaHuyDon.html",
             controller: "DaHuyDonController",
-        })
-        .when("/detailed-invoice", {
-            templateUrl: "/templates/admin/detailedInvoice/detailedInvoice.html",
-            controller: "DetailsController",
         })
         .when("/login", {
             templateUrl: "/templates/admin/login/index.html",
             controller: "loginCtrl",
         })
-        .when("/detailed-invoice2", {
-            templateUrl: "/templates/admin/detailedInvoice/details2.html",
-            controller: "Details2Controller",
+        .when("/CTChoXacNhan", {
+            templateUrl: "/templates/admin/hoaDon/details.Online/ChiTietChoXacNhan.html",
+            controller: "CTChoXacNhan",
         })
-        .when("/detailed-invoice3", {
-            templateUrl: "/templates/admin/detailedInvoice/details3.html",
-            controller: "Details3Controller",
+        .when("/CTChoGiaoHang", {
+            templateUrl: "/templates/admin/hoaDon/details.Online/ChiTietChoGiaoHang.html",
+            controller: "CTChoGiaoHang",
         })
-        .when("/detailed-invoice4", {
-            templateUrl: "/templates/admin/detailedInvoice/details4.html",
-            controller: "Details4Controller",
+        .when("/CTDangGiaoHang", {
+            templateUrl: "/templates/admin/hoaDon/details.Online/ChiTietDangGiaoHang.html",
+            controller: "CTDangGiaoHang",
         })
-        .when("/detailed-invoice5", {
-            templateUrl: "/templates/admin/detailedInvoice/details5.html",
-            controller: "Details5Controller",
+        .when("/CTDaGiaoHang", {
+            templateUrl: "/templates/admin/hoaDon/details.Online/ChiTietDaGiaoHang.html",
+            controller: "CTDaGiaoHang",
+        })
+        .when("/CTDaHuy", {
+            templateUrl: "/templates/admin/hoaDon/details.Online/ChiTietDaHuy.html",
+            controller: "CTDaHuy",
         })
         .when('/', {
             templateUrl: "/templates/admin/home.html",
@@ -81,7 +81,7 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/khachHang/create.html",
             controller: "CreateCustomerController",
         })
-        
+
         .when("/in-store", {
             templateUrl: "/templates/admin/sales/product_list.html",
             controller: "ListProductController",
@@ -211,24 +211,40 @@ app.config(['$routeProvider', function ($routeProvider) {
 //Bán hàng
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
-    .when('/danhSachHoaDon', {
-        templateUrl: '/templates/banHang/taiQuay/DanhSachHoaDon.html',
-        controller: "danhSachHoaDonController",
-    })
+        .when('/danhSachHoaDon', {
+            templateUrl: '/templates/banHang/taiQuay/DanhSachHoaDon.html',
+            controller: "danhSachHoaDonController",
+        })
 
-    .when('/banHang', {
-        templateUrl: '/templates/banHang/taiQuay/BanHang.html',
-        controller: "BanHangTaiQuayController",
-    })
+        .when('/banHang', {
+            templateUrl: '/templates/banHang/taiQuay/BanHang.html',
+            controller: "BanHangTaiQuayController",
+        })
 
-    .when('/danhSachSanPham/taiQuay', {
-        templateUrl: '/templates/banHang/taiQuay/DanhSachSanPham.html',
-        controller: "danhSachSanPhamTaiQuayController",
-    })
+        .when('/danhSachSanPham/taiQuay', {
+            templateUrl: '/templates/banHang/taiQuay/DanhSachSanPham.html',
+            controller: "danhSachSanPhamTaiQuayController",
+        })
 
-    .when('/product-details-taiQuay', {
-        templateUrl: '/templates/banHang/taiQuay/ChiTietSanPham.html',
-        controller: "ChiTietSanPhamTaiQuayController",
-    })
+        .when('/product-details-taiQuay', {
+            templateUrl: '/templates/banHang/taiQuay/ChiTietSanPham.html',
+            controller: "ChiTietSanPhamTaiQuayController",
+        })
 }]);
+
+app.directive('fileChange', ['$parse', function ($parse) {
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var fn = $parse(attrs.fileChange);
+            element.on('change', function (event) {
+                scope.$apply(function () {
+                    fn(scope, { $event: event });
+                });
+            });
+        }
+    };
+}]);
+
 
