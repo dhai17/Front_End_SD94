@@ -8,6 +8,7 @@ app.controller("danhSachSanPhamController", function ($scope, $http) {
     $http.get("http://localhost:8080/customer/sanPham/danhSach", { headers })
         .then(function (response) {
             const sanPham = response.data;
+            console.log(sanPham);
             $scope.sanPham = sanPham;
         });
 
@@ -89,6 +90,18 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
             $scope.mauSac = mauSac;
         });
 
+    $http.get("http://localhost:8080/customer/sanPham/getAnhSanPham/" + id_sanPham)
+        .then(function (response) {
+            const hinhAnh_list = response.data;
+            $scope.hinhAnhs = hinhAnh_list;
+        });
+
+    $http.get("http://localhost:8080/customer/sanPham/getAnhMacDinhSanPham/" + id_sanPham)
+        .then(function (response) {
+            const hinhAnh = response.data.anhMacDinh;
+            $scope.hinhAnh = hinhAnh;
+        });
+
     $scope.selectKichCo = function (kichCo) {
         $scope.selectedKichCo = kichCo;
         return $scope.selectedKichCo;
@@ -112,6 +125,7 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
             }
             kichCo = newValues[0];
             maMauSac = newValues[1];
+
             $http.post("http://localhost:8080/customer/sanPham/api/getSoLuong", data, { headers })
                 .then(function (response) {
                     soLuongGet = document.getElementById('customer-sanPham-soLuongHienCo');
@@ -124,6 +138,23 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
 
     });
 
+    $scope.maMauSac = "";
+    $scope.$watch('selectedMauSac', function (newVal, oldVal) {
+        if (newVal !== undefined) {
+            $scope.maMauSac = newVal;
+            let data = {
+                id_SP: id_sanPham,
+                maMauSac: $scope.maMauSac
+            }
+            $http.post("http://localhost:8080/customer/sanPham/getAnhByMauSac", data)
+                .then(function (response) {
+                    const hinhAnh = response.data.anh;
+                    $scope.hinhAnh = hinhAnh;
+                });
+        }
+    });
+
+
     $scope.addToCart = function (sanPham) {
         if (token) {
             let data = {
@@ -132,9 +163,10 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
                 san_pham_id: sanPham.id,
                 email: decodedToken.email,
                 soLuong: $scope.chonSoLuong,
+                soLuongHienCo: $scope.soLuongHienCo,
                 donGia: sanPham.gia
             }
-    
+
             $http.post("http://localhost:8080/customer/cart/addToCart", data, { headers })
                 .then(function (response) {
                     Swal.fire({
@@ -142,9 +174,18 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
                         title: "Thêm vào giỏ hàng thành công",
                         showConfirmButton: false,
                         timer: 2000,
-                    });
-                });
-        }else{
+                    })
+                })
+                .catch(function (error) {
+                    const errorMessage = error.data[Object.keys(error.data)[0]]
+                    Swal.fire({
+                        icon: "error",
+                        title: errorMessage,
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                })
+        } else {
             Swal.fire({
                 icon: "error",
                 title: "Bạn cần đăng nhập để sử dụng tính năng này",
@@ -154,7 +195,7 @@ app.controller("ChiTietSanPhamController", function ($scope, $routeParams, $http
                 window.location.href = "http://127.0.0.1:5501/templates/auth/Login.html#!/login";
             });
         }
-       
+
     };
 
     $scope.muaNgay = function (sanPham) {
