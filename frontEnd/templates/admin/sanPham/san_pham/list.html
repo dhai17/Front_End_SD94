@@ -22,11 +22,11 @@
             <tr ng-repeat="promotion in pager.promotions">
                 <td>{{ $index + 1 }}</td>
                 <td>
-                    <!-- <img ng-src="{{getImageUrl(x.images)}}" height="50px" width="50px" /> -->
+                    <img src="/static/admin/assets/img/sanPham/{{promotion.urlImage}}" height="100px" width="100px" />
                     <div>
                         <span>{{ promotion.tenSanPham }}</span>
                     </div>
-                </td>
+                </td>                
                 <td>{{ promotion.gia }}</td>
                 <td ng-class="{
                     'text-success': promotion.status2 === 'Còn hàng',
@@ -35,14 +35,12 @@
                     {{ promotion.status2 }}
                 </td>
                 <td>
-                    <div class="button-group">
-                        <button type="button" class="btn btn-link" ng-click="dsCTSP(promotion)">
-                            <i class="bx bx-edit me-2"></i>
-                        </button>
-                        <button type="button" class="btn btn-link btn-sm btn-rounded" ng-click="delete(promotion)">
-                            <i class="bx bx-trash me-2"></i>
-                        </button>
-                    </div>
+                    <button type="button" class="btn btn-link" ng-click="dsCTSP(promotion)">
+                        <i class="bx bx-edit me-2"></i>
+                    </button>
+                    <button type="button" class="btn btn-link btn-sm btn-rounded" ng-click="delete(promotion)">
+                        <i class="bx bx-trash me-2"></i>
+                    </button>
                 </td>
             </tr>
         </tbody>

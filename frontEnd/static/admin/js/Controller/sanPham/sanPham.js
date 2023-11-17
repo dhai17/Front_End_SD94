@@ -12,7 +12,21 @@ app.controller("ProductController", function ($scope, $http) {
             promotions.forEach(function (promotion) {
                 promotion.status2 = getStatusText(promotion.trangThai);
             });
-            $scope.promotions = promotions;
+            const imageRequests = promotions.map(function (promotion) {
+                return $http.get("http://localhost:8080/sanPhamChiTiet/getdefaultimage?idsp=" + promotion.id, { headers })
+                    .then(function (imageResponse) {
+                        const imageData = imageResponse.data;
+                        promotion.urlImage = imageData.tenAnh;
+                    });
+            });
+            return Promise.all(imageRequests)
+                .then(function () {
+                    console.log(promotions);
+                    $scope.promotions = promotions;
+                });
+        })
+        .catch(function (error) {
+            console.error("Error fetching promotions:", error);
         });
 
     function getStatusText(trangThai) {
@@ -75,19 +89,30 @@ app.controller("ProductController", function ($scope, $http) {
                     promotion.status2 = getStatusText(promotion.trangThai);
                 });
 
-                $scope.$evalAsync(function () {
-                    $scope.promotions = promotions;
-                    Swal.fire({
-                        icon: "success",
-                        title: "Xóa thành công",
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
+                const imageRequests = promotions.map(function (promotion) {
+                    return $http.get("http://localhost:8080/sanPhamChiTiet/getdefaultimage?idsp=" + promotion.id, { headers })
+                        .then(function (imageResponse) {
+                            const imageData = imageResponse.data;
+                            promotion.urlImage = imageData.tenAnh;
+                        });
                 });
+
+                return Promise.all(imageRequests)
+                    .then(function () {
+                        $scope.$evalAsync(function () {
+                            $scope.promotions = promotions;
+                            Swal.fire({
+                                icon: "success",
+                                title: "Xóa thành công",
+                                showConfirmButton: false,
+                                timer: 2000,
+                            });
+                        });
+                    });
 
             })
             .catch(function (error) {
-                console.log("Error");
+                console.log("Error", error);
             });
     }
 
@@ -566,6 +591,26 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
                 }
             });
     };
+
+    $scope.deleteCTSP = function (promotion) {
+        let idPro = promotion.id;
+        $http.delete("http://localhost:8080/sanPhamChiTiet/xoa/" + idPro, { headers })
+            .then(function (response) {
+                const details = response.data;
+                $scope.$evalAsync(function () {
+                    $scope.details = details;
+                    Swal.fire({
+                        icon: "success",
+                        title: "Xóa thành công",
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                });
+            })
+            .catch(function (error) {
+                console.log("Error");
+            });
+    }
 
     $scope.editSPCT = function (promotion) {
         let id = promotion.id;
