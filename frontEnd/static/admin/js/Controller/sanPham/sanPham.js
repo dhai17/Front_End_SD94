@@ -369,6 +369,69 @@ app.controller('ImgController', function ($scope, $http, $routeParams) {
         'Authorization': 'Bearer ' + token
     }
 
+    // $http.get("http://localhost:8080/sanPhamChiTiet/themAnh/" + id_product, { headers })
+    //     .then(function (response) {
+    //         const spct = response.data;
+    //         $scope.spct = spct;
+    //     });
+
+    // $scope.loadImage = function (input) {
+    //     if (input.files && input.files[0]) {
+    //         let reader = new FileReader();
+    //         reader.onload = function (e) {
+    //             $scope.$apply(function () {
+    //                 $scope.imagePreview = e.target.result;
+    //             });
+    //         };
+    //         reader.readAsDataURL(input.files[0]);
+    //     }
+    // };
+
+    // $scope.img_name = '';
+
+
+    // $scope.hienThiAnh = function (event, spcts) {
+    //     let id = spcts.id;
+    //     let fileInput = event.target;
+    //     let files = fileInput.files;
+    //     let imagePreviewDiv = angular.element(document.getElementById("imagePreview" + id));
+    //     let fileNameContainer = angular.element(document.getElementById("fileName" + id));
+
+    //     // Xóa ảnh và đặt lại tên trước khi thêm ảnh mới
+    //     imagePreviewDiv.empty();
+    //     fileNameContainer.text('');
+
+    //     for (let i = 0; i < files.length; i++) {
+    //         let file = files[i];
+    //         let reader = new FileReader();
+
+    //         reader.onload = function (e) {
+    //             let data = {
+    //                 id_spct: id,
+    //                 ten_anh: [file.name]
+    //             }
+
+    //             $http.post("http://localhost:8080/sanPhamChiTiet/themAnhSanPham", data, { headers })
+    //                 .then(function (response) {
+    //                     Swal.fire({
+    //                         icon: "success",
+    //                         title: response.data.mess,
+    //                         showConfirmButton: false,
+    //                         timer: 2000
+    //                     });
+
+    //                     $http.get("http://localhost:8080/sanPhamChiTiet/hienThiAnh", { headers })
+    //                         .then(function (response) {
+    //                             const hinhAnh = response.data;
+    //                             $scope.hinhAnh = hinhAnh;
+    //                         });
+    //                 });
+    //         };
+    //         reader.readAsDataURL(file);
+    //     }
+    // };
+
+    // Updated JavaScript
     $http.get("http://localhost:8080/sanPhamChiTiet/themAnh/" + id_product, { headers })
         .then(function (response) {
             const spct = response.data;
@@ -389,17 +452,14 @@ app.controller('ImgController', function ($scope, $http, $routeParams) {
 
     $scope.img_name = '';
 
-
     $scope.hienThiAnh = function (event, spcts) {
         let id = spcts.id;
         let fileInput = event.target;
         let files = fileInput.files;
         let imagePreviewDiv = angular.element(document.getElementById("imagePreview" + id));
-        let fileNameContainer = angular.element(document.getElementById("fileName" + id));
 
-        // Xóa ảnh và đặt lại tên trước khi thêm ảnh mới
-        imagePreviewDiv.empty();
-        fileNameContainer.text('');
+        // Clear the existing images
+        spcts.hinhAnh = [];
 
         for (let i = 0; i < files.length; i++) {
             let file = files[i];
@@ -420,22 +480,30 @@ app.controller('ImgController', function ($scope, $http, $routeParams) {
                             timer: 2000
                         });
 
-                        $http.get("http://localhost:8080/sanPhamChiTiet/hienThiAnh/", { headers })
-                            .then(function (response) {
-                                const hinhAnh = response.data;
-                                $scope.hinhAnh = hinhAnh;
-                            });
+                        // Update the specific product's images
+                    });
+
+                $http.get("http://localhost:8080/sanPhamChiTiet/hienThiAnh/" + id, { headers })
+                    .then(function (response) {
+                        const hinhAnh = response.data;
+                        spcts.hinhAnh = hinhAnh;
+                        $scope.hinhAnh = hinhAnh;
                     });
             };
             reader.readAsDataURL(file);
         }
     };
 
+    // Additional functions (setAnhMacDinh, xoaAnh) can remain unchanged based on your requirements
+
+
     $scope.setAnhMacDinh = function (hinhAnh, spcts) {
         let data = {
             id_hinh_anh: hinhAnh.id,
             id_spct: spcts.id
         }
+
+        console.log(hinhAnh);
 
         $http.put("http://localhost:8080/sanPhamChiTiet/setAnhMacDinh/", data, { headers })
             .then(function (response) {
