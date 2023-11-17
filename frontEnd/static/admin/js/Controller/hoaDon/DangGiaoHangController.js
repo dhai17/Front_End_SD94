@@ -207,6 +207,10 @@ app.controller("CTDangGiaoHang", function ($scope, $routeParams, $http) {
     }
 
     $scope.loadData();
+
+    $scope.quayLai = function(){
+        window.location.href = "#!/dang-giao";
+    }
     //Phân trang
     $scope.pager = {
         page: 1,
