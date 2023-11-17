@@ -1,7 +1,79 @@
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container-fluid {
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .row {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    #imagePreview {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    img {
+        width: 200px;
+        height: 200px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        object-fit: cover;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    hr {
+        margin-top: 20px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+</style>
+
 <div class="container-fluid" ng-controller="ImgController">
-    <h2 style="text-align: center;">Thêm ảnh</h2>
-    <br>
-    <div style="border: solid black 1px; padding-left: 10px;" ng-repeat="spcts in spct">
+    <h2>Thêm ảnh</h2>
+    <br />
+    <div style="border: solid black 1px; padding-left: 10px" ng-repeat="spcts in spct">
         <div class="row mb-4">
             <div class="col-4">
                 <label>Tên sản phẩm: </label>
@@ -17,23 +89,20 @@
             </div>
         </div>
         <div class="row mb-4">
-            <div class="row mb-4">
-                <div class="mb-3 col-4">
-                    <label for="formFile" class="form-label">Chọn ảnh</label>
-                    <input class="form-control" type="file" accept="image/*" id="formFile{{spcts.id}}" multiple
-                        ng-click="showSelectedImage($event, spcts)" ng-model="fileName"
-                        file-change="hienThiAnh($event, spcts)" />
-                </div>
+            <div class="mb-3 col-4">
+                <label for="formFile{{spcts.id}}" class="form-label">Chọn ảnh</label>
+                <input class="form-control" type="file" accept="image/*" id="formFile{{spcts.id}}" multiple
+                    ng-click="showSelectedImage($event, spcts)" ng-model="fileName"
+                    file-change="hienThiAnh($event, spcts)" />
             </div>
         </div>
 
         <label for="imagePreview" class="form-label">Xem trước</label>
-        <div class="mb-3 col-8" ng-repeat="hinhAnh in hinhAnh">
-            <img src='/static/admin/assets/img/sanPham/{{hinhAnh.tenAnh}}'
-                style="width: 200px; height: 200px; margin-right: 10px; margin-bottom: 10px;">
-            <button ng-click="setAnhMacDinh(hinhAnh, spcts)">Set anh mac dinh</button>
-            <button ng-click="xoaAnh(hinhAnh, spcts)">Xoa</button>
+        <div id="imagePreview" class="mb-3 col-8" ng-repeat="hinhAnh in spcts.hinhAnh">
+            <img src="/static/img/{{hinhAnh.tenAnh}}" />
+            <button ng-click="setAnhMacDinh(hinhAnh, spcts)">Set ảnh mặc định</button>
+            <button ng-click="xoaAnh(hinhAnh, spcts)">Xóa</button>
         </div>
     </div>
-    <hr>
+    <hr />
 </div>

@@ -150,7 +150,12 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
                 });
             })
             .catch(function (e) {
-                console.log(e);
+                Swal.fire({
+                    icon: "error",
+                    title: e.data.mess,
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
             })
     }
 });
