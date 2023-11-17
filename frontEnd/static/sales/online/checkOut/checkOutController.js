@@ -77,14 +77,7 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
         let quanHuyen = $("#district option:selected").text();
         let phuongXa = $("#ward option:selected").text();
         let diaChiNhap = $scope.diaChi;
-        let diaChi =
-          diaChiNhap +
-          " - " +
-          phuongXa +
-          " - " +
-          quanHuyen +
-          " - " +
-          tinhThanhPho;
+        let diaChi = diaChiNhap + " - " + phuongXa + " - " + quanHuyen + " - " + tinhThanhPho;
 
         let diaChi2;
         if (
@@ -113,11 +106,7 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
           diaChi: diaChi2,
           nguoiTao: $scope.hoTen,
         };
-        console.log(data);
-        $http
-          .post("http://localhost:8080/api/banHang/online/datHang", data, {
-            headers,
-          })
+        $http.post("http://localhost:8080/api/banHang/online/datHang", data, { headers, })
           .then(function (response) {
             Swal.fire({
               icon: "success",
@@ -125,8 +114,7 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
               showConfirmButton: false,
               timer: 2000,
             }).then(() => {
-              window.location.href =
-                "http://127.0.0.1:5501/templates/customer/home/index.html#!/";
+              window.location.href = "http://127.0.0.1:5501/templates/customer/home/index.html#!/";
             });
           })
           .catch(function (e) {
@@ -137,7 +125,7 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
               showConfirmButton: false,
               timer: 2000,
             });
-          });
+          })
       }
     });
   };
