@@ -106,7 +106,7 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
           diaChi: diaChi2,
           nguoiTao: $scope.hoTen,
         };
-        $http.post("http://localhost:8080/api/banHang/online/datHang", data, {headers,})
+        $http.post("http://localhost:8080/api/banHang/online/datHang", data, { headers, })
           .then(function (response) {
             Swal.fire({
               icon: "success",

@@ -8,7 +8,6 @@ app.controller("danhSachSanPhamController", function ($scope, $http) {
     $http.get("http://localhost:8080/customer/sanPham/danhSach", { headers })
         .then(function (response) {
             const sanPham = response.data;
-            console.log(sanPham);
             $scope.sanPham = sanPham;
         });
 

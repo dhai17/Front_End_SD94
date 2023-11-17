@@ -238,8 +238,6 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
         const id = pending.id;
         window.location.href = "#!/CTChoGiaoHang?id=" + id;
     };
-
-
 });
 
 app.controller("CTChoGiaoHang", function ($scope, $routeParams, $http) {
