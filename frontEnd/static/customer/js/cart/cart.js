@@ -31,7 +31,6 @@ app.controller("cartController", function ($scope, $http) {
         });
     }
 
-
     $http.get("http://localhost:8080/gioHang/danhSach/" + decodedToken.email, { headers }).then(function (response) {
         const gioHangChiTiet = response.data;
         $scope.gioHangChiTiet = gioHangChiTiet;

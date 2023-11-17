@@ -3,12 +3,12 @@
         <div class="row">
             <div class="col-12 col-md-4 col-lg-2 mb-5" ng-repeat="sanPham in pager.sanPham">
                 <a class="product-item" ng-click = "getSanPhamChiTiet(sanPham)">
-                    <img src="/static/customer/images/bowl-2.png" class="img-fluid product-thumbnail">
+                    <img src='/static/img/{{sanPham.anh_san_pham}}' class="img-fluid product-thumbnail" style="width: 450px; height: 300px;">
                     <h3 class="product-title">{{ sanPham.tenSanPham }}</h3>
                     <strong class="product-price">{{ sanPham.gia }} VNĐ</strong>
 
                     <span class="icon-cross">
-                        <img src="/static/customer/images/cross.svg" class="img-fluid">
+                        <img src="/static/customer/assets/images/cross.svg" class="img-fluid">
                     </span>
                 </a>
             </div>
