@@ -14,7 +14,7 @@ app.controller("NhanVienController", function ($scope, $http) {
         // Thêm trường status2 vào từng đối tượng promotion
 
         promotions.forEach(function (promotion) {
-            promotion.status5 = getStatusText(promotion.status);
+            promotion.trangThai2 = getTrangThai(promotion.trangThai);
 
         });
 
@@ -23,13 +23,13 @@ app.controller("NhanVienController", function ($scope, $http) {
 
     });
 
-    function getStatusText(status) {
-        if (status == 0) {
-            return "Active";
-        } else if (status == 1) {
-            return "Expired";
+    function getTrangThai(trangThai) {
+        if (trangThai == 0) {
+            return "Đang hoạt động";
+        } else if (trangThai == 1) {
+            return "Không hoạt động";
         } else {
-            return "Awaiting";
+            return "Nghỉ phép";
         }
     }
 
@@ -79,35 +79,34 @@ app.controller("NhanVienController", function ($scope, $http) {
 
     //   // Xóa trong danh sách
     $scope.deleteStaff = function (promotion) {
-
-        let idStaff = promotion.id;
+        let id = promotion.id;
         let data = {
-            idStaff
+            id
         }
-
-        // Hiển thị hộp thoại xác nhận trước khi xóa
-
         Swal.fire({
-            title: 'Confirm Delete',
-            text: 'Do you want to delete?',
+            title: 'Xác nhận xóa nhân viên',
+            text: 'Bạn có chắc chắn muốn xóa nhân viên này?',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Delete',
-            cancelButtonText: 'Cancel',
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy',
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.delete("http://localhost:8080/nhanVien/xoa/" + data, { headers })
+                $http.put("http://localhost:8080/nhanVien/xoa", data, { headers })
                     .then(function (response) {
                         const promotions = response.data;
+
+                        // Thêm trường status2 và fomattienGiamToiDa vào từng đối tượng promotion
                         promotions.forEach(function (promotion) {
+                            promotion.trangThai2 = getTrangThai(promotion.trangThai);
                         });
 
-                        // Cập nhật lại dữ liệu trong table nhưng không load lại trang by Tung_BE
+                        // Cập nhật lại dữ liệu trong table nhưng không load lại trang by hduong25
                         $scope.$evalAsync(function () {
                             $scope.promotions = promotions;
                             Swal.fire({
                                 icon: "success",
-                                title: "Deleted successfully",
+                                title: "Xóa thành công",
                                 showConfirmButton: false,
                                 timer: 2000,
                             });
@@ -129,7 +128,7 @@ app.controller("NhanVienController", function ($scope, $http) {
                     promotions.forEach(function (promotion) {
                     });
                     promotions.forEach(function (promotion) {
-                        promotion.status5 = getStatusText(promotion.status);
+                        promotion.trangThai2 = getTrangThai(promotion.trangThai);
 
                     });
 
@@ -141,11 +140,9 @@ app.controller("NhanVienController", function ($scope, $http) {
         } else {
             $http.get("http://localhost:8080/nhanVien/danhSach", { headers }).then(function (response) {
                 const promotions = response.data;
-
                 // Thêm trường status2 vào từng đối tượng promotion
-
                 promotions.forEach(function (promotion) {
-                    promotion.status5 = getStatusText(promotion.status);
+                    promotion.trangThai2 = getTrangThai(promotion.trangThai);
 
                 });
 
@@ -162,8 +159,8 @@ app.controller("NhanVienController", function ($scope, $http) {
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {
+                    promotion.trangThai2 = getTrangThai(promotion.trangThai);
                 });
-
                 // Cập nhật lại dữ liệu trong table nhưng không load lại trang by hduong25
                 $scope.$evalAsync(function () {
                     $scope.promotions = promotions;
@@ -218,7 +215,7 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
     $scope.saveCreateStaff = function () {
 
         console.log($scope.createStaff.gioiTinh);
-        
+
         let radioBtn1 = document.getElementById("inlineRadio1");
         let radioBtn2 = document.getElementById("inlineRadio2");
         let gioiTinh = false;
@@ -228,7 +225,7 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
         } else if (radioBtn2.checked) {
             gioiTinh = false;
         }
-    
+
 
         let data = {
             hoTen: $scope.createStaff.hoTen,
@@ -262,7 +259,7 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
                     timer: 2000,
                 }).then(function () {
                     sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/";
+                    window.location.href = "#!/list-Staff";
                 });
             })
             .catch(function (error) {
@@ -301,31 +298,29 @@ app.controller("EditNhanVienController", function ($scope, $routeParams, $http) 
             const editStaff = response.data;
             $scope.editStaff = editStaff;
 
-            if (editStaff.gender === true) {
+            if (editStaff.gioiTinh === true) {
                 document.getElementById('inlineRadio1').checked = true;
-            } else if (editStaff.gender === false) {
+            } else if (editStaff.gioiTinh === false) {
                 document.getElementById('inlineRadio2').checked = true;
             }
+
             // Gán giá trị cho trường nhập liệu ngày sinh
-            document.getElementById('inputDateOfBirth').value = editStaff.dateOfBirth;
+            document.getElementById('inputDateOfBirth').value = editStaff.ngaySinh;
         });
 
     //Lưu edit
     $scope.saveEditStaff = function () {
-
+        let gioiTinh = document.getElementById('inlineRadio1').checked;
+        console.log($scope.editStaff.gioiTinh);
         let editStaff = {
             id: idStaff,
-            name: $scope.editStaff.name,
-            phoneNumber: $scope.editStaff.phoneNumber,
+            hoTen: $scope.editStaff.hoTen,
+            soDienThoai: $scope.editStaff.soDienThoai,
             email: $scope.editStaff.email,
-            dateOfBirth: $scope.editStaff.dateOfBirth,
-            address: $scope.editStaff.address,
-            gender: $scope.editStaff.gender,
-            password: $scope.editStaff.password
-
+            ngaySinh: $scope.editStaff.ngaySinh,
+            diaChi: $scope.editStaff.diaChi,
+            gioiTinh: gioiTinh,
         };
-        console.log($scope.editStaff.gender);
-
 
         $http.put("http://localhost:8080/nhanVien/luuChinhSua", editStaff, { headers })
             .then(function (response) {
