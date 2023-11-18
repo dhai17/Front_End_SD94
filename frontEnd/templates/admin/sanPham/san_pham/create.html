@@ -1,9 +1,8 @@
 <div class="container-fluid" ng-controller="CreateProductController">
     <div class="card mb-4">
-        <br>
         <div class="container-fluid my-auto d-flex align-items-center">
             <div class="mx-auto">
-                <h3>Tạo sản phẩm</h3>
+                <h3 id="h1-taoSanPham">Tạo sản phẩm</h3>
             </div>
         </div>
         <div class="card-body">
@@ -35,53 +34,56 @@
                     </div>
                     <div class="col-md-6">
                         <label class="small mb-1">Chất liệu</label>
-                        <div class="input-group mb-4 border rounded-pill p-2">
-                            <select class="form-control border-0" ng-model="createProduct.chatLieu">
-                                <option ng-repeat="chatLieu in chatLieu" value="{{chatLieu.id}}">{{chatLieu.chatLieu}}
-                                </option>
-                            </select>
-                            
-                        </div>
-                        <div>
-                            <button class="button" ng-click="ThemMoiChatLieu()">
-                                <ion-icon name="add-outline"></ion-icon>
-                                Them moi chat lieu
-                              </button>
+                        <div class="form-inline mb-4">
+                            <div class="input-group flex-grow-1 border rounded-pill p-2">
+                                <select class="form-control border-0" ng-model="createProduct.chatLieu">
+                                    <option value="">Chọn chat lieu</option>
+                                    <option ng-repeat="chatLieu in chatLieu" value="{{chatLieu.id}}">
+                                        {{chatLieu.chatLieu}}
+                                    </option>
+                                </select>
+
+                            </div>
+                            <button class="button ml-2 p-2" id="button-themNgay" ng-click="ThemMoiChatLieu()">
+                                <ion-icon name="add-outline" id = "icon-icon"></ion-icon>
+                            </button>
                         </div>
                     </div>
-                    
                 </div>
 
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="small mb-1">Loại sản phẩm</label>
-                        <div class="input-group mb-4 border rounded-pill p-2">
-                            <select class="form-control border-0" ng-model="createProduct.loaiSanPham">
-                                <option ng-repeat="loaiSanPham in loaiSanPham" value="{{loaiSanPham.id}}">
-                                    {{loaiSanPham.loaiSanPham}}</option>
-                            </select>
-                        </div>
-                        <div>
-                            <button class="button" ng-click="ThemMoiLoai()">
-                                <ion-icon name="add-outline"></ion-icon>
-                                Them moi loai san pham
-                              </button>
+                        <div class="form-inline mb-4">
+                            <div class="input-group flex-grow-1 border rounded-pill p-2">
+                                <select class="form-control border-0" ng-model="createProduct.loaiSanPham">
+                                    <option value="">Chọn loai san pham</option>
+                                    <option ng-repeat="loaiSanPham in loaiSanPham" value="{{loaiSanPham.id}}">
+                                        {{loaiSanPham.loaiSanPham}}
+                                    </option>
+                                </select>
+                            </div>
+                            <button class="button ml-2 p-2" id="button-themNgay" ng-click="ThemMoiLoai()">
+                                <ion-icon name="add-outline" id = "icon-icon"></ion-icon>
+                                <!-- Them moi loai san pham -->
+                            </button>
                         </div>
                     </div>
+
                     <div class="col-md-6">
                         <label class="small mb-1">Hãng</label>
-                        <div class="input-group mb-4 border rounded-pill p-2">
-                            <select class="form-control border-0" ng-model="createProduct.nhaSanXuat">
-                                <option ng-repeat="nhaSanXuat in nhaSanXuat" value="{{nhaSanXuat.id}}">
-                                    {{nhaSanXuat.name}}
-                                </option>
-                            </select>
-                        </div>
-                        <div>
-                            <button class="button" ng-click="ThemMoiHang()">
-                                <ion-icon name="add-outline"></ion-icon>
-                                Them moi hang
-                              </button>
+                        <div class="form-inline mb-4">
+                            <div class="input-group flex-grow-1 border rounded-pill p-2">
+                                <select class="form-control border-0" ng-model="createProduct.nhaSanXuat">
+                                    <option value="">Chọn hang</option>
+                                    <option ng-repeat="nhaSanXuat in nhaSanXuat" value="{{nhaSanXuat.id}}">
+                                        {{nhaSanXuat.name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <button class="button ml-2 p-2" id="button-themNgay" ng-click="ThemMoiHang()">
+                                <ion-icon name="add-outline" id = "icon-icon"></ion-icon>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -89,58 +91,62 @@
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label for="countries" class="small mb-1">Màu sắc</label>
-                        <div class="input-group mb-4 border rounded-pill p-2">
-                            <select name="mauSac" class="form-control border-0" ng-model="selectedColor"
-                                ng-change="onColorChange()">
-                                <option value="">Chọn màu sắc</option>
-                                <option ng-repeat="mauSac in mauSac" value="{{mauSac}}">{{mauSac.tenMauSac}}</option>
-                            </select>
-                            <div class="input-group-append border-0">
-                                <input type="text" placeholder="Màu sắc đã chọn" aria-describedby="button-addon3"
-                                    class="form-control border-0" id="hoTenKhachHang" ng-model="mauSacDaChon"
-                                    style="width: 400px;">
+                        <div class="form-inline mb-4">
+                            <div class="input-group flex-grow-1 border rounded-pill p-2">
+                                <select name="mauSac" class="form-control border-0" ng-model="selectedColor"
+                                    ng-change="onColorChange()">
+                                    <option value="">Chọn màu sắc</option>
+                                    <option ng-repeat="mauSac in mauSac" value="{{mauSac}}">{{mauSac.tenMauSac}}
+                                    </option>
+                                </select>
+                                <div class="input-group-append border-0">
+                                    <input type="text" placeholder="Màu sắc đã chọn" aria-describedby="button-addon3"
+                                        class="form-control border-0" id="hoTenKhachHang" ng-model="mauSacDaChon"
+                                        style="width: 400px;">
+                                </div>
                             </div>
-                        </div>
 
-                        <div>
-                            <button class="button" ng-click="ThemMoiMauSac()">
-                                <ion-icon name="add-outline"></ion-icon>
-                                Them moi mau sac
-                              </button>
+                            <button class="button ml-2 p-2" id="button-themNgay" ng-click="ThemMoiMauSac()">
+                                <ion-icon name="add-outline" id = "icon-icon"></ion-icon>
+                            </button>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <label class="small mb-1">Kích cỡ</label>
-                        <div class="input-group mb-4 border rounded-pill p-2">
-                            <select name="kichCo" class="form-control border-0" ng-model="selectedSizes"
-                                ng-change="onKichCoChange()" ng-model="selectedSizes">
-                                <option value="">Chọn kích cỡ</option>
-                                <option ng-repeat="kichCos in kichCo" value="{{kichCos}}" ng-click="getIdSize(kichCos)">
-                                    {{kichCos.kichCo}}</option>
-                            </select>
-                            <div class="input-group-append border-0">
-                                <input type="text" placeholder="Kích cỡ đã chọn" aria-describedby="button-addon3"
-                                    class="form-control border-0" ng-model="kichCocDaChon" style="width: 400px;">
+                        <div class="form-inline mb-4">
+                            <div class="input-group flex-grow-1 border rounded-pill p-2">
+                                <select name="kichCo" class="form-control border-0" ng-model="selectedSizes"
+                                    ng-change="onKichCoChange()" ng-model="selectedSizes">
+                                    <option value="">Chọn kích cỡ</option>
+                                    <option ng-repeat="kichCos in kichCo" value="{{kichCos}}"
+                                        ng-click="getIdSize(kichCos)">
+                                        {{kichCos.kichCo}}</option>
+                                </select>
+                                <div class="input-group-append border-0">
+                                    <input type="text" placeholder="Kích cỡ đã chọn" aria-describedby="button-addon3"
+                                        class="form-control border-0" ng-model="kichCocDaChon" style="width: 400px;">
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <button class="button" ng-click="ThemMoiKichCo()">
-                                <ion-icon name="add-outline"></ion-icon>
-                                Them moi kich co
-                              </button>
+                            <button class="button ml-2 p-2" id="button-themNgay" ng-click="ThemMoiKichCo()">
+                                <ion-icon name="add-outline" id = "icon-icon"></ion-icon>
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div style="float: right;">
-                    <button class="btn btn-primary" type="button" ng-click="returnCreate()">Quay lại</button>
-                    <button class="btn btn-primary" type="button" ng-click="saveCreate()">Thêm mới</button>
+                    <button class="btn btn-primary" id="button-quayLai" type="button" ng-click="returnCreate()">
+                        <ion-icon name="arrow-back-outline" id="icon-icon"></ion-icon> Quay lại
+                    </button>
+                    <button class="btn btn-success" id="button-taoSP" ng-click="saveCreate()">
+                        <ion-icon name="add-outline" id="icon-icon"></ion-icon> Tạo sản phẩm
+                    </button>
                 </div>
             </form>
         </div>
         <div ng-controller="ProductController" id="productList">
             <div>
-                <table class="table">
+                <table id="myTable">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -174,12 +180,11 @@
                         </tr>
                     </tbody>
                 </table>
-                <br>
-                <button class="btn btn-primary" type="button" id="formFileButton"
-                    ng-click = "themAnh()" style="float: right;">
-                    Thêm ảnh cho toàn bộ mau sac
-                </button>
             </div>
+            <button class="btn btn-primary" type="button" id="formFileButton" ng-click="themAnh()" style="float: right;">
+                <i class="fas fa-image mr-2"></i>Thêm ảnh cho toàn bộ màu sắc
+            </button>
+            
         </div>
     </div>
 </div>
