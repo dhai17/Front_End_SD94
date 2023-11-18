@@ -93,15 +93,11 @@ app.controller("DaThanhToanController", function ($scope, $http) {
         $scope.loadData();
     }
 
- 
-
     // Hoá đơn chi tiết
     $scope.look = function (pending) {
         const id = pending.id;
         window.location.href = "#!/hdct_dathanhtoan?id=" + id;
     };
-
-
 });
 
 

@@ -9,7 +9,7 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
         $scope.tongTienHoaDon = hoaDon.tongTienDonHang;
         $scope.hoaDon = hoaDon;
     });
-    
+
 
     $http.get("http://localhost:8080/api/muaNgay/getHoaDonChiTiet/" + id_HoaDonMuaNgay).then(function (response) {
         const hoaDonChiTiet = response.data;
@@ -67,8 +67,15 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
                         }).then(() => {
                             window.location.href = "http://127.0.0.1:5501/templates/customer/home/index.html#!/";
                         })
-
-                    });
+                    }) .catch(function (e) {
+                        const errorMessage = e.data[Object.keys(e.data)[0]];
+                        Swal.fire({
+                          icon: "error",
+                          title: errorMessage,
+                          showConfirmButton: false,
+                          timer: 2000,
+                        });
+                      })
             }
         });
     }

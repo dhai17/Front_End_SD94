@@ -251,6 +251,7 @@ app.controller(
     };
 
     $scope.saveCreate = function () {
+      console.log(mauSacsss);
       let data = {
         tenSanPham: $scope.createProduct.tenSanPham,
         gia: $scope.createProduct.gia,
@@ -261,6 +262,7 @@ app.controller(
         kichCo: kichCo_id,
         soLuong: $scope.createProduct.soLuong,
       };
+
 
       $http
         .post("http://localhost:8080/sanPham/TaoSanPham", data, { headers })
