@@ -379,6 +379,277 @@ app.controller(
     $scope.themAnh = function (promotion) {
       window.location.href = "#!/list-Img?id=" + id_product;
     };
+
+    $scope.ThemMoiChatLieu = function () {
+      Swal.fire({
+        title: "Thêm mới chất liệu",
+        input: "text",
+        inputLabel: "Nhập tên chất liệu",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Huỷ",
+        inputValidator: (value) => {
+          if (!value) {
+            return "Vui lòng nhập tên chất liệu";
+          }
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let data = {
+            chatLieu: result.value,
+          };
+          $http
+            .post("http://localhost:8080/chatLieu/themMoi", data, { headers })
+            .then(function (response) {
+              Swal.fire({
+                icon: "success",
+                title: "Thêm mới thành công",
+                showConfirmButton: false,
+                timer: 2000,
+              });
+
+              const chatLieu = response.data;
+              $scope.chatLieu = chatLieu;
+            })
+            .catch(function (error) {
+              if (error.status === 400) {
+                const errorMessage = error.data.message;
+                Swal.fire({
+                  icon: "error",
+                  title: errorMessage + "",
+                  showConfirmButton: false,
+                  timer: 2000,
+                });
+              } else {
+                console.error(error);
+              }
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+        }
+      });
+    };
+
+    $scope.ThemMoiLoai = function () {
+      Swal.fire({
+        title: "Thêm mới loai san pham",
+        input: "text",
+        inputLabel: "Nhập tên loai san pham",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Huỷ",
+        inputValidator: (value) => {
+          if (!value) {
+            return "Vui lòng nhập tên loai san pham";
+          }
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let data = {
+            loaiSanPham: result.value,
+          };
+          $http
+            .post("http://localhost:8080/loaiSanPham/themMoi", data, {
+              headers,
+            })
+            .then(function (response) {
+              Swal.fire({
+                icon: "success",
+                title: "Thêm mới thành công",
+                showConfirmButton: false,
+                timer: 2000,
+              });
+              $http
+                .get("http://localhost:8080/loaiSanPham/danhSach", { headers })
+                .then(function (response) {
+                  const loaiSanPham = response.data;
+                  $scope.loaiSanPham = loaiSanPham;
+                });
+            })
+            .catch(function (error) {
+              if (error.status === 400) {
+                const errorMessage = error.data.message;
+                Swal.fire({
+                  icon: "error",
+                  title: errorMessage + "",
+                  showConfirmButton: false,
+                  timer: 2000,
+                });
+              } else {
+                console.error(error);
+              }
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+        }
+      });
+    };
+
+    $scope.ThemMoiHang = function () {
+      Swal.fire({
+        title: "Thêm mới hang",
+        input: "text",
+        inputLabel: "Nhập tên hang",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Huỷ",
+        inputValidator: (value) => {
+          if (!value) {
+            return "Vui lòng nhập tên hang";
+          }
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let data = {
+            name: result.value,
+          };
+          $http
+            .post("http://localhost:8080/nhaSanXuat/themMoi", data, {
+              headers,
+            })
+            .then(function (response) {
+              Swal.fire({
+                icon: "success",
+                title: "Thêm mới thành công",
+                showConfirmButton: false,
+                timer: 2000,
+              });
+              $http
+                .get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
+                .then(function (response) {
+                  const nhaSanXuat = response.data;
+                  $scope.nhaSanXuat = nhaSanXuat;
+                });
+            })
+            .catch(function (error) {
+              if (error.status === 400) {
+                const errorMessage = error.data.message;
+                Swal.fire({
+                  icon: "error",
+                  title: errorMessage + "",
+                  showConfirmButton: false,
+                  timer: 2000,
+                });
+              } else {
+                console.error(error);
+              }
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+        }
+      });
+    };
+
+    $scope.ThemMoiKichCo = function () {
+      Swal.fire({
+        title: "Thêm mới kich co",
+        input: "text",
+        inputLabel: "Nhập tên kich co",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Huỷ",
+        inputValidator: (value) => {
+          if (!value) {
+            return "Vui lòng nhập tên kich ci";
+          }
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let data = {
+            kichCo: result.value,
+          };
+          $http
+            .post("http://localhost:8080/kichCo/themMoi", data, {
+              headers,
+            })
+            .then(function (response) {
+              Swal.fire({
+                icon: "success",
+                title: "Thêm mới thành công",
+                showConfirmButton: false,
+                timer: 2000,
+              });
+              $http
+                .get("http://localhost:8080/kichCo/danhSach", { headers })
+                .then(function (response) {
+                  const kichCo = response.data;
+                  $scope.kichCo = kichCo;
+                });
+            })
+            .catch(function (error) {
+              if (error.status === 400) {
+                const errorMessage = error.data.message;
+                Swal.fire({
+                  icon: "error",
+                  title: errorMessage + "",
+                  showConfirmButton: false,
+                  timer: 2000,
+                });
+              } else {
+                console.error(error);
+              }
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+        }
+      });
+    };
+
+    $scope.ThemMoiMauSac = function () {
+      Swal.fire({
+        title: "Thêm mới màu sắc",
+        html: `
+        <label for="color-input">Chọn màu sắc:</label>
+        <input type="color" id="color-input" class="form-control">
+        <label for="name-input">Nhập tên màu sắc:</label>
+        <input type="text" id="name-input" class="form-control">
+      `,
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Huỷ",
+        preConfirm: () => {
+          const colorInput = document.getElementById("color-input").value;
+          const nameInput = document.getElementById("name-input").value;
+
+          if (!nameInput || !colorInput) {
+            Swal.showValidationMessage("Vui lòng nhập tên và chọn màu sắc");
+          } else {
+            let data = {
+              tenMauSac: nameInput,
+              maMauSac: colorInput,
+            };
+
+            $http
+              .post("http://localhost:8080/mauSac/themMoi", data, { headers })
+              .then(function (response) {
+                // Xử lý thành công nếu có
+                Swal.fire({
+                  icon: "success",
+                  title: "Thêm mới thành công",
+                  showConfirmButton: false,
+                  timer: 2000,
+                });
+
+                $http
+                  .get("http://localhost:8080/mauSac/danhSach", { headers })
+                  .then(function (response) {
+                    const mauSac = response.data;
+                    $scope.mauSac = mauSac;
+                  });
+              })
+              .catch(function (error) {
+                if (error.status === 400) {
+                  const errorMessage = error.data.message;
+                  Swal.fire({
+                    icon: "error",
+                    title: errorMessage + "",
+                    showConfirmButton: false,
+                    timer: 2000,
+                  });
+                } else {
+                  console.error(error);
+                }
+              });
+          }
+        },
+      });
+    };
   }
 );
 
@@ -389,13 +660,6 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
     "Content-Type": "application/json",
     Authorization: "Bearer " + token,
   };
-
-  // Updated JavaScript
-  // $http.get("http://localhost:8080/sanPhamChiTiet/themAnh/" + id_product, { headers })
-  //     .then(function (response) {
-  //         const spct = response.data;
-  //         $scope.spct = spct;
-  //     });
 
   $http
     .get("http://localhost:8080/sanPhamChiTiet/themAnh/" + id_product, {
