@@ -218,9 +218,11 @@ app.controller("BanHangTaiQuayController", function ($scope, $http, $routeParams
             }
             $http.post("http://localhost:8080/api/banHang/taiQuay/xoaHDCT", data, { headers })
                 .then(function (response) {
+                    const hoaDon = response.data;
+                    $scope.hoaDon = hoaDon;
                     Swal.fire({
                         icon: "success",
-                        title: response.data.message,
+                        title: "Xóa thành công",
                         showConfirmButton: false,
                         timer: 2000
                     }).then(() => {
@@ -229,6 +231,8 @@ app.controller("BanHangTaiQuayController", function ($scope, $http, $routeParams
                                 const hoaDonChiTiet = response.data;
                                 $scope.hoaDonChiTiet = hoaDonChiTiet;
                             });
+
+
                     });
                 });
         });
