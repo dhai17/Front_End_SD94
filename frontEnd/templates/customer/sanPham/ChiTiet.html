@@ -3,31 +3,18 @@
         <div class="row g-0">
             <div class="col-md-6 border-end">
                 <div class="d-flex flex-column justify-content-center">
-                    <div class="main_image"> <img
-                            src="https://kingshoes.vn/data/upload/media/giay-sneaker-chinh-hang-tphcm-tai-king-shoes-album-bo-suu-tap-16.jpg"
-                            id="main_product_image" width="350"> </div>
+                    <div class="main_image"> <img src="/static/img/{{hinhAnh}}" id="main_product_image" width="350">
+                    </div>
                     <div class="thumbnail_images">
                         <ul id="thumbnail">
-                            <li><img onclick="changeImage(this)"
-                                    src="https://www.chuphinhsanpham.vn/wp-content/uploads/2021/06/chup-hinh-giay-dincox-shoes-c-photo-studio-4.jpg"
-                                    width="70">
-                            </li>
-                            <li><img onclick="changeImage(this)"
-                                    src="https://www.chuphinhsanpham.vn/wp-content/uploads/2021/06/chup-hinh-giay-dincox-shoes-c-photo-studio-4.jpg"
-                                    width="70">
-                            </li>
-                            <li><img onclick="changeImage(this)"
-                                    src="https://www.chuphinhsanpham.vn/wp-content/uploads/2021/06/chup-hinh-giay-dincox-shoes-c-photo-studio-4.jpg"
-                                    width="70">
-                            </li>
-                            <li><img onclick="changeImage(this)"
-                                    src="https://www.chuphinhsanpham.vn/wp-content/uploads/2021/06/chup-hinh-giay-dincox-shoes-c-photo-studio-4.jpg"
-                                    width="70">
+                            <li ng-repeat="ha in hinhAnhs">
+                                <img onclick="changeImage(this)" src="/static/img/{{ha.tenAnh}}" width="80">
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
+
             <div class="col-md-6">
                 <div class="p-3 right-side">
                     <div class="d-flex justify-content-between align-items-center">
@@ -71,14 +58,14 @@
                     <div class="mt-5">
                         <div class="colors" id="div-inputSoLuong">
                             <h6 for="input-chonSoLuong">Chọn số lượng:</h6>
-                            <input type="number" id="input-chonSoLuong" class="form-control" ng-model="chonSoLuong"/>
+                            <input type="number" id="input-chonSoLuong" class="form-control" ng-model="chonSoLuong" />
 
                         </div>
                     </div>
 
                     <div class="buttons d-flex flex-row mt-5 gap-3">
-                        <button class="btn btn-outline-dark" ng-click = "muaNgay(sanPham)">Mua ngay</button>
-                        <button class="btn btn-dark" ng-click = "addToCart(sanPham)">Thêm vào giỏ </button>
+                        <button class="btn btn-outline-dark" ng-click="muaNgay(sanPham)">Mua ngay</button>
+                        <button class="btn btn-dark" ng-click="addToCart(sanPham)">Thêm vào giỏ </button>
                     </div>
 
                 </div>

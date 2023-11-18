@@ -40,8 +40,16 @@
                                 <option ng-repeat="chatLieu in chatLieu" value="{{chatLieu.id}}">{{chatLieu.chatLieu}}
                                 </option>
                             </select>
+                            
+                        </div>
+                        <div>
+                            <button class="button" ng-click="ThemMoiChatLieu()">
+                                <ion-icon name="add-outline"></ion-icon>
+                                Them moi chat lieu
+                              </button>
                         </div>
                     </div>
+                    
                 </div>
 
                 <div class="row gx-3 mb-3">
@@ -53,6 +61,12 @@
                                     {{loaiSanPham.loaiSanPham}}</option>
                             </select>
                         </div>
+                        <div>
+                            <button class="button" ng-click="ThemMoiLoai()">
+                                <ion-icon name="add-outline"></ion-icon>
+                                Them moi loai san pham
+                              </button>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label class="small mb-1">Hãng</label>
@@ -62,6 +76,12 @@
                                     {{nhaSanXuat.name}}
                                 </option>
                             </select>
+                        </div>
+                        <div>
+                            <button class="button" ng-click="ThemMoiHang()">
+                                <ion-icon name="add-outline"></ion-icon>
+                                Them moi hang
+                              </button>
                         </div>
                     </div>
                 </div>
@@ -81,6 +101,13 @@
                                     style="width: 400px;">
                             </div>
                         </div>
+
+                        <div>
+                            <button class="button" ng-click="ThemMoiMauSac()">
+                                <ion-icon name="add-outline"></ion-icon>
+                                Them moi mau sac
+                              </button>
+                        </div>
                     </div>
 
                     <div class="col-md-6">
@@ -96,6 +123,12 @@
                                 <input type="text" placeholder="Kích cỡ đã chọn" aria-describedby="button-addon3"
                                     class="form-control border-0" ng-model="kichCocDaChon" style="width: 400px;">
                             </div>
+                        </div>
+                        <div>
+                            <button class="button" ng-click="ThemMoiKichCo()">
+                                <ion-icon name="add-outline"></ion-icon>
+                                Them moi kich co
+                              </button>
                         </div>
                     </div>
                 </div>
@@ -144,7 +177,7 @@
                 <br>
                 <button class="btn btn-primary" type="button" id="formFileButton"
                     ng-click = "themAnh()" style="float: right;">
-                    Thêm ảnh cho toàn bộ sản phẩm
+                    Thêm ảnh cho toàn bộ mau sac
                 </button>
             </div>
         </div>

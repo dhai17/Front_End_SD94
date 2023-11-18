@@ -238,8 +238,6 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
         const id = pending.id;
         window.location.href = "#!/CTChoGiaoHang?id=" + id;
     };
-
-
 });
 
 app.controller("CTChoGiaoHang", function ($scope, $routeParams, $http) {
@@ -267,7 +265,9 @@ app.controller("CTChoGiaoHang", function ($scope, $routeParams, $http) {
             $scope.hoaDon = hoaDon;
         });
 
-
+        $scope.quayLai = function(){
+            window.location.href = "#!/cho-giao-hang";
+        }
     //Phân trang
     $scope.pager = {
         page: 1,

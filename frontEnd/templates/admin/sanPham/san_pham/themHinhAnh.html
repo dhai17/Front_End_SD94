@@ -1,39 +1,55 @@
+<!-- Updated HTML -->
 <div class="container-fluid" ng-controller="ImgController">
-    <h2 style="text-align: center;">Thêm ảnh</h2>
-    <br>
-    <div style="border: solid black 1px; padding-left: 10px;" ng-repeat="spcts in spct">
-        <div class="row mb-4">
-            <div class="col-4">
-                <label>Tên sản phẩm: </label>
-                <span>{{ spcts.sanPham.tenSanPham }}</span>
-            </div>
-            <div class="col-4">
-                <label>Màu sắc: </label>
-                <span>{{ spcts.mauSac.tenMauSac}}</span>
-            </div>
-            <div class="col-4">
-                <label>Kích cỡ: </label>
-                <span>{{ spcts.kichCo.kichCo }}</span>
-            </div>
-        </div>
-        <div class="row mb-4">
-            <div class="row mb-4">
-                <div class="mb-3 col-4">
-                    <label for="formFile" class="form-label">Chọn ảnh</label>
-                    <input class="form-control" type="file" accept="image/*" id="formFile{{spcts.id}}" multiple
-                        ng-click="showSelectedImage($event, spcts)" ng-model="fileName"
-                        file-change="hienThiAnh($event, spcts)" />
-                </div>
-            </div>
-        </div>
-
-        <label for="imagePreview" class="form-label">Xem trước</label>
-        <div class="mb-3 col-8" ng-repeat="hinhAnh in hinhAnh">
-            <img src='/static/admin/assets/img/sanPham/{{hinhAnh.tenAnh}}'
-                style="width: 200px; height: 200px; margin-right: 10px; margin-bottom: 10px;">
-            <button ng-click="setAnhMacDinh(hinhAnh, spcts)">Set anh mac dinh</button>
-            <button ng-click="xoaAnh(hinhAnh, spcts)">Xoa</button>
-        </div>
+  <h2 style="text-align: center">Thêm ảnh</h2>
+  <br />
+  <div
+    style="border: solid black 1px; padding-left: 10px"
+    ng-repeat="spcts in spct"
+  >
+    <div class="row mb-4">
+      <div class="col-4">
+        <label>Tên sản phẩm: </label>
+        <span>{{ spcts.sanPham.tenSanPham }}</span>
+      </div>
+      <div class="col-4">
+        <label>Màu sắc: </label>
+        <span>{{ spcts.mauSac.tenMauSac}}</span>
+      </div>
+      <div class="col-4">
+        <label>Kích cỡ: </label>
+        <span>{{ spcts.kichCo.kichCo }}</span>
+      </div>
     </div>
-    <hr>
+    <div class="row mb-4">
+      <div class="mb-3 col-4">
+        <label for="formFile{{spcts.id}}" class="form-label">Chọn ảnh</label>
+        <input
+          class="form-control"
+          type="file"
+          accept="image/*"
+          id="formFile{{spcts.id}}"
+          multiple
+          ng-click="showSelectedImage($event, spcts)"
+          ng-model="fileName"
+          file-change="hienThiAnh($event, spcts)"
+        />
+      </div>
+    </div>
+
+    <label for="imagePreview" class="form-label">Xem trước</label>
+    <div class="mb-3 col-8" ng-repeat="hinhAnh in spcts.hinhAnh">
+      <img
+        src="/static/img/{{hinhAnh.tenAnh}}"
+        style="
+          width: 200px;
+          height: 200px;
+          margin-right: 10px;
+          margin-bottom: 10px;
+        "
+      />
+      <button ng-click="setAnhMacDinh(hinhAnh, spcts)">Set anh mac dinh</button>
+      <button ng-click="xoaAnh(hinhAnh, spcts)">Xoa</button>
+    </div>
+  </div>
+  <hr />
 </div>

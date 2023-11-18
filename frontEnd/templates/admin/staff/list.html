@@ -25,9 +25,9 @@
                 <th>Email</th>
                 <th>Ngày sinh</th>
                 <th>Số điện thoại</th>
-                <th>GenDer</th>
-                <th>Address</th>
-                <th>Status</th>
+                <th>Giới tính</th>
+                <th>Địa Chỉ</th>
+                <th>Trạng thái</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -38,13 +38,13 @@
                 <td>{{ promotion.email }}</td>
                 <td>{{ promotion.ngaySinh | date:'dd/MM/yyyy'}}</td>
                 <td>{{ promotion.soDienThoai }}</td>
-                <td>{{ promotion.gioiTinh == true ? 'Nam' :'Nu'}}</td>
+                <td>{{ promotion.gioiTinh == true ? 'Nam' :'Nữ'}}</td>
                 <td>{{ promotion.diaChi}}</td>
                 <td ng-class="{
-                    'text-success': promotion.trangThai5 === 'Active',
-                    'text-danger': promotion.trangThai5 === 'Expired',
-                    'text-warning': promotion.trangThai5 === 'Awaiting'}">
-                    {{ promotion.trangThai5 }}
+                    'text-success': promotion.trangThai2 === 'Đang hoạt động',
+                    'text-danger': promotion.trangThai2 === 'Không hoạt động',
+                    'text-warning': promotion.trangThai2 === 'Nghỉ phép'}">
+                    {{ promotion.trangThai2 }}
                 </td>
 
                 <td>

@@ -133,6 +133,10 @@ app.controller("CTDaGiaoHang", function ($scope, $routeParams, $http) {
     }
 
     $scope.loadData();
+
+    $scope.quayLai = function(){
+        window.location.href = "#!/da-giao";
+    }
     //Phân trang
     $scope.pager = {
         page: 1,

@@ -59,6 +59,22 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/hoaDon/details.Online/ChiTietDaHuy.html",
             controller: "CTDaHuy",
         })
+        .when("/list-CounterBill", {
+            templateUrl: "/templates/admin/hoaDonTaiQuay/DangBan.html",
+            controller: "DangBanController",
+        })
+        .when("/da-thanh-toan", {
+            templateUrl: "/templates/admin/hoaDonTaiQuay/DaThanhToan.html",
+            controller: "DaThanhToanController",
+        })
+        .when("/hdct_dangban", {
+            templateUrl: "/templates/admin/hoaDonTaiQuay/hoaDonChiTiet/HDCT_DangBan.html",
+            controller: "HDCT_DangBanController",
+        })
+        .when("/hdct_dathanhtoan", {
+            templateUrl: "/templates/admin/hoaDonTaiQuay/hoaDonChiTiet/HDCT_DaThanhToan.html",
+            controller: "HDCT_DaThanhToanController",
+        })
         .when('/', {
             templateUrl: "/templates/admin/home.html",
         })
