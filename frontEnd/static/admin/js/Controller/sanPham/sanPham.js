@@ -41,12 +41,30 @@ app.controller("ProductController", function ($scope, $http) {
     //Phân trang
     $scope.pager = {
         page: 1,
-        size: 8,
+        size: 5,
         get promotions() {
+            if ($scope.promotions && $scope.promotions.length > 0) {
+                let start = (this.page - 1) * this.size;
+                return $scope.promotions.slice(start, start + this.size);
+            } else {
+                return [];
+            }
         },
         get count() {
+            if ($scope.promotions && $scope.promotions.length > 0) {
+                let start = (this.page - 1) * this.size;
+                return Math.ceil((1.0 * $scope.promotions.length) / this.size);
+            } else {
+                return 0;
+            }
         },
         get pageNumbers() {
+            const pageCount = this.count;
+            const pageNumbers = [];
+            for (let i = 1; i <= pageCount; i++) {
+                pageNumbers.push(i);
+            }
+            return pageNumbers;
         },
     };
 
@@ -62,8 +80,7 @@ app.controller("ProductController", function ($scope, $http) {
     //Xóa trong danh sách
     $scope.delete = function (promotion) {
         let idPro = promotion.id;
-        $http
-            .delete("http://localhost:8080/sanPham/xoa/" + idPro, { headers })
+        $http.delete("http://localhost:8080/sanPham/xoa/" + idPro, { headers })
             .then(function (response) {
                 const promotions = response.data;
 
@@ -71,20 +88,32 @@ app.controller("ProductController", function ($scope, $http) {
                     promotion.status2 = getStatusText(promotion.trangThai);
                 });
 
-                $scope.$evalAsync(function () {
-                    $scope.promotions = promotions;
-                    Swal.fire({
-                        icon: "success",
-                        title: "Xóa thành công",
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
+                const imageRequests = promotions.map(function (promotion) {
+                    return $http.get("http://localhost:8080/sanPhamChiTiet/getdefaultimage?idsp=" + promotion.id, { headers })
+                        .then(function (imageResponse) {
+                            const imageData = imageResponse.data;
+                            promotion.urlImage = imageData.tenAnh;
+                        });
                 });
+
+                return Promise.all(imageRequests)
+                    .then(function () {
+                        $scope.$evalAsync(function () {
+                            $scope.promotions = promotions;
+                            Swal.fire({
+                                icon: "success",
+                                title: "Xóa thành công",
+                                showConfirmButton: false,
+                                timer: 2000,
+                            });
+                        });
+                    });
+
             })
             .catch(function (error) {
-                console.log("Error");
+                console.log("Error", error);
             });
-    };
+    }
 
     // Re load
     $scope.reLoad = function () {
@@ -138,8 +167,8 @@ app.controller("EditProductController", function ($scope, $routeParams, $http) {
         let idProduct = $routeParams.id;
         let editProduct = {
             id: idProduct,
-            mauSac: $scope.editproduct.mauSac,
-            kichCo: $scope.editproduct.kichCo,
+            mauSac_id: $scope.editproduct.mauSac,
+            kichCo_id: $scope.editproduct.kichCo,
             sanPham: $scope.editproduct.sanPham,
             soLuong: $scope.editproduct.soLuong,
         };
@@ -595,9 +624,9 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
             id: id,
             tenSanPham: $scope.editproduct.tenSanPham,
             gia: $scope.editproduct.gia,
-            chatLieu: $scope.editproduct.chatLieu,
-            loaiSanPham: $scope.editproduct.loaiSanPham,
-            nhaSanXuat: $scope.editproduct.nhaSanXuat,
+            chatLieu_id: $scope.editproduct.chatLieu,
+            loaiSanPham_id: $scope.editproduct.loaiSanPham,
+            nhaSanXuat_id: $scope.editproduct.nhaSanXuat,
         };
 
         $http.put("http://localhost:8080/sanPham/luuChinhSua", editProduct, {
@@ -610,10 +639,11 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
                     showConfirmButton: false,
                     timer: 2000,
                 });
-                $http.get("http://localhost:8080/sanPhamChiTiet/dsCTSP", {
-                    params: { san_pham_id: id },
-                    headers: headers,
-                })
+                $http
+                    .get("http://localhost:8080/sanPhamChiTiet/dsCTSP", {
+                        params: { san_pham_id: id },
+                        headers: headers,
+                    })
                     .then(function (response) {
                         const details = response.data;
                         $scope.details = details;

@@ -1,4 +1,4 @@
-<div class="container-fluid" ng-controller="CreateProductController">
+<div class="container-fluid" ng-controller="CreateProductController" id="themSp">
     <div class="card mb-4">
         <br>
         <div class="container-fluid my-auto d-flex align-items-center">
@@ -122,12 +122,7 @@
                     <tbody>
                         <tr ng-repeat="details in details">
                             <td>{{ $index + 1 }}</td>
-                            <td>
-                                <!-- <span>{{ details.img }}</span> -->
-                                <div>
-                                    <span>{{ details.sanPham.tenSanPham }}</span>
-                                </div>
-                            </td>
+                            <td>{{ details.sanPham.tenSanPham }}</td>
                             <td>{{ details.soLuong }}</td>
                             <td>{{ details.mauSac.tenMauSac}}</td>
                             <td>{{ details.kichCo.kichCo }}</td>
@@ -142,8 +137,8 @@
                     </tbody>
                 </table>
                 <br>
-                <button class="btn btn-primary" type="button" id="formFileButton"
-                    ng-click = "themAnh()" style="float: right;">
+                <button class="btn btn-primary" type="button" id="formFileButton" ng-click="themAnh()"
+                    style="float: right;">
                     Thêm ảnh cho toàn bộ sản phẩm
                 </button>
             </div>
