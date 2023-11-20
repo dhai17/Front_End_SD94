@@ -1,30 +1,37 @@
-<!-- Updated HTML -->
-<div class="container-fluid" ng-controller="ImgController">
-  <h2 style="text-align: center">Thêm ảnh</h2>
+<div id="container-fluid" ng-controller="ImgController">
+  <h1>Them anh san pham</h1>
   <br />
-  <div
-    style="border: solid black 1px; padding-left: 10px"
-    ng-repeat="spcts in spct"
-  >
+  <div id="productInfo" ng-repeat="spcts in spct">
     <div class="row mb-4">
-      <div class="col-4">
-        <label>Tên sản phẩm: </label>
-        <span>{{ spcts.sanPham.tenSanPham }}</span>
-      </div>
-      <div class="col-4">
-        <label>Màu sắc: </label>
-        <span>{{ spcts.mauSac.tenMauSac}}</span>
-      </div>
-      <div class="col-4">
-        <label>Kích cỡ: </label>
-        <span>{{ spcts.kichCo.kichCo }}</span>
+      <h5>Ten san pham: <strong>{{ spcts.sanPham.tenSanPham }}</strong></h5>
+      <h5>Màu sắc: <strong>{{ spcts.mauSac.tenMauSac}}</strong></h5>
+    </div>
+
+    <h2 for="imagePreview" id="h1-XemTruoc">Xem trước</h2>
+    <div id="imagePreview" class="mb-3 col-12">
+      <div class="image-row">
+        <div ng-repeat="hinhAnh in spcts.hinhAnh" class="image-item">
+          <img
+            src="/static/img/{{hinhAnh.tenAnh}}"
+            style="width: 300px; height: 250px"
+          />
+          <div class="image-buttons">
+            <button ng-click="setAnhMacDinh(hinhAnh, spcts)">
+              <ion-icon name="star-outline"></ion-icon> Set ảnh mặc định
+            </button>
+            <button ng-click="xoaAnh(hinhAnh, spcts)">
+              <ion-icon name="trash-outline"></ion-icon> Xóa
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="row mb-4">
-      <div class="mb-3 col-4">
+
+    <div id="fileInputSection" class="row mb-4">
+      <div>
         <label for="formFile{{spcts.id}}" class="form-label">Chọn ảnh</label>
         <input
-          class="form-control"
+          class="form-control full-width-input"
           type="file"
           accept="image/*"
           id="formFile{{spcts.id}}"
@@ -35,21 +42,10 @@
         />
       </div>
     </div>
-
-    <label for="imagePreview" class="form-label">Xem trước</label>
-    <div class="mb-3 col-8" ng-repeat="hinhAnh in spcts.hinhAnh">
-      <img
-        src="/static/img/{{hinhAnh.tenAnh}}"
-        style="
-          width: 200px;
-          height: 200px;
-          margin-right: 10px;
-          margin-bottom: 10px;
-        "
-      />
-      <button ng-click="setAnhMacDinh(hinhAnh, spcts)">Set anh mac dinh</button>
-      <button ng-click="xoaAnh(hinhAnh, spcts)">Xoa</button>
-    </div>
+    <hr />
   </div>
-  <hr />
+  <button class="complete-button">
+    <ion-icon name="checkmark-circle-outline"></ion-icon> Hoàn tất thêm ảnh sản
+    phẩm
+  </button>
 </div>
