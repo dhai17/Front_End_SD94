@@ -453,15 +453,15 @@ app.controller(
 
     $scope.ThemMoiLoai = function () {
       Swal.fire({
-        title: "Thêm mới loai san pham",
+        title: "Thêm mới loại sản phẩm",
         input: "text",
-        inputLabel: "Nhập tên loai san pham",
+        inputLabel: "Nhập tên loại sản phẩm",
         showCancelButton: true,
         confirmButtonText: "Xác nhận",
         cancelButtonText: "Huỷ",
         inputValidator: (value) => {
           if (!value) {
-            return "Vui lòng nhập tên loai san pham";
+            return "Vui lòng nhập tên loại sản phẩm";
           }
         },
       }).then((result) => {
@@ -507,15 +507,15 @@ app.controller(
 
     $scope.ThemMoiHang = function () {
       Swal.fire({
-        title: "Thêm mới hang",
+        title: "Thêm mới hãng",
         input: "text",
-        inputLabel: "Nhập tên hang",
+        inputLabel: "Nhập tên hãng",
         showCancelButton: true,
         confirmButtonText: "Xác nhận",
         cancelButtonText: "Huỷ",
         inputValidator: (value) => {
           if (!value) {
-            return "Vui lòng nhập tên hang";
+            return "Vui lòng nhập tên hãng";
           }
         },
       }).then((result) => {
@@ -561,15 +561,15 @@ app.controller(
 
     $scope.ThemMoiKichCo = function () {
       Swal.fire({
-        title: "Thêm mới kich co",
+        title: "Thêm mới kích cỡ",
         input: "text",
-        inputLabel: "Nhập tên kich co",
+        inputLabel: "Nhập tên kích cỡ",
         showCancelButton: true,
         confirmButtonText: "Xác nhận",
         cancelButtonText: "Huỷ",
         inputValidator: (value) => {
           if (!value) {
-            return "Vui lòng nhập tên kich ci";
+            return "Vui lòng nhập tên kích cỡ";
           }
         },
       }).then((result) => {

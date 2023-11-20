@@ -17,7 +17,7 @@
                 <div class="col-md-4">
                     <label class="small mb-1">Chất liệu</label>
                     <select class="form-select" aria-label="Default select example" ng-model="editproduct.chatLieu">
-                        <option ng-repeat="x in chatLieu" value="{{x.id}}"
+                        <option ng-repeat="x in chatLieu" value="{{x.chatLieu}}"
                             ng-selected="x.id == editproduct.chatLieu.id">
                             {{x.chatLieu}}
                         </option>
@@ -26,7 +26,7 @@
                 <div class="col-md-4">
                     <label class="small mb-1">Loại sản phẩm</label>
                     <select class="form-select" aria-label="Default select example" ng-model="editproduct.loaiSanPham">
-                        <option ng-repeat="lsp in loaiSanPham" value="{{lsp.id}}"
+                        <option ng-repeat="lsp in loaiSanPham" value="{{lsp.loaiSanPham}}"
                             ng-selected="lsp.id == editproduct.loaiSanPham.id">
                             {{lsp.loaiSanPham}}</option>
                     </select>
@@ -34,7 +34,7 @@
                 <div class="col-md-4">
                     <label class="small mb-1">Hãng</label>
                     <select class="form-select" aria-label="Default select example" ng-model="editproduct.nhaSanXuat">
-                        <option ng-repeat="nsx in nhaSanXuat" value="{{nsx.id}}"
+                        <option ng-repeat="nsx in nhaSanXuat" value="{{nsx.nhaSanXuat}}"
                             ng-selected="nsx.id == editproduct.nhaSanXuat.id">
                             {{nsx.name}}
                         </option>

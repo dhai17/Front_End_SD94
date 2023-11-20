@@ -11,7 +11,7 @@
                     <div class="col-md-4">
                         <label for="sel2" class="small mb-1">Màu sắc</label>
                         <select class="form-select" aria-label="Default select example" ng-model="editproduct.mauSac">
-                            <option ng-repeat="ms in mauSac" value="{{ms.id}}"
+                            <option ng-repeat="ms in mauSac" value="{{ms.mauSac}}"
                                 ng-selected="ms.id == editproduct.mauSac.id">
                                 {{ms.tenMauSac}}</option>
                         </select>
@@ -19,7 +19,7 @@
                     <div class="col-md-4">
                         <label class="small mb-1">Kích cỡ</label>
                         <select class="form-select" aria-label="Default select example" ng-model="editproduct.kichCo">
-                            <option ng-repeat="kc in kichCo" value="{{kc.id}}"
+                            <option ng-repeat="kc in kichCo" value="{{kc.kichCo}}"
                                 ng-selected="kc.id == editproduct.kichCo.id">
                                 {{kc.kichCo}}</option>
                         </select>
