@@ -164,7 +164,7 @@
                             <td>{{ details.soLuong }}</td>
                             <td>{{ details.mauSac.tenMauSac}}</td>
                             <td>{{ details.kichCo.kichCo }}</td>
-                            <td>{{ details.sanPham.gia }}</td>
+                            <td>{{ details.sanPham.gia.toLocaleString('vi-VN') }}</td>
                             <td>
                                 <button type="button" class="btn btn-link btn-sm btn-rounded"
                                     ng-click="deleteCTSP(details)">

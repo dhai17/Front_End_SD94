@@ -79,40 +79,51 @@ app.controller("ProductController", function ($scope, $http) {
 
   //Xóa trong danh sách
   $scope.delete = function (promotion) {
-    let idPro = promotion.id;
-    $http.delete("http://localhost:8080/sanPham/xoa/" + idPro, { headers })
-      .then(function (response) {
-        const promotions = response.data;
+    let id = promotion.id;
+    Swal.fire({
+      title: 'Xác nhận xóa khuyến Mại',
+      text: 'Bạn có chắc chắn muốn xóa khuyến mại này?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Xóa',
+      cancelButtonText: 'Hủy',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $http.delete("http://localhost:8080/sanPham/xoa/" + id, { headers })
+          .then(function (response) {
+            const promotions = response.data;
 
-        promotions.forEach(function (promotion) {
-          promotion.status2 = getStatusText(promotion.trangThai);
-        });
-
-        const imageRequests = promotions.map(function (promotion) {
-          return $http.get("http://localhost:8080/sanPhamChiTiet/getdefaultimage?idsp=" + promotion.id, { headers })
-            .then(function (imageResponse) {
-              const imageData = imageResponse.data;
-              promotion.urlImage = imageData.tenAnh;
+            promotions.forEach(function (promotion) {
+              promotion.status2 = getStatusText(promotion.trangThai);
             });
-        });
 
-        return Promise.all(imageRequests)
-          .then(function () {
-            $scope.$evalAsync(function () {
-              $scope.promotions = promotions;
-              Swal.fire({
-                icon: "success",
-                title: "Xóa thành công",
-                showConfirmButton: false,
-                timer: 2000,
+            const imageRequests = promotions.map(function (promotion) {
+              return $http.get("http://localhost:8080/sanPhamChiTiet/getdefaultimage?idsp=" + promotion.id, { headers })
+                .then(function (imageResponse) {
+                  const imageData = imageResponse.data;
+                  promotion.urlImage = imageData.tenAnh;
+                });
+            });
+
+            return Promise.all(imageRequests)
+              .then(function () {
+                $scope.$evalAsync(function () {
+                  $scope.promotions = promotions;
+                  Swal.fire({
+                    icon: "success",
+                    title: "Xóa thành công",
+                    showConfirmButton: false,
+                    timer: 2000,
+                  });
+                });
               });
-            });
-          });
 
-      })
-      .catch(function (error) {
-        console.log("Error", error);
-      });
+          })
+          .catch(function (error) {
+            console.log("Error");
+          });
+      }
+    });
   }
 
   // Re load
@@ -848,20 +859,6 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
     });
 
   $http
-    .get("http://localhost:8080/mauSac/danhSach", { headers })
-    .then(function (response) {
-      const mauSac = response.data;
-      $scope.mauSac = mauSac;
-    });
-
-  $http
-    .get("http://localhost:8080/kichCo/danhSach", { headers })
-    .then(function (response) {
-      const kichCo = response.data;
-      $scope.kichCo = kichCo;
-    });
-
-  $http
     .get("http://localhost:8080/sanPhamChiTiet/dsCTSP", {
       params: { san_pham_id: id },
       headers: headers,
@@ -929,5 +926,9 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
   $scope.editSPCT = function (promotion) {
     let id = promotion.id;
     window.location.href = "#!/edit-ProductDetails?id=" + id;
+  };
+
+  $scope.returnEdit = function () {
+    window.location.href = "#!/list-Product";
   };
 });
