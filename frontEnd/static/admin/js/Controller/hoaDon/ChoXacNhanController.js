@@ -114,7 +114,7 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
                         $scope.$evalAsync(function () {
                             $scope.pending = pending;
                         });
-                        Swal.fire('Xác nhận thành công!', '', 'success');
+                        Swal.fire('Xác nhận thành công!', '', 'success'); 
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -399,6 +399,21 @@ app.controller("CTChoXacNhan", function ($scope, $routeParams, $http) {
     }
 
     $scope.loadData();
+    $scope.inHoaDon = function(){
+        const id = $routeParams.id;
+        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/inHoaDon/"+id, { headers, responseType: 'arraybuffer' })
+            .then(function (response) {
+                let pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+                let pdfUrl = URL.createObjectURL(pdfBlob);
+
+                let newWindow = window.open(pdfUrl, '_blank'); // Mở trang mới chứa file PDF
+                if (newWindow) {
+                    newWindow.document.title = 'Hóa đơn của bạn';
+                } else {
+                    alert('Vui lòng cho phép trình duyệt mở popup để xem và lưu hóa đơn.');
+                }
+        });
+    }
 
 });
 

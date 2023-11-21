@@ -23,8 +23,6 @@
                         <td>{{$index + 1}}</td>
                         <td>
                             <div style="display: flex; align-items: center;">
-                                <!-- <img th:src="${'/customer/images/' + tenAnhChinhList[stt.index]}" alt=""
-                                 style="margin-right: 10px;" width="100px" height="100px"> -->
                                 <img src='/static/img/{{CTChoXacNhan.anhSanPham}}' alt=""
                                     style="margin-right: 10px;" width="100px" height="100px">
 
@@ -98,20 +96,18 @@
 
         <div class="button-group" id="button-chiTietHoaDon">
             <!--XÁC NHẬN ĐƠN HÀNG-->
-            <button class="action-button XacNhanDon" th:attr="data-id=${hoaDon.id}" ng-click="confirm ()"> Xác nhận
+            <button class="action-button XacNhanDon"  ng-click="confirm ()"> Xác nhận
                 <i class="fas fa-check"></i>
             </button>
 
             <!--HỦY ĐƠN HÀNG-->
-            <button class="action-button HuyDon" th:attr="data-id=${hoaDon.id}" ng-click="refuseBill()"> Hủy đơn
+            <button class="action-button HuyDon" ng-click="refuseBill()"> Hủy đơn
                 <i class="fas fa-times"></i>
             </button>
 
-            <button class="action-button inHoaDonChiTiet">In hóa đơn
+            <button class="action-button inHoaDonChiTiet" ng-click="inHoaDon()">In hóa đơn
                 <i class="fas fa-receipt"></i>
             </button>
-            <input type="hidden" id="idChiTietHoaDon">
-
             <button class="action-button" ng-click="quayLai()">Quay lại
                 <i class="fas fa-arrow-left"></i>
             </button>

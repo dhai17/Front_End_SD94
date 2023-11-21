@@ -313,23 +313,20 @@ app.controller("CTChoGiaoHang", function ($scope, $routeParams, $http) {
     };
     
 
-    $scope.downloadAsPDF = function () {
+    $scope.inHoaDon = function(){
+        const id = $routeParams.id;
+        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/inHoaDon/"+id, { headers, responseType: 'arraybuffer' })
+            .then(function (response) {
+                let pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+                let pdfUrl = URL.createObjectURL(pdfBlob);
 
-        // tạo đối tượng jsPDF
-        // const doc = new jsPDF(); 
-
-        // // Lấy thẻ table
-        // const table = document.getElementById('tableBillĐetail2');  
-
-        // // In table ra PDF
-        // doc.autoTable( {
-        //   head: table.tHead.rows,
-        //   body: table.tBodies 
-        // });
-
-        // // Save PDF
-        // doc.save('table.pdf');
-
+                let newWindow = window.open(pdfUrl, '_blank'); // Mở trang mới chứa file PDF
+                if (newWindow) {
+                    newWindow.document.title = 'Hóa đơn của bạn';
+                } else {
+                    alert('Vui lòng cho phép trình duyệt mở popup để xem và lưu hóa đơn.');
+                }
+        });
     }
 });
 
