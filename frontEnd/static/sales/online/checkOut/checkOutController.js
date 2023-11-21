@@ -50,7 +50,6 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
     )
     .then(function (response) {
       const hoaDonChiTiet = response.data;
-      console.log(hoaDonChiTiet);
       $scope.hoaDonChiTiet = hoaDonChiTiet;
     });
 
