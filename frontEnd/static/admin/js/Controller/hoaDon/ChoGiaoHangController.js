@@ -268,55 +268,65 @@ app.controller("CTChoGiaoHang", function ($scope, $routeParams, $http) {
         $scope.quayLai = function(){
             window.location.href = "#!/cho-giao-hang";
         }
-    //Phân trang
-    $scope.pager = {
-        page: 1,
-        size: 4,
-        get invoice() {
-            if ($scope.invoice && $scope.invoice.length > 0) {
-                let start = (this.page - 1) * this.size;
-                return $scope.invoice.slice(start, start + this.size);
-            } else {
-                // Trả về một mảng trống hoặc thông báo lỗi tùy theo trường hợp
-                return [];
-            }
-        },
-        get count() {
-            if ($scope.invoice && $scope.invoice.length > 0) {
-                let start = (this.page - 1) * this.size;
-                return Math.ceil(1.0 * $scope.invoice.length / this.size);
-            } else {
-                // Trả về 0
-                return 0;
-            }
-        },
-        get pageNumbers() {
-            const pageCount = this.count;
-            const pageNumbers = [];
-            for (let i = 1; i <= pageCount; i++) {
-                pageNumbers.push(i);
-            }
-            return pageNumbers;
-        }
+    // lay ra thong tin nguoi dang nhap
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        let payload = JSON.parse(jsonPayload);
+        return payload;
+    }
+
+    let decodedToken = parseJwt(token);
+
+    // xác nhận đơn
+    $scope.confirm = function (pending) {
+        const id = $routeParams.id;
+        const checkOut_email = decodedToken.email;
+        Swal.fire({
+            title: 'Xác nhận giao đơn hàng',
+            text: 'Giao đơn hàng này cho đơn vị vận chuyển?',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'Có',
+            cancelButtonText: 'Không'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let data = {
+                    id: id,
+                    email_user: checkOut_email
+                }
+                $http.post("http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang", data, { headers })
+                    .then(function (response) {
+                        $scope.quayLai();
+                    })
+                    .catch(function (error) {
+
+                    })
+
+                Swal.fire('Xác nhận thành công!', '', 'success');
+            };
+        });
     };
+    
 
-    $scope.downloadAsPDF = function () {
+    $scope.inHoaDon = function(){
+        const id = $routeParams.id;
+        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/inHoaDon/"+id, { headers, responseType: 'arraybuffer' })
+            .then(function (response) {
+                let pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+                let pdfUrl = URL.createObjectURL(pdfBlob);
 
-        // tạo đối tượng jsPDF
-        // const doc = new jsPDF(); 
-
-        // // Lấy thẻ table
-        // const table = document.getElementById('tableBillĐetail2');  
-
-        // // In table ra PDF
-        // doc.autoTable( {
-        //   head: table.tHead.rows,
-        //   body: table.tBodies 
-        // });
-
-        // // Save PDF
-        // doc.save('table.pdf');
-
+                let newWindow = window.open(pdfUrl, '_blank'); // Mở trang mới chứa file PDF
+                if (newWindow) {
+                    newWindow.document.title = 'Hóa đơn của bạn';
+                } else {
+                    alert('Vui lòng cho phép trình duyệt mở popup để xem và lưu hóa đơn.');
+                }
+        });
     }
 });
 

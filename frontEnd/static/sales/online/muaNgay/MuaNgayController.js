@@ -1,6 +1,5 @@
 app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
     let id_HoaDonMuaNgay = localStorage.getItem("id_HoaDonMuaNgay");
-    console.log(id_HoaDonMuaNgay);
 
     $http.get("http://localhost:8080/api/muaNgay/getHoaDon/" + id_HoaDonMuaNgay).then(function (response) {
         const hoaDon = response.data;
@@ -13,7 +12,6 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
 
     $http.get("http://localhost:8080/api/muaNgay/getHoaDonChiTiet/" + id_HoaDonMuaNgay).then(function (response) {
         const hoaDonChiTiet = response.data;
-        console.log(hoaDonChiTiet);
         $scope.hoaDonChiTiet = hoaDonChiTiet;
     });
 

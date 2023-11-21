@@ -9,6 +9,7 @@ app.controller("ProductController", function ($scope, $http) {
     .get("http://localhost:8080/sanPham/danhSach", { headers })
     .then(function (response) {
       const promotions = response.data;
+      console.log(promotions);
       promotions.forEach(function (promotion) {
         promotion.status2 = getStatusText(promotion.trangThai);
       });
@@ -17,12 +18,12 @@ app.controller("ProductController", function ($scope, $http) {
 
   function getStatusText(trangThai) {
     if (trangThai == 0) {
-      return "Còn hàng";
+      return "Đang bán";
     } else if (trangThai == 1) {
-      return "Hết hàng";
-    } else {
-      return "Lưu kho";
+      return "Ngừng bán";
     }
+    // Nếu không phải 0 hoặc 1, có thể trả về một giá trị mặc định hoặc xử lý theo cách khác tùy thuộc vào logic của bạn.
+    return "Trạng thái không xác định";
   }
 
   //Phân trang
@@ -75,6 +76,17 @@ app.controller("ProductController", function ($scope, $http) {
         promotions.forEach(function (promotion) {
           promotion.status2 = getStatusText(promotion.trangThai);
         });
+
+        $http
+          .get("http://localhost:8080/sanPham/danhSach", { headers })
+          .then(function (response) {
+            const promotions = response.data;
+            console.log(promotions);
+            promotions.forEach(function (promotion) {
+              promotion.status2 = getStatusText(promotion.trangThai);
+            });
+            $scope.promotions = promotions;
+          });
 
         $scope.$evalAsync(function () {
           $scope.promotions = promotions;
@@ -902,6 +914,16 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
             showConfirmButton: false,
             timer: 2000,
           });
+
+          $http
+            .get("http://localhost:8080/sanPhamChiTiet/dsCTSP", {
+              params: { san_pham_id: id },
+              headers: headers,
+            })
+            .then(function (response) {
+              const details = response.data;
+              $scope.details = details;
+            });
         }
       });
   };
@@ -910,4 +932,33 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
     let id = promotion.id;
     window.location.href = "#!/edit-ProductDetails?id=" + id;
   };
+
+  $scope.updateTrangThai = function (details) {
+    Swal.fire({
+      title: "Xác nhận chuyển trạng thái",
+      text: "Bạn có muốn chuyển trạng thái của sản phẩm không?",
+      icon: "success",
+      showCancelButton: true,
+      confirmButtonText: "Đồng ý",
+      cancelButtonText: "Hủy",
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        let data = {
+          status: details.trangThai,
+          id: details.id
+        };
+        $http.post("http://localhost:8080/sanPhamChiTiet/update/trangThai", data, { headers, })
+          .then(function (response) {
+            Swal.fire({
+              icon: "success",
+              title: "Chuyển trạng thái thành công",
+              showConfirmButton: false,
+              timer: 2000,
+            })
+          })
+      }
+    });
+  }
+
 });

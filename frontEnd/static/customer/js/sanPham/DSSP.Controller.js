@@ -118,7 +118,7 @@ app.controller(
     $http
       .get(
         "http://localhost:8080/customer/sanPham/getAnhMacDinhSanPham/" +
-          id_sanPham
+        id_sanPham
       )
       .then(function (response) {
         const hinhAnh = response.data.anhMacDinh;
@@ -204,12 +204,21 @@ app.controller(
             headers,
           })
           .then(function (response) {
-            Swal.fire({
-              icon: "success",
-              title: "Thêm vào giỏ hàng thành công",
-              showConfirmButton: false,
-              timer: 2000,
-            });
+            if(response.data.err === undefined){
+              Swal.fire({
+                icon: "success",
+                title: response.data.done,
+                showConfirmButton: false,
+                timer: 2000,
+              });
+            }else{
+              Swal.fire({
+                icon: "warning",
+                title: response.data.err,
+                showConfirmButton: false,
+                timer: 2000,
+              });
+            }
           })
           .catch(function (error) {
             const errorMessage = error.data[Object.keys(error.data)[0]];
@@ -246,18 +255,29 @@ app.controller(
       $http
         .post("http://localhost:8080/api/muaNgay/check-out", data)
         .then(function (response) {
-          Swal.fire({
-            icon: "success",
-            title: "Đang chuyển hướng hướng đến trang đặt hàng",
-            showConfirmButton: false,
-            timer: 2000,
-          }).then(() => {
-            localStorage.setItem("id_HoaDonMuaNgay", response.data);
-            const id_HoaDonMuaNgay = localStorage.getItem("id_HoaDonMuaNgay");
-            window.location.href =
-              "http://127.0.0.1:5501/templates/banHang/muaNgay/CheckOut.html?id_HoaDonMuaNgay=" +
-              id_HoaDonMuaNgay;
-          });
+          const spct = response.data.san_pham_chi_tiet;
+          if (spct.trangThai === false) {
+            Swal.fire({
+              icon: "warning",
+              title: "Chúng tôi đã ngừng kinh doanh sản phẩm này",
+              showConfirmButton: false,
+              timer: 2000
+            })
+            return
+          } else {
+            Swal.fire({
+              icon: "success",
+              title: "Đang chuyển hướng hướng đến trang đặt hàng",
+              showConfirmButton: false,
+              timer: 2000,
+            }).then(() => {
+              localStorage.setItem("id_HoaDonMuaNgay", response.data.id_hoa_don);
+              const id_HoaDonMuaNgay = localStorage.getItem("id_HoaDonMuaNgay");
+              window.location.href =
+                "http://127.0.0.1:5501/templates/banHang/muaNgay/CheckOut.html?id_HoaDonMuaNgay=" +
+                id_HoaDonMuaNgay;
+            });
+          }
         })
         .catch(function (error) {
           const errorMessage = error.data[Object.keys(error.data)[0]];
