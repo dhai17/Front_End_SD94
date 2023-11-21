@@ -5,7 +5,7 @@
         <p>Mã đơn: <span>{{ hoaDon.maHoaDon}}</span></p>
         <p>Ngày tạo: <span>{{ hoaDon.createdDate | date:'dd/MM/yyyy' }}</span></p>
         <p>Tên khách hàng: <spanx>{{ hoaDon.nguoiNhan}}</span></p>
-
+        <p>Tên nhân viên: <spanx>{{ hoaDon.nhanVien.hoTen}}</span></p>
         <div class="table-wrapper">
             <table class="table">
                 <thead>
@@ -71,6 +71,9 @@
 
         <div class="button-group" id="button-chiTietHoaDon">
             <button class="action-button" ng-click="quayLai()">Quay lại
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <button class="action-button" ng-click="inHoaDon()">In hoá đơn
                 <i class="fas fa-arrow-left"></i>
             </button>
         </div>
