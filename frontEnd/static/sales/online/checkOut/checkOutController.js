@@ -148,14 +148,18 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
         let quanHuyen = $("#district option:selected").text();
         let phuongXa = $("#ward option:selected").text();
         let diaChiNhap = $scope.diaChi;
-        let diaChi =
-          diaChiNhap +
-          " - " +
-          phuongXa +
-          " - " +
-          quanHuyen +
-          " - " +
-          tinhThanhPho;
+        let diaChi = diaChiNhap + " - " + phuongXa + " - " + quanHuyen + " - " + tinhThanhPho;
+
+        let diaChi2;
+        if (
+            diaChi.includes("Chọn Tỉnh/Thành phố") ||
+            diaChi.includes("Chọn Quận/Huyện") ||
+            diaChi.includes("Chọn Phường/Xã")
+        ) {
+            diaChi2 = "";
+        } else {
+            diaChi2 = diaChi;
+        }
 
         const tongTienHoaDon = fomatTien(c);
         const tienShip = fomatTien(b);
@@ -170,7 +174,7 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
           tongTienHoaDon: tongTienHoaDon,
           tongTienDonHang: tongTienDonHang,
           email_user: decodedToken.email,
-          diaChi: diaChi,
+          diaChi: diaChi2,
           nguoiTao: $scope.hoTen,
         };
 
@@ -185,10 +189,15 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
             }).then(() => {
               window.location.href = response.data.createURL;
             });
+          }).catch(function (e) {
+            const errorMessage = e.data[Object.keys(e.data)[0]];
+            Swal.fire({
+              icon: "error",
+              title: errorMessage,
+              showConfirmButton: false,
+              timer: 2000,
+            });
           })
-          .catch(function (e) {
-            console.log(e);
-          });
       }
     });
   };

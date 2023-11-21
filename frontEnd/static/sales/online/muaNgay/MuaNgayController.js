@@ -42,6 +42,18 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
                 let diaChiNhap = $scope.diaChi;
                 let diaChi = diaChiNhap + " - " + phuongXa + " - " + quanHuyen + " - " + tinhThanhPho
 
+                let diaChi2;
+                if (
+                    diaChi.includes("Chọn Tỉnh/Thành phố") ||
+                    diaChi.includes("Chọn Quận/Huyện") ||
+                    diaChi.includes("Chọn Phường/Xã")
+                ) {
+                    diaChi2 = "";
+                } else {
+                    diaChi2 = diaChi;
+                }
+
+
                 const tongTienHoaDon = fomatTien(c);
                 const tienShip = fomatTien(b);
                 const tongTienDonHang = fomatTien(a);
@@ -54,7 +66,7 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
                     tienShip: tienShip,
                     tongTienHoaDon: tongTienHoaDon,
                     tongTienDonHang: tongTienDonHang,
-                    diaChi: diaChi,
+                    diaChi: diaChi2,
                     nguoiTao: $scope.hoTen
                 }
                 $http.post("http://localhost:8080/api/muaNgay/datHang", data)
@@ -67,15 +79,15 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
                         }).then(() => {
                             window.location.href = "http://127.0.0.1:5501/templates/customer/home/index.html#!/";
                         })
-                    }) .catch(function (e) {
+                    }).catch(function (e) {
                         const errorMessage = e.data[Object.keys(e.data)[0]];
                         Swal.fire({
-                          icon: "error",
-                          title: errorMessage,
-                          showConfirmButton: false,
-                          timer: 2000,
+                            icon: "error",
+                            title: errorMessage,
+                            showConfirmButton: false,
+                            timer: 2000,
                         });
-                      })
+                    })
             }
         });
     }
@@ -100,6 +112,17 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
                 let diaChiNhap = $scope.diaChi;
                 let diaChi = diaChiNhap + " - " + phuongXa + " - " + quanHuyen + " - " + tinhThanhPho
 
+                let diaChi2;
+                if (
+                    diaChi.includes("Chọn Tỉnh/Thành phố") ||
+                    diaChi.includes("Chọn Quận/Huyện") ||
+                    diaChi.includes("Chọn Phường/Xã")
+                ) {
+                    diaChi2 = "";
+                } else {
+                    diaChi2 = diaChi;
+                }
+
                 const tongTienHoaDon = fomatTien(c);
                 const tienShip = fomatTien(b);
                 const tongTienDonHang = fomatTien(a);
@@ -112,7 +135,7 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
                     tienShip: tienShip,
                     tongTienHoaDon: tongTienHoaDon,
                     tongTienDonHang: tongTienDonHang,
-                    diaChi: diaChi,
+                    diaChi: diaChi2,
                     nguoiTao: $scope.hoTen
                 }
 
@@ -126,9 +149,14 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
                         }).then(() => {
                             window.location.href = response.data.createURL;
                         });
-                    })
-                    .catch(function (e) {
-                        console.log(e);
+                    }).catch(function (e) {
+                        const errorMessage = e.data[Object.keys(e.data)[0]];
+                        Swal.fire({
+                            icon: "error",
+                            title: errorMessage,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
                     })
             }
         });
