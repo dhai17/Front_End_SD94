@@ -234,7 +234,7 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
             ngaySinh: $scope.createStaff.ngaySinh,
             diaChi: $scope.createStaff.diaChi,
             gioiTinh: gioiTinh,
-            // matKhau: $scope.createStaff.matKhau,
+            matKhau: $scope.createStaff.matKhau,
 
         };
 
