@@ -1,0 +1,126 @@
+<section class="container-fluid" ng-controller="thongKeController">
+     <h1 class="h3 mb-2 text-center">Thống kê</h1>
+     <hr>
+     <div class="row mb-3">
+          <div class="row" style="margin-bottom: 20px;">
+
+          </div>
+          <div class="row">
+               <div class="col-md-4">
+                    <div class="card">
+                         <div class="card-body" style="text-align: center;">
+                              <h5 class="card-title">Tổng doanh số</h5>
+                              <p class="card-text" id="doanhSo" style="color: red;">{{ tongTien.toLocaleString('vi-VN')}} VNĐ</p>
+                         </div>
+                    </div>
+               </div>
+               <div class="col-md-4">
+                    <div class="card">
+                         <div class="card-body" style="text-align: center;">
+                              <h5 class="card-title">Doanh số hôm nay</h5>
+                              <p class="card-text" id="doanhSoNgay" style="color: red;">0</p>
+                         </div>
+                    </div>
+               </div>
+               <div class="col-md-4">
+                    <div class="card">
+                         <div class="card-body" style="text-align: center;">
+                              <h5 class="card-title">Hàng bán được</h5>
+                              <p class="card-text" id="hangBanDuoc" style="color: red;">0</p>
+                         </div>
+                    </div>
+               </div>
+          </div>
+
+     </div>
+
+     <div class="row">
+          <div class="col-md-12 table-responsive">
+               <div style="display: flex;">
+                    <div class="dropdown" style="margin-right: 10px;">
+                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                              data-bs-toggle="dropdown" aria-expanded="false">
+                              Chọn năm
+                         </button>
+                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                              <li><a class="dropdown-item" href="#">2023</a></li>
+                              <li><a class="dropdown-item" href="#">2024</a></li>
+                              <li><a class="dropdown-item" href="#">2025</a></li>
+                         </ul>
+                    </div>
+
+                    <div class="dropdown">
+                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                              data-bs-toggle="dropdown" aria-expanded="false">
+                              Chọn tháng
+                         </button>
+                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                              <li><a class="dropdown-item" href="#">2023</a></li>
+                              <li><a class="dropdown-item" href="#">2024</a></li>
+                              <li><a class="dropdown-item" href="#">2025</a></li>
+                         </ul>
+                    </div>
+               </div>
+               <div class="card mt-3">
+                    <div class="card-body">
+                         <h5 class="card-title" style="text-align: center;">Biểu đồ thống kê</h5>
+                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="growthReportId">
+                              <a class="dropdown-item" href="javascript:void(0);">2021</a>
+                              <a class="dropdown-item" href="javascript:void(0);">2020</a>
+                              <a class="dropdown-item" href="javascript:void(0);">2019</a>
+                         </div>
+                         <canvas id="myChart" width="400" height="200"></canvas>
+                    </div>
+               </div>
+          </div>
+     </div>
+     <br>
+     <div class="row">
+          <div class="col-md-12 table-responsive">
+               <div class="card">
+                    <div class="card-body">
+                         <h5 class="card-title" style="text-align: center;">Top 5 sản phẩm bán chạy nhất</h5>
+                         <table class="table table-striped">
+                              <thead>
+                                   <tr>
+                                        <th scope="col">STT</th>
+                                        <th scope="col">Ảnh</th>
+                                        <th scope="col">Tên sản phẩm</th>
+                                        <th scope="col">Giá bán</th>
+                                        <th scope="col">Số lượng</th>
+                                        <th scope="col">Phong cách</th>
+                                        <th scope="col">Kiểu dáng</th>
+                                        <th scope="col">Chất liệu</th>
+                                        <th scope="col">Kích cỡ</th>
+                                        <th scope="col">Màu sắc</th>
+                                   </tr>
+                              </thead>
+                              <tbody>
+                                   <tr th:each="item, istat : ${bestSeller}">
+                                        <td th:text="${istat.index + 1}"></td>
+                                        <td>
+                                             <img class="d-block img-responsive"
+                                                  th:src="${'/admin/product/images/'+ item.getAnhChinhs()}"
+                                                  alt="First slide" style="width: 150px; height: 150px;">
+                                        </td>
+                                        <td th:text="${item.getTenSanPham()}"></td>
+                                        <td
+                                             th:text="${#numbers.formatDecimal(item.getGiaBan(), 0, 'COMMA', 0, 'POINT')}">
+                                        </td>
+
+                                        <!--              <td th:text="${item.getGiaBan()}">0</td>-->
+                                        <td th:text="${item.getDoanhSo()}">0</td>
+                                        <td th:text="${item.getPhongCach()}">0</td>
+                                        <td th:text="${item.getKieuDang()}">0</td>
+                                        <td th:text="${item.getChatLieu()}">0</td>
+                                        <td th:text="${item.getKichCo()}">0</td>
+                                        <td th:text="${item.getMauSac()}">0</td>
+                                   </tr>
+                              </tbody>
+                         </table>
+                    </div>
+               </div>
+          </div>
+     </div>
+     <script type="text/javascript" th:src="@{/admin/js/thongke/thongke.js}"></script>
+</section>
