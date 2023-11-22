@@ -163,12 +163,13 @@ app.controller("cartController", function ($scope, $http, $window) {
                     })
                 })
                 .catch(function (error) {
+                    const errorMessage = error.data[Object.keys(error.data)[0]];
                     Swal.fire({
-                        icon: "error",
-                        title: error.data.mess,
-                        showConfirmButton: false,
-                        timer: 2000
-                    })
+                      icon: "error",
+                      title: errorMessage,
+                      showConfirmButton: false,
+                      timer: 2000,
+                    });
                 })
         }
     }, true);

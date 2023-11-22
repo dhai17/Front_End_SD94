@@ -9,7 +9,6 @@ app.controller("ProductController", function ($scope, $http) {
     .get("http://localhost:8080/sanPham/danhSach", { headers })
     .then(function (response) {
       const promotions = response.data;
-      console.log(promotions);
       promotions.forEach(function (promotion) {
         promotion.status2 = getStatusText(promotion.trangThai);
       });
@@ -263,7 +262,6 @@ app.controller(
     };
 
     $scope.saveCreate = function () {
-      console.log(mauSacsss);
       let data = {
         tenSanPham: $scope.createProduct.tenSanPham,
         gia: $scope.createProduct.gia,
