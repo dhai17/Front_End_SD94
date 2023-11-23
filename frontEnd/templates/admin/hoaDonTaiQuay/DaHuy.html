@@ -1,15 +1,15 @@
 
-<div  class="container-fluid" ng-controller="DangBanController">
+<div  class="container-fluid" ng-controller="DaHuyController">
     <div class="container-fluid my-auto d-flex align-items-center">
         <div class="mx-auto">
-            <h1>Hoá đơn đang bán</h1>
+            <h1>Hoá đơn đã huỷ</h1>
         </div>
     </div>
     <div class="container-fluid my-auto d-flex align-items-center">
         <div class="mx-auto">
             <div class="tab-buttons">
-                <a href="#!/list-CounterBill" class="tab-button active">Đang bán</a>
                 <a href="#!/da-thanh-toan" class="tab-button ">Đã thanh toán</a>
+                <a href="#!/list-CounterBill" class="tab-button active">Đã huỷ</a>
             </div>
         </div>
     </div>
@@ -61,11 +61,6 @@
 
                         <button type="button" class="btn btn-link" ng-click="look(pending)">
                             <i class="bx bx-edit me-2"></i>
-                        </button>
-
-                        <button type="button" class="btn btn-link btn-sm btn-rounded"
-                            ng-click="refuseBill(pending)">
-                            <i class="bx bx-trash me-2"></i>
                         </button>
                     </div>
                 </td>

@@ -1,33 +1,91 @@
-<div class="container-fluid" ng-controller="EditProductController">
+<style>
+    body {
+        background-color: #f8f9fa; /* Set a light background color */
+    }
+
+    .container-fluid {
+        padding: 20px; /* Add some padding to the container */
+    }
+
+    .card {
+        border: 1px solid #d1d3e2; /* Add a subtle border to the card */
+        border-radius: 8px; /* Add rounded corners to the card */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a slight box shadow */
+    }
+
+    #h1-XemTruoc {
+        color: #007bff; /* Set a primary color for the heading */
+    }
+
+    h6 {
+        color: #495057; /* Set a dark color for subheadings */
+    }
+
+    strong {
+        color: #007bff; /* Set a success color for strong elements */
+    }
+
+    .form-control {
+        border: 1px solid #ced4da; /* Set a border color for form controls */
+        border-radius: 4px; /* Add rounded corners to form controls */
+    }
+
+    .btn-primary {
+        background-color: #007bff; /* Set a primary color for buttons */
+        border-color: #007bff; /* Set a matching border color for buttons */
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3; /* Darken the background on hover */
+        border-color: #0056b3; /* Darken the border on hover */
+    }
+
+    .text-center {
+        text-align: center; /* Center-align text */
+    }
+
+    .text-right {
+        text-align: right; /* Right-align text */
+    }
+</style>
+
+<div class="container-fluid" ng-controller="EditProductController" id="editCTSP">
     <div class="card mb-4">
-        <div class="card-header">Cập nhật sản phẩm</div>
+        <h2 id="h1-XemTruoc" class="text-center">Cập nhật chi tiết sản phẩm</h2>
+        <br>
         <div class="card-body">
             <form>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-4">
-                        <label class="small mb-1">Số lượng</label>
-                        <input class="form-control" id="quantity" type="text" ng-model="editproduct.soLuong">
+                        <h6>Tên sản phẩm: <strong>{{editproduct.sanPham.tenSanPham}}</strong></h6>
                     </div>
                     <div class="col-md-4">
-                        <label for="sel2" class="small mb-1">Màu sắc</label>
-                        <select class="form-select" aria-label="Default select example" ng-model="editproduct.mauSac">
-                            <option ng-repeat="ms in mauSac" value="{{ms.mauSac}}"
-                                ng-selected="ms.id == editproduct.mauSac.id">
-                                {{ms.tenMauSac}}</option>
-                        </select>
+                        <h6>Màu sắc: <strong>{{editproduct.mauSac.tenMauSac}}</strong></h6>
                     </div>
                     <div class="col-md-4">
-                        <label class="small mb-1">Kích cỡ</label>
-                        <select class="form-select" aria-label="Default select example" ng-model="editproduct.kichCo">
-                            <option ng-repeat="kc in kichCo" value="{{kc.kichCo}}"
-                                ng-selected="kc.id == editproduct.kichCo.id">
-                                {{kc.kichCo}}</option>
-                        </select>
+                        <h6>Kích cỡ: <strong>{{editproduct.kichCo.kichCo}}</strong></h6>
                     </div>
                 </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="mb-1">Số lượng</label>
+                        <input class="form-control" id="quantity" type="text" ng-model="editproduct.soLuong">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="mb-1">Giá bán</label>
+                        <input class="form-control" id="gia" type="text" ng-model="editproduct.sanPham.gia">
+                    </div>
+                </div>
+                <br>
+                <div class="text-right">
+                    <button id="btnQuayLai" class="btn btn-primary" type="button" ng-click="returnEdit(editProduct)">
+                        <ion-icon name="arrow-back"></ion-icon> Quay lại
+                    </button>
 
-                <button class="btn btn-primary" type="button" ng-click="returnEdit(editProduct)">Return</button>
-                <button class="btn btn-primary" type="button" ng-click="saveEdits(editProduct)">Update</button>
+                    <button id="btnCapNhat" class="btn btn-primary" type="button" ng-click="saveEdits(editProduct)">
+                        <ion-icon name="save"></ion-icon> Cập nhật
+                    </button>
+                </div>
             </form>
         </div>
     </div>

@@ -40,10 +40,6 @@ td {
     color: #dc3545 !important;
 }
 
-#productList .button-group {
-    display: flex;
-}
-
 #productList .btn-link {
     margin-right: 10px;
 }

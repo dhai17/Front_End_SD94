@@ -1,22 +1,126 @@
+<style>
+    .filter-container {
+        background-color: #e9ecef;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 100px;
+    }
+
+    .product-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-around;
+    }
+
+    .product-card {
+        max-width: 300px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+    .product-card:hover {
+        transform: scale(1.05);
+    }
+
+    .product-card .card-body {
+        text-align: center;
+    }
+
+    .btn-primary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn-primary:hover {
+        background-color: #495057;
+        border-color: #495057;
+    }
+</style>
+
 <div class="untree_co-section product-section before-footer-section" ng-controller="danhSachSanPhamController">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 col-md-4 col-lg-3 mb-5" ng-repeat="sanPham in pager.sanPham">
-                <a class="product-item" ng-click="getSanPhamChiTiet(sanPham)">
-                    <img src="/static/img/{{sanPham.anh_san_pham}}" class="img-fluid product-thumbnail" />
-                    <h3 class="product-title">{{ sanPham.tenSanPham }}</h3>
-                    <strong class="product-price">{{ sanPham.gia }} VNĐ</strong>
+        <!-- <div class="container mt-4"> -->
+        <div class="filter-container">
+            <form id="productFilter">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="category" class="form-label">Tên sản phẩm</label>
+                        <select id="category" name="category" class="form-select">
+                            <option value="">All</option>
+                            <option value="T-shirt">T-shirt</option>
+                            <option value="Shirt">Shirt</option>
+                            <option value="Polo">Polo</option>
+                        </select>
+                    </div>
 
-                    <span class="icon-cross">
-                        <img src="/static/customer/assets/images/cross.svg" class="img-fluid">
-                    </span>
-                </a>
+                    <div class="col-md-3 mb-3">
+                        <label for="color" class="form-label">màu sắc</label>
+                        <select id="color" name="color" class="form-select">
+                            <option value="">All</option>
+                            <option value="white">White</option>
+                            <option value="black">Black</option>
+                            <option value="grey">Grey</option>
+                            <option value="blue">Blue</option>
+                            <option value="brown">Brown</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="size" class="form-label">Kích cở</label>
+                        <select id="size" name="size" class="form-select">
+                            <option value="">All</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="size" class="form-label">Giá tiền</label>
+                        <select id="size" name="size" class="form-select">
+                            <option value="">All</option>
+                            <option value="S">100 - 500</option>
+                            <option value="M">500 - 1000</option>
+                            <option value="L">1000 - 1500</option>
+                            <option value="XL">1500 - trở lên</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="invisible">Search</label>
+                        <button type="button" class="btn btn-primary" onclick="applyFilter()">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div id="productList" class="product-list">
+            <!-- TODO: Display your products here -->
+        </div>
+        <!-- </div> -->
+        <div class="danhSachSp">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-3 mb-5" ng-repeat="sanPham in pager.sanPham">
+                    <a class="product-item" ng-click="getSanPhamChiTiet(sanPham)">
+                        <img src="/static/img/{{sanPham.anh_san_pham}}" class="img-fluid product-thumbnail" />
+                        <h3 class="product-title">{{ sanPham.tenSanPham }}</h3>
+                        <strong class="product-price">{{ sanPham.gia }} VNĐ</strong>
+
+                        <span class="icon-cross">
+                            <img src="/static/customer/assets/images/cross.svg" class="img-fluid">
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <button class="btn" ng-repeat="pageNumber in pager.pageNumbers" ng-click="pager.page = pageNumber">
+                    {{pageNumber}}
+                </button>
             </div>
         </div>
-    </div>
-    <div class="card-footer text-center">
-        <button class="btn" ng-repeat="pageNumber in pager.pageNumbers" ng-click="pager.page = pageNumber">
-            {{pageNumber}}
-        </button>
     </div>
 </div>

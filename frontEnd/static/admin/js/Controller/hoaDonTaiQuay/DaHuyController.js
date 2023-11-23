@@ -1,5 +1,5 @@
 
-app.controller("DangBanController", function ($scope, $http) {
+app.controller("DaHuyController", function ($scope, $http) {
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
@@ -7,7 +7,7 @@ app.controller("DangBanController", function ($scope, $http) {
     }
 
     $scope.loadData = function () {
-        $http.get("http://localhost:8080/hoaDon/taiQuay/dangBan/danhSach", { headers }).then(function (response) {
+        $http.get("http://localhost:8080/hoaDon/taiQuay/daHuy/danhSach", { headers }).then(function (response) {
             const pending = response.data;
             $scope.pending = pending;
         });
@@ -29,36 +29,6 @@ app.controller("DangBanController", function ($scope, $http) {
 
     let decodedToken = parseJwt(token);
 
-    // từ chối xác nhận ( trạng thái đã huỷ đơn 5)
-    $scope.refuseBill = function (pending) {
-        const id = pending.id;
-        const checkOut_email = decodedToken.email;
-        Swal.fire({
-            title: 'Xác nhận huỷ đơn hàng',
-            text: 'Bạn có muốn huỷ đơn hàng này không?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Có',
-            cancelButtonText: 'Không'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let data = {
-                    id:id,
-                    email_user: checkOut_email
-                }
-                $http.post("http://localhost:8080/hoaDon/taiQuay/dangBan/capNhatTrangThai/daHuyDon", data, { headers })
-                    .then(function (response) {
-                        $scope.loadData();
-                        Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    })
-                
-            };
-        });
-
-    };
 
     //Phân trang
     $scope.pager = {
@@ -95,7 +65,7 @@ app.controller("DangBanController", function ($scope, $http) {
     //Tìm kiếm
     $scope.$watch('search', function (newVal) {
         if (newVal) {
-            $http.get("http://localhost:8080/hoaDon/taiQuay/dangBan/timKiem=" + newVal, { headers })
+            $http.get("http://localhost:8080/hoaDon/taiQuay/daHuy/timKiem=" + newVal, { headers })
                 .then(function (response) {
                     const pending = response.data;
 
@@ -114,7 +84,7 @@ app.controller("DangBanController", function ($scope, $http) {
         let formattedDate = formatDate(searchDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http.get("http://localhost:8080/hoaDon/taiQuay/dangBan/timKiemNgay=" + formattedDate, { headers })
+        $http.get("http://localhost:8080/hoaDon/taiQuay/daHuy/timKiemNgay=" + formattedDate, { headers })
             .then(function (response) {
                 const pending = response.data;
 
@@ -143,14 +113,14 @@ app.controller("DangBanController", function ($scope, $http) {
     // Hoá đơn chi tiết
     $scope.look = function (pending) {
         const id = pending.id;
-        window.location.href = "#!/hdct_dangban?id=" + id;
+        window.location.href = "#!/hdct_dahuy?id=" + id;
     };
 
 
 });
 
 
-app.controller("HDCT_DangBanController", function ($scope, $routeParams, $http) {
+app.controller("HDCT_DaHuyController", function ($scope, $routeParams, $http) {
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',

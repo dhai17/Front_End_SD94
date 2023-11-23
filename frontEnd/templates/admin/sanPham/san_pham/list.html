@@ -1,36 +1,31 @@
 <div ng-controller="ProductController" id="productList">
     <div class="container-fluid my-auto d-flex align-items-center">
         <div class="mx-auto">
-            <h1>Sản phẩm</h1>
+            <h1 style="text-align: center;">DANH SÁCH SẢN PHẨM</h1>
         </div>
-        <button type="button" class="btn btn-outline-secondary" ng-click="create(promotion)">Thêm sản phẩm</button>
     </div>
+    <button type="button" id="button-them-san-pham" ng-click="create(promotion)">
+        <ion-icon name="add-circle"></ion-icon> Thêm sản phẩm
+    </button>
     <br>
-    <table class="table align-middle mb-1 bg-white">
+    <table id="myTable">
         <thead class="bg-light">
             <tr>
                 <th>#</th>
                 <th>Hình ảnh</th>
                 <th>Sản phẩm</th>
                 <th>Giá</th>
-                <th>Trạng thái</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="promotion in pager.promotions">
                 <td>{{ $index + 1 }}</td>
+                <td><img src="/static/img/{{promotion.anh_san_pham}}" height="90px" width="90px" /></td>
                 <td>
-                    <img src='/static/img/{{promotion.urlImage}}' width="100px" , height="100px">
+                    <span>{{ promotion.tenSanPham }}</span>
                 </td>
-                <td>{{ promotion.tenSanPham }}</td>
-                <td>{{ promotion.gia.toLocaleString('vi-VN') }} VNĐ</td>
-                <td ng-class="{
-                    'text-success': promotion.status2 === 'Còn hàng',
-                    'text-warning': promotion.status2 === 'Hết hàng',
-                    'text-danger': promotion.status2 === 'Lưu kho'}">
-                    {{ promotion.status2 }}
-                </td>
+                <td>{{ promotion.gia.toLocaleString('vi-VN')}} VNĐ</td>
                 <td>
                     <div class="button-group">
                         <button type="button" class="btn btn-link" ng-click="dsCTSP(promotion)">
@@ -67,8 +62,7 @@
         </tbody>
     </table>
     <div class="card-footer text-center">
-        <button class="pagination-button" ng-repeat="pageNumber in pager.pageNumbers"
-            ng-class="{ 'active': pager.page === pageNumber }" ng-click="pager.page = pageNumber">
+        <button class="btn" ng-repeat="pageNumber in pager.pageNumbers" ng-click="pager.page = pageNumber">
             {{pageNumber}}
         </button>
     </div>

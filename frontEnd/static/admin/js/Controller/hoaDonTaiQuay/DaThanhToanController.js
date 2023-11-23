@@ -93,15 +93,11 @@ app.controller("DaThanhToanController", function ($scope, $http) {
         $scope.loadData();
     }
 
- 
-
     // Hoá đơn chi tiết
     $scope.look = function (pending) {
         const id = pending.id;
         window.location.href = "#!/hdct_dathanhtoan?id=" + id;
     };
-
-
 });
 
 
@@ -127,6 +123,21 @@ app.controller("HDCT_DaThanhToanController", function ($scope, $routeParams, $ht
     $scope.loadData();
     $scope.quayLai = function(){
         window.location.href = "#!/da-thanh-toan";
+    }
+    $scope.inHoaDon = function(){
+        const id = $routeParams.id;
+        $http.get("http://localhost:8080/api/banHang/taiQuay/inHoaDon/"+id, { headers, responseType: 'arraybuffer' })
+            .then(function (response) {
+                let pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+                let pdfUrl = URL.createObjectURL(pdfBlob);
+
+                let newWindow = window.open(pdfUrl, '_blank'); // Mở trang mới chứa file PDF
+                if (newWindow) {
+                    newWindow.document.title = 'Hóa đơn của bạn';
+                } else {
+                    alert('Vui lòng cho phép trình duyệt mở popup để xem và lưu hóa đơn.');
+                }
+        });
     }
 });
 

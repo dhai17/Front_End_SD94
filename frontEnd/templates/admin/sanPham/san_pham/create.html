@@ -1,4 +1,4 @@
-<div class="container-fluid" ng-controller="CreateProductController" id="themSp">
+<div class="container-fluid" ng-controller="CreateProductController">
     <div class="card mb-4">
         <div class="container-fluid my-auto d-flex align-items-center">
             <div class="mx-auto">
@@ -160,11 +160,15 @@
                     <tbody>
                         <tr ng-repeat="details in details">
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ details.sanPham.tenSanPham }}</td>
+                            <td>
+                                <div>
+                                    <span>{{ details.sanPham.tenSanPham }}</span>
+                                </div>
+                            </td>
                             <td>{{ details.soLuong }}</td>
                             <td>{{ details.mauSac.tenMauSac}}</td>
                             <td>{{ details.kichCo.kichCo }}</td>
-                            <td>{{ details.sanPham.gia.toLocaleString('vi-VN') }}</td>
+                            <td>{{ details.sanPham.gia }}</td>
                             <td>
                                 <button type="button" class="btn btn-link btn-sm btn-rounded"
                                     ng-click="deleteCTSP(details)">
@@ -176,7 +180,7 @@
                 </table>
             </div>
             <button class="btn btn-primary" type="button" id="formFileButton" ng-click="themAnh()" style="float: right;">
-                <i class="fas fa-image mr-2"></i>Thêm ảnh cho toàn bộ màu sắc
+                <i class="fas fa-image mr-2"></i>Thêm ảnh sản phẩm
             </button>
             
         </div>

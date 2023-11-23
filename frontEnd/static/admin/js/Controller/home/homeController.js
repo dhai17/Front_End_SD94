@@ -60,16 +60,16 @@ app.config(function ($routeProvider) {
             controller: "CTDaHuy",
         })
         .when("/list-CounterBill", {
-            templateUrl: "/templates/admin/hoaDonTaiQuay/DangBan.html",
-            controller: "DangBanController",
+            templateUrl: "/templates/admin/hoaDonTaiQuay/DaHuy.html",
+            controller: "DaHuyController",
         })
         .when("/da-thanh-toan", {
             templateUrl: "/templates/admin/hoaDonTaiQuay/DaThanhToan.html",
             controller: "DaThanhToanController",
         })
-        .when("/hdct_dangban", {
-            templateUrl: "/templates/admin/hoaDonTaiQuay/hoaDonChiTiet/HDCT_DangBan.html",
-            controller: "HDCT_DangBanController",
+        .when("/hdct_dahuy", {
+            templateUrl: "/templates/admin/hoaDonTaiQuay/hoaDonChiTiet/HDCT_DaHuy.html",
+            controller: "HDCT_DaHuyController",
         })
         .when("/hdct_dathanhtoan", {
             templateUrl: "/templates/admin/hoaDonTaiQuay/hoaDonChiTiet/HDCT_DaThanhToan.html",

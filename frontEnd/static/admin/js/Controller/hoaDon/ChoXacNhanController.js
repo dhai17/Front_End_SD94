@@ -7,7 +7,7 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
     $scope.loadData = function () {
         $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/danhSach", { headers }).then(function (response) {
             const pending = response.data;
-            $scope.pending = pending;
+             $scope.pending = pending;
         });
     }
 
@@ -114,7 +114,7 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
                         $scope.$evalAsync(function () {
                             $scope.pending = pending;
                         });
-                        Swal.fire('Xác nhận thành công!', '', 'success');
+                        Swal.fire('Xác nhận thành công!', '', 'success'); 
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -320,12 +320,100 @@ app.controller("CTChoXacNhan", function ($scope, $routeParams, $http) {
                 $scope.hoaDon = hoaDon;
             });
     }
+    // lay ra thong tin nguoi dang nhap
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        let payload = JSON.parse(jsonPayload);
+        return payload;
+    }
+
+    let decodedToken = parseJwt(token);
+
+
+    $scope.confirm = function (pending) {
+        const id = $routeParams.id;
+        const checkOut_email = decodedToken.email;
+        Swal.fire({
+            title: 'Xác nhận đơn hàng',
+            text: 'Bạn có muốn giao đơn hàng này không?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Có',
+            cancelButtonText: 'Không'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let data = {
+                    id: id,
+                    email_user: checkOut_email
+                }
+                $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/daXacNhan", data, { headers })
+                    .then(function (response) {
+                        $scope.quayLai();
+                        Swal.fire('Xác nhận thành công!', '', 'success');
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+            };
+        });
+    };
+
+    // từ chối xác nhận ( trạng thái đã huỷ đơn 5)
+    $scope.refuseBill = function (pending) {
+        const id = $routeParams.id;
+        const checkOut_email = decodedToken.email;
+        Swal.fire({
+            title: 'Xác nhận huỷ đơn hàng',
+            text: 'Bạn có muốn huỷ đơn hàng này không?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Có',
+            cancelButtonText: 'Không'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let data = {
+                    id: id,
+                    email_user: checkOut_email
+                }
+                $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/huyDon", data, { headers })
+                    .then(function (response) {
+                        $scope.quayLai();
+                        Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+
+            };
+        });
+
+    };
 
     $scope.quayLai = function(){
         window.location.href = "#!/list-PurchaseBill";
     }
 
     $scope.loadData();
+    $scope.inHoaDon = function(){
+        const id = $routeParams.id;
+        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/inHoaDon/"+id, { headers, responseType: 'arraybuffer' })
+            .then(function (response) {
+                let pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+                let pdfUrl = URL.createObjectURL(pdfBlob);
+
+                let newWindow = window.open(pdfUrl, '_blank'); // Mở trang mới chứa file PDF
+                if (newWindow) {
+                    newWindow.document.title = 'Hóa đơn của bạn';
+                } else {
+                    alert('Vui lòng cho phép trình duyệt mở popup để xem và lưu hóa đơn.');
+                }
+        });
+    }
 
 });
 

@@ -1,4 +1,4 @@
-app.controller("cartController", function ($scope, $http) {
+app.controller("cartController", function ($scope, $http, $window) {
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
@@ -115,13 +115,14 @@ app.controller("cartController", function ($scope, $http) {
     $scope.checkboxDaChon = false;
 
     $scope.checkTatCaDaChon = function () {
-        $scope.checkboxDaChon = $scope.pending.some(function (item) {
+        $scope.checkboxDaChon = $scope.gioHangChiTiet.some(function (item) {
             return item.selected;
         });
     };
     $scope.toggleSelectAll = function () {
-        angular.forEach($scope.pending, function (item) {
+        angular.forEach($scope.gioHangChiTiet, function (item) {
             item.selected = $scope.selectAll;
+            $scope.selectedGioHangChiTiet(item);
         });
         $scope.checkTatCaDaChon();
     };
@@ -139,6 +140,7 @@ app.controller("cartController", function ($scope, $http) {
                 $scope.gioHangChiTietID.splice(index, 1);
             }
         }
+        $scope.checkTatCaDaChon();
     };
 
     $scope.$watch('gioHangChiTietID', function (newVal, oldVal) {
@@ -170,5 +172,10 @@ app.controller("cartController", function ($scope, $http) {
                 })
         }
     }, true);
+
+    $scope.tiepTucMuaSam = function () {
+        // Replace 'your-product-page-url' with the actual URL of your product page
+        $window.location.href = "http://127.0.0.1:5501/templates/customer/home/index.html#!/product-list";
+    };
 
 });
