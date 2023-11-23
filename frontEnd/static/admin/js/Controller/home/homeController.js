@@ -248,6 +248,15 @@ app.config(['$routeProvider', function ($routeProvider) {
         })
 }]);
 
+//Bán hàng
+app.config(['$routeProvider', function ($routeProvider) {
+    $routeProvider
+        .when('/thongKe', {
+            templateUrl: '/templates/admin/ThongKe.html',
+            controller: "thongKeController",
+        })
+}]);
+
 app.directive('fileChange', ['$parse', function ($parse) {
     return {
         require: 'ngModel',
