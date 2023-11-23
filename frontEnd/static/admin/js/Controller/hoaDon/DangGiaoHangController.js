@@ -82,11 +82,14 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
                 $http.post("http://localhost:8080/hoaDon/datHang/dangGiaoHang/capNhatTrangThai/daGiaoHang", data, { headers })
                     .then(function (response) {
                         $scope.loadData();
+                        Swal.fire('Xác nhận thành công!', '', 'success');
+                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
+                            .then(function (response) {
+                        });
                     })
                     .catch(function (error) {
 
                     })
-                Swal.fire('Xác nhận thành công!', '', 'success');
             };
         });
     };
@@ -114,6 +117,9 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
                         $scope.loadData();
                         ///end lệnh
                         Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
+                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
+                            .then(function (response) {
+                        });
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -244,11 +250,14 @@ app.controller("CTDangGiaoHang", function ($scope, $routeParams, $http) {
                 $http.post("http://localhost:8080/hoaDon/datHang/dangGiaoHang/capNhatTrangThai/daGiaoHang", data, { headers })
                     .then(function (response) {
                         $scope.quayLai();
+                        Swal.fire('Xác nhận thành công!', '', 'success');
+                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
+                            .then(function (response) {
+                        });
                     })
                     .catch(function (error) {
 
                     })
-                Swal.fire('Xác nhận thành công!', '', 'success');
             };
         });
     };
@@ -276,6 +285,9 @@ app.controller("CTDangGiaoHang", function ($scope, $routeParams, $http) {
                         $scope.quayLai();
                         ///end lệnh
                         Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
+                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
+                            .then(function (response) {
+                        });
                     })
                     .catch(function (error) {
                         console.log(error);
