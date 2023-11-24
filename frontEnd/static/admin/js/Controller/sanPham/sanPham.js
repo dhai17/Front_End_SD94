@@ -263,7 +263,6 @@ app.controller(
     };
 
     $scope.saveCreate = function () {
-      console.log(mauSacsss);
       let data = {
         tenSanPham: $scope.createProduct.tenSanPham,
         gia: $scope.createProduct.gia,
