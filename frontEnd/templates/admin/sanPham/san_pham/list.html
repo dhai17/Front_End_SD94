@@ -7,11 +7,21 @@
     <button type="button" id="button-them-san-pham" ng-click="create(promotion)">
         <ion-icon name="add-circle"></ion-icon> Thêm sản phẩm
     </button>
+    <div class="d-flex">
+        <input class="form-control me-1" type="search" placeholder="Search" aria-label="Search" ng-model="searchTerm">
+        <button class="btn btn-primary btn-sm" type="submit" ng-click="searchAllCustomer(searchTerm)">Tìm kiếm</button>
+
+        <button type="button" class="dt-button buttons-html5 btn btn-white btn-success btn-bold" data-toggle="tooltip"
+            title='Tải lại dữ liệu' ng-click="reLoad()">
+            <span> <i class="fas fa-sync-alt"></i></span>
+        </button>
+    </div>
     <br>
     <table id="myTable">
         <thead class="bg-light">
             <tr>
                 <th>#</th>
+                <th>Hình ảnh</th>
                 <th>Sản phẩm</th>
                 <th>Giá</th>
                 <th>Thao tác</th>
@@ -20,13 +30,11 @@
         <tbody>
             <tr ng-repeat="promotion in pager.promotions">
                 <td>{{ $index + 1 }}</td>
+                <td><img src="/static/img/{{promotion.anh_san_pham}}" height="90px" width="90px" /></td>
                 <td>
-                    <img src='/static/img/{{promotion.anh_san_pham}}' height="90px" width="90px" />
-                    <div>
-                        <span>{{ promotion.tenSanPham }}</span>
-                    </div>
+                    <span>{{ promotion.tenSanPham }}</span>
                 </td>
-                <td>{{ promotion.gia }}</td>
+                <td>{{ promotion.gia.toLocaleString('vi-VN')}} VNĐ</td>
                 <td>
                     <div class="button-group">
                         <button type="button" class="btn btn-link" ng-click="dsCTSP(promotion)">
@@ -35,6 +43,28 @@
                         <button type="button" class="btn btn-link btn-sm btn-rounded" ng-click="delete(promotion)">
                             <i class="bx bx-trash me-2"></i>
                         </button>
+                        <div class="modal fade" ng-attr-id="confirmDeleteModal_{{ promotion.id }}" tabindex="-1"
+                            role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Bạn có chắc chắn muốn xóa?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Hủy</button>
+                                        <button type="button" class="btn btn-danger"
+                                            id="confirmDeleteButton">Xóa</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </td>
             </tr>
