@@ -59,8 +59,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/static/admin/js/Controller/nhanVien/NhanVien.js"></script>
     <script src="/static/admin/js/Controller/khuyenMai/khuyenMai.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link href="/static/home/assets/css/style.css" rel="stylesheet">
     <link href="/static/admin/assets/css/index.css" rel="stylesheet">
     <script src="/static/admin/js/config/index.js"></script>
@@ -76,6 +76,7 @@
     <script src="/static/sales/taiQuay/DanhSachHoaDon.Controller.js"></script>
     <script src="/static/sales/taiQuay/DanhSachSanPham.TaiQuay.js"></script>
     <script src="/static/admin/js/config/Js.Chung.js"></script>
+    <script src="/static/admin/js/Controller/thongKe/ThongKeController.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="../../../static/admin/assets/css/sanPham/img.css">
@@ -83,9 +84,14 @@
     <link rel="stylesheet" href="/static/admin/assets/css/sanPham/Create.css">
     <link rel="stylesheet" href="/static/admin/assets/css/sanPham/ThemHinhAnh.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-rZo9fR9ISv0/32RR3Xu2KDVsAGKMAxfxP4pyw1Y9QxvjJ/6Z1XoEFAj1eYvmf5g+7WXoZx3d2uPY2/5x4P/uOQ==" crossorigin="anonymous" />
-	<link rel="stylesheet" href="/static/admin/assets/css/sanPham/DanhSach.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-rZo9fR9ISv0/32RR3Xu2KDVsAGKMAxfxP4pyw1Y9QxvjJ/6Z1XoEFAj1eYvmf5g+7WXoZx3d2uPY2/5x4P/uOQ=="
+        crossorigin="anonymous" /> -->
+    <link rel="stylesheet" href="/static/admin/assets/css/sanPham/DanhSach.css">
     <link rel="stylesheet" href="/static/admin/assets/css/sanPham/ChinhSua.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -163,6 +169,18 @@
                             <div data-i18n="Analytics">Trang chủ</div>
                         </a>
                     </li>
+
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Thống kê</span>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="#!/thongKe" class="menu-link">
+                            <i class="menu-icon fas fa-chart-bar"></i>
+                            <div data-i18n="Analytics">Thống kê</div>
+                        </a>
+                    </li>
+
                     <!-- Layouts -->
                     <li class="menu-header small text-uppercase">
                         <span class="menu-header-text">Bán hàng</span>
