@@ -154,7 +154,6 @@
                             <th>Màu sắc</th>
                             <th>Kích cỡ</th>
                             <th>Giá bán</th>
-                            <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -169,13 +168,6 @@
                             <td>{{ details.mauSac.tenMauSac}}</td>
                             <td>{{ details.kichCo.kichCo }}</td>
                             <td>{{ details.sanPham.gia }}</td>
-                            <td>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
-                                        ng-model="details.trangThai" ng-checked="details.trangThai"
-                                        ng-click="updateTrangThai(details)">
-                                </div>
-                            </td>
                         </tr>
                     </tbody>
                 </table>

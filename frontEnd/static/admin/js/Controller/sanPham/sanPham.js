@@ -154,12 +154,16 @@ app.controller("EditProductController", function ($scope, $routeParams, $http, $
   $scope.saveEdits = function () {
     let idProduct = $routeParams.id;
     let sanPham = $scope.editproduct.sanPham;
+    let soLuong = $scope.editproduct.soLuong;
+    let trangThai = soLuong === 0 ? false : true;
+
     let editProduct = {
       id: idProduct,
       mauSac: $scope.editproduct.mauSac,
       kichCo: $scope.editproduct.kichCo,
       sanPham: sanPham,
-      soLuong: $scope.editproduct.soLuong,
+      soLuong: soLuong,
+      trangThai: trangThai
     };
 
     $http
@@ -871,23 +875,46 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
       cancelButtonText: "Hủy",
     }).then((result) => {
       if (result.isConfirmed) {
+        // Kiểm tra xem số lượng có phải là 0 không và trạng thái là true
+        if (details.soLuong === 0 && details.trangThai) {
+          Swal.fire({
+            icon: "warning",
+            title: "Không thể chuyển trạng thái khi số lượng bằng 0",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          $scope.$apply(function () {
+            details.trangThai = !details.trangThai; // Đảo ngược trạng thái
+          });
+        } else {
+          let data = {
+            status: details.trangThai,
+            id: details.id
+          };
 
-        let data = {
-          status: details.trangThai,
-          id: details.id
-        };
-        $http.post("http://localhost:8080/sanPhamChiTiet/update/trangThai", data, { headers, })
-          .then(function (response) {
-            Swal.fire({
-              icon: "success",
-              title: "Chuyển trạng thái thành công",
-              showConfirmButton: false,
-              timer: 2000,
-            })
-          })
+          $http.post("http://localhost:8080/sanPhamChiTiet/update/trangThai", data, { headers, })
+            .then(function (response) {
+              Swal.fire({
+                icon: "success",
+                title: "Chuyển trạng thái thành công",
+                showConfirmButton: false,
+                timer: 2000,
+              });
+
+              // Cập nhật ngữ cảnh AngularJS
+              $scope.$apply(function () {
+                details.trangThai = !details.trangThai; // Đảo ngược trạng thái
+              });
+            });
+        }
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        $scope.$apply(function () {
+          details.trangThai = !details.trangThai; // Đảo ngược trạng thái
+        });
+        console.log("Người dùng đã nhấn nút Hủy");
       }
     });
-  }
+  };
 
   $scope.returnProduct = function () {
     window.location.href = "#!/list-Product";
