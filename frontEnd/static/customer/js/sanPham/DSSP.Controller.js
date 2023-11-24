@@ -47,6 +47,17 @@ app.controller("danhSachSanPhamController", function ($scope, $http) {
     let id_sanPham = sanPham.id;
     window.location.href = "#!/product-details?id=" + id_sanPham;
   };
+
+  $scope.filterByChatLieu = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/chat_lieu',
+      {
+        params: { id_chat_lieu: $scope.id_chat_lieu },
+        headers: headers
+      })
+      .then(function (response) {
+        $scope.sanPhams = response.data;
+      });
+  };
 });
 
 app.controller(
@@ -204,14 +215,14 @@ app.controller(
             headers,
           })
           .then(function (response) {
-            if(response.data.err === undefined){
+            if (response.data.err === undefined) {
               Swal.fire({
                 icon: "success",
                 title: response.data.done,
                 showConfirmButton: false,
                 timer: 2000,
               });
-            }else{
+            } else {
               Swal.fire({
                 icon: "warning",
                 title: response.data.err,

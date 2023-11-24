@@ -663,6 +663,34 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
       },
     });
   };
+
+  $scope.updateTrangThai = function (details) {
+    Swal.fire({
+      title: "Xác nhận chuyển trạng thái",
+      text: "Bạn có muốn chuyển trạng thái của sản phẩm không?",
+      icon: "success",
+      showCancelButton: true,
+      confirmButtonText: "Đồng ý",
+      cancelButtonText: "Hủy",
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        let data = {
+          status: details.trangThai,
+          id: details.id
+        };
+        $http.post("http://localhost:8080/sanPhamChiTiet/update/trangThai", data, { headers, })
+          .then(function (response) {
+            Swal.fire({
+              icon: "success",
+              title: "Chuyển trạng thái thành công",
+              showConfirmButton: false,
+              timer: 2000,
+            })
+          })
+      }
+    });
+  }
 }
 );
 
