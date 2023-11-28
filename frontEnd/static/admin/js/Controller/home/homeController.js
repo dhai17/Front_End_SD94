@@ -246,6 +246,11 @@ app.config(['$routeProvider', function ($routeProvider) {
             templateUrl: '/templates/banHang/taiQuay/ChiTietSanPham.html',
             controller: "ChiTietSanPhamTaiQuayController",
         })
+
+        .when('/thong-tin-user', {
+            templateUrl: '/templates/admin/profile/infor.html',
+            controller: "ThongTinUserController",
+        })
 }]);
 
 //Bán hàng
