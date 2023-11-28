@@ -270,6 +270,24 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
   };
 
   $scope.saveCreate = function () {
+    if (!$scope.createProduct ||
+      !$scope.createProduct.tenSanPham ||
+      !$scope.createProduct.gia ||
+      !$scope.createProduct.chatLieu ||
+      !$scope.createProduct.loaiSanPham ||
+      !$scope.createProduct.nhaSanXuat ||
+      !$scope.selectedColor ||
+      !$scope.selectedSizes ||
+      !$scope.createProduct.soLuong) {
+      Swal.fire({
+        icon: "error",
+        title: "Nhập đầy đủ thông tin",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      return;
+    }
+
     let data = {
       tenSanPham: $scope.createProduct.tenSanPham,
       gia: $scope.createProduct.gia,
@@ -281,8 +299,7 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
       soLuong: $scope.createProduct.soLuong,
     };
 
-    $http
-      .post("http://localhost:8080/sanPham/TaoSanPham", data, { headers })
+    $http.post("http://localhost:8080/sanPham/TaoSanPham", data, { headers })
       .then(function (response) {
         Swal.fire({
           icon: "success",
@@ -295,9 +312,9 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
 
         localStorage.setItem("id_product", response.data.id_product);
       })
-      .catch(function (response) {
+      .catch(function (errorResponse) {
         if (errorResponse.status === 400) {
-          const errorMessage = errorResponse.data.message;
+          const errorMessage = errorResponse.data.error;
           Swal.fire({
             icon: "error",
             title: errorMessage + "",
@@ -361,39 +378,12 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
       });
   };
 
-  $scope.onImageSelected = function (event) {
-    $scope.product.image = event.target.files[0];
-  };
-
-  $scope.addProduct = function () {
-    let formData = new FormData();
-    let data = {
-      id: $scope.createProduct.id,
-      anhMacDinh: true,
-      image: $scope.product.image,
-    };
-
-    $http
-      .post("/api/products", formData, {
-        headers: { "Content-Type": undefined },
-        transformRequest: angular.identity,
-      })
-      .then(
-        function (response) {
-          console.log(response);
-        },
-        function (error) {
-          console.error(error);
-        }
-      );
-  };
-
   $scope.returnCreate = function () {
     window.location.href = "#!/list-Product";
   };
-  let id_product = localStorage.getItem("id_product");
 
   $scope.themAnh = function (promotion) {
+    let id_product = localStorage.getItem("id_product");
     window.location.href = "#!/list-Img?id=" + id_product;
   };
 
@@ -408,6 +398,9 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
       inputValidator: (value) => {
         if (!value) {
           return "Vui lòng nhập tên chất liệu";
+        }
+        if (!/^(?=.*[a-zA-Z])[a-zA-Z\d]+$/.test(value)) {
+          return "Vui lòng chỉ nhập chữ và có cả chữ lẫn số";
         }
       },
     }).then((result) => {
@@ -442,6 +435,7 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
             }
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // Có thể thêm xử lý nếu người dùng huỷ bỏ
       }
     });
   };
@@ -564,7 +558,10 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
       cancelButtonText: "Huỷ",
       inputValidator: (value) => {
         if (!value) {
-          return "Vui lòng nhập tên kích cỡ";
+          return "Vui lòng nhập kích cỡ";
+        }
+        if (!/^\d+(\.\d+)?$/.test(value)) {
+          return "Vui lòng nhập số";
         }
       },
     }).then((result) => {
@@ -667,34 +664,6 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
       },
     });
   };
-
-  $scope.updateTrangThai = function (details) {
-    Swal.fire({
-      title: "Xác nhận chuyển trạng thái",
-      text: "Bạn có muốn chuyển trạng thái của sản phẩm không?",
-      icon: "success",
-      showCancelButton: true,
-      confirmButtonText: "Đồng ý",
-      cancelButtonText: "Hủy",
-    }).then((result) => {
-      if (result.isConfirmed) {
-
-        let data = {
-          status: details.trangThai,
-          id: details.id
-        };
-        $http.post("http://localhost:8080/sanPhamChiTiet/update/trangThai", data, { headers, })
-          .then(function (response) {
-            Swal.fire({
-              icon: "success",
-              title: "Chuyển trạng thái thành công",
-              showConfirmButton: false,
-              timer: 2000,
-            })
-          })
-      }
-    });
-  }
 }
 );
 
@@ -748,6 +717,18 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
 
     spcts.hinhAnh = [];
 
+    function updateImageData() {
+      $http
+        .get("http://localhost:8080/sanPhamChiTiet/hienThiAnh/" + id, {
+          headers,
+        })
+        .then(function (response) {
+          const hinhAnh = response.data;
+          spcts.hinhAnh = hinhAnh;
+          $scope.hinhAnh = hinhAnh;
+        });
+    }
+
     for (let i = 0; i < files.length; i++) {
       let file = files[i];
       let reader = new FileReader();
@@ -759,9 +740,12 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
         };
 
         $http
-          .post("http://localhost:8080/sanPhamChiTiet/themAnhSanPham", data, {
-            headers,
-          })
+          .post(
+            "http://localhost:8080/sanPhamChiTiet/themAnhSanPham", data,
+            {
+              headers,
+            }
+          )
           .then(function (response) {
             Swal.fire({
               icon: "success",
@@ -769,16 +753,7 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
               showConfirmButton: false,
               timer: 2000,
             });
-          });
-
-        $http
-          .get("http://localhost:8080/sanPhamChiTiet/hienThiAnh/" + id, {
-            headers,
-          })
-          .then(function (response) {
-            const hinhAnh = response.data;
-            spcts.hinhAnh = hinhAnh;
-            $scope.hinhAnh = hinhAnh;
+            updateImageData();
           });
       };
       reader.readAsDataURL(file);
@@ -804,6 +779,7 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
           showConfirmButton: false,
           timer: 2000,
         });
+        updateImageData();
       });
   };
 
@@ -816,12 +792,14 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
     $http
       .put("http://localhost:8080/sanPhamChiTiet/xoaAnh/", data, { headers })
       .then(function (response) {
-        const hinhAnh = response.data;
-        $scope.hinhAnh = hinhAnh;
+        const index = spcts.hinhAnh.findIndex(item => item.id === hinhAnh.id);
+        if (index !== -1) {
+          spcts.hinhAnh.splice(index, 1);
+        }
 
         Swal.fire({
           icon: "success",
-          title: "Xoa anh thanh cong",
+          title: "Xóa ảnh thành công",
           showConfirmButton: false,
           timer: 2000,
         });
@@ -847,11 +825,6 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
       const details = response.data;
       $scope.details = details;
     });
-
-  $scope.edit = function (promotion) {
-    let id = promotion.id;
-    window.location.href = "#!/edit-Product?id=" + idPro;
-  };
 
   $http
     .get("http://localhost:8080/sanPham/chinhSua/" + id, { headers })
@@ -918,6 +891,11 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
 
   $scope.returnProduct = function () {
     window.location.href = "#!/list-Product";
+  };
+
+  $scope.themAnh = function () {
+    let id = $routeParams.id;
+    window.location.href = "#!/list-Img?id=" + id;
   };
 
 });

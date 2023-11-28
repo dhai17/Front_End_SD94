@@ -1,9 +1,30 @@
 <style>
     .filter-container {
-        background-color: #e9ecef;
+        background-color: #f8f9fa;
         padding: 15px;
         border-radius: 10px;
-        margin-bottom: 100px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-label {
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        height: 38px;
+        /* Adjust the height as needed */
     }
 
     .product-list {
@@ -30,52 +51,80 @@
     }
 
     .btn-primary {
-        background-color: #6c757d;
-        border-color: #6c757d;
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
     }
 
     .btn-primary:hover {
-        background-color: #495057;
-        border-color: #495057;
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .product-item {
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.3s ease;
+        display: block;
+    }
+
+    .product-item:hover {
+        transform: translateY(-5px);
+    }
+
+    .product-thumbnail {
+        width: 100%;
+        height: auto;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .product-title {
+        margin: 10px 0;
+        font-size: 18px;
+    }
+
+    .product-price {
+        display: block;
+        font-weight: bold;
+        font-size: 16px;
+        color: #28a745;
     }
 </style>
 
 <div class="untree_co-section product-section before-footer-section" ng-controller="danhSachSanPhamController">
     <div class="container-fluid">
-        <!-- <div class="container mt-4"> -->
         <div class="filter-container">
             <form id="productFilter">
                 <div class="row">
                     <div class="col-md-3 mb-3">
-                        <label for="category" class="form-label">Tên sản phẩm</label>
-                        <select id="category" name="category" class="form-select">
+                        <label for="color" class="form-label">Loại sản phẩm</label>
+                        <select id="color" class="form-select">
                             <option value="">All</option>
-                            <option value="T-shirt">T-shirt</option>
-                            <option value="Shirt">Shirt</option>
-                            <option value="Polo">Polo</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-3 mb-3">
-                        <label for="color" class="form-label">Màu sắc</label>
-                        <select id="color" name="color" class="form-select">
-                            <option value="">All</option>
-                            <option value="white">White</option>
-                            <option value="black">Black</option>
-                            <option value="grey">Grey</option>
-                            <option value="blue">Blue</option>
-                            <option value="brown">Brown</option>
+                            <option ng-repeat="lsp in loaiSanPham" value="{{lsp.loaiSanPham}}"
+                                ng-selected="lsp.id == loaiSanPham.id">
+                                {{lsp.loaiSanPham}}</option>
                         </select>
                     </div>
 
                     <div class="col-md-3 mb-3">
                         <label for="size" class="form-label">Chất liệu</label>
-                        <select id="size" name="size" class="form-select">
+                        <select id="size" class="form-select">
                             <option value="">All</option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
+                            <option ng-repeat="x in chatLieu" value="{{x.chatLieu}}" ng-selected="x.id == chatLieu.id">
+                                {{x.chatLieu}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="size" class="form-label">Hãng</label>
+                        <select id="size" class="form-select">
+                            <option value="">All</option>
+                            <option ng-repeat="nsx in nhaSanXuat" value="{{nsx.nhaSanXuat}}"
+                                ng-selected="nsx.id == nhaSanXuat.id">
+                                {{nsx.name}}
+                            </option>
                         </select>
                     </div>
 
@@ -91,6 +140,11 @@
                     </div>
 
                     <div class="col-md-3 mb-3">
+                        <label for="color" class="form-label">Tên sản phẩm</label>
+                        <input class="form-control" type="search" placeholder="Tìm kiếm" ng-model="searchTerm">
+                    </div>
+
+                    <div class="col-md-3 mb-3 align-self-end">
                         <label class="invisible">Search</label>
                         <button type="button" class="btn btn-primary" onclick="applyFilter()">Search</button>
                     </div>
@@ -98,14 +152,12 @@
             </form>
         </div>
 
-        <div id="productList" class="product-list">
-            <!-- TODO: Display your products here -->
-        </div>
         <div class="danhSachSp">
             <div class="row">
                 <div class="col-12 col-md-4 col-lg-3 mb-5" ng-repeat="sanPham in pager.sanPham">
                     <a class="product-item" ng-click="getSanPhamChiTiet(sanPham)">
-                        <img src="/static/img/{{sanPham.anh_san_pham}}" class="img-fluid product-thumbnail" />
+                        <img src="/static/img/{{sanPham.anh_san_pham}}" class="img-fluid product-thumbnail"
+                            style="width: 500px; height: 500px;" />
                         <h3 class="product-title">{{ sanPham.tenSanPham }}</h3>
                         <strong class="product-price">{{ sanPham.gia }} VNĐ</strong>
 

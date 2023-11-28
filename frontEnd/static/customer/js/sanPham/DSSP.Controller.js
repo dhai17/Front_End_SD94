@@ -12,6 +12,41 @@ app.controller("danhSachSanPhamController", function ($scope, $http) {
       $scope.sanPham = sanPham;
     });
 
+  $http
+    .get("http://localhost:8080/chatLieu/danhSach", { headers })
+    .then(function (response) {
+      const chatLieu = response.data;
+      $scope.chatLieu = chatLieu;
+    });
+
+  $http
+    .get("http://localhost:8080/loaiSanPham/danhSach", { headers })
+    .then(function (response) {
+      const loaiSanPham = response.data;
+      $scope.loaiSanPham = loaiSanPham;
+    });
+
+  $http
+    .get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
+    .then(function (response) {
+      const nhaSanXuat = response.data;
+      $scope.nhaSanXuat = nhaSanXuat;
+    });
+
+  $http
+    .get("http://localhost:8080/mauSac/danhSach", { headers })
+    .then(function (response) {
+      const mauSac = response.data;
+      $scope.mauSac = mauSac;
+    });
+
+  $http
+    .get("http://localhost:8080/kichCo/danhSach", { headers })
+    .then(function (response) {
+      const kichCo = response.data;
+      $scope.kichCo = kichCo;
+    });
+
   $scope.pager = {
     page: 1,
     size: 8,

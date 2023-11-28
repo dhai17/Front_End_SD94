@@ -15,23 +15,34 @@ app.controller("ColorrController", function ($scope, $http) {
 
     $scope.delete = function (promotion) {
         let idColor = promotion.id;
-        $http.delete("http://localhost:8080/mauSac/xoa/" + idColor, { headers })
-            .then(function (response) {
-                const promotions = response.data;
-                $scope.$evalAsync(function () {
-                    $scope.promotions = promotions;
-                    Swal.fire({
-                        icon: "success",
-                        title: "Xóa thành công",
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
-                });
+        Swal.fire({
+            title: 'Xác nhận xóa sản phẩm',
+            text: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $http.delete("http://localhost:8080/mauSac/xoa/" + idColor, { headers })
+                    .then(function (response) {
+                        const promotions = response.data;
+                        $scope.$evalAsync(function () {
+                            $scope.promotions = promotions;
+                            Swal.fire({
+                                icon: "success",
+                                title: "Xóa thành công",
+                                showConfirmButton: false,
+                                timer: 2000,
+                            });
+                        });
 
-            })
-            .catch(function (error) {
-                console.log("Error");
-            });
+                    })
+                    .catch(function (error) {
+                        console.log("Error");
+                    });
+            }
+        });
     }
 
     $scope.editColor = function (promotion) {

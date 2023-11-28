@@ -1,0 +1,17 @@
+#themMoiCtSP {
+    max-width: 1400px;
+    /* Điều chỉnh độ rộng tối đa của form */
+    margin: auto;
+    /* Để căn giữa form */
+}
+
+#themMoiCtSP .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#themMoiCtSP .input-group {
+    width: 100%;
+    /* Input sẽ rộng hơn toàn bộ phần tử cha */
+}

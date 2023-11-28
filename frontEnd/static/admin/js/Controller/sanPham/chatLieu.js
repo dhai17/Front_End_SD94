@@ -14,23 +14,34 @@ app.controller("MaterialController", function ($scope, $http) {
 
     $scope.deleteMaterial = function (promotion) {
         let idMaterial = promotion.id;
-        $http.delete("http://localhost:8080/chatLieu/xoa/" + idMaterial, { headers })
-            .then(function (response) {
-                const promotions = response.data;
-                $scope.$evalAsync(function () {
-                    $scope.promotions = promotions;
-                    Swal.fire({
-                        icon: "success",
-                        title: "Xóa thành công",
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
-                });
+        Swal.fire({
+            title: 'Xác nhận xóa chất liệu',
+            text: 'Bạn có chắc chắn muốn xóa chất liệu này?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $http.delete("http://localhost:8080/chatLieu/xoa/" + idMaterial, { headers })
+                    .then(function (response) {
+                        const promotions = response.data;
+                        $scope.$evalAsync(function () {
+                            $scope.promotions = promotions;
+                            Swal.fire({
+                                icon: "success",
+                                title: "Xóa thành công",
+                                showConfirmButton: false,
+                                timer: 2000,
+                            });
+                        });
 
-            })
-            .catch(function (error) {
-                console.log("Error");
-            });
+                    })
+                    .catch(function (error) {
+                        console.log("Error");
+                    });
+            }
+        });
     }
 
     $scope.editMaterial = function (promotion) {
