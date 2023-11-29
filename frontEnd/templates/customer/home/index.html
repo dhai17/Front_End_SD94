@@ -35,6 +35,7 @@
 	<link rel="stylesheet" href="/static/customer/assets/css/hoaDon/DanhSach.css">
 	<link rel="stylesheet" href="/static/customer/assets/css/hoaDon/Base.css">
 	<link rel="stylesheet" href="/static/customer/assets/css/sanPham/DanhSach.css">
+	<script src="../../../static/customer/js/profile/thongTinKhachHang.js"></script>
 </head>
 
 <body>
@@ -69,13 +70,21 @@
 							</a>
 							<ul class="dropdown-menu dropdown-menu-end">
 								<li>
-									<a class="dropdown-item" href="">
+									<a class="dropdown-item" href="#!/thong-tin-khach-hang" id="thongtin-button">
 										<i class="bx bx-user me-2"></i>
 										<span class="align-middle">Thông tin</span>
 									</a>
 								</li>
 								<li ng-controller="LogoutController">
-									<a class="dropdown-item" href="#!/" id="dangXuat-homeAdmin" ng-click="logout()">
+									<a class="dropdown-item" href="#!/" id="dangKy-homeAdmin"
+										ng-click="DangKy()">
+										<i class="fas fa-user-plus me-2"></i>
+										<span class="align-middle">Đăng ký</span>
+									</a>
+								</li>
+								<li ng-controller="LogoutController">
+									<a class="dropdown-item" href="#!/" id="dangXuat-homeAdmin"
+										ng-click="logout()">
 										<i class="fas fa-sign-out-alt me-2"></i>
 										<span class="align-middle">Đăng xuất</span>
 									</a>
@@ -84,7 +93,8 @@
 						</li>
 						<!--/ User -->
 					</ul>
-					<li><a class="nav-link" href="#!/cart-list"><img src="/static/customer/assets/images/cart.svg"></a>
+					<li><a class="nav-link" href="#!/cart-list"><img
+								src="/static/customer/assets/images/cart.svg"></a>
 					</li>
 				</ul>
 			</div>
@@ -98,7 +108,8 @@
 				<div class="col-lg-5">
 					<div class="intro-excerpt">
 						<h1>Cửa hàng bán giày trực tuyến <span clsas="d-block">Adudas</span></h1>
-						<p class="mb-4">Đối với chúng tôi, mỗi khách hàng là một thượng đế. Chúng tôi đặt ra một mục
+						<p class="mb-4">Đối với chúng tôi, mỗi khách hàng là một thượng đế. Chúng tôi đặt ra một
+							mục
 							tiêu duy nhất là làm hài lòng tất cả khách hàng</p>
 						<p><a href="" class="btn btn-secondary me-2">Khám phá sản phẩm</a>
 					</div>
@@ -124,9 +135,12 @@
 
 			<div class="row g-5 mb-5">
 				<div class="col-lg-4">
-					<div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Adudas<span>.</span></a></div>
-					<p class="mb-4">Chúng tôi luôn mang đến cho khách hàng những trải nghiệm mau sắm tuyệt vời nhất.
-						Chúng tôi ở đây để đem đến cho các bạn những sản phẩm chất lượng cũng như với giá thành phải
+					<div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Adudas<span>.</span></a>
+					</div>
+					<p class="mb-4">Chúng tôi luôn mang đến cho khách hàng những trải nghiệm mau sắm tuyệt vời
+						nhất.
+						Chúng tôi ở đây để đem đến cho các bạn những sản phẩm chất lượng cũng như với giá thành
+						phải
 						chăng
 					</p>
 

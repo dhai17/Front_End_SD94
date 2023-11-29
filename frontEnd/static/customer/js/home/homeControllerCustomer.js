@@ -7,6 +7,10 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/customer/cart/cart.html",
             controller: "cartController",
         })
+        .when("/thong-tin-khach-hang", {
+            templateUrl: "/templates/customer/home/ThongTin.html",
+            controller: "ThongTinKhachHang",
+        })
 
         .otherwise({
             redirectTo: "/",
