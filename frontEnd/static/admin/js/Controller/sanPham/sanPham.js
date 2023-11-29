@@ -270,24 +270,6 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
   };
 
   $scope.saveCreate = function () {
-    if (!$scope.createProduct ||
-      !$scope.createProduct.tenSanPham ||
-      !$scope.createProduct.gia ||
-      !$scope.createProduct.chatLieu ||
-      !$scope.createProduct.loaiSanPham ||
-      !$scope.createProduct.nhaSanXuat ||
-      !$scope.selectedColor ||
-      !$scope.selectedSizes ||
-      !$scope.createProduct.soLuong) {
-      Swal.fire({
-        icon: "error",
-        title: "Nhập đầy đủ thông tin",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-      return;
-    }
-
     let data = {
       tenSanPham: $scope.createProduct.tenSanPham,
       gia: $scope.createProduct.gia,
@@ -298,6 +280,16 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
       kichCo: kichCo_id,
       soLuong: $scope.createProduct.soLuong,
     };
+
+    if ($scope.createProduct === undefined) {
+      Swal.fire({
+        icon: "error",
+        title: "Vui lòng nhập đầy đủ thông tin",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      return;
+    }
 
     $http.post("http://localhost:8080/sanPham/TaoSanPham", data, { headers })
       .then(function (response) {
@@ -314,12 +306,15 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
       })
       .catch(function (errorResponse) {
         if (errorResponse.status === 400) {
-          const errorMessage = errorResponse.data.error;
-          Swal.fire({
-            icon: "error",
-            title: errorMessage + "",
-            showConfirmButton: false,
-            timer: 2000,
+          const errors = errorResponse.data;
+          angular.forEach(errors, function (errorMessage, fieldName) {
+            // Show error messages for each field
+            Swal.fire({
+              icon: "error",
+              title: errorMessage,
+              showConfirmButton: false,
+              timer: 2000,
+            });
           });
         }
       });

@@ -83,16 +83,66 @@ app.controller("danhSachSanPhamController", function ($scope, $http) {
     window.location.href = "#!/product-details?id=" + id_sanPham;
   };
 
-  $scope.filterByChatLieu = function () {
-    $http.get('http://localhost:8080/customer/sanPham/loc/chat_lieu',
-      {
-        params: { id_chat_lieu: $scope.id_chat_lieu },
-        headers: headers
-      })
+  $scope.filterByLoaiSp = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/loai_san_pham', {
+      params: { idloaiSanPham: $scope.idloaiSanPham },
+      headers: headers
+    })
       .then(function (response) {
-        $scope.sanPhams = response.data;
+        $scope.sanPham = response.data;
       });
   };
+
+  $scope.filterByChatLieu = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/chat_lieu', {
+      params: { id_chat_lieu: $scope.id_chat_lieu },
+      headers: headers
+    })
+      .then(function (response) {
+        $scope.sanPham = response.data;
+      });
+  };
+
+  $scope.filterByNsx = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/nha_san_xuat', {
+      params: { id_nsx: $scope.id_nsx },
+      headers: headers
+    })
+      .then(function (response) {
+        $scope.sanPham = response.data;
+      });
+  };
+
+  $scope.filterByMauSac = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/mau_sac', {
+      params: { mauSac_id: $scope.mauSac_id },
+      headers: headers
+    })
+      .then(function (response) {
+        $scope.sanPham = response.data;
+      });
+  };
+
+  $scope.filterByKichCo = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/kich_co', {
+      params: { kichCo_id: $scope.kichCo_id },
+      headers: headers
+    })
+      .then(function (response) {
+        $scope.sanPham = response.data;
+      });
+  };
+
+  $scope.filterByGia = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/gia', {
+      params: { id_nsx: $scope.id_nsx },
+      headers: headers
+    })
+      .then(function (response) {
+        $scope.sanPham = response.data;
+      });
+  };
+
 });
 
 app.controller(
