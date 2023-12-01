@@ -89,7 +89,8 @@ app.controller("danhSachSanPhamController", function ($scope, $http) {
       headers: headers
     })
       .then(function (response) {
-        $scope.sanPham = response.data;
+        const sanPham = response.data;
+        $scope.sanPham = sanPham;
       });
   };
 
@@ -99,7 +100,8 @@ app.controller("danhSachSanPhamController", function ($scope, $http) {
       headers: headers
     })
       .then(function (response) {
-        $scope.sanPham = response.data;
+        const sanPham = response.data;
+        $scope.sanPham = sanPham;
       });
   };
 
@@ -109,7 +111,8 @@ app.controller("danhSachSanPhamController", function ($scope, $http) {
       headers: headers
     })
       .then(function (response) {
-        $scope.sanPham = response.data;
+        const sanPham = response.data;
+        $scope.sanPham = sanPham;
       });
   };
 
@@ -119,7 +122,8 @@ app.controller("danhSachSanPhamController", function ($scope, $http) {
       headers: headers
     })
       .then(function (response) {
-        $scope.sanPham = response.data;
+        const sanPham = response.data;
+        $scope.sanPham = sanPham;
       });
   };
 
@@ -129,17 +133,49 @@ app.controller("danhSachSanPhamController", function ($scope, $http) {
       headers: headers
     })
       .then(function (response) {
-        $scope.sanPham = response.data;
+        const sanPham = response.data;
+        $scope.sanPham = sanPham;
       });
   };
 
   $scope.filterByGia = function () {
-    $http.get('http://localhost:8080/customer/sanPham/loc/gia', {
-      params: { id_nsx: $scope.id_nsx },
+    $http.get("http://localhost:8080/customer/sanPham/loc/gia", {
+      params: { gia1: $scope.gia1, gia2: $scope.gia2 },
       headers: headers
     })
       .then(function (response) {
         $scope.sanPham = response.data;
+      });
+  };
+
+  $scope.$watch('searchTerm', function (newVal) {
+    if (newVal) {
+      $http.get("http://localhost:8080/customer/sanPham/timKiemTheoTen/" + newVal, { headers })
+        .then(function (response) {
+          $scope.sanPham = response.data;
+        });
+    } else {
+      $http.get("http://localhost:8080/customer/sanPham/danhSach", { headers })
+        .then(function (response) {
+          $scope.sanPham = response.data;
+        });
+    }
+  });
+
+  $scope.searchAll = function (searchTerm) {
+    $http.get("http://localhost:8080/customer/sanPham/timKiemTheoTen/" + searchTerm, { headers })
+      .then(function (response) {
+        $scope.sanPham = response.data;
+      });
+  };
+
+  $scope.reLoad = function () {
+    $http.get("http://localhost:8080/customer/sanPham/danhSach", { headers })
+      .then(function (response) {
+        const sanPham = response.data;
+        $scope.$evalAsync(function () {
+          $scope.sanPham = sanPham;
+        });
       });
   };
 

@@ -7,17 +7,16 @@
     <button type="button" id="button-them-san-pham" ng-click="create(promotion)">
         <ion-icon name="add-circle"></ion-icon> Thêm sản phẩm
     </button>
-    <!-- <div class="d-flex align-items-center mt-2">
-        <input class="form-control me-1" type="search" placeholder="Tìm kiếm" aria-label="Search" ng-model="searchTerm">
-        <button class="btn btn-primary btn-sm" type="submit" ng-click="searchAll(searchTerm)">
-            <i class="fas fa-search"></i> Tìm kiếm
+    <div class="d-flex align-items-center mt-2">
+        <input class="form-control" type="search" placeholder="Tìm kiếm" aria-label="Search" ng-model="searchTerm">
+        <button class="btn btn-primary" type="submit" ng-click="searchAll(searchTerm)">
+            <ion-icon class="fas fa-search"></ion-icon>
         </button>
 
-        <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="tooltip" title='Tải lại dữ liệu'
-            ng-click="reLoad()">
-            <i class="fas fa-sync-alt"></i>
+        <button class="btn btn-primary" type="button" data-toggle="tooltip" title='Tải lại dữ liệu' ng-click="reLoad()">
+            <ion-icon class="fas fa-sync-alt"></ion-icon>
         </button>
-    </div> -->
+    </div>
     <br>
     <table id="myTable">
         <thead class="bg-light">
@@ -73,7 +72,8 @@
         </tbody>
     </table>
     <div class="card-footer text-center">
-        <button class="btn" ng-repeat="pageNumber in pager.pageNumbers" ng-click="pager.page = pageNumber">
+        <button class="btn btn-secondary mx-1" ng-repeat="pageNumber in pager.pageNumbers"
+            ng-click="pager.page = pageNumber">
             {{pageNumber}}
         </button>
     </div>

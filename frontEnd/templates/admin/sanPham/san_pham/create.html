@@ -18,7 +18,7 @@
                     <div class="col-md-6">
                         <label class="small mb-1">Giá bán</label>
                         <div class="input-group mb-4 border rounded-pill p-2">
-                            <input class="form-control border-0" id="price" type="text" placeholder="Nhập giá tiền"
+                            <input class="form-control border-0" id="price" type="number" placeholder="Nhập giá tiền"
                                 ng-model="createProduct.gia">
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                     <div class="col-md-6">
                         <label class="small mb-1">Số lượng</label>
                         <div class="input-group mb-4 border rounded-pill p-2">
-                            <input class="form-control border-0" id="quantity" type="text" placeholder="Nhập số lượng"
+                            <input class="form-control border-0" id="quantity" type="number" placeholder="Nhập số lượng"
                                 ng-model="createProduct.soLuong">
                         </div>
                     </div>
@@ -173,8 +173,8 @@
                 </table>
             </div>
             <br>
-            <button class="btn btn-primary" type="button" id="formFileButton" ng-click="themAnh()"
-                style="float: right;">
+            <button class="btn btn-primary" type="button" id="formFileButton" ng-click="createProduct && themAnh()"
+                ng-disabled="!createProduct" style="float: right;">
                 <i class="fas fa-image mr-2"></i>Thêm ảnh sản phẩm
             </button>
         </div>
