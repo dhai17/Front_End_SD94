@@ -141,6 +141,10 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/sanPham/san_pham/themHinhAnh.html",
             controller: "ImgController",
         })
+        .when("/edit-Img", {
+            templateUrl: "/templates/admin/sanPham/san_pham/editAnhSP.html",
+            controller: "EditImgController",
+        })
         .when("/list-Line", {
             templateUrl: "/templates/admin/sanPham/loai_san_pham/list.html",
             controller: "LineController",
