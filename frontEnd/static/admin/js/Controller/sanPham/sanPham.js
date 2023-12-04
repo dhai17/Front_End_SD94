@@ -18,7 +18,6 @@ app.controller("ProductController", function ($scope, $http) {
     } else if (trangThai == 1) {
       return "Ngừng bán";
     }
-    // Nếu không phải 0 hoặc 1, có thể trả về một giá trị mặc định hoặc xử lý theo cách khác tùy thuộc vào logic của bạn.
     return "Trạng thái không xác định";
   }
 
