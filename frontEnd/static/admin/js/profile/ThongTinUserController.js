@@ -78,4 +78,8 @@ app.controller("ThongTinUserController", function ($scope, $http) {
                });
      }
 
+     $scope.doiMatKhauNV = function (){
+          window.location.href = "#!/doimatkhau"
+     }
+
 });

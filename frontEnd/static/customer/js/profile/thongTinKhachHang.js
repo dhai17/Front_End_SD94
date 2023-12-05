@@ -68,4 +68,7 @@ app.controller("ThongTinKhachHang", function ($scope, $http) {
                     $scope.diaChi = KhachHang.diaChi
                });
      }
+     $scope.doimatkhau = function (){
+          window.location.href = "#!/doi-mat-khau"
+     }
 });

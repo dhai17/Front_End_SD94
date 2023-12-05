@@ -264,6 +264,10 @@ app.config(['$routeProvider', function ($routeProvider) {
             templateUrl: '/templates/admin/ThongKe.html',
             controller: "thongKeController",
         })
+        .when('/doimatkhau', {
+            templateUrl: '/templates/admin/profile/DoiMatKhauNV.html',
+            controller: "doimatkhauNV",
+        })
 }]);
 
 app.directive('fileChange', ['$parse', function ($parse) {
