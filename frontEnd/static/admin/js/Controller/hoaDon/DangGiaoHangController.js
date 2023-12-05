@@ -101,16 +101,18 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
 
         Swal.fire({
             title: 'Xác nhận huỷ đơn hàng',
-            text: 'Bạn có muốn huỷ đơn hàng này không?',
+            html: '<input type="text" id="cancelReason" class="swal2-input" placeholder="Lý do hủy">',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Có',
             cancelButtonText: 'Không'
         }).then((result) => {
             if (result.isConfirmed) {
+                const cancelReason = document.getElementById('cancelReason').value;
                 let data = {
                     id: id,
-                    email_user: checkOut_email
+                    email_user: checkOut_email,
+                    ghiChu: cancelReason  // Include the cancel reason in the data
                 }
                 $http.post("http://localhost:8080/hoaDon/datHang/dangGiaoHang/capNhatTrangThai/huyDon5", data, { headers })
                     .then(function (response) {
@@ -269,16 +271,18 @@ app.controller("CTDangGiaoHang", function ($scope, $routeParams, $http) {
 
         Swal.fire({
             title: 'Xác nhận huỷ đơn hàng',
-            text: 'Bạn có muốn huỷ đơn hàng này không?',
+            html: '<input type="text" id="cancelReason" class="swal2-input" placeholder="Lý do hủy">',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Có',
             cancelButtonText: 'Không'
         }).then((result) => {
             if (result.isConfirmed) {
+                const cancelReason1 = document.getElementById('cancelReason').value;
                 let data = {
                     id: id,
-                    email_user: checkOut_email
+                    email_user: checkOut_email,
+                    ghiChu: cancelReason1  // Include the cancel reason in the data
                 }
                 $http.post("http://localhost:8080/hoaDon/datHang/dangGiaoHang/capNhatTrangThai/huyDon5", data, { headers })
                     .then(function (response) {

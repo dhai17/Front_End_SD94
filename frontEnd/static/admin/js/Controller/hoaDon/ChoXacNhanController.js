@@ -314,17 +314,19 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
             if (item.selected) {
                 id_hoaDon.push(item.id);
                 Swal.fire({
-                    title: 'Hủy những đơn đã chọn',
-                    text: 'Bạn có muốn hủy những đơn đã chọn không?',
+                    title: 'Xác nhận huỷ đơn hàng',
+                    html: '<input type="text" id="cancelReason" class="swal2-input" placeholder="Lý do hủy">',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Có',
                     cancelButtonText: 'Không'
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        const cancelReason1 = document.getElementById('cancelReason').value;
                         let data = {
                             id_hoaDon: id_hoaDon,
-                            email_user: checkOut_email
+                            email_user: checkOut_email,
+                            ghiChu: cancelReason1  // Include the cancel reason in the data
                         }
                         $http.put("http://localhost:8080/hoaDon/datHang/choXacNhan/huyDon/daChon", data, { headers })
                             .then(function (response) {
@@ -434,17 +436,16 @@ app.controller("CTChoXacNhan", function ($scope, $routeParams, $http) {
             cancelButtonText: 'Không'
         }).then((result) => {
             if (result.isConfirmed) {
-                const cancelReason = document.getElementById('cancelReason').value;
+                const cancelReason1 = document.getElementById('cancelReason').value;
     
                 let data = {
                     id: id,
                     email_user: checkOut_email,
-                    ghiChu: cancelReason  // Include the cancel reason in the data
+                    ghiChu: cancelReason1  // Include the cancel reason in the data
                 }
     
                 $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/huyDon", data, { headers })
                     .then(function (response) {
-                        $scope.loadData();
                         Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
                         $scope.quayLai();
                         $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/" + id, { headers })
