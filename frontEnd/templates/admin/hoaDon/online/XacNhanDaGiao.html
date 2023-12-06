@@ -1,8 +1,8 @@
 
-<div ng-controller="DaGiaoHangController">
+<div ng-controller="XacNhanDaGiaoController">
     <div class="container-fluid my-auto d-flex align-items-center">
         <div class="mx-auto">
-            <h1>Đã Giao Hàng</h1>
+            <h1>Đang Giao Hàng</h1>
         </div>
     </div>
     <div class="container-fluid my-auto d-flex align-items-center">
@@ -10,8 +10,8 @@
             <div class="tab-buttons">
                 <a href="#!/list-PurchaseBill" class="tab-button">Chờ xác nhận</a>
                 <a href="#!/cho-giao-hang" class="tab-button ">Chờ giao hàng</a>
-                <a href="#!/dang-giao" class="tab-button">Đang giao</a>
-                <a href="#!/da-giao" class="tab-button active">Đã giao</a>
+                <a href="#!/dang-giao" class="tab-button active">Đang giao</a>
+                <a href="#!/da-giao" class="tab-button">Đã giao</a>
                 <a href="#!/da-huy" class="tab-button">Đã hủy</a>
             </div>
         </div>
@@ -31,10 +31,13 @@
                     data-toggle="tooltip" title='Tải lại dữ liệu' ng-click="reLoad()">
                     <span> <i class="fas fa-sync-alt"></i></span>
                 </button>
-            </div>              
+            </div>
+            <div class="tab-buttons">
+                <a href="#!/dang-giao" class="tab-button active">Đang giao hàng</a>
+            </div>             
         </div>
     </div>
-    <table class="table align-middle mb-1 bg-white" id="tableBillDaHuyDon">
+    <table class="table align-middle mb-1 bg-white" id="tableBillXacNhanDaGiao">
         <thead class="bg-light">
             <tr>
                 <th>#</th>
@@ -60,11 +63,18 @@
 
                 <td>
                     <div class="button-group">
+                        <button type="button" class="btn btn-link" ng-click="confirm(pending)">
+                            <i class="bx bx-check-circle me-2"></i>
+                        </button>
 
                         <button type="button" class="btn btn-link" ng-click="look(pending)">
                             <i class="bx bx-edit me-2"></i>
                         </button>
 
+                        <button type="button" class="btn btn-link btn-sm btn-rounded"
+                            ng-click="huyDon(pending)">
+                            <i class="bx bx-trash me-2"></i>
+                        </button>
                     </div>
                 </td>
             </tr>
