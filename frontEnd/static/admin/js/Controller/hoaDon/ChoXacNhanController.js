@@ -49,6 +49,7 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
                             $scope.pending = pending;
                         });
                         Swal.fire('Xác nhận thành công!', '', 'success');
+                        
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -115,6 +116,9 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
                             $scope.pending = pending;
                         });
                         Swal.fire('Xác nhận thành công!', '', 'success'); 
+                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
+                            .then(function (response) {
+                        });
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -144,6 +148,9 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
                     .then(function (response) {
                         $scope.loadData();
                         Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
+                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
+                            .then(function (response) {
+                        });
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -250,8 +257,14 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
                                     $scope.selectAll = false
                                 });
                                 Swal.fire('Xác nhận đơn thành công!', '', 'success');
+                                let id;
+                                for (id of id_hoaDon){
+                                    $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
+                                    .then(function (response) {
+                                    });
+                                }
+                                
                             });
-
                     };
                 });
 
@@ -285,8 +298,14 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
                                     $scope.coCheckboxDaChon = false;
                                     $scope.selectAll = false
                                 });
+                                Swal.fire('Hủy tất cả đơn thành công!', '', 'success');
+                                let id;
+                                for (id of id_hoaDon){
+                                    $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
+                                    .then(function (response) {
+                                    });
+                                }
                             });
-                        Swal.fire('Hủy tất cả đơn thành công!', '', 'success');
                     };
                 });
             };
@@ -355,6 +374,9 @@ app.controller("CTChoXacNhan", function ($scope, $routeParams, $http) {
                     .then(function (response) {
                         $scope.quayLai();
                         Swal.fire('Xác nhận thành công!', '', 'success');
+                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
+                            .then(function (response) {
+                        });
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -384,6 +406,9 @@ app.controller("CTChoXacNhan", function ($scope, $routeParams, $http) {
                     .then(function (response) {
                         $scope.quayLai();
                         Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
+                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
+                            .then(function (response) {
+                        });
                     })
                     .catch(function (error) {
                         console.log(error);

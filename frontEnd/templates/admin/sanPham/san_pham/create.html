@@ -18,7 +18,7 @@
                     <div class="col-md-6">
                         <label class="small mb-1">Giá bán</label>
                         <div class="input-group mb-4 border rounded-pill p-2">
-                            <input class="form-control border-0" id="price" type="text" placeholder="Nhập giá tiền"
+                            <input class="form-control border-0" id="price" type="number" placeholder="Nhập giá tiền"
                                 ng-model="createProduct.gia">
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                     <div class="col-md-6">
                         <label class="small mb-1">Số lượng</label>
                         <div class="input-group mb-4 border rounded-pill p-2">
-                            <input class="form-control border-0" id="quantity" type="text" placeholder="Nhập số lượng"
+                            <input class="form-control border-0" id="quantity" type="number" placeholder="Nhập số lượng"
                                 ng-model="createProduct.soLuong">
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                         <div class="form-inline mb-4">
                             <div class="input-group flex-grow-1 border rounded-pill p-2">
                                 <select class="form-control border-0" ng-model="createProduct.chatLieu">
-                                    <option value="">Chọn chat lieu</option>
+                                    <option value="">Chọn chất liệu</option>
                                     <option ng-repeat="chatLieu in chatLieu" value="{{chatLieu.id}}">
                                         {{chatLieu.chatLieu}}
                                     </option>
@@ -45,7 +45,7 @@
 
                             </div>
                             <button class="button ml-2 p-2" id="button-themNgay" ng-click="ThemMoiChatLieu()">
-                                <ion-icon name="add-outline" id = "icon-icon"></ion-icon>
+                                <ion-icon name="add-outline" id="icon-icon"></ion-icon>
                             </button>
                         </div>
                     </div>
@@ -57,15 +57,14 @@
                         <div class="form-inline mb-4">
                             <div class="input-group flex-grow-1 border rounded-pill p-2">
                                 <select class="form-control border-0" ng-model="createProduct.loaiSanPham">
-                                    <option value="">Chọn loai san pham</option>
+                                    <option value="">Chọn loại sản phẩm</option>
                                     <option ng-repeat="loaiSanPham in loaiSanPham" value="{{loaiSanPham.id}}">
                                         {{loaiSanPham.loaiSanPham}}
                                     </option>
                                 </select>
                             </div>
                             <button class="button ml-2 p-2" id="button-themNgay" ng-click="ThemMoiLoai()">
-                                <ion-icon name="add-outline" id = "icon-icon"></ion-icon>
-                                <!-- Them moi loai san pham -->
+                                <ion-icon name="add-outline" id="icon-icon"></ion-icon>
                             </button>
                         </div>
                     </div>
@@ -75,14 +74,14 @@
                         <div class="form-inline mb-4">
                             <div class="input-group flex-grow-1 border rounded-pill p-2">
                                 <select class="form-control border-0" ng-model="createProduct.nhaSanXuat">
-                                    <option value="">Chọn hang</option>
+                                    <option value="">Chọn hãng</option>
                                     <option ng-repeat="nhaSanXuat in nhaSanXuat" value="{{nhaSanXuat.id}}">
                                         {{nhaSanXuat.name}}
                                     </option>
                                 </select>
                             </div>
                             <button class="button ml-2 p-2" id="button-themNgay" ng-click="ThemMoiHang()">
-                                <ion-icon name="add-outline" id = "icon-icon"></ion-icon>
+                                <ion-icon name="add-outline" id="icon-icon"></ion-icon>
                             </button>
                         </div>
                     </div>
@@ -107,7 +106,7 @@
                             </div>
 
                             <button class="button ml-2 p-2" id="button-themNgay" ng-click="ThemMoiMauSac()">
-                                <ion-icon name="add-outline" id = "icon-icon"></ion-icon>
+                                <ion-icon name="add-outline" id="icon-icon"></ion-icon>
                             </button>
                         </div>
                     </div>
@@ -129,7 +128,7 @@
                                 </div>
                             </div>
                             <button class="button ml-2 p-2" id="button-themNgay" ng-click="ThemMoiKichCo()">
-                                <ion-icon name="add-outline" id = "icon-icon"></ion-icon>
+                                <ion-icon name="add-outline" id="icon-icon"></ion-icon>
                             </button>
                         </div>
                     </div>
@@ -155,14 +154,12 @@
                             <th>Màu sắc</th>
                             <th>Kích cỡ</th>
                             <th>Giá bán</th>
-                            <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="details in details">
                             <td>{{ $index + 1 }}</td>
                             <td>
-                                <!-- <span>{{ details.img }}</span> -->
                                 <div>
                                     <span>{{ details.sanPham.tenSanPham }}</span>
                                 </div>
@@ -171,20 +168,15 @@
                             <td>{{ details.mauSac.tenMauSac}}</td>
                             <td>{{ details.kichCo.kichCo }}</td>
                             <td>{{ details.sanPham.gia }}</td>
-                            <td>
-                                <button type="button" class="btn btn-link btn-sm btn-rounded"
-                                    ng-click="deleteCTSP(details)">
-                                    <i class="bx bx-trash me-2"></i>
-                                </button>
-                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <button class="btn btn-primary" type="button" id="formFileButton" ng-click="themAnh()" style="float: right;">
+            <br>
+            <button class="btn btn-primary" type="button" id="formFileButton" ng-click="createProduct && themAnh()"
+                ng-disabled="!createProduct" style="float: right;">
                 <i class="fas fa-image mr-2"></i>Thêm ảnh sản phẩm
             </button>
-            
         </div>
     </div>
 </div>

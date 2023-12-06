@@ -60,7 +60,7 @@ app.controller("danhSachHoaDonController", function ($scope, $http) {
             id: hoaDon.id
         }
         Swal.fire({
-            title: 'Xác nhận xóa khách hàng',
+            title: 'Xác nhận xóa hóa đơn',
             text: 'Bạn có chắc chắn muốn xóa hóa đơn này?',
             icon: 'warning',
             showCancelButton: true,

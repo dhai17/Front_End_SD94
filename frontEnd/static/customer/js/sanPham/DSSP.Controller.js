@@ -12,6 +12,41 @@ app.controller("danhSachSanPhamController", function ($scope, $http) {
       $scope.sanPham = sanPham;
     });
 
+  $http
+    .get("http://localhost:8080/chatLieu/danhSach", { headers })
+    .then(function (response) {
+      const chatLieu = response.data;
+      $scope.chatLieu = chatLieu;
+    });
+
+  $http
+    .get("http://localhost:8080/loaiSanPham/danhSach", { headers })
+    .then(function (response) {
+      const loaiSanPham = response.data;
+      $scope.loaiSanPham = loaiSanPham;
+    });
+
+  $http
+    .get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
+    .then(function (response) {
+      const nhaSanXuat = response.data;
+      $scope.nhaSanXuat = nhaSanXuat;
+    });
+
+  $http
+    .get("http://localhost:8080/mauSac/danhSach", { headers })
+    .then(function (response) {
+      const mauSac = response.data;
+      $scope.mauSac = mauSac;
+    });
+
+  $http
+    .get("http://localhost:8080/kichCo/danhSach", { headers })
+    .then(function (response) {
+      const kichCo = response.data;
+      $scope.kichCo = kichCo;
+    });
+
   $scope.pager = {
     page: 1,
     size: 8,
@@ -47,6 +82,103 @@ app.controller("danhSachSanPhamController", function ($scope, $http) {
     let id_sanPham = sanPham.id;
     window.location.href = "#!/product-details?id=" + id_sanPham;
   };
+
+  $scope.filterByLoaiSp = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/loai_san_pham', {
+      params: { idloaiSanPham: $scope.idloaiSanPham },
+      headers: headers
+    })
+      .then(function (response) {
+        const sanPham = response.data;
+        $scope.sanPham = sanPham;
+      });
+  };
+
+  $scope.filterByChatLieu = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/chat_lieu', {
+      params: { id_chat_lieu: $scope.id_chat_lieu },
+      headers: headers
+    })
+      .then(function (response) {
+        const sanPham = response.data;
+        $scope.sanPham = sanPham;
+      });
+  };
+
+  $scope.filterByNsx = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/nha_san_xuat', {
+      params: { id_nsx: $scope.id_nsx },
+      headers: headers
+    })
+      .then(function (response) {
+        const sanPham = response.data;
+        $scope.sanPham = sanPham;
+      });
+  };
+
+  $scope.filterByMauSac = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/mau_sac', {
+      params: { mauSac_id: $scope.mauSac_id },
+      headers: headers
+    })
+      .then(function (response) {
+        const sanPham = response.data;
+        $scope.sanPham = sanPham;
+      });
+  };
+
+  $scope.filterByKichCo = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/kich_co', {
+      params: { kichCo_id: $scope.kichCo_id },
+      headers: headers
+    })
+      .then(function (response) {
+        const sanPham = response.data;
+        $scope.sanPham = sanPham;
+      });
+  };
+
+  $scope.filterByGia = function () {
+    $http.get("http://localhost:8080/customer/sanPham/loc/gia", {
+      params: { gia1: $scope.gia1, gia2: $scope.gia2 },
+      headers: headers
+    })
+      .then(function (response) {
+        $scope.sanPham = response.data;
+      });
+  };
+
+  $scope.$watch('searchTerm', function (newVal) {
+    if (newVal) {
+      $http.get("http://localhost:8080/customer/sanPham/timKiemTheoTen/" + newVal, { headers })
+        .then(function (response) {
+          $scope.sanPham = response.data;
+        });
+    } else {
+      $http.get("http://localhost:8080/customer/sanPham/danhSach", { headers })
+        .then(function (response) {
+          $scope.sanPham = response.data;
+        });
+    }
+  });
+
+  $scope.searchAll = function (searchTerm) {
+    $http.get("http://localhost:8080/customer/sanPham/timKiemTheoTen/" + searchTerm, { headers })
+      .then(function (response) {
+        $scope.sanPham = response.data;
+      });
+  };
+
+  $scope.reLoad = function () {
+    $http.get("http://localhost:8080/customer/sanPham/danhSach", { headers })
+      .then(function (response) {
+        const sanPham = response.data;
+        $scope.$evalAsync(function () {
+          $scope.sanPham = sanPham;
+        });
+      });
+  };
+
 });
 
 app.controller(
@@ -204,14 +336,14 @@ app.controller(
             headers,
           })
           .then(function (response) {
-            if(response.data.err === undefined){
+            if (response.data.err === undefined) {
               Swal.fire({
                 icon: "success",
                 title: response.data.done,
                 showConfirmButton: false,
                 timer: 2000,
               });
-            }else{
+            } else {
               Swal.fire({
                 icon: "warning",
                 title: response.data.err,

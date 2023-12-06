@@ -121,8 +121,17 @@ app.controller("cartController", function ($scope, $http, $window) {
     };
     $scope.toggleSelectAll = function () {
         angular.forEach($scope.gioHangChiTiet, function (item) {
-            item.selected = $scope.selectAll;
-            $scope.selectedGioHangChiTiet(item);
+            if ($scope.selectAll) {
+                // Nếu chọn tất cả, thì chỉ thêm vào nếu chưa được chọn trước đó
+                if (!item.selected) {
+                    item.selected = true;
+                    $scope.selectedGioHangChiTiet(item);
+                }
+            } else {
+                // Nếu bỏ chọn tất cả, thì giảm giá trị đã chọn trước đó
+                item.selected = false;
+                $scope.selectedGioHangChiTiet(item);
+            }
         });
         $scope.checkTatCaDaChon();
     };

@@ -106,6 +106,19 @@ app.controller("CTDaGiaoHang", function ($scope, $routeParams, $http) {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
+     // lay ra thong tin nguoi dang nhap
+     function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        let payload = JSON.parse(jsonPayload);
+        return payload;
+    }
+
+    let decodedToken = parseJwt(token);
     const id = $routeParams.id;
     $scope.loadData = function () {
         $http.get("http://localhost:8080/hoaDon/chiTietHoaDon/daGiaoHang/id=" + id, { headers })
@@ -137,37 +150,40 @@ app.controller("CTDaGiaoHang", function ($scope, $routeParams, $http) {
     $scope.quayLai = function(){
         window.location.href = "#!/da-giao";
     }
-    //Phân trang
-    $scope.pager = {
-        page: 1,
-        size: 4,
-        get invoice() {
-            if ($scope.invoice && $scope.invoice.length > 0) {
-                let start = (this.page - 1) * this.size;
-                return $scope.invoice.slice(start, start + this.size);
-            } else {
-                // Trả về một mảng trống hoặc thông báo lỗi tùy theo trường hợp
-                return [];
-            }
-        },
-        get count() {
-            if ($scope.invoice && $scope.invoice.length > 0) {
-                let start = (this.page - 1) * this.size;
-                return Math.ceil(1.0 * $scope.invoice.length / this.size);
-            } else {
-                // Trả về 0
-                return 0;
-            }
-        },
-        get pageNumbers() {
-            const pageCount = this.count;
-            const pageNumbers = [];
-            for (let i = 1; i <= pageCount; i++) {
-                pageNumbers.push(i);
-            }
-            return pageNumbers;
-        }
+    // từ chối xác nhận ( trạng thái đã huỷ đơn 5)
+    $scope.refuseBill = function (pending) {
+        const id = $routeParams.id;
+        const checkOut_email = decodedToken.email;
+        Swal.fire({
+            title: 'Xác nhận huỷ đơn hàng',
+            text: 'Bạn có muốn huỷ đơn hàng này không?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Có',
+            cancelButtonText: 'Không'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let data = {
+                    id: id,
+                    email_user: checkOut_email
+                }
+                $http.post("http://localhost:8080/hoaDon/datHang/daGiaoHang/capNhatTrangThai/huyDon", data, { headers })
+                    .then(function (response) {
+                        $scope.quayLai();
+                        Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
+                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
+                            .then(function (response) {
+                        });
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+
+            };
+        });
+
     };
+   
 });
 
 

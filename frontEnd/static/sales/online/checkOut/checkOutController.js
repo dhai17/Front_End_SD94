@@ -151,13 +151,13 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
 
         let diaChi2;
         if (
-            diaChi.includes("Chọn Tỉnh/Thành phố") ||
-            diaChi.includes("Chọn Quận/Huyện") ||
-            diaChi.includes("Chọn Phường/Xã")
+          diaChi.includes("Chọn Tỉnh/Thành phố") ||
+          diaChi.includes("Chọn Quận/Huyện") ||
+          diaChi.includes("Chọn Phường/Xã")
         ) {
-            diaChi2 = "";
+          diaChi2 = "";
         } else {
-            diaChi2 = diaChi;
+          diaChi2 = diaChi;
         }
 
         const tongTienHoaDon = fomatTien(c);
