@@ -198,6 +198,15 @@ app.controller("ChiTietSanPhamTaiQuayController", function ($scope, $routeParams
                     }).then(() => {
                         window.location.href = "#!/banHang?id=" + id_HD_TaiQuay;
                     });
+                })
+                .catch(function (e) {
+                  const errorMessage = e.data[Object.keys(e.data)[0]];
+                  Swal.fire({
+                    icon: "error",
+                    title: errorMessage,
+                    showConfirmButton: false,
+                    timer: 2000,
+                  });
                 });
         }
     };

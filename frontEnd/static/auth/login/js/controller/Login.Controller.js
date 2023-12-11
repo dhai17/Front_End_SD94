@@ -54,22 +54,6 @@ app.controller('LoginController', function ($scope, $http) {
         window.location.href = "http://127.0.0.1:5501/templates/auth/Register.html#!/";
     }
     $scope.quenMatKhau = function () {
-        // Swal.fire({
-        //     icon: "question",
-        //     title: 'Bạn là nhân viên hay khách hàng?',
-        //     showDenyButton: true,
-        //     showCancelButton: true,
-        //     confirmButtonText: 'Nhân viên',
-        //     denyButtonText: 'Khách hàng',
-        //   }).then((result) => {
-        //     if (result.isConfirmed) {
-        //       window.location.href = "http://127.0.0.1:5501/templates/auth/ForgotPassword.html#!/";
-        //     }
-        //      else if (result.isDenied) {
-        //       window.location.href = "http://127.0.0.1:5501/templates/auth/ForgotPasswordKhachHang.html#!/";
-        //     }
-        //   })
-        //   if (result.isConfirmed) {
             window.location.href = "http://127.0.0.1:5501/templates/auth/ForgotPassword.html#!/";
     }
 }); 
