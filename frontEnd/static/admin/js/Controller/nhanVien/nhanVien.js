@@ -122,7 +122,7 @@ app.controller("NhanVienController", function ($scope, $http) {
 
     $scope.$watch('searchTerm', function (newVal) {
         if (newVal) {
-            $http.get("http://localhost:8080/nhanVien/timKiem=" + newVal, { headers })
+            $http.get("http://localhost:8080/nhanVien/timKiem/" + newVal, { headers })
                 .then(function (response) {
                     const promotions = response.data;
                     promotions.forEach(function (promotion) {
@@ -155,7 +155,7 @@ app.controller("NhanVienController", function ($scope, $http) {
 
     // Tìm kiếm
     $scope.searchAllStaff = function (searchTerm) {
-        $http.get("http://localhost:8080/nhanVien/timKiem=" + searchTerm, { headers })
+        $http.get("http://localhost:8080/nhanVien/timKiem/" + searchTerm, { headers })
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {
@@ -172,7 +172,7 @@ app.controller("NhanVienController", function ($scope, $http) {
         let formattedDate = formatDate(selectedDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http.get("http://localhost:8080/nhanVien/timKiemNgay=" + formattedDate, { headers })
+        $http.get("http://localhost:8080/nhanVien/timKiemNgay/" + formattedDate, { headers })
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {
