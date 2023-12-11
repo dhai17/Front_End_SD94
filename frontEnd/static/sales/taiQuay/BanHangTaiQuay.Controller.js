@@ -173,6 +173,7 @@ app.controller("BanHangTaiQuayController", function ($scope, $http, $routeParams
                     id: id_HoaDonTaiQuay,
                     email_user: decodedToken.email
                 }
+                console.log(data)
                 $http.post("http://localhost:8080/api/banHang/taiQuay/thanhToan", data, { headers })
                     .then(function (response) {
                         Swal.fire({
@@ -192,14 +193,19 @@ app.controller("BanHangTaiQuayController", function ($scope, $http, $routeParams
                                     } else {
                                         alert('Vui lòng cho phép trình duyệt mở popup để xem và lưu hóa đơn.');
                                     }
-                                });
-
+                                })
                             window.location.href = "#!/danhSachHoaDon"
                         });
                     })
-                    .catch(function (error) {
-                        console.log("Lỗi");
-                    });
+
+                    .catch((e)=>{
+                        Swal.fire({
+                            icon: "warning",
+                            title: e.data.err,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                    })
             }
         });
     }
