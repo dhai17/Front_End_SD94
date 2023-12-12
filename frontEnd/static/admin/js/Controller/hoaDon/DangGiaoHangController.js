@@ -4,14 +4,22 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
+    $scope.soDonHang=0;
     $scope.loadData = function () {
         $http.get("http://localhost:8080/hoaDon/datHang/dangGiaoHang/danhSach", { headers }).then(function (response) {
             const pending = response.data;
             $scope.pending = pending;
+            
+        });
+    }
+    $scope.loadData();
+    $scope.loadDataXN = function () {
+        $http.get("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/danhSach", { headers }).then(function (response) {
+            $scope.soDonHang=response.data.length;
         });
     }
 
-    $scope.loadData();
+    $scope.loadDataXN();
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
         let base64Url = token.split('.')[1];

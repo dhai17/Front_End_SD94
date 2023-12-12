@@ -4,6 +4,13 @@ app.controller("XacNhanDaGiaoController", function ($scope, $http) {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
+    $scope.soDonHang=0;
+    $scope.loadDataDG = function () {
+        $http.get("http://localhost:8080/hoaDon/datHang/dangGiaoHang/danhSach", { headers }).then(function (response) {
+            $scope.soDonHang=response.data.length;
+        });
+    }
+    $scope.loadDataDG();
     $scope.loadData = function () {
         $http.get("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/danhSach", { headers }).then(function (response) {
             const pending = response.data;
