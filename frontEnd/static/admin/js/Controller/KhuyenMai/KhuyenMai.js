@@ -98,13 +98,12 @@ app.controller("KhuyenMaiController", function ($scope, $http) {
                     .then(function (response) {
                         const promotions = response.data;
 
-                        // Thêm trường status2 và fomattienGiamToiDa vào từng đối tượng promotion
+                        // Thêm trường trangThai2 và fomattienGiamToiDa vào từng đối tượng promotion
                         promotions.forEach(function (promotion) {
                             promotion.trangThai2 = getStatusText(promotion.trangThai);
                             promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
                         });
-
-                        // Cập nhật lại dữ liệu trong table nhưng không load lại trang by hduong25
+                        // Cập nhật lại dữ liệu trong table nhưng không load lại trang 
                         $scope.$evalAsync(function () {
                             $scope.promotions = promotions;
                             Swal.fire({
@@ -129,11 +128,11 @@ app.controller("KhuyenMaiController", function ($scope, $http) {
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {
-                    promotion.status2 = getStatusText(promotion.status);
+                    promotion.trangThai2 = getStatusText(promotion.status);
                     promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
                 });
 
-                // Cập nhật lại dữ liệu trong table nhưng không load lại trang by hduong25
+                // Cập nhật lại dữ liệu trong table nhưng không load lại trang 
                 $scope.$evalAsync(function () {
                     $scope.promotions = promotions;
                 });
@@ -149,7 +148,7 @@ app.controller("KhuyenMaiController", function ($scope, $http) {
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {
-                    promotion.status2 = getStatusText(promotion.status);
+                    promotion.trangThai2 = getStatusText(promotion.status);
                     promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
                 });
 
@@ -174,7 +173,7 @@ app.controller("KhuyenMaiController", function ($scope, $http) {
         $http.get("http://localhost:8080/khuyenMai/danhSach", { headers }).then(function (response) {
             const promotions = response.data;
             promotions.forEach(function (promotion) {
-                promotion.status2 = getStatusText(promotion.status);
+                promotion.trangThai2 = getStatusText(promotion.status);
                 promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
             });
 
