@@ -45,8 +45,8 @@ app.controller("ProducerController", function ($scope, $http) {
     $scope.deleteProducer = function (promotion) {
         let idProducer = promotion.id;
         Swal.fire({
-            title: 'Xác nhận xóa sản phẩm',
-            text: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+            title: 'Xác nhận xóa nhà sản xuất',
+            text: 'Bạn có chắc chắn muốn xóa nhà sản xuất này?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Xóa',

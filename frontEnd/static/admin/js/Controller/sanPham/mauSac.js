@@ -44,8 +44,8 @@ app.controller("ColorrController", function ($scope, $http) {
     $scope.delete = function (promotion) {
         let idColor = promotion.id;
         Swal.fire({
-            title: 'Xác nhận xóa sản phẩm',
-            text: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+            title: 'Xác nhận xóa màu sắc',
+            text: 'Bạn có chắc chắn muốn xóa màu sắc này?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Xóa',

@@ -43,8 +43,8 @@ app.controller("SizeController", function ($scope, $http) {
     $scope.delete = function (promotion) {
         let idSize = promotion.id;
         Swal.fire({
-            title: 'Xác nhận xóa sản phẩm',
-            text: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+            title: 'Xác nhận xóa kích cỡ',
+            text: 'Bạn có chắc chắn muốn xóa kích cỡ này?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Xóa',

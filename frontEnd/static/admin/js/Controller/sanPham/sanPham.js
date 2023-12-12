@@ -350,9 +350,6 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
         if (!value) {
           return "Vui lòng nhập tên chất liệu";
         }
-        if (!/^(?=.*[a-zA-Z])[a-zA-Z\d]+$/.test(value)) {
-          return "Vui lòng chỉ nhập chữ và có cả chữ lẫn số";
-        }
       },
     }).then((result) => {
       if (result.isConfirmed) {
