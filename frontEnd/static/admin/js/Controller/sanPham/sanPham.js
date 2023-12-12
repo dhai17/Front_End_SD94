@@ -18,7 +18,6 @@ app.controller("ProductController", function ($scope, $http) {
     } else if (trangThai == 1) {
       return "Ngừng bán";
     }
-    // Nếu không phải 0 hoặc 1, có thể trả về một giá trị mặc định hoặc xử lý theo cách khác tùy thuộc vào logic của bạn.
     return "Trạng thái không xác định";
   }
 
@@ -270,17 +269,6 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
   };
 
   $scope.saveCreate = function () {
-    let data = {
-      tenSanPham: $scope.createProduct.tenSanPham,
-      gia: $scope.createProduct.gia,
-      chatLieu_id: $scope.createProduct.chatLieu,
-      loaiSanPham_id: $scope.createProduct.loaiSanPham,
-      nhaSanXuat_id: $scope.createProduct.nhaSanXuat,
-      mauSac: mauSac_id,
-      kichCo: kichCo_id,
-      soLuong: $scope.createProduct.soLuong,
-    };
-
     if ($scope.createProduct === undefined) {
       Swal.fire({
         icon: "error",
@@ -290,6 +278,17 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
       });
       return;
     }
+
+    let data = {
+      tenSanPham: $scope.createProduct.tenSanPham,
+      gia: $scope.createProduct.gia,
+      soLuong: $scope.createProduct.soLuong,
+      chatLieu_id: $scope.createProduct.chatLieu,
+      loaiSanPham_id: $scope.createProduct.loaiSanPham,
+      nhaSanXuat_id: $scope.createProduct.nhaSanXuat,
+      mauSac: mauSac_id,
+      kichCo: kichCo_id,
+    };
 
     $http.post("http://localhost:8080/sanPham/TaoSanPham", data, { headers })
       .then(function (response) {
@@ -305,10 +304,10 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
         localStorage.setItem("id_product", response.data.id_product);
       })
       .catch(function (errorResponse) {
+        console.log(errorResponse);
         if (errorResponse.status === 400) {
           const errors = errorResponse.data;
           angular.forEach(errors, function (errorMessage, fieldName) {
-            // Show error messages for each field
             Swal.fire({
               icon: "error",
               title: errorMessage,
@@ -320,65 +319,22 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
       });
   };
 
-  $scope.deleteCTSP = function (promotion) {
-    let idPro = promotion.id;
-    $http
-      .delete("http://localhost:8080/sanPhamChiTiet/xoa/" + idPro, {
-        headers,
-      })
-      .then(function (response) {
-        const details = response.data;
-        $scope.$evalAsync(function () {
-          $scope.details = details;
-          Swal.fire({
-            icon: "success",
-            title: "Xóa thành công",
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        });
-      })
-      .catch(function (error) {
-        console.log("Error");
-      });
-  };
-
-  $scope.themAnhMacDinh = function () {
-    let data = {
-      id: $scope.createProduct.id,
-      anhMacDinh: true,
-    };
-    $http
-      .put("http://localhost:8080/sanPhamChiTiet/ThemAnhMacDinh", data, {
-        headers,
-      })
-      .then(function (response) {
-        Swal.fire({
-          icon: "success",
-          title: "Thêm ảnh thành công",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-      })
-      .catch(function (errorResponse) {
-        if (errorResponse.status === 400) {
-          const errorMessage = errorResponse.data.message;
-          Swal.fire({
-            icon: "error",
-            title: errorMessage + "",
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        }
-      });
-  };
-
   $scope.returnCreate = function () {
     window.location.href = "#!/list-Product";
   };
 
-  $scope.themAnh = function (promotion) {
+  $scope.themAnh = function () {
     let id_product = localStorage.getItem("id_product");
+
+    if (!id_product) {
+      Swal.fire({
+        icon: "error",
+        title: "Vui lòng tạo sản phẩm trước khi thêm ảnh",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      return;
+    }
     window.location.href = "#!/list-Img?id=" + id_product;
   };
 
@@ -393,9 +349,6 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
       inputValidator: (value) => {
         if (!value) {
           return "Vui lòng nhập tên chất liệu";
-        }
-        if (!/^(?=.*[a-zA-Z])[a-zA-Z\d]+$/.test(value)) {
-          return "Vui lòng chỉ nhập chữ và có cả chữ lẫn số";
         }
       },
     }).then((result) => {
@@ -670,6 +623,18 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
     Authorization: "Bearer " + token,
   };
 
+  function updateImageData(id, spcts) {
+    $http
+      .get("http://localhost:8080/sanPhamChiTiet/hienThiAnh/" + id, {
+        headers,
+      })
+      .then(function (response) {
+        const hinhAnh = response.data;
+        spcts.hinhAnh = hinhAnh;
+        $scope.hinhAnh = hinhAnh;
+      });
+  }
+
   $http
     .get("http://localhost:8080/sanPhamChiTiet/themAnh/" + id_product, {
       headers,
@@ -712,18 +677,6 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
 
     spcts.hinhAnh = [];
 
-    function updateImageData() {
-      $http
-        .get("http://localhost:8080/sanPhamChiTiet/hienThiAnh/" + id, {
-          headers,
-        })
-        .then(function (response) {
-          const hinhAnh = response.data;
-          spcts.hinhAnh = hinhAnh;
-          $scope.hinhAnh = hinhAnh;
-        });
-    }
-
     for (let i = 0; i < files.length; i++) {
       let file = files[i];
       let reader = new FileReader();
@@ -748,7 +701,7 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
               showConfirmButton: false,
               timer: 2000,
             });
-            updateImageData();
+            updateImageData(id, spcts);
           });
       };
       reader.readAsDataURL(file);
@@ -761,8 +714,6 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
       id_spct: spcts.id,
     };
 
-    console.log(hinhAnh);
-
     $http
       .put("http://localhost:8080/sanPhamChiTiet/setAnhMacDinh/", data, {
         headers,
@@ -774,7 +725,7 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
           showConfirmButton: false,
           timer: 2000,
         });
-        updateImageData();
+        updateImageData(spcts.id, spcts);
       });
   };
 
@@ -800,6 +751,42 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
         });
       });
   };
+
+  $scope.themAnhSanPhamHT = function () {
+    const productsWithoutImages = $scope.spct.filter(
+      (spcts) => !spcts.hinhAnh || spcts.hinhAnh.length === 0
+    );
+    const productsWithoutDefaultImage = $scope.spct.filter(
+      (spcts) => spcts.hinhAnh && !spcts.hinhAnh.some((anh) => anh.anhMacDinh)
+    );
+
+    if (productsWithoutImages.length > 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Lỗi',
+        text: 'Vui lòng thêm ảnh cho tất cả sản phẩm trước khi hoàn thành.',
+      });
+    } else if (productsWithoutDefaultImage.length > 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Cảnh báo',
+        text: 'Có sản phẩm không có ảnh mặc định. Vui lòng đặt ảnh mặc định cho sản phẩm.',
+      });
+    } else {
+      Swal.fire({
+        icon: 'success',
+        title: 'Hoàn tất thêm ảnh sản phẩm',
+        showCancelButton: true,
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "#!/list-Product";
+        }
+      });
+    }
+  };
+
 });
 
 app.controller("CTSPController", function ($scope, $routeParams, $http) {
@@ -888,9 +875,225 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
     window.location.href = "#!/list-Product";
   };
 
-  $scope.themAnh = function () {
-    let id = $routeParams.id;
-    window.location.href = "#!/list-Img?id=" + id;
+  $scope.suaAnh = function () {
+    window.location.href = "#!/edit-Img?id=" + id;
+  };
+
+});
+
+app.factory('ImageService', function () {
+  var images = {};
+
+  return {
+    getImages: function (productId) {
+      return images[productId] || [];
+    },
+    setImages: function (productId, imgData) {
+      images[productId] = imgData;
+    }
+  };
+});
+
+app.controller("EditImgController", function ($scope, $http, $routeParams, ImageService) {
+  let token = localStorage.getItem("token");
+  let headers = {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + token,
+  };
+
+  let id_product = $routeParams.id;
+  let storedImages = ImageService.getImages(id_product);
+  if (storedImages.length > 0) {
+    $scope.spct = storedImages;
+  } else {
+    $http.get("http://localhost:8080/sanPhamChiTiet/themAnh/" + id_product, { headers })
+      .then(function (response) {
+        const spct = response.data;
+        const uniqueProducts = {};
+
+        spct.forEach(function (product) {
+          const mauSacId = product.mauSac.id;
+          if (!uniqueProducts[mauSacId]) {
+            uniqueProducts[mauSacId] = product;
+          }
+        });
+
+        $scope.spct = Object.values(uniqueProducts);
+        ImageService.setImages(id_product, $scope.spct);
+
+        $scope.spct.forEach(function (spcts) {
+          updateImageData(spcts);
+        });
+      });
+  }
+
+  $scope.loadImage = function (input) {
+    if (input.files && input.files[0]) {
+      let reader = new FileReader();
+      reader.onload = function (e) {
+        $scope.$apply(function () {
+          $scope.imagePreview = e.target.result;
+        });
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  };
+
+  $scope.img_name = "";
+
+  function updateImageData(spcts) {
+    if (!spcts || !spcts.id) {
+      return;
+    }
+
+    $http
+      .get("http://localhost:8080/sanPhamChiTiet/hienThiAnh/" + spcts.id, {
+        headers,
+      })
+      .then(function (response) {
+        const hinhAnh = response.data;
+        spcts.hinhAnh = hinhAnh;
+      });
+  }
+
+  $http
+    .get("http://localhost:8080/sanPhamChiTiet/themAnh/" + id_product, {
+      headers,
+    })
+    .then(function (response) {
+      const spct = response.data;
+      const uniqueProducts = {};
+
+      spct.forEach(function (product) {
+        const mauSacId = product.mauSac.id;
+        if (!uniqueProducts[mauSacId]) {
+          uniqueProducts[mauSacId] = product;
+        }
+      });
+
+      $scope.spct = Object.values(uniqueProducts);
+      $scope.spct.forEach(function (spcts) {
+        updateImageData(spcts);
+      });
+    });
+
+  $scope.hienThiAnh = function (event, spcts) {
+    let id = spcts.id;
+    let fileInput = event.target;
+    let files = fileInput.files;
+
+    spcts.hinhAnh = [];
+
+    for (let i = 0; i < files.length; i++) {
+      let file = files[i];
+      let reader = new FileReader();
+
+      reader.onload = function (e) {
+        let data = {
+          id_spct: id,
+          ten_anh: [file.name],
+        };
+
+        $http
+          .post(
+            "http://localhost:8080/sanPhamChiTiet/themAnhSanPham",
+            data,
+            {
+              headers,
+            }
+          )
+          .then(function (response) {
+            Swal.fire({
+              icon: "success",
+              title: response.data.mess,
+              showConfirmButton: false,
+              timer: 2000,
+            });
+            // Pass spcts to the updateImageData function
+            updateImageData(spcts);
+          });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  $scope.setAnhMacDinh = function (hinhAnh, spcts) {
+    let data = {
+      id_hinh_anh: hinhAnh.id,
+      id_spct: spcts.id,
+    };
+
+    $http
+      .put("http://localhost:8080/sanPhamChiTiet/setAnhMacDinh/", data, {
+        headers,
+      })
+      .then(function (response) {
+        Swal.fire({
+          icon: "success",
+          title: response.data.mess,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        updateImageData(spcts);
+      });
+  };
+
+  $scope.xoaAnh = function (hinhAnh, spcts) {
+    let data = {
+      id_hinh_anh: hinhAnh.id,
+      id_spct: spcts.id,
+    };
+
+    $http
+      .put("http://localhost:8080/sanPhamChiTiet/xoaAnh/", data, { headers })
+      .then(function (response) {
+        const index = spcts.hinhAnh.findIndex(item => item.id === hinhAnh.id);
+        if (index !== -1) {
+          spcts.hinhAnh.splice(index, 1);
+        }
+
+        Swal.fire({
+          icon: "success",
+          title: "Xóa ảnh thành công",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      });
+  };
+
+  $scope.themAnhSanPhamHT = function () {
+    const productsWithoutImages = $scope.spct.filter(
+      (spcts) => !spcts.hinhAnh || spcts.hinhAnh.length === 0
+    );
+    const productsWithoutDefaultImage = $scope.spct.filter(
+      (spcts) => spcts.hinhAnh && !spcts.hinhAnh.some((anh) => anh.anhMacDinh)
+    );
+
+    if (productsWithoutImages.length > 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Lỗi',
+        text: 'Vui lòng thêm ảnh cho tất cả sản phẩm trước khi hoàn thành.',
+      });
+    } else if (productsWithoutDefaultImage.length > 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Cảnh báo',
+        text: 'Có sản phẩm không có ảnh mặc định. Vui lòng đặt ảnh mặc định cho sản phẩm.',
+      });
+    } else {
+      Swal.fire({
+        icon: 'success',
+        title: 'Hoàn tất sửa ảnh sản phẩm',
+        showCancelButton: true,
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "#!/list-Product";
+        }
+      });
+    }
   };
 
 });

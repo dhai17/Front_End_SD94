@@ -12,12 +12,40 @@ app.controller("ColorrController", function ($scope, $http) {
             $scope.promotions = promotions;
         });
 
+    $scope.pager = {
+        page: 1,
+        size: 8,
+        get promotions() {
+            if ($scope.promotions && $scope.promotions.length > 0) {
+                let start = (this.page - 1) * this.size;
+                return $scope.promotions.slice(start, start + this.size);
+            } else {
+                return [];
+            }
+        },
+        get count() {
+            if ($scope.promotions && $scope.promotions.length > 0) {
+                let start = (this.page - 1) * this.size;
+                return Math.ceil((1.0 * $scope.promotions.length) / this.size);
+            } else {
+                return 0;
+            }
+        },
+        get pageNumbers() {
+            const pageCount = this.count;
+            const pageNumbers = [];
+            for (let i = 1; i <= pageCount; i++) {
+                pageNumbers.push(i);
+            }
+            return pageNumbers;
+        },
+    };
 
     $scope.delete = function (promotion) {
         let idColor = promotion.id;
         Swal.fire({
-            title: 'Xác nhận xóa sản phẩm',
-            text: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+            title: 'Xác nhận xóa màu sắc',
+            text: 'Bạn có chắc chắn muốn xóa màu sắc này?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Xóa',

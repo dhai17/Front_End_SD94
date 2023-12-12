@@ -1,42 +1,38 @@
 <div class="container-fluid" ng-controller="CreateNhanVienController">
     <!-- Account details card-->
     <div class="card mb-4">
-        <div class="container-fluid my-auto d-flex align-items-center">
-            <div class="mx-auto">
-                <h1 >Tạo Nhân Viên</h1>
-            </div>
-        </div>
+        <div class="card-header">Thêm nhân viên</div>
         <div class="card-body" >
             <form>
                 <div class="row gx-3 mb-3">   
                     <div class="col-md-6">
                         <label class="form-check-label" for="inputUsername">Họ tên</label>
-                        <input class="form-control" id="inputUsername" type="text" placeholder="Enter Staff name" ng-model="createStaff.hoTen">
+                        <input class="form-control" id="inputUsername" type="text" placeholder="Nhập tên nhân viên" ng-model="createStaff.hoTen">
                     </div>
                     <div class="col-md-6">
                         <label class="form-check-label" for="inputLocation">Số điện thoại</label>
-                        <input class="form-control" id="inputLocation" type="text" placeholder="Enter phone number" ng-model="createStaff.soDienThoai">
+                        <input class="form-control" id="inputLocation" type="text" placeholder="Nhập số điện thoại" ng-model="createStaff.soDienThoai">
                     </div>
                 </div>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="form-check-label" for="inputLastName">Email</label>
-                        <input class="form-control" id="inputFirstName" type="text" placeholder="Enter email" ng-model="createStaff.email">
+                        <input class="form-control" id="inputFirstName" type="text" placeholder="Nhập email" ng-model="createStaff.email">
                     </div>
                     <div class="col-md-6">
                         <label class="form-check-label" for="inputLastName">Ngày sinh</label>
-                        <input class="form-control" id="inputLastName" type="date" placeholder="Enter date birth" ng-model="createStaff.ngaySinh">
+                        <input class="form-control" id="inputLastName" type="date" placeholder="Nhập ngày sinh" ng-model="createStaff.ngaySinh">
                     </div>
                 </div>
                
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="form-check-label" for="inputLastName">Địa chỉ</label>
-                        <input class="form-control" id="inputLastName" type="text" placeholder="Enter address" ng-model="createStaff.diaChi">
+                        <input class="form-control" id="inputLastName" type="text" placeholder="Nhập địa chỉ" ng-model="createStaff.diaChi">
                     </div>
                     <div class="col-md-6">
                         <label class="small mb-1" for="matKhau">Mật khẩu</label>
-                        <input class="form-control" id="matKhau" type="password" placeholder="Enter password" ng-model="createStaff.matKhau">
+                        <input class="form-control" id="matKhau" type="password" placeholder="Nhập mật khẩu" ng-model="createStaff.matKhau">
                     </div>
                    
                 </div>

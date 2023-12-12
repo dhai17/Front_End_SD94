@@ -37,7 +37,7 @@ app.controller('LoginController', function ($scope, $http) {
                 }
 
             }).catch(function (error) {
-                if(error.status === 500){
+                if (error.status === 500) {
                     Swal.fire({
                         icon: "warning",
                         title: "Sai thông tin đăng nhập",
@@ -52,5 +52,8 @@ app.controller('LoginController', function ($scope, $http) {
 
     $scope.returnDangKy = function () {
         window.location.href = "http://127.0.0.1:5501/templates/auth/Register.html#!/";
+    }
+    $scope.quenMatKhau = function () {
+            window.location.href = "http://127.0.0.1:5501/templates/auth/ForgotPassword.html#!/";
     }
 }); 

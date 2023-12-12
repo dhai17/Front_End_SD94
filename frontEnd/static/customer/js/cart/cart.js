@@ -31,8 +31,12 @@ app.controller("cartController", function ($scope, $http, $window) {
         });
     }
 
+    $scope.soLuongBanDau = 0;
     $http.get("http://localhost:8080/gioHang/danhSach/" + decodedToken.email, { headers }).then(function (response) {
         const gioHangChiTiet = response.data;
+        gioHangChiTiet.forEach((item) => {
+            $scope.soLuongBanDau = item.soLuong
+        })
         $scope.gioHangChiTiet = gioHangChiTiet;
     });
 
@@ -121,8 +125,17 @@ app.controller("cartController", function ($scope, $http, $window) {
     };
     $scope.toggleSelectAll = function () {
         angular.forEach($scope.gioHangChiTiet, function (item) {
-            item.selected = $scope.selectAll;
-            $scope.selectedGioHangChiTiet(item);
+            if ($scope.selectAll) {
+                // Nếu chọn tất cả, thì chỉ thêm vào nếu chưa được chọn trước đó
+                if (!item.selected) {
+                    item.selected = true;
+                    $scope.selectedGioHangChiTiet(item);
+                }
+            } else {
+                // Nếu bỏ chọn tất cả, thì giảm giá trị đã chọn trước đó
+                item.selected = false;
+                $scope.selectedGioHangChiTiet(item);
+            }
         });
         $scope.checkTatCaDaChon();
     };
@@ -158,7 +171,7 @@ app.controller("cartController", function ($scope, $http, $window) {
                         title: "Chuyển hướng đến trang đặt hàng",
                         showConfirmButton: false,
                         timer: 2000
-                    }).then(function(){
+                    }).then(function () {
                         window.location.href = "http://127.0.0.1:5501/templates/banHang/online/BanHangOnline.html?id_HoaDon=" + id_HoaDon;
                     })
                 })
@@ -177,5 +190,41 @@ app.controller("cartController", function ($scope, $http, $window) {
         // Replace 'your-product-page-url' with the actual URL of your product page
         $window.location.href = "http://127.0.0.1:5501/templates/customer/home/index.html#!/product-list";
     };
+
+    $scope.updateSoLuong = function (gioHangChiTiet) {
+        let data = {
+            id: gioHangChiTiet.id,
+            sanPhamChiTiet: gioHangChiTiet.sanPhamChiTiet,
+            soLuongCapNhat: gioHangChiTiet.soLuong,
+            email_user: decodedToken.email
+        }
+
+        $http.post("http://localhost:8080/gioHang/update/soLuongGioHangChiTiet", data, { headers })
+            .then(function (response) {
+                Swal.fire({
+                    icon: "success",
+                    title: response.data.success,
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(() => {
+                    $http.get("http://localhost:8080/gioHang/danhSach/" + decodedToken.email, { headers }).then(function (response) {
+                        const gioHangChiTiet = response.data;
+                        gioHangChiTiet.forEach((item) => {
+                            $scope.soLuongBanDau = item.soLuong
+                        })
+                        $scope.gioHangChiTiet = gioHangChiTiet;
+                    });
+                })
+
+            })
+            .catch(function (error) {
+                Swal.fire({
+                    icon: "error",
+                    title: error.data.err,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            })
+    }
 
 });

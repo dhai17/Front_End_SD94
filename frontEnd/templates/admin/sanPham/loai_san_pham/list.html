@@ -4,7 +4,7 @@
             <h1 class="text-center">Loại sản phẩm</h1>
         </div>
         <button type="button" id="button-them-san-pham" ng-click="createLinee(promotion)">
-            <ion-icon name="add-circle"></ion-icon> Thêm loại sp
+            <ion-icon name="add-circle"></ion-icon> Thêm loại
         </button>
     </div>
     <br>
@@ -18,17 +18,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="promotion in promotions">
+                <tr ng-repeat="promotion in pager.promotions">
                     <td>{{$index + 1}}</td>
                     <td>{{ promotion.loaiSanPham }}</td>
                     <td>
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-info" ng-click="editLine(promotion)">
-                                <i class="bx bx-edit"></i> Sửa
+                        <div class="button-group">
+                            <button type="button" class="btn btn-link" ng-click="editLine(promotion)">
+                                <i class="bx bx-edit me-2"></i>
                             </button>
-                            <button type="button" class="btn btn-danger" ng-click="deleteLine(promotion)"
-                                data-toggle="modal" data-target="#confirmDeleteModal_{{ promotion.id }}">
-                                <i class="bx bx-trash"></i> Xóa
+                            <button type="button" class="btn btn-link btn-sm btn-rounded" ng-click="deleteLine(promotion)">
+                                <i class="bx bx-trash me-2"></i>
                             </button>
                         </div>
                     </td>
@@ -58,5 +57,11 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="card-footer text-center">
+        <button class="btn btn-secondary mx-1" ng-repeat="pageNumber in pager.pageNumbers"
+            ng-click="pager.page = pageNumber">
+            {{pageNumber}}
+        </button>
     </div>
 </div>
