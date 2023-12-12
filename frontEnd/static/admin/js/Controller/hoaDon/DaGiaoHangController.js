@@ -154,6 +154,7 @@ app.controller("CTDaGiaoHang", function ($scope, $routeParams, $http) {
     $scope.refuseBill = function (pending) {
         const id = $routeParams.id;
         const checkOut_email = decodedToken.email;
+        console.log(decodedToken);
         Swal.fire({
             title: 'Xác nhận huỷ đơn hàng',
             html: '<input type="text" id="cancelReason" class="swal2-input" placeholder="Lý do hủy">',
