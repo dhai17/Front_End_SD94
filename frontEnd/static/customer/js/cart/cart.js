@@ -31,8 +31,12 @@ app.controller("cartController", function ($scope, $http, $window) {
         });
     }
 
+    $scope.soLuongBanDau = 0;
     $http.get("http://localhost:8080/gioHang/danhSach/" + decodedToken.email, { headers }).then(function (response) {
         const gioHangChiTiet = response.data;
+        gioHangChiTiet.forEach((item) => {
+            $scope.soLuongBanDau = item.soLuong
+        })
         $scope.gioHangChiTiet = gioHangChiTiet;
     });
 
@@ -167,7 +171,7 @@ app.controller("cartController", function ($scope, $http, $window) {
                         title: "Chuyển hướng đến trang đặt hàng",
                         showConfirmButton: false,
                         timer: 2000
-                    }).then(function(){
+                    }).then(function () {
                         window.location.href = "http://127.0.0.1:5501/templates/banHang/online/BanHangOnline.html?id_HoaDon=" + id_HoaDon;
                     })
                 })
@@ -187,5 +191,41 @@ app.controller("cartController", function ($scope, $http, $window) {
         // Replace 'your-product-page-url' with the actual URL of your product page
         $window.location.href = "http://127.0.0.1:5501/templates/customer/home/index.html#!/product-list";
     };
+
+    $scope.updateSoLuong = function (gioHangChiTiet) {
+        let data = {
+            id: gioHangChiTiet.id,
+            sanPhamChiTiet: gioHangChiTiet.sanPhamChiTiet,
+            soLuongCapNhat: gioHangChiTiet.soLuong,
+            email_user: decodedToken.email
+        }
+
+        $http.post("http://localhost:8080/gioHang/update/soLuongGioHangChiTiet", data, { headers })
+            .then(function (response) {
+                Swal.fire({
+                    icon: "success",
+                    title: response.data.success,
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(() => {
+                    $http.get("http://localhost:8080/gioHang/danhSach/" + decodedToken.email, { headers }).then(function (response) {
+                        const gioHangChiTiet = response.data;
+                        gioHangChiTiet.forEach((item) => {
+                            $scope.soLuongBanDau = item.soLuong
+                        })
+                        $scope.gioHangChiTiet = gioHangChiTiet;
+                    });
+                })
+
+            })
+            .catch(function (error) {
+                Swal.fire({
+                    icon: "error",
+                    title: error.data.err,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            })
+    }
 
 });

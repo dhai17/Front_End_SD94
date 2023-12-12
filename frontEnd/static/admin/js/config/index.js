@@ -43,7 +43,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     if (userInfo.role === "STAFF") {
-        const menuToHide = document.getElementById('SanPhamMenuItem');
+        const menuToHide = document.getElementById('ThongkMenuItem');
+
+        if (menuToHide) {
+            menuToHide.style.display = "none";
+        }
+    }
+
+    if (userInfo.role === "STAFF") {
+        const menuToHide = document.getElementById('ThongkeMenuItem');
 
         if (menuToHide) {
             menuToHide.style.display = "none";

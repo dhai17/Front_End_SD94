@@ -46,6 +46,7 @@
     <script src="/static/admin/js/Controller/hoaDon/DangGiaoHangController.js"></script>
     <script src="/static/admin/js/Controller/hoaDon/DaGiaoHangController.js"></script>
     <script src="/static/admin/js/Controller/hoaDon/DaHuyDonController.js"></script>
+    <script src="/static/admin/js/Controller/hoaDon/XacNhanDaGiaoController.js"></script>
     <script src="/static/admin/js/Controller/sanPham/chatLieu.js"></script>
     <script src="/static/admin/js/Controller/sanPham/kichCo.js"></script>
     <script src="/static/admin/js/Controller/sanPham/loaiSanPham.js"></script>
@@ -168,11 +169,11 @@
                         </a>
                     </li>
 
-                    <li class="menu-header small text-uppercase">
+                    <li class="menu-header small text-uppercase" id="ThongkMenuItem">
                         <span class="menu-header-text">Thống kê</span>
                     </li>
 
-                    <li class="menu-item">
+                    <li class="menu-item" id="ThongkeMenuItem">
                         <a href="#!/thongKe" class="menu-link">
                             <i class="menu-icon fas fa-chart-bar"></i>
                             <div data-i18n="Analytics">Thống kê</div>
@@ -198,7 +199,7 @@
                     </li>
 
 
-                    <li class="menu-item" id="SanPhamMenuItem">
+                    <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-package"></i>
                             <div data-i18n="Account Settings">Sản phẩm</div>
@@ -226,7 +227,7 @@
                             </li>
                             <li class="menu-item">
                                 <a href="#!/list-Producer" class="menu-link">
-                                    <div data-i18n="Notifications">Hãng</div>
+                                    <div data-i18n="Notifications">Nhà sản xuất</div>
                                 </a>
                             </li>
                             <li class="menu-item">

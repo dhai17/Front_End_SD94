@@ -42,7 +42,7 @@ app.controller("ThongTinUserController", function ($scope, $http) {
 
      $scope.chinhSua = function () {
           let email = $scope.email;
-          if (email !== decodedToken.email || sdthoai !== $scope.sdt && decodedToken.role === 'STAFF') {
+          if (hoTen !== decodedToken.hoTen || email !== decodedToken.email || sdthoai !== $scope.sdt && decodedToken.role === 'STAFF') {
                Swal.fire({
                     icon: "warning",
                     title: "Bạn không có quyền chỉnh sửa email hoặc số điện thoại",
