@@ -6,30 +6,20 @@ app.controller("NhanVienController", function ($scope, $http) {
     }
 
     let decodedToken = parseJwt(token);
-    // console.log(decodedToken);
 
     $http.get("http://localhost:8080/nhanVien/danhSach", { headers }).then(function (response) {
         const promotions = response.data;
-
-        // Thêm trường status2 vào từng đối tượng promotion
-
         promotions.forEach(function (promotion) {
             promotion.trangThai2 = getTrangThai(promotion.trangThai);
-
         });
-
-
         $scope.promotions = promotions;
-
     });
 
     function getTrangThai(trangThai) {
         if (trangThai == 0) {
             return "Đang hoạt động";
         } else if (trangThai == 1) {
-            return "Không hoạt động";
-        } else {
-            return "Nghỉ phép";
+            return "Nghỉ việc";
         }
     }
 
@@ -64,12 +54,6 @@ app.controller("NhanVienController", function ($scope, $http) {
             return pageNumbers;
         }
     };
-
-
-    // function fomatMaxValue(maximumvalue) {
-    //     return maximumvalue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-    // }
-
 
     //Chuyển hướng đến trang edit theo id
     $scope.editStaff = function (promotion) {
@@ -122,7 +106,7 @@ app.controller("NhanVienController", function ($scope, $http) {
 
     $scope.$watch('searchTerm', function (newVal) {
         if (newVal) {
-            $http.get("http://localhost:8080/nhanVien/timKiem=" + newVal, { headers })
+            $http.get("http://localhost:8080/nhanVien/timKiem/" + newVal, { headers })
                 .then(function (response) {
                     const promotions = response.data;
                     promotions.forEach(function (promotion) {
@@ -132,7 +116,6 @@ app.controller("NhanVienController", function ($scope, $http) {
 
                     });
 
-                    // Cập nhật lại dữ liệu trong table nhưng không load lại trang by hduong25
                     $scope.$evalAsync(function () {
                         $scope.promotions = promotions;
                     });
@@ -152,10 +135,9 @@ app.controller("NhanVienController", function ($scope, $http) {
         }
     });
 
-
     // Tìm kiếm
     $scope.searchAllStaff = function (searchTerm) {
-        $http.get("http://localhost:8080/nhanVien/timKiem=" + searchTerm, { headers })
+        $http.get("http://localhost:8080/nhanVien/timKiem/" + searchTerm, { headers })
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {
@@ -171,11 +153,11 @@ app.controller("NhanVienController", function ($scope, $http) {
     $scope.searchStaff = function (selectedDate) {
         let formattedDate = formatDate(selectedDate);
 
-        // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http.get("http://localhost:8080/nhanVien/timKiemNgay=" + formattedDate, { headers })
+        $http.get("http://localhost:8080/nhanVien/timKiemNgay/" + formattedDate, { headers })
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {
+                    promotion.trangThai2 = getTrangThai(promotion.trangThai);
                 });
 
                 $scope.$evalAsync(function () {
@@ -195,6 +177,7 @@ app.controller("NhanVienController", function ($scope, $http) {
         $http.get("http://localhost:8080/nhanVien/danhSach", { headers }).then(function (response) {
             const promotions = response.data;
             promotions.forEach(function (promotion) {
+                promotion.trangThai2 = getTrangThai(promotion.trangThai);
             });
 
             $scope.$evalAsync(function () {
@@ -302,15 +285,17 @@ app.controller("EditNhanVienController", function ($scope, $routeParams, $http) 
             } else if (editStaff.gioiTinh === false) {
                 document.getElementById('inlineRadio2').checked = true;
             }
-
+            document.getElementById('statusSelect').value = editStaff.trangThai.toString();
             // Gán giá trị cho trường nhập liệu ngày sinh
             document.getElementById('inputDateOfBirth').value = editStaff.ngaySinh;
+
         });
 
     //Lưu edit
     $scope.saveEditStaff = function () {
         let gioiTinh = document.getElementById('inlineRadio1').checked;
         console.log($scope.editStaff.gioiTinh);
+        let trangThai = document.getElementById('statusSelect').value;
         let editStaff = {
             id: idStaff,
             hoTen: $scope.editStaff.hoTen,
@@ -319,6 +304,7 @@ app.controller("EditNhanVienController", function ($scope, $routeParams, $http) 
             ngaySinh: $scope.editStaff.ngaySinh,
             diaChi: $scope.editStaff.diaChi,
             gioiTinh: gioiTinh,
+            trangThai: trangThai,
         };
 
         $http.put("http://localhost:8080/nhanVien/luuChinhSua", editStaff, { headers })
