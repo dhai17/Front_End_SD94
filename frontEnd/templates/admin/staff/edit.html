@@ -1,7 +1,7 @@
 <div class="container-fluid" ng-controller="EditNhanVienController">
     <!-- Account details card-->
     <div class="card mb-4">
-        <div class="card-header">Sữa nhân viên</div>
+        <div class="card-header">Sửa nhân viên</div>
         <div class="card-body">
             <form>
                 <div class="row gx-3 mb-3">
@@ -22,7 +22,7 @@
                         <input class="form-control" id="inputFirstName" type="text" placeholder="Nhập email"
                             ng-model="editStaff.email">
                     </div>
-                                       <div class="col-md-6">
+                    <div class="col-md-6">
                         <label class="form-check-label" for="inputDateOfBirth">Ngày sinh</label>
                         <input class="form-control" id="inputDateOfBirth" type="date" placeholder="nhập ngày sinh"
                             ng-model="editStaff.ngaySinh">
@@ -32,30 +32,42 @@
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="form-check-label" for="inputAddress">Địa chỉ</label>
-                        <input class="form-control" id="inputAddress" type="text" placeholder="Nhập địa chỉ" ng-model="editStaff.diaChi">
+                        <input class="form-control" id="inputAddress" type="text" placeholder="Nhập địa chỉ"
+                            ng-model="editStaff.diaChi">
                     </div>
-                  
+                    <div class="col-md-6 d-flex">
+                        <label class="form-check-label me-2" for="statusSelect">Trạng thái</label>
+                        <select class="form-select w-auto" id="statusSelect" aria-label="Default select example">
+                            <option value="0"> Đang hoạt động</option>
+                            <option value="1">Nghỉ việc</option>
+                        </select>
+                    </div>
                 </div>
+
+
                 <br>
                 <div class="form-check-inline">
                     <label class="form-check-label" for="inputLastName">Giới tính</label>
                     <br>
                     <div class="form-check form-check-inline" style="margin-left: 30px;">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" ng-model="editStaff.gioiTinh" value="true">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                            ng-model="editStaff.gioiTinh" value="true">
                         <label class="form-check-label" for="inlineRadio1">Nam</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" ng-model="editStaff.gioiTinh" value="false">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                            ng-model="editStaff.gioiTinh" value="false">
                         <label class="form-check-label" for="inlineRadio2">Nữ</label>
                     </div>
                 </div>
-                
+
+
                 <br>
                 <br>
-                    <button class="btn btn-primary" type="button" ng-click="returnEdit(editStaff)">Trở về</button>
-                    <button class="btn btn-primary" type="button" ng-click="saveEditStaff(editStaff)">Lưu</button>
-              
-             
+                <button class="btn btn-primary" type="button" ng-click="returnEdit(editStaff)">Trở về</button>
+                <button class="btn btn-primary" type="button" ng-click="saveEditStaff(editStaff)">Lưu</button>
+
+
             </form>
         </div>
     </div>
