@@ -9,7 +9,7 @@
         <button class="btn btn-primary btn-sm" type="submit" ng-click="searchAllStaff(searchTerm)">Tìm kiếm</button>
 
         <input class="form-control me-1" type="date" placeholder="Search" aria-label="Search" ng-model="searchDate">
-        <button class="btn btn-primary btn-sm" type="submit" ng-click="searchDateStaff(searchDate)">Tìm kiếm</button>
+        <button class="btn btn-primary btn-sm" type="submit" ng-click="searchStaff(searchDate)">Tìm kiếm</button>
 
         <button type="button" class="dt-button buttons-html5 btn btn-white btn-success btn-bold" data-toggle="tooltip"
             title='Tải lại dữ liệu' ng-click="reLoad()">
@@ -42,8 +42,7 @@
                 <td>{{ promotion.diaChi}}</td>
                 <td ng-class="{
                     'text-success': promotion.trangThai2 === 'Đang hoạt động',
-                    'text-danger': promotion.trangThai2 === 'Không hoạt động',
-                    'text-warning': promotion.trangThai2 === 'Nghỉ phép'}">
+                    'text-danger': promotion.trangThai2 === 'Nghỉ việc'}">
                     {{ promotion.trangThai2 }}
                 </td>
 
