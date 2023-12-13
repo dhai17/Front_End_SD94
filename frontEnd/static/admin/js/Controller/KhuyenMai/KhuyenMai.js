@@ -129,7 +129,7 @@ app.controller("KhuyenMaiController", function ($scope, $http) {
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {
-                    promotion.status2 = getStatusText(promotion.status);
+                    promotion.trangThai2 = getStatusText(promotion.status);
                     promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
                 });
 
@@ -149,7 +149,7 @@ app.controller("KhuyenMaiController", function ($scope, $http) {
             .then(function (response) {
                 const promotions = response.data;
                 promotions.forEach(function (promotion) {
-                    promotion.status2 = getStatusText(promotion.status);
+                    promotion.trangThai2 = getStatusText(promotion.status);
                     promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
                 });
 
@@ -174,7 +174,7 @@ app.controller("KhuyenMaiController", function ($scope, $http) {
         $http.get("http://localhost:8080/khuyenMai/danhSach", { headers }).then(function (response) {
             const promotions = response.data;
             promotions.forEach(function (promotion) {
-                promotion.status2 = getStatusText(promotion.status);
+                promotion.trangThai2 = getStatusText(promotion.status);
                 promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
             });
 

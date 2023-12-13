@@ -57,15 +57,17 @@
 									<td>{{ gioHangChiTiet.sanPhamChiTiet.sanPham.gia.toLocaleString('vi-VN')}}
 										VNĐ</td>
 									<td>
-										<input ng-model="gioHangChiTiet.soLuong">
-
+										<!-- <input ng-model="gioHangChiTiet.soLuong" style="text-align: center;"> -->
 										<div class="button-group" id="button-group-GHCT">
 											<button ng-show="gioHangChiTiet.soLuong != soLuongBanDau"
 												ng-click="updateSoLuong(gioHangChiTiet)"
-												id="xacNhan-updateSoLuongGioHangCT">Xác nhận</button>
-
+												id="xacNhan-updateSoLuongGioHangCT"
+												class="fas fa-check btn-icon btn-primary"></button>
+												<input ng-model="gioHangChiTiet.soLuong" style="text-align: center;">
 											<button ng-show="gioHangChiTiet.soLuong != soLuongBanDau"
-												id="huy-updateSoLuongGioHangCT">Hủy</button>
+												id="huy-updateSoLuongGioHangCT"
+												class="fas fa-times btn-icon btn-danger"
+												class="btn btn-rounded"></button>
 										</div>
 									</td>
 
