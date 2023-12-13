@@ -279,25 +279,15 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
       return;
     }
 
-    if ($scope.createProduct.soLuong === undefined || $scope.createProduct.soLuong === null) {
-      Swal.fire({
-        icon: "error",
-        title: "Vui lòng nhập số lượng.",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-      return;
-    }
-
     let data = {
       tenSanPham: $scope.createProduct.tenSanPham,
       gia: $scope.createProduct.gia,
+      soLuong: $scope.createProduct.soLuong,
       chatLieu_id: $scope.createProduct.chatLieu,
       loaiSanPham_id: $scope.createProduct.loaiSanPham,
       nhaSanXuat_id: $scope.createProduct.nhaSanXuat,
       mauSac: mauSac_id,
       kichCo: kichCo_id,
-      soLuong: $scope.createProduct.soLuong,
     };
 
     $http.post("http://localhost:8080/sanPham/TaoSanPham", data, { headers })
@@ -314,10 +304,10 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
         localStorage.setItem("id_product", response.data.id_product);
       })
       .catch(function (errorResponse) {
+        console.log(errorResponse);
         if (errorResponse.status === 400) {
           const errors = errorResponse.data;
           angular.forEach(errors, function (errorMessage, fieldName) {
-            // Show error messages for each field
             Swal.fire({
               icon: "error",
               title: errorMessage,
@@ -359,9 +349,6 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
       inputValidator: (value) => {
         if (!value) {
           return "Vui lòng nhập tên chất liệu";
-        }
-        if (!/^(?=.*[a-zA-Z])[a-zA-Z\d]+$/.test(value)) {
-          return "Vui lòng chỉ nhập chữ và có cả chữ lẫn số";
         }
       },
     }).then((result) => {

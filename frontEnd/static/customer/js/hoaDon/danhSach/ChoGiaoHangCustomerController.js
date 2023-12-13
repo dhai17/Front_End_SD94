@@ -75,6 +75,9 @@ app.controller("CTchoGiaoHangCustomer", function ($scope, $routeParams, $http) {
                const hoaDon = respone.hoaDon;
 
                $scope.hoaDon = hoaDon;
-          });
-
+          }
+     );
+     $scope.quayLai = function(){
+          window.location.href = "#!/choGiaoHang-Customer";
+     }
 });

@@ -1,25 +1,24 @@
-app.controller("DangGiaoHangController", function ($scope, $http) {
+app.controller("XacNhanDaGiaoController", function ($scope, $http) {
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
     $scope.soDonHang=0;
-    $scope.loadData = function () {
+    $scope.loadDataDG = function () {
         $http.get("http://localhost:8080/hoaDon/datHang/dangGiaoHang/danhSach", { headers }).then(function (response) {
-            const pending = response.data;
-            $scope.pending = pending;
-            
-        });
-    }
-    $scope.loadData();
-    $scope.loadDataXN = function () {
-        $http.get("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/danhSach", { headers }).then(function (response) {
             $scope.soDonHang=response.data.length;
         });
     }
+    $scope.loadDataDG();
+    $scope.loadData = function () {
+        $http.get("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/danhSach", { headers }).then(function (response) {
+            const pending = response.data;
+            $scope.pending = pending;
+        });
+    }
 
-    $scope.loadDataXN();
+    $scope.loadData();
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
         let base64Url = token.split('.')[1];
@@ -87,7 +86,7 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
                     id: id,
                     email_user: checkOut_email
                 }
-                $http.post("http://localhost:8080/hoaDon/datHang/dangGiaoHang/capNhatTrangThai/daGiaoHang", data, { headers })
+                $http.post("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/capNhatTrangThai/daGiaoHang", data, { headers })
                     .then(function (response) {
                         $scope.loadData();
                         Swal.fire('Xác nhận thành công!', '', 'success');
@@ -122,7 +121,7 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
                     email_user: checkOut_email,
                     ghiChu: cancelReason  // Include the cancel reason in the data
                 }
-                $http.post("http://localhost:8080/hoaDon/datHang/dangGiaoHang/capNhatTrangThai/huyDon5", data, { headers })
+                $http.post("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/capNhatTrangThai/huyDon5", data, { headers })
                     .then(function (response) {
                         $scope.loadData();
                         ///end lệnh
@@ -144,7 +143,7 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
     //Tìm kiếm
     $scope.$watch('search', function (newVal) {
         if (newVal) {
-            $http.get("http://localhost:8080/hoaDon/datHang/dangGiaoHang/timKiem=" + newVal, { headers })
+            $http.get("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/timKiem=" + newVal, { headers })
                 .then(function (response) {
                     const pending = response.data;
 
@@ -163,7 +162,7 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
         let formattedDate = formatDate(searchDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http.get("http://localhost:8080/hoaDon/datHang/dangGiaoHang/timKiemNgay=" + formattedDate, { headers })
+        $http.get("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/timKiemNgay=" + formattedDate, { headers })
             .then(function (response) {
                 const pending = response.data;
 
@@ -189,11 +188,11 @@ app.controller("DangGiaoHangController", function ($scope, $http) {
     // Hoá đơn chi tiết
     $scope.look = function (pending) {
         const id = pending.id;
-        window.location.href = "#!/CTDangGiaoHang?id=" + id;
+        window.location.href = "#!/CTXacNhanDaGiao?id=" + id;
     };
 });
 
-app.controller("CTDangGiaoHang", function ($scope, $routeParams, $http) {
+app.controller("CTXacNhanDaGiao", function ($scope, $routeParams, $http) {
     let token = localStorage.getItem("token");
     let headers = {
         'Content-Type': 'application/json',
@@ -201,7 +200,7 @@ app.controller("CTDangGiaoHang", function ($scope, $routeParams, $http) {
     }
     const id = $routeParams.id;
     $scope.loadData = function () {
-        $http.get("http://localhost:8080/hoaDon/chiTietHoaDon/dangGiaoHang/id=" + id, { headers })
+        $http.get("http://localhost:8080/hoaDon/chiTietHoaDon/xacNhanDaGiao/id=" + id, { headers })
             .then(function (response) {
                 const respone = response.data;
                 const hdct = respone.list_HDCT;
@@ -215,6 +214,9 @@ app.controller("CTDangGiaoHang", function ($scope, $routeParams, $http) {
 
                 const timeLine_DangGiaoHang = respone.timeLine_DangGiaoHang;
                 $scope.timeLine_DangGiaoHang = timeLine_DangGiaoHang;
+
+                const timeLine_XacNhanDaGiao = respone.timeLine_XacNhanDaGiao;
+                $scope.timeLine_XacNhanDaGiao = timeLine_XacNhanDaGiao;
     
                 const hoaDon = respone.hoaDon;
     
@@ -225,7 +227,7 @@ app.controller("CTDangGiaoHang", function ($scope, $routeParams, $http) {
     $scope.loadData();
 
     $scope.quayLai = function(){
-        window.location.href = "#!/dang-giao";
+        window.location.href = "#!/xac-nhan-da-giao";
     }
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
@@ -257,7 +259,7 @@ app.controller("CTDangGiaoHang", function ($scope, $routeParams, $http) {
                     id: id,
                     email_user: checkOut_email
                 }
-                $http.post("http://localhost:8080/hoaDon/datHang/dangGiaoHang/capNhatTrangThai/daGiaoHang", data, { headers })
+                $http.post("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/capNhatTrangThai/daGiaoHang", data, { headers })
                     .then(function (response) {
                         $scope.quayLai();
                         Swal.fire('Xác nhận thành công!', '', 'success');
@@ -292,7 +294,7 @@ app.controller("CTDangGiaoHang", function ($scope, $routeParams, $http) {
                     email_user: checkOut_email,
                     ghiChu: cancelReason1  // Include the cancel reason in the data
                 }
-                $http.post("http://localhost:8080/hoaDon/datHang/dangGiaoHang/capNhatTrangThai/huyDon5", data, { headers })
+                $http.post("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/capNhatTrangThai/huyDon5", data, { headers })
                     .then(function (response) {
                         $scope.quayLai();
                         ///end lệnh

@@ -25,9 +25,9 @@
                     </div>
 
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Hãng</label>
+                        <label class="form-label">Nhà sản xuất</label>
                         <select class="form-select" ng-model="id_nsx" ng-change="filterByNsx()">
-                            <option value="">Chọn hãng</option>
+                            <option value="">Chọn nhà sản xuất</option>
                             <option ng-repeat="nsx in nhaSanXuat" value="{{nsx.id}}" ng-selected="nsx.id == id_nsx">
                                 {{nsx.name}}
                             </option>
@@ -93,7 +93,7 @@
                         <img src="/static/img/{{sanPham.anh_san_pham}}" class="img-fluid product-thumbnail"
                             style="width: 500px; height: 500px;" />
                         <h3 class="product-title">{{ sanPham.tenSanPham }}</h3>
-                        <strong class="product-price">{{ sanPham.gia }} VNĐ</strong>
+                        <strong class="product-price">{{ sanPham.gia.toLocaleString('vi-VN') }} VNĐ</strong>
 
                         <span class="icon-cross">
                             <img src="/static/customer/assets/images/cross.svg" class="img-fluid">
