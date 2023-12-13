@@ -291,28 +291,6 @@ app.controller(
         $scope.kichCocDaChon += kichCo.kichCo + ", ";
       }
     };
-    function parseJwt(token) {
-      let base64Url = token.split(".")[1];
-      let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-      let jsonPayload = decodeURIComponent(
-        atob(base64)
-          .split("")
-          .map(function (c) {
-            return (
-              "%" +
-              ("00" + c.charCodeAt(0).toString(16)).slice(-2)
-            );
-          })
-          .join("")
-      );
-
-      let payload = JSON.parse(jsonPayload);
-      return payload;
-    }
-
-    let decodedToken = parseJwt(token);
-    const email_user = decodedToken.email;
-    const role_user = decodedToken.role;
 
     $scope.saveCreate = function () {
       if ($scope.createProduct === undefined) {
@@ -333,7 +311,6 @@ app.controller(
         nhaSanXuat_id: $scope.createProduct.nhaSanXuat,
         mauSac: mauSac_id,
         kichCo: kichCo_id,
-        email_user: email_user,
       };
 
       $http
@@ -353,22 +330,6 @@ app.controller(
             "id_product",
             response.data.id_product
           );
-          let data2 = {
-            tenSanPham: $scope.createProduct.tenSanPham,
-            gia: $scope.createProduct.gia,
-            email_user: email_user,
-          };
-          if (role_user === "STAFF") {
-            $http
-              .post(
-                "http://localhost:8080/sanPham/guiMailThemSanPham",
-                data2,
-                { headers }
-              )
-              .then(function (response) {
-                // Handle success
-              });
-          }
         })
         .catch(function (errorResponse) {
           console.log(errorResponse);
