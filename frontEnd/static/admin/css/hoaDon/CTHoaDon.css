@@ -760,3 +760,9 @@ body {
         margin-bottom: 10px
     }
 }
+.so-don-hang {
+    font-size: 12px;
+    position: absolute;
+    top: 1px;
+    right: 10px;
+}

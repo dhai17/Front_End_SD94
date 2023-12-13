@@ -1,4 +1,4 @@
-<div class="container-fluid" layout:fragment="content" :ng-controller="CTDaHuy">
+<div class="container-fluid" layout:fragment="content" :ng-controller="CTXacNhanDaGiao">
     <h1>CHI TIẾT HÓA ĐƠN</h1>
     <div th:object="${hoaDon}">
         <input type="hidden" id="IDHoaDonCXN">
@@ -19,37 +19,35 @@
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="CTChoXacNhan in hdct">
+                    <tr ng-repeat="CTXacNhanDaGiao in hdct">
                         <td>{{$index + 1}}</td>
                         <td>
                             <div style="display: flex; align-items: center;">
-                                <!-- <img th:src="${'/customer/images/' + tenAnhChinhList[stt.index]}" alt=""
-                                 style="margin-right: 10px;" width="100px" height="100px"> -->
-                                <img src='/static/img/{{CTChoXacNhan.anhSanPham}}' alt=""
+                                <img src='/static/img/{{CTXacNhanDaGiao.anhSanPham}}' alt=""
                                     style="margin-right: 10px;" width="100px" height="100px">
 
                                 <div>
                                     <h6>
                                         <strong>
                                             <span style="text-transform: uppercase" class="TenSP">{{
-                                                CTChoXacNhan.sanPhamChiTiet.sanPham.tenSanPham}}</span>
+                                                CTXacNhanDaGiao.sanPhamChiTiet.sanPham.tenSanPham}}</span>
                                         </strong>
                                     </h6>
                                     <div class="ThongTinSP">
-                                        <span>{{ CTChoXacNhan.sanPhamChiTiet.mauSac.tenMauSac}}</span>
+                                        <span>{{ CTXacNhanDaGiao.sanPhamChiTiet.mauSac.tenMauSac}}</span>
                                         <span>/</span>
-                                        <span>{{ CTChoXacNhan.sanPhamChiTiet.kichCo.kichCo}}</span>
+                                        <span>{{ CTXacNhanDaGiao.sanPhamChiTiet.kichCo.kichCo}}</span>
                                     </div>
                                 </div>
                             </div>
                         </td>
-                        <td>{{ CTChoXacNhan.donGia.toLocaleString('vi-VN') + ' VNĐ' }}</td>
+                        <td>{{ CTXacNhanDaGiao.donGia.toLocaleString('vi-VN') + ' VNĐ' }}</td>
 
                         <td>
-                            {{ CTChoXacNhan.soLuong}}
+                            {{ CTXacNhanDaGiao.soLuong}}
                         </td>
 
-                        <td>{{ CTChoXacNhan.thanhTien.toLocaleString('vi-VN') + ' VNĐ' }}</td>
+                        <td>{{ CTXacNhanDaGiao.thanhTien.toLocaleString('vi-VN') + ' VNĐ' }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -89,7 +87,7 @@
                 <div class="timeline-content">
                     <h5 class="title">Chờ xác nhận</h5>
                     <p class="description"><strong>Thao tác: </strong>Tạo đơn hàng</p>
-                    <p><strong>Người tạo đơn: </strong><span>{{timetimeLine_ChoXacNhanLine.nguoiThaoTac}}</span>
+                    <p><strong>Người tạo đơn: </strong><span>{{timeLine_ChoXacNhan.nguoiThaoTac}}</span>
                     </p>
                 </div>
             </div>
@@ -99,24 +97,64 @@
                 <div class="date-content">
                     <div class="date-outer">
                         <span class="date">
-                            <span class="month">{{timeLine_DaHuy.createdDate | date:'dd/MM/yyyy'}}</span>
-                            <span class="hour"></span>
+                            <span class="month">{{timeLine_ChoGiaoHang.createdDate | date:'dd/MM/yyyy'}}</span>
                         </span>
                     </div>
                 </div>
-
                 <div class="timeline-content">
-                    <h5 class="title">Huỷ đơn</h5>
-                    <p class="description"><strong>Thao tác: </strong>Hủy đơn hàng</p>
-                    <p><strong>Người tạo đơn: </strong><span>{{timeLine_DaHuy.nguoiThaoTac}}</span>
-                    <p><strong>Lý do: </strong><span>{{hoaDon.ghiChu}}</span>
+                    <h5 class="title">Chờ giao hàng</h5>
+                    <p class="description"><strong>Thao tác: </strong>Xác nhận đơn, đợi giao hàng cho đơn vị vận chuyển
                     </p>
+                    <p><strong>Người thao tác: </strong><span>{{timeLine_ChoGiaoHang.nguoiThaoTac}}</span></p>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <div class="icon"></div>
+                <div class="date-content">
+                    <div class="date-outer">
+                        <span class="date">
+                            <span class="month">{{timeLine_DangGiaoHang.createdDate | date:'dd/MM/yyyy'}}</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="timeline-content">
+                    <h5 class="title">Đang giao hàng</h5>
+                    <p class="description"><strong>Thao tác: </strong>Đã bàn giao cho đơn vị vận chuyển, đang giao đến
+                        người nhận</p>
+                    <p><strong>Người thao tác: </strong><span>{{timeLine_DangGiaoHang.nguoiThaoTac}}</span></p>
+                </div>
+            </div>
+            <div class="timeline">
+                <div class="icon"></div>
+                <div class="date-content">
+                    <div class="date-outer">
+                        <span class="date">
+                            <span class="month">{{timeLine_XacNhanDaGiao.createdDate | date:'dd/MM/yyyy'}}</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="timeline-content">
+                    <h5 class="title">Xác nhận đã nhận được hàng</h5>
+                    <p class="description"><strong>Thao tác: </strong>Khách hàng đã nhận được hàng</p>
+                    <p><strong>Người thao tác: </strong><span>{{timeLine_XacNhanDaGiao.nguoiThaoTac}}</span></p>
                 </div>
             </div>
         </div>
         <br>
 
         <div class="button-group" id="button-chiTietHoaDon">
+            <!--XÁC NHẬN ĐƠN HÀNG-->
+            <button class="action-button XacNhanDon" th:attr="data-id=${hoaDon.id}" ng-click="confirm ()"> Xác nhận đơn
+                <i class="fas fa-check"></i>
+            </button>
+
+            <!--HỦY ĐƠN HÀNG-->
+            <button class="action-button HuyDon" th:attr="data-id=${hoaDon.id}" ng-click="huyDon()"> Hủy đơn
+                <i class="fas fa-times"></i>
+            </button>
+
+            <input type="hidden" id="idChiTietHoaDon">
 
             <button class="action-button" ng-click="quayLai()">Quay lại
                 <i class="fas fa-arrow-left"></i>

@@ -183,4 +183,9 @@ app.controller("CTDangGiaoHangCustomer", function ($scope, $routeParams, $http) 
                }
           });
      }
+     $scope.quayLai = function(){
+          window.location.href = "#!/dangGiaoHang-Customer";
+     }
+     
+
 });

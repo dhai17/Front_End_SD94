@@ -169,24 +169,35 @@ app.controller("cartController", function ($scope, $http, $window) {
             }
             $http.post("http://localhost:8080/api/banHang/online/checkOut", data, { headers })
                 .then(function (response) {
-                    localStorage.setItem("id_HoaDon", response.data)
+                    localStorage.setItem("id_HoaDon", response.data.body)
                     const id_HoaDon = localStorage.getItem("id_HoaDon");
-                    Swal.fire({
-                        icon: "success",
-                        title: "Chuyển hướng đến trang đặt hàng",
-                        showConfirmButton: false,
-                        timer: 2000
-                    }).then(function () {
-                        window.location.href = "http://127.0.0.1:5501/templates/banHang/online/BanHangOnline.html?id_HoaDon=" + id_HoaDon;
-                    })
+                    if (response.data.statusCodeValue === 400) {
+                        Swal.fire({
+                            icon: "error",
+                            title: response.data.body.err,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Chuyển hướng đến trang đặt hàng",
+                            showConfirmButton: false,
+                            timer: 2000
+                        }).then(function () {
+                            window.location.href = "http://127.0.0.1:5501/templates/banHang/online/BanHangOnline.html?id_HoaDon=" + id_HoaDon;
+                        })
+                    }
+
                 })
                 .catch(function (error) {
+                    const errorMessage = error.data[Object.keys(error.data)[0]];
                     Swal.fire({
                         icon: "error",
-                        title: error.data.mess,
+                        title: errorMessage,
                         showConfirmButton: false,
-                        timer: 2000
-                    })
+                        timer: 2000,
+                    });
                 })
         }
     }, true);

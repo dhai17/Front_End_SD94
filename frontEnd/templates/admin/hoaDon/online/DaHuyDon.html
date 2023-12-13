@@ -52,7 +52,7 @@
                 <td>{{$index + 1}}</td>
                 <td>{{ pending.maHoaDon }}</td>
                 <td>{{ pending.createdDate | date:'dd/MM/yyyy' }}</td>
-                <td>{{ pending.tongTienDonHang}}</td>
+                <td>{{ pending.tongTienDonHang.toLocaleString('vi-VN') + ' VNĐ'}}</td>
                 <td>{{ pending.nguoiNhan}}</td>
                 <td>{{ pending.emailNguoiNhan}}</td>
                 <td>{{ pending.sdtnguoiNhan}}</td>

@@ -35,6 +35,10 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/hoaDon/online/DaHuyDon.html",
             controller: "DaHuyDonController",
         })
+        .when("/xac-nhan-da-giao", {
+            templateUrl: "/templates/admin/hoaDon/online/XacNhanDaGiao.html",
+            controller: "XacNhanDaGiaoController",
+        })
         .when("/login", {
             templateUrl: "/templates/admin/login/index.html",
             controller: "loginCtrl",
@@ -58,6 +62,10 @@ app.config(function ($routeProvider) {
         .when("/CTDaHuy", {
             templateUrl: "/templates/admin/hoaDon/details.Online/ChiTietDaHuy.html",
             controller: "CTDaHuy",
+        })
+        .when("/CTXacNhanDaGiao", {
+            templateUrl: "/templates/admin/hoaDon/details.Online/ChiTietXacNhanDaGiao.html",
+            controller: "CTXacNhanDaGiao",
         })
         .when("/list-CounterBill", {
             templateUrl: "/templates/admin/hoaDonTaiQuay/DaHuy.html",
@@ -197,6 +205,12 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/sanPham/san_pham/listSPCT.html",
             controller: "CTSPController",
         })
+
+        .when("/themSanPhamTuongTu", {
+            templateUrl: "/templates/admin/sanPham/san_pham/create_new_sp.html",
+            controller: "themSanPhamTuongTuController",
+        })
+
         .otherwise({
             redirectTo: "/",
         });

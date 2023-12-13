@@ -44,8 +44,8 @@ app.controller("LineController", function ($scope, $http) {
     $scope.deleteLine = function (promotion) {
         let idLine = promotion.id;
         Swal.fire({
-            title: 'Xác nhận xóa sản phẩm',
-            text: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+            title: 'Xác nhận xóa loại sản phẩm',
+            text: 'Bạn có chắc chắn muốn xóa loại sản phẩm này?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Xóa',

@@ -5,7 +5,7 @@
                 <a class="product-item" ng-click = "getSanPhamChiTiet(sanPham)">
                     <img src='/static/img/{{sanPham.anh_san_pham}}' class="img-fluid product-thumbnail" style="width: 450px; height: 300px;">
                     <h3 class="product-title">{{ sanPham.tenSanPham }}</h3>
-                    <strong class="product-price">{{ sanPham.gia }} VNĐ</strong>
+                    <strong class="product-price">{{ sanPham.gia.toLocaleString('vi-VN')}} VNĐ</strong>
 
                     <span class="icon-cross">
                         <img src="/static/customer/assets/images/cross.svg" class="img-fluid">

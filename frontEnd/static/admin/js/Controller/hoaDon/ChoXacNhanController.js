@@ -128,37 +128,73 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
     };
 
     // từ chối xác nhận ( trạng thái đã huỷ đơn 5)
+    // $scope.refuseBill = function (pending) {
+    //     const id = pending.id;
+    //     const checkOut_email = decodedToken.email;
+    //     Swal.fire({
+    //         title: 'Xác nhận huỷ đơn hàng',
+    //         text: 'Bạn có muốn huỷ đơn hàng này không?',
+    //         icon: 'question',
+    //         showCancelButton: true,
+    //         confirmButtonText: 'Có',
+    //         cancelButtonText: 'Không'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             let data = {
+    //                 id: id,
+    //                 email_user: checkOut_email
+    //             }
+    //             $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/huyDon", data, { headers })
+    //                 .then(function (response) {
+    //                     $scope.loadData();
+    //                     Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
+    //                     $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
+    //                         .then(function (response) {
+    //                     });
+    //                 })
+    //                 .catch(function (error) {
+    //                     console.log(error);
+    //                 })
+
+    //         };
+    //     });
+
+    // };
     $scope.refuseBill = function (pending) {
         const id = pending.id;
         const checkOut_email = decodedToken.email;
+    
         Swal.fire({
             title: 'Xác nhận huỷ đơn hàng',
-            text: 'Bạn có muốn huỷ đơn hàng này không?',
+            html: '<input type="text" id="cancelReason" class="swal2-input" placeholder="Lý do hủy">',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Có',
             cancelButtonText: 'Không'
         }).then((result) => {
             if (result.isConfirmed) {
+                const cancelReason = document.getElementById('cancelReason').value;
+    
                 let data = {
                     id: id,
-                    email_user: checkOut_email
+                    email_user: checkOut_email,
+                    ghiChu: cancelReason  // Include the cancel reason in the data
                 }
+    
                 $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/huyDon", data, { headers })
                     .then(function (response) {
                         $scope.loadData();
                         Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
-                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
+                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/" + id, { headers })
                             .then(function (response) {
-                        });
+                                // Handle success
+                            });
                     })
                     .catch(function (error) {
                         console.log(error);
                     })
-
-            };
+            }
         });
-
     };
 
     //Tìm kiếm
@@ -278,17 +314,19 @@ app.controller("ChoXacNhanController", function ($scope, $http) {
             if (item.selected) {
                 id_hoaDon.push(item.id);
                 Swal.fire({
-                    title: 'Hủy những đơn đã chọn',
-                    text: 'Bạn có muốn hủy những đơn đã chọn không?',
+                    title: 'Xác nhận huỷ đơn hàng',
+                    html: '<input type="text" id="cancelReason" class="swal2-input" placeholder="Lý do hủy">',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Có',
                     cancelButtonText: 'Không'
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        const cancelReason1 = document.getElementById('cancelReason').value;
                         let data = {
                             id_hoaDon: id_hoaDon,
-                            email_user: checkOut_email
+                            email_user: checkOut_email,
+                            ghiChu: cancelReason1  // Include the cancel reason in the data
                         }
                         $http.put("http://localhost:8080/hoaDon/datHang/choXacNhan/huyDon/daChon", data, { headers })
                             .then(function (response) {
@@ -391,30 +429,34 @@ app.controller("CTChoXacNhan", function ($scope, $routeParams, $http) {
         const checkOut_email = decodedToken.email;
         Swal.fire({
             title: 'Xác nhận huỷ đơn hàng',
-            text: 'Bạn có muốn huỷ đơn hàng này không?',
+            html: '<input type="text" id="cancelReason" class="swal2-input" placeholder="Lý do hủy">',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Có',
             cancelButtonText: 'Không'
         }).then((result) => {
             if (result.isConfirmed) {
+                const cancelReason1 = document.getElementById('cancelReason').value;
+    
                 let data = {
                     id: id,
-                    email_user: checkOut_email
+                    email_user: checkOut_email,
+                    ghiChu: cancelReason1  // Include the cancel reason in the data
                 }
+    
                 $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/huyDon", data, { headers })
                     .then(function (response) {
-                        $scope.quayLai();
                         Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
-                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
+                        $scope.quayLai();
+                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/" + id, { headers })
                             .then(function (response) {
-                        });
+                                // Handle success
+                            });
                     })
                     .catch(function (error) {
                         console.log(error);
                     })
-
-            };
+            }
         });
 
     };
