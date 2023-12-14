@@ -9,7 +9,6 @@ app.controller("ProductController", function ($scope, $http) {
     .get("http://localhost:8080/sanPham/danhSach", { headers })
     .then(function (response) {
       const promotions = response.data;
-      console.log(promotions);
       $scope.promotions = promotions;
     });
 
@@ -945,8 +944,8 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
     window.location.href = "#!/list-Product";
   };
 
-  $scope.suaAnh = function () {
-    window.location.href = "#!/edit-Img?id=" + id;
+  $scope.themSanPhamTuongTu = function () {
+    window.location.href = "#!/themSanPhamTuongTu?id=" + id
   };
 });
 

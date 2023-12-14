@@ -294,7 +294,6 @@ app.controller("EditNhanVienController", function ($scope, $routeParams, $http) 
     //Lưu edit
     $scope.saveEditStaff = function () {
         let gioiTinh = document.getElementById('inlineRadio1').checked;
-        console.log($scope.editStaff.gioiTinh);
         let trangThai = document.getElementById('statusSelect').value;
         let editStaff = {
             id: idStaff,

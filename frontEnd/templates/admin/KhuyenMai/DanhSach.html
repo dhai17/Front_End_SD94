@@ -36,7 +36,7 @@
                 <td>{{ promotion.ngayBatDau | date:'dd/MM/yyyy' }}</td>
                 <td>{{ promotion.ngayKetThuc | date:'dd/MM/yyyy'}}</td>
                 <td>{{ promotion.phanTramGiam}}%</td>
-                <td>{{ promotion.tienGiamToiDa}}đ</td>
+                <td>{{ promotion.tienGiamToiDa.toLocaleString('vi-VN')}} VNĐ</td>
                 <td ng-class="{
                     'text-success': promotion.trangThai2 === 'Đang hoạt động',
                     'text-warning': promotion.trangThai2 === 'Chờ hoạt động',

@@ -205,6 +205,12 @@ app.config(function ($routeProvider) {
             templateUrl: "/templates/admin/sanPham/san_pham/listSPCT.html",
             controller: "CTSPController",
         })
+
+        .when("/themSanPhamTuongTu", {
+            templateUrl: "/templates/admin/sanPham/san_pham/create_new_sp.html",
+            controller: "themSanPhamTuongTuController",
+        })
+
         .otherwise({
             redirectTo: "/",
         });
