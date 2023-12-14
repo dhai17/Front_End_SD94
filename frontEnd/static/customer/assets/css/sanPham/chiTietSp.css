@@ -3,7 +3,7 @@
     align-items: center;
     overflow: hidden;
     flex-direction: row;
-    margin-left: 10px;
+    margin-right: 15px;
     margin-top: 10px;
 }
 
@@ -18,11 +18,16 @@
 
 #thumbnail {
     list-style: none;
-    padding: 0;
-    margin: 0;
+    justify-content: center;
     display: flex;
+    align-items: center;
+    margin-top: 10px;
 }
 
 #thumbnail li {
     margin: 5px;
+    padding: 10px;
+    border: 2px solid #eee;
+    cursor: pointer;
+    transition: all 0.5s;
 }

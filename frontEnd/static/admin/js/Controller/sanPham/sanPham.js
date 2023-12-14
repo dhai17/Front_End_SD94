@@ -8,18 +8,8 @@ app.controller("ProductController", function ($scope, $http) {
   $http.get("http://localhost:8080/sanPham/danhSach", { headers })
     .then(function (response) {
       const promotions = response.data;
-      console.log(promotions);
       $scope.promotions = promotions;
     });
-
-  function getStatusText(trangThai) {
-    if (trangThai == 0) {
-      return "Đang bán";
-    } else if (trangThai == 1) {
-      return "Ngừng bán";
-    }
-    return "Trạng thái không xác định";
-  }
 
   //Phân trang
   $scope.pager = {
@@ -444,15 +434,15 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
 
   $scope.ThemMoiHang = function () {
     Swal.fire({
-      title: "Thêm mới hãng",
+      title: "Thêm mới nhà sản xuất",
       input: "text",
-      inputLabel: "Nhập tên hãng",
+      inputLabel: "Nhập tên nhà sản xuất",
       showCancelButton: true,
       confirmButtonText: "Xác nhận",
       cancelButtonText: "Huỷ",
       inputValidator: (value) => {
         if (!value) {
-          return "Vui lòng nhập tên hãng";
+          return "Vui lòng nhập tên nhà sản xuất";
         }
       },
     }).then((result) => {
