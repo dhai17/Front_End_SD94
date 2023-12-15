@@ -72,17 +72,17 @@
 								</div>
 							</a>
 							<ul class="dropdown-menu dropdown-menu-end">
-								<li>
-									<a class="dropdown-item" href="#!/thong-tin-khach-hang" id="thongtin-button">
-										<i class="bx bx-user me-2"></i>
-										<span class="align-middle">Thông tin</span>
+								<li ng-controller="LogoutController">
+									<a class="dropdown-item" href="#!/" id="dangKy-homeAdmin"
+										ng-click="DangKy()">
+										<i class="fas fa-user-plus me-2"></i>
+										<span class="align-middle">Đăng ký</span>
 									</a>
 								</li>
 								<li ng-controller="LogoutController">
-									<a class="dropdown-item" href="#!/" id="dangXuat-homeAdmin"
-										ng-click="out()">
-										<i class="fas fa-sign-out-alt me-2"></i>
-										<span class="align-middle">Đăng xuất</span>
+									<a class="dropdown-item" href="#!/" id="thongtin-button" ng-click="logout()">
+										<i class="bx bx-user me-2"></i>
+										<span class="align-middle">Đăng nhập</span>
 									</a>
 								</li>
 							</ul>
