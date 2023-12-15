@@ -59,12 +59,14 @@
 									<td>
 										<!-- <input ng-model="gioHangChiTiet.soLuong" style="text-align: center;"> -->
 										<div class="button-group" id="button-group-GHCT">
-											<button ng-show="gioHangChiTiet.soLuong != soLuongBanDau"
+											<!-- ng-show="gioHangChiTiet.soLuong != soLuongBanDau" -->
+											<button 
 												ng-click="updateSoLuong(gioHangChiTiet)"
 												id="xacNhan-updateSoLuongGioHangCT"
-												class="fas fa-check btn-icon btn-primary"></button>
+												class="fas fa-check btn-icon btn-primary">
+											</button>
 												<input ng-model="gioHangChiTiet.soLuong" style="text-align: center;">
-											<button ng-show="gioHangChiTiet.soLuong != soLuongBanDau"
+											<button 
 												id="huy-updateSoLuongGioHangCT"
 												class="fas fa-times btn-icon btn-danger"
 												class="btn btn-rounded"></button>
