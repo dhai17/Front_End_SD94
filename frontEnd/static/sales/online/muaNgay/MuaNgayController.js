@@ -185,7 +185,7 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
             .catch(function (e) {
                 Swal.fire({
                     icon: "error",
-                    title: e.data.mess,
+                    title: "Vui lòng nhập đúng mã giảm giá",
                     showConfirmButton: false,
                     timer: 2000,
                 });
