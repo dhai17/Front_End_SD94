@@ -175,6 +175,7 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
           email_user: decodedToken.email,
           diaChi: diaChi2,
           nguoiTao: $scope.hoTen,
+          loaiHoaDon: 2,
         };
 
         $http
