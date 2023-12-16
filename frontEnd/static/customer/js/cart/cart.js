@@ -97,17 +97,22 @@ app.controller("cartController", function ($scope, $http, $window) {
                 $http.post("http://localhost:8080/gioHang/xoa/gioHangChiTiet", data, { headers })
 
                     .then(function (response) {
-                        const gioHangChiTiet = response.data;
 
-                        $scope.$evalAsync(function () {
-                            $scope.gioHangChiTiet = gioHangChiTiet;
-                            Swal.fire({
-                                icon: "success",
-                                title: "Xóa thành công",
-                                showConfirmButton: false,
-                                timer: 2000,
+                        Swal.fire({
+                            icon: "success",
+                            title: "Xóa thành công",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        }).then(() => {
+                            $http.get("http://localhost:8080/gioHang/danhSach/" + decodedToken.email, { headers }).then(function (response) {
+                                const gioHangChiTiet = response.data;
+                                gioHangChiTiet.forEach((item) => {
+                                    $scope.soLuongBanDau = item.soLuong
+                                })
+                                $scope.gioHangChiTiet = gioHangChiTiet;
                             });
                         });
+
                     })
                     .catch(function (error) {
                         console.log("Lỗi");

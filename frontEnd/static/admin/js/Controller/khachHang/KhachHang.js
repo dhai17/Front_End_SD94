@@ -5,6 +5,18 @@ app.controller("CustomerController", function ($scope, $http) {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
+    // lay ra thong tin nguoi dang nhap
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    
+        let payload = JSON.parse(jsonPayload);
+        return payload;
+      }
+      let decodedToken = parseJwt(token);
 
     $http.get("http://localhost:8080/khachHang/danhSach", { headers }).then(function (response) {
         const promotions = response.data;
@@ -60,12 +72,30 @@ app.controller("CustomerController", function ($scope, $http) {
 
     //Chuyển hướng đến trang edit theo id
     $scope.editCustomer = function (promotion) {
+        if (decodedToken.role === 'STAFF') {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Bạn không có quyền thao tác',
+              showConfirmButton: false,
+              timer: 2000
+            });
+            return;
+        }
         let idCustomer = promotion.id;
         window.location.href = '#!/edit-Customer?id=' + idCustomer;
     };
 
     // Xóa trong danh sách
     $scope.deleteCustomer = function (promotion) {
+        if (decodedToken.role === 'STAFF') {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Bạn không có quyền thao tác',
+              showConfirmButton: false,
+              timer: 2000
+            });
+            return;
+        }
         let id = promotion.id;
         let data = {
             id
@@ -191,7 +221,28 @@ app.controller("CreateCustomerController", function ($scope, $http) {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
+    // lay ra thong tin nguoi dang nhap
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    
+        let payload = JSON.parse(jsonPayload);
+        return payload;
+      }
+      let decodedToken = parseJwt(token);
     $scope.saveCreateCustomer = function () {
+        if (decodedToken.role === 'STAFF') {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Bạn không có quyền thao tác',
+              showConfirmButton: false,
+              timer: 2000
+            });
+            return;
+        }
 
         if ($scope.createCustomer === undefined) {
             Swal.fire({
@@ -263,7 +314,7 @@ app.controller("EditCustomerController", function ($scope, $routeParams, $http) 
             email: $scope.editCustomer.email,
             ngaySinh: $scope.editCustomer.ngaySinh,
             diaChi: $scope.editCustomer.diaChi,
-            matKhau: $scope.editCustomer.matKhau
+            // matKhau: $scope.editCustomer.matKhau
         };
 
         $http.put("http://localhost:8080/khachHang/luu-chinh-sua", editCustomer, { headers })

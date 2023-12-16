@@ -18,7 +18,7 @@ app.controller("ThongTinUserController", function ($scope, $http) {
 
      let decodedToken = parseJwt(token);
      let email = decodedToken.email
-     let sdthoai;
+     let sdthoai = decodedToken.sdt;
 
      $scope.GioiTinhChon = true;
      $http.get("http://localhost:8080/api/user/thongTin/" + email, { headers })
@@ -41,15 +41,24 @@ app.controller("ThongTinUserController", function ($scope, $http) {
 
 
      $scope.chinhSua = function () {
-          let email = $scope.email;
-          if (hoTen !== decodedToken.hoTen || email !== decodedToken.email || sdthoai !== $scope.sdt && decodedToken.role === 'STAFF') {
+          if (decodedToken.role === 'STAFF') {
                Swal.fire({
-                    icon: "warning",
-                    title: "Bạn không có quyền chỉnh sửa email hoặc số điện thoại",
-                    showConfirmButton: false,
-                    timer: 2000,
+                   icon: "warning",
+                   title: "Bạn không có quyền chỉnh sửa thông tin",
+                   showConfirmButton: false,
+                   timer: 2000,
                });
-          }
+               return;
+           }
+          // let email = $scope.email;
+          // if (email !== decodedToken.email || sdthoai !== decodedToken.sdt && decodedToken.role === 'STAFF') {
+          // Swal.fire({
+          //           icon: "warning",
+          //           title: "Bạn không có quyền chỉnh sửa email hoặc số điện thoại",
+          //           showConfirmButton: false,
+          //           timer: 2000,
+          //      });
+          // }
 
           let data = {
                name: $scope.hoTen,

@@ -5,6 +5,18 @@ app.controller("ProducerController", function ($scope, $http) {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
+    // lay ra thong tin nguoi dang nhap
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    
+        let payload = JSON.parse(jsonPayload);
+        return payload;
+      }
+      let decodedToken = parseJwt(token);
 
     $http.get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
         .then(function (response) {
@@ -43,6 +55,15 @@ app.controller("ProducerController", function ($scope, $http) {
     };
 
     $scope.deleteProducer = function (promotion) {
+        if (decodedToken.role === 'STAFF') {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Bạn không có quyền thao tác',
+              showConfirmButton: false,
+              timer: 2000
+            });
+            return;
+        }
         let idProducer = promotion.id;
         Swal.fire({
             title: 'Xác nhận xóa nhà sản xuất',
@@ -75,11 +96,29 @@ app.controller("ProducerController", function ($scope, $http) {
     }
 
     $scope.editProducer = function (promotion) {
+        if (decodedToken.role === 'STAFF') {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Bạn không có quyền thao tác',
+              showConfirmButton: false,
+              timer: 2000
+            });
+            return;
+        }
         let idProducer = promotion.id;
         window.location.href = '#!/edit-Producer?id=' + idProducer;
     };
 
     $scope.createProducer = function (promotion) {
+        if (decodedToken.role === 'STAFF') {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Bạn không có quyền thao tác',
+              showConfirmButton: false,
+              timer: 2000
+            });
+            return;
+        }
         window.location.href = '#!/create-Producer?id=';
     };
 

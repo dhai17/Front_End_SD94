@@ -1,5 +1,14 @@
 app.controller('changePassController', function ($scope, $http) {
      $scope.change = function () {
+          if ($scope.new_pass !== $scope.confirm_pass) {
+               Swal.fire({
+                    icon: "error",
+                    title: "Mật khẩu không khớp",
+                    showConfirmButton: false,
+                    timer: 2000,
+               });
+               return;
+          }
           let data = {
                password_new: $scope.new_pass
           }

@@ -4,6 +4,19 @@ app.controller("ProductController", function ($scope, $http) {
     "Content-Type": "application/json",
     Authorization: "Bearer " + token,
   };
+  // lay ra thong tin nguoi dang nhap
+  function parseJwt(token) {
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    let payload = JSON.parse(jsonPayload);
+    return payload;
+  }
+
+  let decodedToken = parseJwt(token);
 
   $http
     .get("http://localhost:8080/sanPham/danhSach", { headers })
@@ -57,11 +70,29 @@ app.controller("ProductController", function ($scope, $http) {
   };
 
   $scope.create = function (promotion) {
+    if (decodedToken.role === 'STAFF') {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Bạn không có quyền thao tác',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      return;
+    }
     window.location.href = "#!/create-Product?id=";
   };
 
   //Xóa trong danh sách
   $scope.delete = function (promotion) {
+    if (decodedToken.role === 'STAFF') {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Bạn không có quyền xoá',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      return;
+    }
     let id = promotion.id;
     Swal.fire({
       title: "Xác nhận xóa sản phẩm",
@@ -73,11 +104,15 @@ app.controller("ProductController", function ($scope, $http) {
     }).then((result) => {
       if (result.isConfirmed) {
         $http
-          .delete("http://localhost:8080/sanPham/xoa/" + id, { headers })
+          .delete("http://localhost:8080/sanPham/xoa/" + id, {
+            headers,
+          })
           .then(function (response) {
             const promotions = response.data;
             $http
-              .get("http://localhost:8080/sanPham/danhSach", { headers })
+              .get("http://localhost:8080/sanPham/danhSach", {
+                headers,
+              })
               .then(function (response) {
                 const promotions = response.data;
                 console.log(promotions);
@@ -116,7 +151,9 @@ app.controller("ProductController", function ($scope, $http) {
   $scope.$watch("searchTerm", function (newVal) {
     if (newVal) {
       $http
-        .get("http://localhost:8080/sanPham/timKiem=" + newVal, { headers })
+        .get("http://localhost:8080/sanPham/timKiem=" + newVal, {
+          headers,
+        })
         .then(function (response) {
           $scope.promotions = response.data;
         });
@@ -131,7 +168,9 @@ app.controller("ProductController", function ($scope, $http) {
 
   $scope.searchAll = function (searchTerm) {
     $http
-      .get("http://localhost:8080/sanPham/timKiem=" + searchTerm, { headers })
+      .get("http://localhost:8080/sanPham/timKiem=" + searchTerm, {
+        headers,
+      })
       .then(function (response) {
         $scope.promotions = response.data;
       });
@@ -147,6 +186,18 @@ app.controller(
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,
     };
+    function parseJwt(token) {
+      let base64Url = token.split('.')[1];
+      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+  
+      let payload = JSON.parse(jsonPayload);
+      return payload;
+    }
+  
+    let decodedToken = parseJwt(token);
 
     let idPro = $routeParams.id;
 
@@ -160,6 +211,15 @@ app.controller(
       });
 
     $scope.saveEdits = function () {
+      if (decodedToken.role === 'STAFF') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Bạn không có quyền thao tác',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        return;
+      }
       let idProduct = $routeParams.id;
       let sanPham = $scope.editproduct.sanPham;
       let soLuong = $scope.editproduct.soLuong;
@@ -175,9 +235,13 @@ app.controller(
       };
 
       $http
-        .put("http://localhost:8080/sanPhamChiTiet/luuChinhSua", editProduct, {
-          headers,
-        })
+        .put(
+          "http://localhost:8080/sanPhamChiTiet/luuChinhSua",
+          editProduct,
+          {
+            headers,
+          }
+        )
         .then(function (response) {
           Swal.fire({
             icon: "success",
@@ -221,6 +285,18 @@ app.controller(
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,
     };
+    // lay ra thong tin nguoi dang nhap
+    function parseJwt(token) {
+      let base64Url = token.split('.')[1];
+      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+  
+      let payload = JSON.parse(jsonPayload);
+      return payload;
+    }
+    let decodedToken = parseJwt(token);
 
     $http
       .get("http://localhost:8080/chatLieu/danhSach", { headers })
@@ -260,6 +336,15 @@ app.controller(
     let mauSac_id = [];
     $scope.mauSacDaChon = "";
     $scope.onColorChange = function () {
+      if (decodedToken.role === 'STAFF') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Bạn không có quyền thao tác',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        return;
+      }
       let mauSac = JSON.parse($scope.selectedColor);
 
       if (mauSac_id.indexOf(mauSac.id) === -1) {
@@ -271,6 +356,15 @@ app.controller(
     let kichCo_id = [];
     $scope.kichCocDaChon = "";
     $scope.onKichCoChange = function () {
+      if (decodedToken.role === 'STAFF') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Bạn không có quyền thao tác',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        return;
+      }
       let kichCo = JSON.parse($scope.selectedSizes);
 
       if (kichCo_id.indexOf(kichCo.id) === -1) {
@@ -280,6 +374,15 @@ app.controller(
     };
 
     $scope.saveCreate = function () {
+      if (decodedToken.role === 'STAFF') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Bạn không có quyền thao tác',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        return;
+      }
       if ($scope.createProduct === undefined) {
         Swal.fire({
           icon: "error",
@@ -289,7 +392,6 @@ app.controller(
         });
         return;
       }
-
       let data = {
         tenSanPham: $scope.createProduct.tenSanPham,
         gia: $scope.createProduct.gia,
@@ -302,7 +404,9 @@ app.controller(
       };
 
       $http
-        .post("http://localhost:8080/sanPham/TaoSanPham", data, { headers })
+        .post("http://localhost:8080/sanPham/TaoSanPham", data, {
+          headers,
+        })
         .then(function (response) {
           Swal.fire({
             icon: "success",
@@ -312,21 +416,26 @@ app.controller(
           });
           const details = response.data.list;
           $scope.details = details;
-
-          localStorage.setItem("id_product", response.data.id_product);
+          localStorage.setItem(
+            "id_product",
+            response.data.id_product
+          );
         })
         .catch(function (errorResponse) {
           console.log(errorResponse);
           if (errorResponse.status === 400) {
             const errors = errorResponse.data;
-            angular.forEach(errors, function (errorMessage, fieldName) {
-              Swal.fire({
-                icon: "error",
-                title: errorMessage,
-                showConfirmButton: false,
-                timer: 2000,
-              });
-            });
+            angular.forEach(
+              errors,
+              function (errorMessage, fieldName) {
+                Swal.fire({
+                  icon: "error",
+                  title: errorMessage,
+                  showConfirmButton: false,
+                  timer: 2000,
+                });
+              }
+            );
           }
         });
     };
@@ -336,6 +445,15 @@ app.controller(
     };
 
     $scope.themAnh = function () {
+      if (decodedToken.role === 'STAFF') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Bạn không có quyền thao tác',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        return;
+      }
       let id_product = localStorage.getItem("id_product");
 
       if (!id_product) {
@@ -351,6 +469,15 @@ app.controller(
     };
 
     $scope.ThemMoiChatLieu = function () {
+      if (decodedToken.role === 'STAFF') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Bạn không có quyền thao tác',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        return;
+      }
       Swal.fire({
         title: "Thêm mới chất liệu",
         input: "text",
@@ -369,7 +496,9 @@ app.controller(
             chatLieu: result.value,
           };
           $http
-            .post("http://localhost:8080/chatLieu/themMoi", data, { headers })
+            .post("http://localhost:8080/chatLieu/themMoi", data, {
+              headers,
+            })
             .then(function (response) {
               Swal.fire({
                 icon: "success",
@@ -401,6 +530,15 @@ app.controller(
     };
 
     $scope.ThemMoiLoai = function () {
+      if (decodedToken.role === 'STAFF') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Bạn không có quyền thao tác',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        return;
+      }
       Swal.fire({
         title: "Thêm mới loại sản phẩm",
         input: "text",
@@ -419,9 +557,13 @@ app.controller(
             loaiSanPham: result.value,
           };
           $http
-            .post("http://localhost:8080/loaiSanPham/themMoi", data, {
-              headers,
-            })
+            .post(
+              "http://localhost:8080/loaiSanPham/themMoi",
+              data,
+              {
+                headers,
+              }
+            )
             .then(function (response) {
               Swal.fire({
                 icon: "success",
@@ -430,7 +572,10 @@ app.controller(
                 timer: 2000,
               });
               $http
-                .get("http://localhost:8080/loaiSanPham/danhSach", { headers })
+                .get(
+                  "http://localhost:8080/loaiSanPham/danhSach",
+                  { headers }
+                )
                 .then(function (response) {
                   const loaiSanPham = response.data;
                   $scope.loaiSanPham = loaiSanPham;
@@ -455,6 +600,15 @@ app.controller(
     };
 
     $scope.ThemMoiHang = function () {
+      if (decodedToken.role === 'STAFF') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Bạn không có quyền thao tác',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        return;
+      }
       Swal.fire({
         title: "Thêm mới hãng",
         input: "text",
@@ -473,9 +627,13 @@ app.controller(
             name: result.value,
           };
           $http
-            .post("http://localhost:8080/nhaSanXuat/themMoi", data, {
-              headers,
-            })
+            .post(
+              "http://localhost:8080/nhaSanXuat/themMoi",
+              data,
+              {
+                headers,
+              }
+            )
             .then(function (response) {
               Swal.fire({
                 icon: "success",
@@ -484,7 +642,10 @@ app.controller(
                 timer: 2000,
               });
               $http
-                .get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
+                .get(
+                  "http://localhost:8080/nhaSanXuat/danhSach",
+                  { headers }
+                )
                 .then(function (response) {
                   const nhaSanXuat = response.data;
                   $scope.nhaSanXuat = nhaSanXuat;
@@ -509,6 +670,15 @@ app.controller(
     };
 
     $scope.ThemMoiKichCo = function () {
+      if (decodedToken.role === 'STAFF') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Bạn không có quyền thao tác',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        return;
+      }
       Swal.fire({
         title: "Thêm mới kích cỡ",
         input: "text",
@@ -541,7 +711,9 @@ app.controller(
                 timer: 2000,
               });
               $http
-                .get("http://localhost:8080/kichCo/danhSach", { headers })
+                .get("http://localhost:8080/kichCo/danhSach", {
+                  headers,
+                })
                 .then(function (response) {
                   const kichCo = response.data;
                   $scope.kichCo = kichCo;
@@ -566,6 +738,15 @@ app.controller(
     };
 
     $scope.ThemMoiMauSac = function () {
+      if (decodedToken.role === 'STAFF') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Bạn không có quyền thao tác',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        return;
+      }
       Swal.fire({
         title: "Thêm mới màu sắc",
         html: `
@@ -578,11 +759,15 @@ app.controller(
         confirmButtonText: "Xác nhận",
         cancelButtonText: "Huỷ",
         preConfirm: () => {
-          const colorInput = document.getElementById("color-input").value;
-          const nameInput = document.getElementById("name-input").value;
+          const colorInput =
+            document.getElementById("color-input").value;
+          const nameInput =
+            document.getElementById("name-input").value;
 
           if (!nameInput || !colorInput) {
-            Swal.showValidationMessage("Vui lòng nhập tên và chọn màu sắc");
+            Swal.showValidationMessage(
+              "Vui lòng nhập tên và chọn màu sắc"
+            );
           } else {
             let data = {
               tenMauSac: nameInput,
@@ -590,7 +775,11 @@ app.controller(
             };
 
             $http
-              .post("http://localhost:8080/mauSac/themMoi", data, { headers })
+              .post(
+                "http://localhost:8080/mauSac/themMoi",
+                data,
+                { headers }
+              )
               .then(function (response) {
                 // Xử lý thành công nếu có
                 Swal.fire({
@@ -601,7 +790,10 @@ app.controller(
                 });
 
                 $http
-                  .get("http://localhost:8080/mauSac/danhSach", { headers })
+                  .get(
+                    "http://localhost:8080/mauSac/danhSach",
+                    { headers }
+                  )
                   .then(function (response) {
                     const mauSac = response.data;
                     $scope.mauSac = mauSac;
@@ -634,6 +826,18 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
     "Content-Type": "application/json",
     Authorization: "Bearer " + token,
   };
+  // lay ra thong tin nguoi dang nhap
+  function parseJwt(token) {
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    let payload = JSON.parse(jsonPayload);
+    return payload;
+  }
+  let decodedToken = parseJwt(token);
 
   function updateImageData(id, spcts) {
     $http
@@ -666,6 +870,15 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
     });
 
   $scope.loadImage = function (input) {
+    if (decodedToken.role === 'STAFF') {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Bạn không có quyền thao tác',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      return;
+    }
     if (input.files && input.files[0]) {
       let reader = new FileReader();
       reader.onload = function (e) {
@@ -700,9 +913,13 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
         };
 
         $http
-          .post("http://localhost:8080/sanPhamChiTiet/themAnhSanPham", data, {
-            headers,
-          })
+          .post(
+            "http://localhost:8080/sanPhamChiTiet/themAnhSanPham",
+            data,
+            {
+              headers,
+            }
+          )
           .then(function (response) {
             Swal.fire({
               icon: "success",
@@ -718,6 +935,15 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
   };
 
   $scope.setAnhMacDinh = function (hinhAnh, spcts) {
+    if (decodedToken.role === 'STAFF') {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Bạn không có quyền thao tác',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      return;
+    }
     let data = {
       id_hinh_anh: hinhAnh.id,
       id_spct: spcts.id,
@@ -739,15 +965,28 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
   };
 
   $scope.xoaAnh = function (hinhAnh, spcts) {
+    if (decodedToken.role === 'STAFF') {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Bạn không có quyền thao tác',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      return;
+    }
     let data = {
       id_hinh_anh: hinhAnh.id,
       id_spct: spcts.id,
     };
 
     $http
-      .put("http://localhost:8080/sanPhamChiTiet/xoaAnh/", data, { headers })
+      .put("http://localhost:8080/sanPhamChiTiet/xoaAnh/", data, {
+        headers,
+      })
       .then(function (response) {
-        const index = spcts.hinhAnh.findIndex((item) => item.id === hinhAnh.id);
+        const index = spcts.hinhAnh.findIndex(
+          (item) => item.id === hinhAnh.id
+        );
         if (index !== -1) {
           spcts.hinhAnh.splice(index, 1);
         }
@@ -762,11 +1001,21 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
   };
 
   $scope.themAnhSanPhamHT = function () {
+    if (decodedToken.role === 'STAFF') {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Bạn không có quyền thao tác',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      return;
+    }
     const productsWithoutImages = $scope.spct.filter(
       (spcts) => !spcts.hinhAnh || spcts.hinhAnh.length === 0
     );
     const productsWithoutDefaultImage = $scope.spct.filter(
-      (spcts) => spcts.hinhAnh && !spcts.hinhAnh.some((anh) => anh.anhMacDinh)
+      (spcts) =>
+        spcts.hinhAnh && !spcts.hinhAnh.some((anh) => anh.anhMacDinh)
     );
 
     if (productsWithoutImages.length > 0) {
@@ -803,6 +1052,18 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
     "Content-Type": "application/json",
     Authorization: "Bearer " + token,
   };
+  // lay ra thong tin nguoi dang nhap
+  function parseJwt(token) {
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    let payload = JSON.parse(jsonPayload);
+    return payload;
+  }
+  let decodedToken = parseJwt(token);
 
   let id = $routeParams.id;
 
@@ -824,11 +1085,29 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
     });
 
   $scope.editSPCT = function (promotion) {
+    if (decodedToken.role === 'STAFF') {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Bạn không có quyền thao tác',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      return;
+    }
     let id = promotion.id;
     window.location.href = "#!/edit-ProductDetails?id=" + id;
   };
 
   $scope.updateTrangThai = function (details) {
+    if (decodedToken.role === 'STAFF') {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Bạn không có quyền thao tác',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      return;
+    }
     Swal.fire({
       title: "Xác nhận chuyển trạng thái",
       text: "Bạn có muốn chuyển trạng thái của sản phẩm không?",
@@ -889,7 +1168,16 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
   };
 
   $scope.themSanPhamTuongTu = function () {
-    window.location.href = "#!/themSanPhamTuongTu?id=" + id;
+    if (decodedToken.role === 'STAFF') {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Bạn không có quyền thao tác',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      return;
+    }
+    window.location.href = "#!/themSanPhamTuongTu?id=" + id
   };
 });
 
@@ -914,6 +1202,18 @@ app.controller(
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,
     };
+    // lay ra thong tin nguoi dang nhap
+    function parseJwt(token) {
+      let base64Url = token.split('.')[1];
+      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+  
+      let payload = JSON.parse(jsonPayload);
+      return payload;
+    }
+    let decodedToken = parseJwt(token);
 
     let id_product = $routeParams.id;
     let storedImages = ImageService.getImages(id_product);
@@ -921,9 +1221,11 @@ app.controller(
       $scope.spct = storedImages;
     } else {
       $http
-        .get("http://localhost:8080/sanPhamChiTiet/themAnh/" + id_product, {
-          headers,
-        })
+        .get(
+          "http://localhost:8080/sanPhamChiTiet/themAnh/" +
+          id_product,
+          { headers }
+        )
         .then(function (response) {
           const spct = response.data;
           const uniqueProducts = {};
@@ -964,9 +1266,13 @@ app.controller(
       }
 
       $http
-        .get("http://localhost:8080/sanPhamChiTiet/hienThiAnh/" + spcts.id, {
-          headers,
-        })
+        .get(
+          "http://localhost:8080/sanPhamChiTiet/hienThiAnh/" +
+          spcts.id,
+          {
+            headers,
+          }
+        )
         .then(function (response) {
           const hinhAnh = response.data;
           spcts.hinhAnh = hinhAnh;
@@ -1012,9 +1318,13 @@ app.controller(
           };
 
           $http
-            .post("http://localhost:8080/sanPhamChiTiet/themAnhSanPham", data, {
-              headers,
-            })
+            .post(
+              "http://localhost:8080/sanPhamChiTiet/themAnhSanPham",
+              data,
+              {
+                headers,
+              }
+            )
             .then(function (response) {
               Swal.fire({
                 icon: "success",
@@ -1031,15 +1341,28 @@ app.controller(
     };
 
     $scope.setAnhMacDinh = function (hinhAnh, spcts) {
+      if (decodedToken.role === 'STAFF') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Bạn không có quyền thao tác',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        return;
+      }
       let data = {
         id_hinh_anh: hinhAnh.id,
         id_spct: spcts.id,
       };
 
       $http
-        .put("http://localhost:8080/sanPhamChiTiet/setAnhMacDinh/", data, {
-          headers,
-        })
+        .put(
+          "http://localhost:8080/sanPhamChiTiet/setAnhMacDinh/",
+          data,
+          {
+            headers,
+          }
+        )
         .then(function (response) {
           Swal.fire({
             icon: "success",
@@ -1052,13 +1375,24 @@ app.controller(
     };
 
     $scope.xoaAnh = function (hinhAnh, spcts) {
+      if (decodedToken.role === 'STAFF') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Bạn không có quyền thao tác',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        return;
+      }
       let data = {
         id_hinh_anh: hinhAnh.id,
         id_spct: spcts.id,
       };
 
       $http
-        .put("http://localhost:8080/sanPhamChiTiet/xoaAnh/", data, { headers })
+        .put("http://localhost:8080/sanPhamChiTiet/xoaAnh/", data, {
+          headers,
+        })
         .then(function (response) {
           const index = spcts.hinhAnh.findIndex(
             (item) => item.id === hinhAnh.id
@@ -1077,11 +1411,22 @@ app.controller(
     };
 
     $scope.themAnhSanPhamHT = function () {
+      if (decodedToken.role === 'STAFF') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Bạn không có quyền thao tác',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        return;
+      }
       const productsWithoutImages = $scope.spct.filter(
         (spcts) => !spcts.hinhAnh || spcts.hinhAnh.length === 0
       );
       const productsWithoutDefaultImage = $scope.spct.filter(
-        (spcts) => spcts.hinhAnh && !spcts.hinhAnh.some((anh) => anh.anhMacDinh)
+        (spcts) =>
+          spcts.hinhAnh &&
+          !spcts.hinhAnh.some((anh) => anh.anhMacDinh)
       );
 
       if (productsWithoutImages.length > 0) {
