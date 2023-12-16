@@ -1,0 +1,43 @@
+{
+    "name": "ng-webcam",
+    "version": "1.0.0",
+    "description": "A simple Angular library to support webcam audio/video access, with camera feature, and an edge for Machine learning",
+    "author": "Mohit Paritosh",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/trafalgarDWaterLaw/ng-webcam.git"
+    },
+    "bugs": {
+        "url": "https://github.com/trafalgarDWaterLaw/ng-webcam/issues"
+    },
+    "homepage": "https://github.com/trafalgarDWaterLaw/ng-webcam",
+    "keywords": [
+        "angular",
+        "javascript",
+        "typescript",
+        "ML",
+        "Webcam",
+        "camera",
+        "Machine learning",
+        "usermedia"
+    ],
+    "license": "MIT",
+    "peerDependencies": {
+        "@angular/common": "^8.2.0",
+        "@angular/core": "^8.2.0",
+        "rxjs": "^6.5.5"
+    },
+    "main": "bundles/ng-web-cam.umd.js",
+    "module": "fesm5/ng-web-cam.js",
+    "es2015": "fesm2015/ng-web-cam.js",
+    "esm5": "esm5/ng-web-cam.js",
+    "esm2015": "esm2015/ng-web-cam.js",
+    "fesm5": "fesm5/ng-web-cam.js",
+    "fesm2015": "fesm2015/ng-web-cam.js",
+    "typings": "ng-web-cam.d.ts",
+    "metadata": "ng-web-cam.metadata.json",
+    "sideEffects": false,
+    "dependencies": {
+        "tslib": "^1.9.0"
+    }
+}
