@@ -5,7 +5,8 @@ app.controller("ProductController", function ($scope, $http) {
     Authorization: "Bearer " + token,
   };
 
-  $http.get("http://localhost:8080/sanPham/danhSach", { headers })
+  $http
+    .get("http://localhost:8080/sanPham/danhSach", { headers })
     .then(function (response) {
       const promotions = response.data;
       $scope.promotions = promotions;
@@ -63,18 +64,20 @@ app.controller("ProductController", function ($scope, $http) {
   $scope.delete = function (promotion) {
     let id = promotion.id;
     Swal.fire({
-      title: 'Xác nhận xóa sản phẩm',
-      text: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
-      icon: 'warning',
+      title: "Xác nhận xóa sản phẩm",
+      text: "Bạn có chắc chắn muốn xóa sản phẩm này?",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Xóa',
-      cancelButtonText: 'Hủy',
+      confirmButtonText: "Xóa",
+      cancelButtonText: "Hủy",
     }).then((result) => {
       if (result.isConfirmed) {
-        $http.delete("http://localhost:8080/sanPham/xoa/" + id, { headers })
+        $http
+          .delete("http://localhost:8080/sanPham/xoa/" + id, { headers })
           .then(function (response) {
             const promotions = response.data;
-            $http.get("http://localhost:8080/sanPham/danhSach", { headers })
+            $http
+              .get("http://localhost:8080/sanPham/danhSach", { headers })
               .then(function (response) {
                 const promotions = response.data;
                 console.log(promotions);
@@ -96,11 +99,12 @@ app.controller("ProductController", function ($scope, $http) {
           });
       }
     });
-  }
+  };
 
   // Re load
   $scope.reLoad = function () {
-    $http.get("http://localhost:8080/sanPham/danhSach", { headers })
+    $http
+      .get("http://localhost:8080/sanPham/danhSach", { headers })
       .then(function (response) {
         const promotions = response.data;
         $scope.$evalAsync(function () {
@@ -109,14 +113,16 @@ app.controller("ProductController", function ($scope, $http) {
       });
   };
 
-  $scope.$watch('searchTerm', function (newVal) {
+  $scope.$watch("searchTerm", function (newVal) {
     if (newVal) {
-      $http.get("http://localhost:8080/sanPham/timKiem=" + newVal, { headers })
+      $http
+        .get("http://localhost:8080/sanPham/timKiem=" + newVal, { headers })
         .then(function (response) {
           $scope.promotions = response.data;
         });
     } else {
-      $http.get("http://localhost:8080/sanPham/danhSach", { headers })
+      $http
+        .get("http://localhost:8080/sanPham/danhSach", { headers })
         .then(function (response) {
           $scope.promotions = response.data;
         });
@@ -124,462 +130,247 @@ app.controller("ProductController", function ($scope, $http) {
   });
 
   $scope.searchAll = function (searchTerm) {
-    $http.get("http://localhost:8080/sanPham/timKiem=" + searchTerm, { headers })
+    $http
+      .get("http://localhost:8080/sanPham/timKiem=" + searchTerm, { headers })
       .then(function (response) {
         $scope.promotions = response.data;
       });
   };
-
 });
 
 //Edit controller
-app.controller("EditProductController", function ($scope, $routeParams, $http, $location) {
-  let token = localStorage.getItem("token");
-  let headers = {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + token,
-  };
-
-  let idPro = $routeParams.id;
-
-  $http
-    .get("http://localhost:8080/sanPhamChiTiet/chinhSua/" + idPro, { headers })
-    .then(function (response) {
-      const editproduct = response.data;
-      $scope.editproduct = editproduct;
-    });
-
-  $scope.saveEdits = function () {
-    let idProduct = $routeParams.id;
-    let sanPham = $scope.editproduct.sanPham;
-    let soLuong = $scope.editproduct.soLuong;
-    let trangThai = soLuong === 0 ? false : true;
-
-    let editProduct = {
-      id: idProduct,
-      mauSac: $scope.editproduct.mauSac,
-      kichCo: $scope.editproduct.kichCo,
-      sanPham: sanPham,
-      soLuong: soLuong,
-      trangThai: trangThai
+app.controller(
+  "EditProductController",
+  function ($scope, $routeParams, $http, $location) {
+    let token = localStorage.getItem("token");
+    let headers = {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
     };
 
+    let idPro = $routeParams.id;
+
     $http
-      .put("http://localhost:8080/sanPhamChiTiet/luuChinhSua", editProduct, {
+      .get("http://localhost:8080/sanPhamChiTiet/chinhSua/" + idPro, {
         headers,
       })
       .then(function (response) {
+        const editproduct = response.data;
+        $scope.editproduct = editproduct;
+      });
+
+    $scope.saveEdits = function () {
+      let idProduct = $routeParams.id;
+      let sanPham = $scope.editproduct.sanPham;
+      let soLuong = $scope.editproduct.soLuong;
+      let trangThai = soLuong === 0 ? false : true;
+
+      let editProduct = {
+        id: idProduct,
+        mauSac: $scope.editproduct.mauSac,
+        kichCo: $scope.editproduct.kichCo,
+        sanPham: sanPham,
+        soLuong: soLuong,
+        trangThai: trangThai,
+      };
+
+      $http
+        .put("http://localhost:8080/sanPhamChiTiet/luuChinhSua", editProduct, {
+          headers,
+        })
+        .then(function (response) {
+          Swal.fire({
+            icon: "success",
+            title: "Cập nhật thành công",
+            showConfirmButton: false,
+            timer: 2000,
+          }).then(function () {
+            sessionStorage.setItem("isConfirmed", true);
+            let idProduct = $scope.editproduct.sanPham.id;
+            window.location.href = "#!/list-CTSP?id=" + idProduct;
+          });
+        })
+        .catch(function (errorResponse) {
+          if (errorResponse.status === 400) {
+            const errorMessage = errorResponse.data.message;
+            Swal.fire({
+              icon: "error",
+              title: errorMessage + "",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+          }
+          console.log(errorResponse);
+        });
+    };
+
+    //Return
+    $scope.returnEdit = function () {
+      let idProduct = $scope.editproduct.sanPham.id;
+      $location.path("/list-CTSP").search({ id: idProduct });
+    };
+  }
+);
+
+//Create controller
+app.controller(
+  "CreateProductController",
+  function ($scope, $http, $routeParams) {
+    let token = localStorage.getItem("token");
+    let headers = {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    };
+
+    $http
+      .get("http://localhost:8080/chatLieu/danhSach", { headers })
+      .then(function (response) {
+        const chatLieu = response.data;
+        $scope.chatLieu = chatLieu;
+      });
+
+    $http
+      .get("http://localhost:8080/loaiSanPham/danhSach", { headers })
+      .then(function (response) {
+        const loaiSanPham = response.data;
+        $scope.loaiSanPham = loaiSanPham;
+      });
+
+    $http
+      .get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
+      .then(function (response) {
+        const nhaSanXuat = response.data;
+        $scope.nhaSanXuat = nhaSanXuat;
+      });
+
+    $http
+      .get("http://localhost:8080/mauSac/danhSach", { headers })
+      .then(function (response) {
+        const mauSac = response.data;
+        $scope.mauSac = mauSac;
+      });
+
+    $http
+      .get("http://localhost:8080/kichCo/danhSach", { headers })
+      .then(function (response) {
+        const kichCo = response.data;
+        $scope.kichCo = kichCo;
+      });
+
+    let mauSac_id = [];
+    $scope.mauSacDaChon = "";
+    $scope.onColorChange = function () {
+      let mauSac = JSON.parse($scope.selectedColor);
+
+      if (mauSac_id.indexOf(mauSac.id) === -1) {
+        mauSac_id.push(mauSac.id);
+        $scope.mauSacDaChon += mauSac.tenMauSac + ", ";
+      }
+    };
+
+    let kichCo_id = [];
+    $scope.kichCocDaChon = "";
+    $scope.onKichCoChange = function () {
+      let kichCo = JSON.parse($scope.selectedSizes);
+
+      if (kichCo_id.indexOf(kichCo.id) === -1) {
+        kichCo_id.push(kichCo.id);
+        $scope.kichCocDaChon += kichCo.kichCo + ", ";
+      }
+    };
+
+    $scope.saveCreate = function () {
+      if ($scope.createProduct === undefined) {
         Swal.fire({
-          icon: "success",
-          title: "Cập nhật thành công",
+          icon: "error",
+          title: "Vui lòng nhập đầy đủ thông tin",
           showConfirmButton: false,
           timer: 2000,
-        }).then(function () {
-          sessionStorage.setItem("isConfirmed", true);
-          let idProduct = $scope.editproduct.sanPham.id;
-          window.location.href = "#!/list-CTSP?id=" + idProduct;
         });
-      })
-      .catch(function (errorResponse) {
-        if (errorResponse.status === 400) {
-          const errorMessage = errorResponse.data.message;
+        return;
+      }
+
+      let data = {
+        tenSanPham: $scope.createProduct.tenSanPham,
+        gia: $scope.createProduct.gia,
+        soLuong: $scope.createProduct.soLuong,
+        chatLieu_id: $scope.createProduct.chatLieu,
+        loaiSanPham_id: $scope.createProduct.loaiSanPham,
+        nhaSanXuat_id: $scope.createProduct.nhaSanXuat,
+        mauSac: mauSac_id,
+        kichCo: kichCo_id,
+      };
+
+      $http
+        .post("http://localhost:8080/sanPham/TaoSanPham", data, { headers })
+        .then(function (response) {
           Swal.fire({
-            icon: "error",
-            title: errorMessage + "",
+            icon: "success",
+            title: "Thêm mới thành công",
             showConfirmButton: false,
             timer: 2000,
           });
-        }
-        console.log(errorResponse)
-      });
-  };
+          const details = response.data.list;
+          $scope.details = details;
 
-  //Return
-  $scope.returnEdit = function () {
-    let idProduct = $scope.editproduct.sanPham.id;
-    $location.path("/list-CTSP").search({ id: idProduct });
-  };
-
-});
-
-//Create controller
-app.controller("CreateProductController", function ($scope, $http, $routeParams) {
-  let token = localStorage.getItem("token");
-  let headers = {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + token,
-  };
-
-  $http
-    .get("http://localhost:8080/chatLieu/danhSach", { headers })
-    .then(function (response) {
-      const chatLieu = response.data;
-      $scope.chatLieu = chatLieu;
-    });
-
-  $http
-    .get("http://localhost:8080/loaiSanPham/danhSach", { headers })
-    .then(function (response) {
-      const loaiSanPham = response.data;
-      $scope.loaiSanPham = loaiSanPham;
-    });
-
-  $http
-    .get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
-    .then(function (response) {
-      const nhaSanXuat = response.data;
-      $scope.nhaSanXuat = nhaSanXuat;
-    });
-
-  $http
-    .get("http://localhost:8080/mauSac/danhSach", { headers })
-    .then(function (response) {
-      const mauSac = response.data;
-      $scope.mauSac = mauSac;
-    });
-
-  $http
-    .get("http://localhost:8080/kichCo/danhSach", { headers })
-    .then(function (response) {
-      const kichCo = response.data;
-      $scope.kichCo = kichCo;
-    });
-
-  let mauSac_id = [];
-  $scope.mauSacDaChon = "";
-  $scope.onColorChange = function () {
-    let mauSac = JSON.parse($scope.selectedColor);
-
-    if (mauSac_id.indexOf(mauSac.id) === -1) {
-      mauSac_id.push(mauSac.id);
-      $scope.mauSacDaChon += mauSac.tenMauSac + ", ";
-    }
-  };
-
-  let kichCo_id = [];
-  $scope.kichCocDaChon = "";
-  $scope.onKichCoChange = function () {
-    let kichCo = JSON.parse($scope.selectedSizes);
-
-    if (kichCo_id.indexOf(kichCo.id) === -1) {
-      kichCo_id.push(kichCo.id);
-      $scope.kichCocDaChon += kichCo.kichCo + ", ";
-    }
-  };
-
-  $scope.saveCreate = function () {
-    if ($scope.createProduct === undefined) {
-      Swal.fire({
-        icon: "error",
-        title: "Vui lòng nhập đầy đủ thông tin",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-      return;
-    }
-
-    let data = {
-      tenSanPham: $scope.createProduct.tenSanPham,
-      gia: $scope.createProduct.gia,
-      soLuong: $scope.createProduct.soLuong,
-      chatLieu_id: $scope.createProduct.chatLieu,
-      loaiSanPham_id: $scope.createProduct.loaiSanPham,
-      nhaSanXuat_id: $scope.createProduct.nhaSanXuat,
-      mauSac: mauSac_id,
-      kichCo: kichCo_id,
+          localStorage.setItem("id_product", response.data.id_product);
+        })
+        .catch(function (errorResponse) {
+          console.log(errorResponse);
+          if (errorResponse.status === 400) {
+            const errors = errorResponse.data;
+            angular.forEach(errors, function (errorMessage, fieldName) {
+              Swal.fire({
+                icon: "error",
+                title: errorMessage,
+                showConfirmButton: false,
+                timer: 2000,
+              });
+            });
+          }
+        });
     };
 
-    $http.post("http://localhost:8080/sanPham/TaoSanPham", data, { headers })
-      .then(function (response) {
+    $scope.returnCreate = function () {
+      window.location.href = "#!/list-Product";
+    };
+
+    $scope.themAnh = function () {
+      let id_product = localStorage.getItem("id_product");
+
+      if (!id_product) {
         Swal.fire({
-          icon: "success",
-          title: "Thêm mới thành công",
+          icon: "error",
+          title: "Vui lòng tạo sản phẩm trước khi thêm ảnh",
           showConfirmButton: false,
           timer: 2000,
         });
-        const details = response.data.list;
-        $scope.details = details;
+        return;
+      }
+      window.location.href = "#!/list-Img?id=" + id_product;
+    };
 
-        localStorage.setItem("id_product", response.data.id_product);
-      })
-      .catch(function (errorResponse) {
-        console.log(errorResponse);
-        if (errorResponse.status === 400) {
-          const errors = errorResponse.data;
-          angular.forEach(errors, function (errorMessage, fieldName) {
-            Swal.fire({
-              icon: "error",
-              title: errorMessage,
-              showConfirmButton: false,
-              timer: 2000,
-            });
-          });
-        }
-      });
-  };
-
-  $scope.returnCreate = function () {
-    window.location.href = "#!/list-Product";
-  };
-
-  $scope.themAnh = function () {
-    let id_product = localStorage.getItem("id_product");
-
-    if (!id_product) {
+    $scope.ThemMoiChatLieu = function () {
       Swal.fire({
-        icon: "error",
-        title: "Vui lòng tạo sản phẩm trước khi thêm ảnh",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-      return;
-    }
-    window.location.href = "#!/list-Img?id=" + id_product;
-  };
-
-  $scope.ThemMoiChatLieu = function () {
-    Swal.fire({
-      title: "Thêm mới chất liệu",
-      input: "text",
-      inputLabel: "Nhập tên chất liệu",
-      showCancelButton: true,
-      confirmButtonText: "Xác nhận",
-      cancelButtonText: "Huỷ",
-      inputValidator: (value) => {
-        if (!value) {
-          return "Vui lòng nhập tên chất liệu";
-        }
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        let data = {
-          chatLieu: result.value,
-        };
-        $http
-          .post("http://localhost:8080/chatLieu/themMoi", data, { headers })
-          .then(function (response) {
-            Swal.fire({
-              icon: "success",
-              title: "Thêm mới thành công",
-              showConfirmButton: false,
-              timer: 2000,
-            });
-
-            const chatLieu = response.data;
-            $scope.chatLieu = chatLieu;
-          })
-          .catch(function (error) {
-            if (error.status === 400) {
-              const errorMessage = error.data.message;
-              Swal.fire({
-                icon: "error",
-                title: errorMessage + "",
-                showConfirmButton: false,
-                timer: 2000,
-              });
-            } else {
-              console.error(error);
-            }
-          });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        // Có thể thêm xử lý nếu người dùng huỷ bỏ
-      }
-    });
-  };
-
-  $scope.ThemMoiLoai = function () {
-    Swal.fire({
-      title: "Thêm mới loại sản phẩm",
-      input: "text",
-      inputLabel: "Nhập tên loại sản phẩm",
-      showCancelButton: true,
-      confirmButtonText: "Xác nhận",
-      cancelButtonText: "Huỷ",
-      inputValidator: (value) => {
-        if (!value) {
-          return "Vui lòng nhập tên loại sản phẩm";
-        }
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        let data = {
-          loaiSanPham: result.value,
-        };
-        $http
-          .post("http://localhost:8080/loaiSanPham/themMoi", data, {
-            headers,
-          })
-          .then(function (response) {
-            Swal.fire({
-              icon: "success",
-              title: "Thêm mới thành công",
-              showConfirmButton: false,
-              timer: 2000,
-            });
-            $http
-              .get("http://localhost:8080/loaiSanPham/danhSach", { headers })
-              .then(function (response) {
-                const loaiSanPham = response.data;
-                $scope.loaiSanPham = loaiSanPham;
-              });
-          })
-          .catch(function (error) {
-            if (error.status === 400) {
-              const errorMessage = error.data.message;
-              Swal.fire({
-                icon: "error",
-                title: errorMessage + "",
-                showConfirmButton: false,
-                timer: 2000,
-              });
-            } else {
-              console.error(error);
-            }
-          });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-      }
-    });
-  };
-
-  $scope.ThemMoiHang = function () {
-    Swal.fire({
-      title: "Thêm mới hãng",
-      input: "text",
-      inputLabel: "Nhập tên hãng",
-      showCancelButton: true,
-      confirmButtonText: "Xác nhận",
-      cancelButtonText: "Huỷ",
-      inputValidator: (value) => {
-        if (!value) {
-          return "Vui lòng nhập tên hãng";
-        }
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        let data = {
-          name: result.value,
-        };
-        $http
-          .post("http://localhost:8080/nhaSanXuat/themMoi", data, {
-            headers,
-          })
-          .then(function (response) {
-            Swal.fire({
-              icon: "success",
-              title: "Thêm mới thành công",
-              showConfirmButton: false,
-              timer: 2000,
-            });
-            $http
-              .get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
-              .then(function (response) {
-                const nhaSanXuat = response.data;
-                $scope.nhaSanXuat = nhaSanXuat;
-              });
-          })
-          .catch(function (error) {
-            if (error.status === 400) {
-              const errorMessage = error.data.message;
-              Swal.fire({
-                icon: "error",
-                title: errorMessage + "",
-                showConfirmButton: false,
-                timer: 2000,
-              });
-            } else {
-              console.error(error);
-            }
-          });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-      }
-    });
-  };
-
-  $scope.ThemMoiKichCo = function () {
-    Swal.fire({
-      title: "Thêm mới kích cỡ",
-      input: "text",
-      inputLabel: "Nhập tên kích cỡ",
-      showCancelButton: true,
-      confirmButtonText: "Xác nhận",
-      cancelButtonText: "Huỷ",
-      inputValidator: (value) => {
-        if (!value) {
-          return "Vui lòng nhập kích cỡ";
-        }
-        if (!/^\d+(\.\d+)?$/.test(value)) {
-          return "Vui lòng nhập số";
-        }
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        let data = {
-          kichCo: result.value,
-        };
-        $http
-          .post("http://localhost:8080/kichCo/themMoi", data, {
-            headers,
-          })
-          .then(function (response) {
-            Swal.fire({
-              icon: "success",
-              title: "Thêm mới thành công",
-              showConfirmButton: false,
-              timer: 2000,
-            });
-            $http
-              .get("http://localhost:8080/kichCo/danhSach", { headers })
-              .then(function (response) {
-                const kichCo = response.data;
-                $scope.kichCo = kichCo;
-              });
-          })
-          .catch(function (error) {
-            if (error.status === 400) {
-              const errorMessage = error.data.message;
-              Swal.fire({
-                icon: "error",
-                title: errorMessage + "",
-                showConfirmButton: false,
-                timer: 2000,
-              });
-            } else {
-              console.error(error);
-            }
-          });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-      }
-    });
-  };
-
-  $scope.ThemMoiMauSac = function () {
-    Swal.fire({
-      title: "Thêm mới màu sắc",
-      html: `
-        <label for="color-input">Chọn màu sắc:</label>
-        <input type="color" id="color-input" class="form-control">
-        <label for="name-input">Nhập tên màu sắc:</label>
-        <input type="text" id="name-input" class="form-control">
-      `,
-      showCancelButton: true,
-      confirmButtonText: "Xác nhận",
-      cancelButtonText: "Huỷ",
-      preConfirm: () => {
-        const colorInput = document.getElementById("color-input").value;
-        const nameInput = document.getElementById("name-input").value;
-
-        if (!nameInput || !colorInput) {
-          Swal.showValidationMessage("Vui lòng nhập tên và chọn màu sắc");
-        } else {
+        title: "Thêm mới chất liệu",
+        input: "text",
+        inputLabel: "Nhập tên chất liệu",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Huỷ",
+        inputValidator: (value) => {
+          if (!value) {
+            return "Vui lòng nhập tên chất liệu";
+          }
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
           let data = {
-            tenMauSac: nameInput,
-            maMauSac: colorInput,
+            chatLieu: result.value,
           };
-
           $http
-            .post("http://localhost:8080/mauSac/themMoi", data, { headers })
+            .post("http://localhost:8080/chatLieu/themMoi", data, { headers })
             .then(function (response) {
-              // Xử lý thành công nếu có
               Swal.fire({
                 icon: "success",
                 title: "Thêm mới thành công",
@@ -587,11 +378,62 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
                 timer: 2000,
               });
 
+              const chatLieu = response.data;
+              $scope.chatLieu = chatLieu;
+            })
+            .catch(function (error) {
+              if (error.status === 400) {
+                const errorMessage = error.data.message;
+                Swal.fire({
+                  icon: "error",
+                  title: errorMessage + "",
+                  showConfirmButton: false,
+                  timer: 2000,
+                });
+              } else {
+                console.error(error);
+              }
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // Có thể thêm xử lý nếu người dùng huỷ bỏ
+        }
+      });
+    };
+
+    $scope.ThemMoiLoai = function () {
+      Swal.fire({
+        title: "Thêm mới loại sản phẩm",
+        input: "text",
+        inputLabel: "Nhập tên loại sản phẩm",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Huỷ",
+        inputValidator: (value) => {
+          if (!value) {
+            return "Vui lòng nhập tên loại sản phẩm";
+          }
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let data = {
+            loaiSanPham: result.value,
+          };
+          $http
+            .post("http://localhost:8080/loaiSanPham/themMoi", data, {
+              headers,
+            })
+            .then(function (response) {
+              Swal.fire({
+                icon: "success",
+                title: "Thêm mới thành công",
+                showConfirmButton: false,
+                timer: 2000,
+              });
               $http
-                .get("http://localhost:8080/mauSac/danhSach", { headers })
+                .get("http://localhost:8080/loaiSanPham/danhSach", { headers })
                 .then(function (response) {
-                  const mauSac = response.data;
-                  $scope.mauSac = mauSac;
+                  const loaiSanPham = response.data;
+                  $scope.loaiSanPham = loaiSanPham;
                 });
             })
             .catch(function (error) {
@@ -607,11 +449,182 @@ app.controller("CreateProductController", function ($scope, $http, $routeParams)
                 console.error(error);
               }
             });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
         }
-      },
-    });
-  };
-}
+      });
+    };
+
+    $scope.ThemMoiHang = function () {
+      Swal.fire({
+        title: "Thêm mới hãng",
+        input: "text",
+        inputLabel: "Nhập tên hãng",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Huỷ",
+        inputValidator: (value) => {
+          if (!value) {
+            return "Vui lòng nhập tên hãng";
+          }
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let data = {
+            name: result.value,
+          };
+          $http
+            .post("http://localhost:8080/nhaSanXuat/themMoi", data, {
+              headers,
+            })
+            .then(function (response) {
+              Swal.fire({
+                icon: "success",
+                title: "Thêm mới thành công",
+                showConfirmButton: false,
+                timer: 2000,
+              });
+              $http
+                .get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
+                .then(function (response) {
+                  const nhaSanXuat = response.data;
+                  $scope.nhaSanXuat = nhaSanXuat;
+                });
+            })
+            .catch(function (error) {
+              if (error.status === 400) {
+                const errorMessage = error.data.message;
+                Swal.fire({
+                  icon: "error",
+                  title: errorMessage + "",
+                  showConfirmButton: false,
+                  timer: 2000,
+                });
+              } else {
+                console.error(error);
+              }
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+        }
+      });
+    };
+
+    $scope.ThemMoiKichCo = function () {
+      Swal.fire({
+        title: "Thêm mới kích cỡ",
+        input: "text",
+        inputLabel: "Nhập tên kích cỡ",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Huỷ",
+        inputValidator: (value) => {
+          if (!value) {
+            return "Vui lòng nhập kích cỡ";
+          }
+          if (!/^\d+(\.\d+)?$/.test(value)) {
+            return "Vui lòng nhập số";
+          }
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let data = {
+            kichCo: result.value,
+          };
+          $http
+            .post("http://localhost:8080/kichCo/themMoi", data, {
+              headers,
+            })
+            .then(function (response) {
+              Swal.fire({
+                icon: "success",
+                title: "Thêm mới thành công",
+                showConfirmButton: false,
+                timer: 2000,
+              });
+              $http
+                .get("http://localhost:8080/kichCo/danhSach", { headers })
+                .then(function (response) {
+                  const kichCo = response.data;
+                  $scope.kichCo = kichCo;
+                });
+            })
+            .catch(function (error) {
+              if (error.status === 400) {
+                const errorMessage = error.data.message;
+                Swal.fire({
+                  icon: "error",
+                  title: errorMessage + "",
+                  showConfirmButton: false,
+                  timer: 2000,
+                });
+              } else {
+                console.error(error);
+              }
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+        }
+      });
+    };
+
+    $scope.ThemMoiMauSac = function () {
+      Swal.fire({
+        title: "Thêm mới màu sắc",
+        html: `
+        <label for="color-input">Chọn màu sắc:</label>
+        <input type="color" id="color-input" class="form-control">
+        <label for="name-input">Nhập tên màu sắc:</label>
+        <input type="text" id="name-input" class="form-control">
+      `,
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Huỷ",
+        preConfirm: () => {
+          const colorInput = document.getElementById("color-input").value;
+          const nameInput = document.getElementById("name-input").value;
+
+          if (!nameInput || !colorInput) {
+            Swal.showValidationMessage("Vui lòng nhập tên và chọn màu sắc");
+          } else {
+            let data = {
+              tenMauSac: nameInput,
+              maMauSac: colorInput,
+            };
+
+            $http
+              .post("http://localhost:8080/mauSac/themMoi", data, { headers })
+              .then(function (response) {
+                // Xử lý thành công nếu có
+                Swal.fire({
+                  icon: "success",
+                  title: "Thêm mới thành công",
+                  showConfirmButton: false,
+                  timer: 2000,
+                });
+
+                $http
+                  .get("http://localhost:8080/mauSac/danhSach", { headers })
+                  .then(function (response) {
+                    const mauSac = response.data;
+                    $scope.mauSac = mauSac;
+                  });
+              })
+              .catch(function (error) {
+                if (error.status === 400) {
+                  const errorMessage = error.data.message;
+                  Swal.fire({
+                    icon: "error",
+                    title: errorMessage + "",
+                    showConfirmButton: false,
+                    timer: 2000,
+                  });
+                } else {
+                  console.error(error);
+                }
+              });
+          }
+        },
+      });
+    };
+  }
 );
 
 app.controller("ImgController", function ($scope, $http, $routeParams) {
@@ -687,12 +700,9 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
         };
 
         $http
-          .post(
-            "http://localhost:8080/sanPhamChiTiet/themAnhSanPham", data,
-            {
-              headers,
-            }
-          )
+          .post("http://localhost:8080/sanPhamChiTiet/themAnhSanPham", data, {
+            headers,
+          })
           .then(function (response) {
             Swal.fire({
               icon: "success",
@@ -737,7 +747,7 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
     $http
       .put("http://localhost:8080/sanPhamChiTiet/xoaAnh/", data, { headers })
       .then(function (response) {
-        const index = spcts.hinhAnh.findIndex(item => item.id === hinhAnh.id);
+        const index = spcts.hinhAnh.findIndex((item) => item.id === hinhAnh.id);
         if (index !== -1) {
           spcts.hinhAnh.splice(index, 1);
         }
@@ -761,23 +771,23 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
 
     if (productsWithoutImages.length > 0) {
       Swal.fire({
-        icon: 'error',
-        title: 'Lỗi',
-        text: 'Vui lòng thêm ảnh cho tất cả sản phẩm trước khi hoàn thành.',
+        icon: "error",
+        title: "Lỗi",
+        text: "Vui lòng thêm ảnh cho tất cả sản phẩm trước khi hoàn thành.",
       });
     } else if (productsWithoutDefaultImage.length > 0) {
       Swal.fire({
-        icon: 'warning',
-        title: 'Cảnh báo',
-        text: 'Có sản phẩm không có ảnh mặc định. Vui lòng đặt ảnh mặc định cho sản phẩm.',
+        icon: "warning",
+        title: "Cảnh báo",
+        text: "Có sản phẩm không có ảnh mặc định. Vui lòng đặt ảnh mặc định cho sản phẩm.",
       });
     } else {
       Swal.fire({
-        icon: 'success',
-        title: 'Hoàn tất thêm ảnh sản phẩm',
+        icon: "success",
+        title: "Hoàn tất thêm ảnh sản phẩm",
         showCancelButton: true,
-        confirmButtonText: 'Xác nhận',
-        cancelButtonText: 'Hủy',
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Hủy",
       }).then((result) => {
         if (result.isConfirmed) {
           window.location.href = "#!/list-Product";
@@ -785,7 +795,6 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
       });
     }
   };
-
 });
 
 app.controller("CTSPController", function ($scope, $routeParams, $http) {
@@ -843,10 +852,15 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
         } else {
           let data = {
             status: details.trangThai,
-            id: details.id
+            id: details.id,
           };
 
-          $http.post("http://localhost:8080/sanPhamChiTiet/update/trangThai", data, { headers, })
+          $http
+            .post(
+              "http://localhost:8080/sanPhamChiTiet/update/trangThai",
+              data,
+              { headers }
+            )
             .then(function (response) {
               Swal.fire({
                 icon: "success",
@@ -875,12 +889,11 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
   };
 
   $scope.themSanPhamTuongTu = function () {
-    window.location.href = "#!/themSanPhamTuongTu?id=" + id
+    window.location.href = "#!/themSanPhamTuongTu?id=" + id;
   };
-
 });
 
-app.factory('ImageService', function () {
+app.factory("ImageService", function () {
   var images = {};
 
   return {
@@ -889,23 +902,81 @@ app.factory('ImageService', function () {
     },
     setImages: function (productId, imgData) {
       images[productId] = imgData;
-    }
+    },
   };
 });
 
-app.controller("EditImgController", function ($scope, $http, $routeParams, ImageService) {
-  let token = localStorage.getItem("token");
-  let headers = {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + token,
-  };
+app.controller(
+  "EditImgController",
+  function ($scope, $http, $routeParams, ImageService) {
+    let token = localStorage.getItem("token");
+    let headers = {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    };
 
-  let id_product = $routeParams.id;
-  let storedImages = ImageService.getImages(id_product);
-  if (storedImages.length > 0) {
-    $scope.spct = storedImages;
-  } else {
-    $http.get("http://localhost:8080/sanPhamChiTiet/themAnh/" + id_product, { headers })
+    let id_product = $routeParams.id;
+    let storedImages = ImageService.getImages(id_product);
+    if (storedImages.length > 0) {
+      $scope.spct = storedImages;
+    } else {
+      $http
+        .get("http://localhost:8080/sanPhamChiTiet/themAnh/" + id_product, {
+          headers,
+        })
+        .then(function (response) {
+          const spct = response.data;
+          const uniqueProducts = {};
+
+          spct.forEach(function (product) {
+            const mauSacId = product.mauSac.id;
+            if (!uniqueProducts[mauSacId]) {
+              uniqueProducts[mauSacId] = product;
+            }
+          });
+
+          $scope.spct = Object.values(uniqueProducts);
+          ImageService.setImages(id_product, $scope.spct);
+
+          $scope.spct.forEach(function (spcts) {
+            updateImageData(spcts);
+          });
+        });
+    }
+
+    $scope.loadImage = function (input) {
+      if (input.files && input.files[0]) {
+        let reader = new FileReader();
+        reader.onload = function (e) {
+          $scope.$apply(function () {
+            $scope.imagePreview = e.target.result;
+          });
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    };
+
+    $scope.img_name = "";
+
+    function updateImageData(spcts) {
+      if (!spcts || !spcts.id) {
+        return;
+      }
+
+      $http
+        .get("http://localhost:8080/sanPhamChiTiet/hienThiAnh/" + spcts.id, {
+          headers,
+        })
+        .then(function (response) {
+          const hinhAnh = response.data;
+          spcts.hinhAnh = hinhAnh;
+        });
+    }
+
+    $http
+      .get("http://localhost:8080/sanPhamChiTiet/themAnh/" + id_product, {
+        headers,
+      })
       .then(function (response) {
         const spct = response.data;
         const uniqueProducts = {};
@@ -918,181 +989,126 @@ app.controller("EditImgController", function ($scope, $http, $routeParams, Image
         });
 
         $scope.spct = Object.values(uniqueProducts);
-        ImageService.setImages(id_product, $scope.spct);
-
         $scope.spct.forEach(function (spcts) {
           updateImageData(spcts);
         });
       });
-  }
 
-  $scope.loadImage = function (input) {
-    if (input.files && input.files[0]) {
-      let reader = new FileReader();
-      reader.onload = function (e) {
-        $scope.$apply(function () {
-          $scope.imagePreview = e.target.result;
-        });
-      };
-      reader.readAsDataURL(input.files[0]);
-    }
-  };
+    $scope.hienThiAnh = function (event, spcts) {
+      let id = spcts.id;
+      let fileInput = event.target;
+      let files = fileInput.files;
 
-  $scope.img_name = "";
+      spcts.hinhAnh = [];
 
-  function updateImageData(spcts) {
-    if (!spcts || !spcts.id) {
-      return;
-    }
+      for (let i = 0; i < files.length; i++) {
+        let file = files[i];
+        let reader = new FileReader();
 
-    $http
-      .get("http://localhost:8080/sanPhamChiTiet/hienThiAnh/" + spcts.id, {
-        headers,
-      })
-      .then(function (response) {
-        const hinhAnh = response.data;
-        spcts.hinhAnh = hinhAnh;
-      });
-  }
+        reader.onload = function (e) {
+          let data = {
+            id_spct: id,
+            ten_anh: [file.name],
+          };
 
-  $http
-    .get("http://localhost:8080/sanPhamChiTiet/themAnh/" + id_product, {
-      headers,
-    })
-    .then(function (response) {
-      const spct = response.data;
-      const uniqueProducts = {};
-
-      spct.forEach(function (product) {
-        const mauSacId = product.mauSac.id;
-        if (!uniqueProducts[mauSacId]) {
-          uniqueProducts[mauSacId] = product;
-        }
-      });
-
-      $scope.spct = Object.values(uniqueProducts);
-      $scope.spct.forEach(function (spcts) {
-        updateImageData(spcts);
-      });
-    });
-
-  $scope.hienThiAnh = function (event, spcts) {
-    let id = spcts.id;
-    let fileInput = event.target;
-    let files = fileInput.files;
-
-    spcts.hinhAnh = [];
-
-    for (let i = 0; i < files.length; i++) {
-      let file = files[i];
-      let reader = new FileReader();
-
-      reader.onload = function (e) {
-        let data = {
-          id_spct: id,
-          ten_anh: [file.name],
-        };
-
-        $http
-          .post(
-            "http://localhost:8080/sanPhamChiTiet/themAnhSanPham",
-            data,
-            {
+          $http
+            .post("http://localhost:8080/sanPhamChiTiet/themAnhSanPham", data, {
               headers,
-            }
-          )
-          .then(function (response) {
-            Swal.fire({
-              icon: "success",
-              title: response.data.mess,
-              showConfirmButton: false,
-              timer: 2000,
+            })
+            .then(function (response) {
+              Swal.fire({
+                icon: "success",
+                title: response.data.mess,
+                showConfirmButton: false,
+                timer: 2000,
+              });
+              // Pass spcts to the updateImageData function
+              updateImageData(spcts);
             });
-            // Pass spcts to the updateImageData function
-            updateImageData(spcts);
-          });
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
+    $scope.setAnhMacDinh = function (hinhAnh, spcts) {
+      let data = {
+        id_hinh_anh: hinhAnh.id,
+        id_spct: spcts.id,
       };
-      reader.readAsDataURL(file);
-    }
-  };
 
-  $scope.setAnhMacDinh = function (hinhAnh, spcts) {
-    let data = {
-      id_hinh_anh: hinhAnh.id,
-      id_spct: spcts.id,
+      $http
+        .put("http://localhost:8080/sanPhamChiTiet/setAnhMacDinh/", data, {
+          headers,
+        })
+        .then(function (response) {
+          Swal.fire({
+            icon: "success",
+            title: response.data.mess,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          updateImageData(spcts);
+        });
     };
 
-    $http
-      .put("http://localhost:8080/sanPhamChiTiet/setAnhMacDinh/", data, {
-        headers,
-      })
-      .then(function (response) {
-        Swal.fire({
-          icon: "success",
-          title: response.data.mess,
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        updateImageData(spcts);
-      });
-  };
+    $scope.xoaAnh = function (hinhAnh, spcts) {
+      let data = {
+        id_hinh_anh: hinhAnh.id,
+        id_spct: spcts.id,
+      };
 
-  $scope.xoaAnh = function (hinhAnh, spcts) {
-    let data = {
-      id_hinh_anh: hinhAnh.id,
-      id_spct: spcts.id,
+      $http
+        .put("http://localhost:8080/sanPhamChiTiet/xoaAnh/", data, { headers })
+        .then(function (response) {
+          const index = spcts.hinhAnh.findIndex(
+            (item) => item.id === hinhAnh.id
+          );
+          if (index !== -1) {
+            spcts.hinhAnh.splice(index, 1);
+          }
+
+          Swal.fire({
+            icon: "success",
+            title: "Xóa ảnh thành công",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        });
     };
 
-    $http
-      .put("http://localhost:8080/sanPhamChiTiet/xoaAnh/", data, { headers })
-      .then(function (response) {
-        const index = spcts.hinhAnh.findIndex(item => item.id === hinhAnh.id);
-        if (index !== -1) {
-          spcts.hinhAnh.splice(index, 1);
-        }
+    $scope.themAnhSanPhamHT = function () {
+      const productsWithoutImages = $scope.spct.filter(
+        (spcts) => !spcts.hinhAnh || spcts.hinhAnh.length === 0
+      );
+      const productsWithoutDefaultImage = $scope.spct.filter(
+        (spcts) => spcts.hinhAnh && !spcts.hinhAnh.some((anh) => anh.anhMacDinh)
+      );
 
+      if (productsWithoutImages.length > 0) {
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: "Vui lòng thêm ảnh cho tất cả sản phẩm trước khi hoàn thành.",
+        });
+      } else if (productsWithoutDefaultImage.length > 0) {
+        Swal.fire({
+          icon: "warning",
+          title: "Cảnh báo",
+          text: "Có sản phẩm không có ảnh mặc định. Vui lòng đặt ảnh mặc định cho sản phẩm.",
+        });
+      } else {
         Swal.fire({
           icon: "success",
-          title: "Xóa ảnh thành công",
-          showConfirmButton: false,
-          timer: 2000,
+          title: "Hoàn tất sửa ảnh sản phẩm",
+          showCancelButton: true,
+          confirmButtonText: "Xác nhận",
+          cancelButtonText: "Hủy",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "#!/list-Product";
+          }
         });
-      });
-  };
-
-  $scope.themAnhSanPhamHT = function () {
-    const productsWithoutImages = $scope.spct.filter(
-      (spcts) => !spcts.hinhAnh || spcts.hinhAnh.length === 0
-    );
-    const productsWithoutDefaultImage = $scope.spct.filter(
-      (spcts) => spcts.hinhAnh && !spcts.hinhAnh.some((anh) => anh.anhMacDinh)
-    );
-
-    if (productsWithoutImages.length > 0) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Lỗi',
-        text: 'Vui lòng thêm ảnh cho tất cả sản phẩm trước khi hoàn thành.',
-      });
-    } else if (productsWithoutDefaultImage.length > 0) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Cảnh báo',
-        text: 'Có sản phẩm không có ảnh mặc định. Vui lòng đặt ảnh mặc định cho sản phẩm.',
-      });
-    } else {
-      Swal.fire({
-        icon: 'success',
-        title: 'Hoàn tất sửa ảnh sản phẩm',
-        showCancelButton: true,
-        confirmButtonText: 'Xác nhận',
-        cancelButtonText: 'Hủy',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = "#!/list-Product";
-        }
-      });
-    }
-  };
-
-});
+      }
+    };
+  }
+);
