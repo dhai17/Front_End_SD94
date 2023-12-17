@@ -382,7 +382,7 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
   };
 
   $scope.reload = function(){
-    window.location.reload()
+    window.location.href = "http://127.0.0.1:5501/templates/admin/home/index.html#!/create-Staff/"
   }
 });
 
