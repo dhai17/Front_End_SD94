@@ -1,9 +1,10 @@
-app.controller("NhanVienController", function ($scope, $http, Webcam) {
+app.controller("NhanVienController", function ($scope, $http) {
   let token = localStorage.getItem("token");
   let headers = {
     "Content-Type": "application/json",
     Authorization: "Bearer " + token,
   };
+
   let decodedToken = parseJwt(token);
 
   $http
@@ -54,10 +55,6 @@ app.controller("NhanVienController", function ($scope, $http, Webcam) {
       }
       return pageNumbers;
     },
-  };
-
-  $scope.camera = function () {
-    Webcam.attach("#my_camera");
   };
 
   //Chuyển hướng đến trang edit theo id
@@ -204,6 +201,7 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
     "Content-Type": "application/json",
     Authorization: "Bearer " + token,
   };
+
   $scope.saveCreateStaff = function () {
     console.log($scope.createStaff.gioiTinh);
 
@@ -218,7 +216,7 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
     }
 
     let data = {
-      hoTen: $scope.createStaff.hoTen,
+      hoTen: vm.createStaff.hoTen,
       soDienThoai: $scope.createStaff.soDienThoai,
       email: $scope.createStaff.email,
       ngaySinh: $scope.createStaff.ngaySinh,
@@ -248,6 +246,7 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
           timer: 2000,
         }).then(function () {
           sessionStorage.setItem("isConfirmed", true);
+          localStorage.removeItem("qr")
           window.location.href = "#!/list-Staff";
         });
       })
