@@ -112,7 +112,7 @@ app.controller("NhanVienController", function ($scope, $http) {
         .get("http://localhost:8080/nhanVien/timKiem/" + newVal, { headers })
         .then(function (response) {
           const promotions = response.data;
-          promotions.forEach(function (promotion) {});
+          promotions.forEach(function (promotion) { });
           promotions.forEach(function (promotion) {
             promotion.trangThai2 = getTrangThai(promotion.trangThai);
           });
@@ -202,24 +202,128 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
     Authorization: "Bearer " + token,
   };
 
+
+  let gioiTinh;
+  $scope.batDauQuet = function () {
+    let vm = this;
+    vm.duLieuQuet = null;
+    vm.createStaff = {}; // Khởi tạo đối tượng createStaff
+
+    // Tạo đối tượng quét
+    let quetMQR = new Instascan.Scanner({
+      video: document.getElementById("preview"),
+    });
+
+    // Xử lý sự kiện quét mã QR
+    quetMQR.addListener("scan", function (noiDung) {
+      vm.duLieuQuet = fixVietnameseCharacters(noiDung);
+
+      let qrCodeParts = vm.duLieuQuet.split(/(?:\||\|\|)/);
+
+      vm.createStaff = {
+        soCanCuoc: qrCodeParts[0] || "",
+        hoTen: qrCodeParts[2] || "",
+        ngaySinh: qrCodeParts[3] || "",
+        gioiTinh: qrCodeParts[4] || "",
+        diaChi: qrCodeParts[5] || "",
+      };
+
+      let ngaySinhFormatted = formatNgaySinh(vm.createStaff.ngaySinh);
+
+      function formatNgaySinh(ngaySinh) {
+        // Kiểm tra xem ngày sinh có đúng định dạng không (ddmmyyyy)
+        if (/^\d{8}$/.test(ngaySinh)) {
+          // Chia thành các phần tử dd, mm, yyyy
+          let dd = ngaySinh.substring(0, 2);
+          let mm = ngaySinh.substring(2, 4);
+          let yyyy = ngaySinh.substring(4, 8);
+
+          // Định dạng lại thành yyyy-MM-dd
+          return yyyy + '-' + mm + '-' + dd;
+        } else {
+          // Nếu không đúng định dạng, trả lại giá trị ban đầu
+          return ngaySinh;
+        }
+      }
+
+      let radioBtn1 = document.getElementById("inlineRadio1");
+      let radioBtn2 = document.getElementById("inlineRadio2");
+
+      if (radioBtn1 && radioBtn2) {
+        if (vm.createStaff.gioiTinh === "Nam") {
+          gioiTinh = true;
+          radioBtn1.checked = true;
+        } else {
+          gioiTinh = false;
+          radioBtn2.checked = true;
+        }
+      }
+
+      angular.element(document.getElementById("inputName")).val(vm.createStaff.hoTen);
+      angular.element(document.getElementById("inputPhone")).val(vm.createStaff.soDienThoai);
+      angular.element(document.getElementById("inputEmail")).val(vm.createStaff.email);
+      angular.element(document.getElementById("inputDob")).val(ngaySinhFormatted);
+      angular.element(document.getElementById("inputAddress")).val(vm.createStaff.diaChi);
+      angular.element(document.getElementById("inputSoCanCuoc")).val(vm.createStaff.soCanCuoc);
+      setTimeout(function () {
+        quetMQR.stop();
+      }, 2000);
+    });
+
+    vm.batDauQuet = function () {
+      Instascan.Camera.getCameras()
+        .then(function (cameras) {
+          if (cameras.length > 0) {
+            quetMQR.start(cameras[0]);
+          } else {
+            console.error("Không tìm thấy camera.");
+          }
+        })
+        .catch(function (loi) {
+          console.error("Lỗi khi lấy danh sách camera:", loi);
+        });
+    };
+
+    // Hàm giải mã nội dung từ QR
+    function decodeQRContent(noiDung) {
+      try {
+        return iconv.decode(new Buffer(noiDung, "binary"), "utf-8");
+      } catch (error) {
+        console.error("Lỗi khi giải mã QR:", error);
+        return noiDung;
+      }
+    }
+    function fixVietnameseCharacters(str) {
+      let decodedStr = decodeURIComponent(escape(str));
+      return decodedStr;
+    }
+  }
+
   $scope.saveCreateStaff = function () {
-    console.log($scope.createStaff.gioiTinh);
 
-    let radioBtn1 = document.getElementById("inlineRadio1");
-    let radioBtn2 = document.getElementById("inlineRadio2");
-    let gioiTinh = false;
+    let ngaySinh = formatNgaySinh($scope.createStaff.ngaySinh)
 
-    if (radioBtn1.checked) {
-      gioiTinh = true;
-    } else if (radioBtn2.checked) {
-      gioiTinh = false;
+    function formatNgaySinh(ngaySinh) {
+      // Kiểm tra xem ngày sinh có đúng định dạng không (ddmmyyyy)
+      if (/^\d{8}$/.test(ngaySinh)) {
+        // Chia thành các phần tử dd, mm, yyyy
+        let dd = ngaySinh.substring(0, 2);
+        let mm = ngaySinh.substring(2, 4);
+        let yyyy = ngaySinh.substring(4, 8);
+
+        // Định dạng lại thành yyyy-MM-dd
+        return yyyy + '-' + mm + '-' + dd;
+      } else {
+        // Nếu không đúng định dạng, trả lại giá trị ban đầu
+        return ngaySinh;
+      }
     }
 
     let data = {
-      hoTen: vm.createStaff.hoTen,
+      hoTen: $scope.createStaff.hoTen,
       soDienThoai: $scope.createStaff.soDienThoai,
       email: $scope.createStaff.email,
-      ngaySinh: $scope.createStaff.ngaySinh,
+      ngaySinh: ngaySinh,
       diaChi: $scope.createStaff.diaChi,
       gioiTinh: gioiTinh,
       matKhau: $scope.createStaff.matKhau,
