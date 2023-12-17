@@ -149,7 +149,7 @@ app.controller("CTChoXacNhanCustomer", function ($scope, $routeParams, $http) {
           });
      }
      $scope.quayLai = function(){
-          window.location.href = "#!/choXacNhan-Customer";
+          window.location.href = "#!/don-hang";
      }
 
 });
