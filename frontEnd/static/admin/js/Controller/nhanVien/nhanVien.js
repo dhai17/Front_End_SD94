@@ -396,11 +396,28 @@ app.controller(
       Authorization: "Bearer " + token,
     };
     let idStaff = $routeParams.id;
+
+    function formatNgaySinh(ngaySinh) {
+      // Kiểm tra xem ngày sinh có đúng định dạng không (ddmmyyyy)
+      if (/^\d{8}$/.test(ngaySinh)) {
+        // Chia thành các phần tử dd, mm, yyyy
+        let dd = ngaySinh.substring(0, 2);
+        let mm = ngaySinh.substring(2, 4);
+        let yyyy = ngaySinh.substring(4, 8);
+
+        // Định dạng lại thành yyyy-MM-dd
+        return yyyy + '-' + mm + '-' + dd;
+      } else {
+        // Nếu không đúng định dạng, trả lại giá trị ban đầu
+        return ngaySinh;
+      }
+    }
+    $scope.ngaySinh = ""
     $http
       .get("http://localhost:8080/nhanVien/chinhSua/" + idStaff, { headers })
       .then(function (response) {
         const editStaff = response.data;
-        console.log(editStaff);
+        $scope.ngaySinh = formatNgaySinh(editStaff.ngaySinh)
         $scope.editStaff = editStaff;
 
         if (editStaff.gioiTinh === true) {
