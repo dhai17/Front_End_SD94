@@ -139,14 +139,38 @@ app.controller("danhSachSanPhamController", function ($scope, $http) {
   };
 
   $scope.filterByGia = function () {
+    if ($scope.gia2 <= $scope.gia1) {
+      const errorMessage = "Giá 2 phải lớn hơn giá 1";
+      Swal.fire({
+        icon: "error",
+        title: errorMessage,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      return;
+    }
+
     $http.get("http://localhost:8080/customer/sanPham/loc/gia", {
       params: { gia1: $scope.gia1, gia2: $scope.gia2 },
       headers: headers
     })
       .then(function (response) {
         $scope.sanPham = response.data;
+      })
+      .catch(function (errorResponse) {
+        if (errorResponse.status === 400) {
+          const errorMessage = errorResponse.data.message;
+          Swal.fire({
+            icon: "error",
+            title: "Vui lòng nhập giá",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        }
+        console.log(errorResponse);
       });
   };
+
 
   $scope.$watch('searchTerm', function (newVal) {
     if (newVal) {

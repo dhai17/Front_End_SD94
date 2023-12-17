@@ -8,7 +8,6 @@ app.controller("danhSachSanPhamTaiQuayController", function ($scope, $http) {
     $http.get("http://localhost:8080/customer/sanPham/danhSach", { headers })
         .then(function (response) {
             const sanPham = response.data;
-            console.log(sanPham);
             $scope.sanPham = sanPham;
         });
 
@@ -20,7 +19,6 @@ app.controller("danhSachSanPhamTaiQuayController", function ($scope, $http) {
                 let start = (this.page - 1) * this.size;
                 return $scope.sanPham.slice(start, start + this.size);
             } else {
-                // Trả về một mảng trống hoặc thông báo lỗi tùy theo trường hợp
                 return [];
             }
         },
@@ -46,6 +44,137 @@ app.controller("danhSachSanPhamTaiQuayController", function ($scope, $http) {
     $scope.getSanPhamChiTiet = function (sanPham) {
         let id_sanPham = sanPham.id;
         window.location.href = '#!/product-details-taiQuay?id=' + id_sanPham;
+    };
+
+    $http
+        .get("http://localhost:8080/chatLieu/danhSach", { headers })
+        .then(function (response) {
+            const chatLieu = response.data;
+            $scope.chatLieu = chatLieu;
+        });
+
+    $http
+        .get("http://localhost:8080/loaiSanPham/danhSach", { headers })
+        .then(function (response) {
+            const loaiSanPham = response.data;
+            $scope.loaiSanPham = loaiSanPham;
+        });
+
+    $http
+        .get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
+        .then(function (response) {
+            const nhaSanXuat = response.data;
+            $scope.nhaSanXuat = nhaSanXuat;
+        });
+
+    $http
+        .get("http://localhost:8080/mauSac/danhSach", { headers })
+        .then(function (response) {
+            const mauSac = response.data;
+            $scope.mauSac = mauSac;
+        });
+
+    $http
+        .get("http://localhost:8080/kichCo/danhSach", { headers })
+        .then(function (response) {
+            const kichCo = response.data;
+            $scope.kichCo = kichCo;
+        });
+
+    $scope.filterByLoaiSp = function () {
+        $http.get('http://localhost:8080/customer/sanPham/loc/loai_san_pham', {
+            params: { idloaiSanPham: $scope.idloaiSanPham },
+            headers: headers
+        })
+            .then(function (response) {
+                const sanPham = response.data;
+                $scope.sanPham = sanPham;
+            });
+    };
+
+    $scope.filterByChatLieu = function () {
+        $http.get('http://localhost:8080/customer/sanPham/loc/chat_lieu', {
+            params: { id_chat_lieu: $scope.id_chat_lieu },
+            headers: headers
+        })
+            .then(function (response) {
+                const sanPham = response.data;
+                $scope.sanPham = sanPham;
+            });
+    };
+
+    $scope.filterByNsx = function () {
+        $http.get('http://localhost:8080/customer/sanPham/loc/nha_san_xuat', {
+            params: { id_nsx: $scope.id_nsx },
+            headers: headers
+        })
+            .then(function (response) {
+                const sanPham = response.data;
+                $scope.sanPham = sanPham;
+            });
+    };
+
+    $scope.filterByMauSac = function () {
+        $http.get('http://localhost:8080/customer/sanPham/loc/mau_sac', {
+            params: { mauSac_id: $scope.mauSac_id },
+            headers: headers
+        })
+            .then(function (response) {
+                const sanPham = response.data;
+                $scope.sanPham = sanPham;
+            });
+    };
+
+    $scope.filterByKichCo = function () {
+        $http.get('http://localhost:8080/customer/sanPham/loc/kich_co', {
+            params: { kichCo_id: $scope.kichCo_id },
+            headers: headers
+        })
+            .then(function (response) {
+                const sanPham = response.data;
+                $scope.sanPham = sanPham;
+            });
+    };
+
+    $scope.filterByGia = function () {
+        $http.get("http://localhost:8080/customer/sanPham/loc/gia", {
+            params: { gia1: $scope.gia1, gia2: $scope.gia2 },
+            headers: headers
+        })
+            .then(function (response) {
+                $scope.sanPham = response.data;
+            });
+    };
+
+    $scope.$watch('searchTerm', function (newVal) {
+        if (newVal) {
+            $http.get("http://localhost:8080/customer/sanPham/timKiemTheoTen/" + newVal, { headers })
+                .then(function (response) {
+                    $scope.sanPham = response.data;
+                });
+        } else {
+            $http.get("http://localhost:8080/customer/sanPham/danhSach", { headers })
+                .then(function (response) {
+                    $scope.sanPham = response.data;
+                });
+        }
+    });
+
+    $scope.searchAll = function (searchTerm) {
+        $http.get("http://localhost:8080/customer/sanPham/timKiemTheoTen/" + searchTerm, { headers })
+            .then(function (response) {
+                $scope.sanPham = response.data;
+            });
+    };
+
+    $scope.reLoad = function () {
+        $http.get("http://localhost:8080/customer/sanPham/danhSach", { headers })
+            .then(function (response) {
+                const sanPham = response.data;
+                $scope.$evalAsync(function () {
+                    $scope.sanPham = sanPham;
+                });
+            });
     };
 });
 
@@ -200,13 +329,13 @@ app.controller("ChiTietSanPhamTaiQuayController", function ($scope, $routeParams
                     });
                 })
                 .catch(function (e) {
-                  const errorMessage = e.data[Object.keys(e.data)[0]];
-                  Swal.fire({
-                    icon: "error",
-                    title: errorMessage,
-                    showConfirmButton: false,
-                    timer: 2000,
-                  });
+                    const errorMessage = e.data[Object.keys(e.data)[0]];
+                    Swal.fire({
+                        icon: "error",
+                        title: errorMessage,
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
                 });
         }
     };

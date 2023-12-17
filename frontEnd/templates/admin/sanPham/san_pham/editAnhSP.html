@@ -1,6 +1,6 @@
 <div id="container-fluid" ng-controller="EditImgController">
-  <h1>Sửa ảnh sản phẩm</h1>
-  <br />
+  <h1>Thêm ảnh sản phẩm</h1>
+  <br>
   <div id="productInfo" ng-repeat="spcts in spct">
     <div class="row mb-4">
       <h5>Tên sản phẩm: <strong>{{ spcts.sanPham.tenSanPham }}</strong></h5>
@@ -33,7 +33,13 @@
     </div>
     <hr />
   </div>
-  <button class="complete-button" type="button" ng-click="themAnhSanPhamHT()">
-    <ion-icon name="checkmark-circle-outline"></ion-icon> Hoàn tất sửa ảnh sản phẩm
-  </button>
+  <div class="text-right">
+    <button id="btnQuayLai" class="btn btn-primary" type="button" ng-click="returnEdit(editProduct)">
+      <ion-icon name="arrow-back"></ion-icon> Quay lại
+    </button>
+
+    <button id="btnQuayLai" class="btn btn-primary" type="button" ng-click="themAnhSanPhamHT()">
+      <ion-icon name="checkmark-circle-outline"></ion-icon> Hoàn tất thêm ảnh sản phẩm
+    </button>
+  </div>
 </div>

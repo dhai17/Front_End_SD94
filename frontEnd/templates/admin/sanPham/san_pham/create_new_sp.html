@@ -13,7 +13,10 @@
                          <div class="row gx-3 mb-3">
                               <div class="col-md-6">
                                    <label class="mb-1">Số lượng</label>
-                                   <input class="form-control" id="quantity" type="text" ng-model="editproduct.soLuong">
+                                   <div class="input-group mb-4 border rounded-pill p-2">
+                                        <input class="form-control border-0" id="quantity" type="number"
+                                             placeholder="Nhập số lượng" ng-model="editproduct.soLuong">
+                                   </div>
                               </div>
                               <div class="col-md-6">
                                    <label for="countries" class="small mb-1">Màu sắc</label>
@@ -54,7 +57,6 @@
                               </div>
                          </div>
                     </div>
-                    <br>
                     <div class="text-right">
                          <button id="btnQuayLai" class="btn btn-primary" type="button"
                               ng-click="returnEdit(editProduct)">

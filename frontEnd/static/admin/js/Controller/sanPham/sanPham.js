@@ -9,7 +9,7 @@ app.controller("ProductController", function ($scope, $http) {
     let base64Url = token.split('.')[1];
     let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
 
     let payload = JSON.parse(jsonPayload);
@@ -25,14 +25,151 @@ app.controller("ProductController", function ($scope, $http) {
       $scope.promotions = promotions;
     });
 
-  function getStatusText(trangThai) {
-    if (trangThai == 0) {
-      return "Đang bán";
-    } else if (trangThai == 1) {
-      return "Ngừng bán";
+  $http
+    .get("http://localhost:8080/chatLieu/danhSach", { headers })
+    .then(function (response) {
+      const chatLieu = response.data;
+      $scope.chatLieu = chatLieu;
+    });
+
+  $http
+    .get("http://localhost:8080/loaiSanPham/danhSach", { headers })
+    .then(function (response) {
+      const loaiSanPham = response.data;
+      $scope.loaiSanPham = loaiSanPham;
+    });
+
+  $http
+    .get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
+    .then(function (response) {
+      const nhaSanXuat = response.data;
+      $scope.nhaSanXuat = nhaSanXuat;
+    });
+
+  $http
+    .get("http://localhost:8080/mauSac/danhSach", { headers })
+    .then(function (response) {
+      const mauSac = response.data;
+      $scope.mauSac = mauSac;
+    });
+
+  $http
+    .get("http://localhost:8080/kichCo/danhSach", { headers })
+    .then(function (response) {
+      const kichCo = response.data;
+      $scope.kichCo = kichCo;
+    });
+
+  $scope.filterByLoaiSp = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/loai_san_pham', {
+      params: { idloaiSanPham: $scope.idloaiSanPham },
+      headers: headers
+    })
+      .then(function (response) {
+        const promotions = response.data;
+        $scope.promotions = promotions;
+      });
+  };
+
+  $scope.filterByChatLieu = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/chat_lieu', {
+      params: { id_chat_lieu: $scope.id_chat_lieu },
+      headers: headers
+    })
+      .then(function (response) {
+        const promotions = response.data;
+        $scope.promotions = promotions;
+      });
+  };
+
+  $scope.filterByNsx = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/nha_san_xuat', {
+      params: { id_nsx: $scope.id_nsx },
+      headers: headers
+    })
+      .then(function (response) {
+        const promotions = response.data;
+        $scope.promotions = promotions;
+      });
+  };
+
+  $scope.filterByMauSac = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/mau_sac', {
+      params: { mauSac_id: $scope.mauSac_id },
+      headers: headers
+    })
+      .then(function (response) {
+        const promotions = response.data;
+        $scope.promotions = promotions;
+      });
+  };
+
+  $scope.filterByKichCo = function () {
+    $http.get('http://localhost:8080/customer/sanPham/loc/kich_co', {
+      params: { kichCo_id: $scope.kichCo_id },
+      headers: headers
+    })
+      .then(function (response) {
+        const promotions = response.data;
+        $scope.promotions = promotions;
+      });
+  };
+
+  $scope.filterByGia = function () {
+    if ($scope.gia2 <= $scope.gia1) {
+      const errorMessage = "Giá 2 phải lớn hơn giá 1";
+      Swal.fire({
+        icon: "error",
+        title: errorMessage,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      return;
     }
-    return "Trạng thái không xác định";
-  }
+
+    $http.get("http://localhost:8080/customer/sanPham/loc/gia", {
+      params: { gia1: $scope.gia1, gia2: $scope.gia2 },
+      headers: headers
+    })
+      .then(function (response) {
+        $scope.promotions = response.data;
+      })
+      .catch(function (errorResponse) {
+        if (errorResponse.status === 400) {
+          const errorMessage = errorResponse.data.message;
+          Swal.fire({
+            icon: "error",
+            title: "Vui lòng nhập giá",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        }
+        console.log(errorResponse);
+      });
+  };
+
+
+  $scope.$watch('searchTerm', function (newVal) {
+    if (newVal) {
+      $http.get("http://localhost:8080/customer/sanPham/timKiemTheoTen/" + newVal, { headers })
+        .then(function (response) {
+          $scope.promotions = response.data;
+        });
+    } else {
+      $http.get("http://localhost:8080/customer/sanPham/danhSach", { headers })
+        .then(function (response) {
+          $scope.promotions = response.data;
+        });
+    }
+  });
+
+  $scope.searchAll = function (searchTerm) {
+    $http.get("http://localhost:8080/customer/sanPham/timKiemTheoTen/" + searchTerm, { headers })
+      .then(function (response) {
+        $scope.promotions = response.data;
+      });
+  };
+
 
   //Phân trang
   $scope.pager = {
@@ -147,34 +284,6 @@ app.controller("ProductController", function ($scope, $http) {
         });
       });
   };
-
-  $scope.$watch("searchTerm", function (newVal) {
-    if (newVal) {
-      $http
-        .get("http://localhost:8080/sanPham/timKiem=" + newVal, {
-          headers,
-        })
-        .then(function (response) {
-          $scope.promotions = response.data;
-        });
-    } else {
-      $http
-        .get("http://localhost:8080/sanPham/danhSach", { headers })
-        .then(function (response) {
-          $scope.promotions = response.data;
-        });
-    }
-  });
-
-  $scope.searchAll = function (searchTerm) {
-    $http
-      .get("http://localhost:8080/sanPham/timKiem=" + searchTerm, {
-        headers,
-      })
-      .then(function (response) {
-        $scope.promotions = response.data;
-      });
-  };
 });
 
 //Edit controller
@@ -190,13 +299,13 @@ app.controller(
       let base64Url = token.split('.')[1];
       let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
       let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join(''));
-  
+
       let payload = JSON.parse(jsonPayload);
       return payload;
     }
-  
+
     let decodedToken = parseJwt(token);
 
     let idPro = $routeParams.id;
@@ -273,6 +382,11 @@ app.controller(
       let idProduct = $scope.editproduct.sanPham.id;
       $location.path("/list-CTSP").search({ id: idProduct });
     };
+
+    $scope.editSPCT = function () {
+      let id = $routeParams.id;
+      window.location.href = "#!/edit-Img?id=" + id;
+    };
   }
 );
 
@@ -290,9 +404,9 @@ app.controller(
       let base64Url = token.split('.')[1];
       let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
       let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join(''));
-  
+
       let payload = JSON.parse(jsonPayload);
       return payload;
     }
@@ -610,15 +724,15 @@ app.controller(
         return;
       }
       Swal.fire({
-        title: "Thêm mới hãng",
+        title: "Thêm mới nhà sản xuất",
         input: "text",
-        inputLabel: "Nhập tên hãng",
+        inputLabel: "Nhập tên nhà sản xuất",
         showCancelButton: true,
         confirmButtonText: "Xác nhận",
         cancelButtonText: "Huỷ",
         inputValidator: (value) => {
           if (!value) {
-            return "Vui lòng nhập tên hãng";
+            return "Vui lòng nhập tên nhà sản xuất";
           }
         },
       }).then((result) => {
@@ -831,7 +945,7 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
     let base64Url = token.split('.')[1];
     let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
 
     let payload = JSON.parse(jsonPayload);
@@ -1057,7 +1171,7 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
     let base64Url = token.split('.')[1];
     let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
 
     let payload = JSON.parse(jsonPayload);
@@ -1207,9 +1321,9 @@ app.controller(
       let base64Url = token.split('.')[1];
       let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
       let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join(''));
-  
+
       let payload = JSON.parse(jsonPayload);
       return payload;
     }
@@ -1220,12 +1334,7 @@ app.controller(
     if (storedImages.length > 0) {
       $scope.spct = storedImages;
     } else {
-      $http
-        .get(
-          "http://localhost:8080/sanPhamChiTiet/themAnh/" +
-          id_product,
-          { headers }
-        )
+      $http.get("http://localhost:8080/sanPhamChiTiet/themAnhSpctId/" + id_product, { headers })
         .then(function (response) {
           const spct = response.data;
           const uniqueProducts = {};
@@ -1238,8 +1347,6 @@ app.controller(
           });
 
           $scope.spct = Object.values(uniqueProducts);
-          ImageService.setImages(id_product, $scope.spct);
-
           $scope.spct.forEach(function (spcts) {
             updateImageData(spcts);
           });
@@ -1332,7 +1439,6 @@ app.controller(
                 showConfirmButton: false,
                 timer: 2000,
               });
-              // Pass spcts to the updateImageData function
               updateImageData(spcts);
             });
         };
@@ -1450,10 +1556,16 @@ app.controller(
           cancelButtonText: "Hủy",
         }).then((result) => {
           if (result.isConfirmed) {
-            window.location.href = "#!/list-Product";
+            let id = $routeParams.id;
+            window.location.href = "#!/edit-ProductDetails?id=" + id;
           }
         });
       }
+    };
+
+    $scope.returnEdit = function () {
+      let idProduct = $routeParams.id;
+      window.location.href = "#!/edit-ProductDetails?id=" + idProduct;
     };
   }
 );
