@@ -270,7 +270,7 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
 
 
       setTimeout(function () {
-        document.getElementById("scanButton").classList.remove("hidden");
+        // document.getElementById("scanButton").classList.remove("hidden");
         quetMQR.stop();
       }, 2000);
     });
@@ -380,6 +380,10 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
   $scope.returnCreate = function () {
     window.location.href = "#!/list-Staff";
   };
+
+  $scope.reload = function(){
+    window.location.reload()
+  }
 });
 
 //Edit Staff
