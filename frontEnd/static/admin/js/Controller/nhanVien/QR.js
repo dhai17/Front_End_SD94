@@ -1,4 +1,4 @@
-app.controller("CreateNhanVienController", QRController);
+app.controller("CreateNhanVienControllerQR", QRController);
 
 function QRController($scope) {
   var vm = this;
@@ -28,6 +28,14 @@ function QRController($scope) {
         // You can set other properties accordingly
       };
       localStorage.setItem("qr", JSON.stringify(vm.createStaff));
+
+      angular.element(document.getElementById("inputName")).val(vm.createStaff.hoTen);
+      angular.element(document.getElementById("inputPhone")).val(vm.createStaff.soDienThoai);
+      angular.element(document.getElementById("inputEmail")).val(vm.createStaff.email);
+      angular.element(document.getElementById("inputDob")).val(vm.createStaff.ngaySinh);
+      angular.element(document.getElementById("inputAddress")).val(vm.createStaff.diaChi);
+
+
       console.log("vm.createStaff", vm.createStaff);
       console.log("qrCodeParts", qrCodeParts);
       //   $timeout(quetMQR.stop(), 2000);

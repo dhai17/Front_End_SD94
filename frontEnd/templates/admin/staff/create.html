@@ -1,5 +1,5 @@
 
-<div class="container-fluid" ng-controller="CreateNhanVienController as vm">
+<div class="container-fluid" ng-controller="CreateNhanVienControllerQR as vm">
 
     <video id="preview"></video>
     <button class="btn btn-primary btn-sm"  ng-click="vm.batDauQuet()" >Scran</button>
@@ -22,29 +22,29 @@
                 <div class="row gx-3 mb-3">   
                     <div class="col-md-6">
                         <label class="form-check-label" for="inputUsername">Họ tên</label>
-                        <input class="form-control" id="inputUsername" type="text" placeholder="Nhập tên nhân viên" ng-model="createStaff.hoTen",
+                        <input class="form-control" id="inputName" type="text" placeholder="Nhập tên nhân viên" ng-model="createStaff.hoTen",
                         >
                     </div>
                     <div class="col-md-6">
                         <label class="form-check-label" for="inputLocation">Số điện thoại</label>
-                        <input class="form-control" id="inputLocation" type="text" placeholder="Nhập số điện thoại" ng-model="createStaff.soDienThoai">
+                        <input class="form-control" id="inputPhone" type="text" placeholder="Nhập số điện thoại" ng-model="createStaff.soDienThoai">
                     </div>
                 </div>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="form-check-label" for="inputLastName">Email</label>
-                        <input class="form-control" id="inputFirstName" type="text" placeholder="Nhập email" ng-model="createStaff.email">
+                        <input class="form-control" id="inputEmail" type="text" placeholder="Nhập email" ng-model="createStaff.email">
                     </div>
                     <div class="col-md-6">
                         <label class="form-check-label" for="inputLastName">Ngày sinh</label>
-                        <input class="form-control" id="inputLastName" type="date" placeholder="Nhập ngày sinh" ng-model="createStaff.ngaySinh">
+                        <input class="form-control" id="inputDob" type="date" placeholder="Nhập ngày sinh" ng-model="createStaff.ngaySinh">
                     </div>
                 </div>
                
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="form-check-label" for="inputLastName">Địa chỉ</label>
-                        <input class="form-control" id="inputLastName" type="text" placeholder="Nhập địa chỉ" ng-model="createStaff.diaChi">
+                        <input class="form-control" id="inputAddress" type="text" placeholder="Nhập địa chỉ" ng-model="createStaff.diaChi">
                     </div>
                     <div class="col-md-6">
                         <label class="small mb-1" for="matKhau">Mật khẩu</label>
