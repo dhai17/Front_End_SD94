@@ -16,6 +16,28 @@ app.controller("thongKeController", function ($scope, $http) {
                });
           });
 
+     $http.get("http://localhost:8080/thongKe/tongDoanhSoonline", { headers })
+          .then(function (response) {
+               $scope.tongDoanhSo = response.data;
+               $scope.tongTien_online = 0;
+
+               angular.forEach($scope.tongDoanhSo, function (item) {
+                    $scope.tongTien_online += item.tong_tien_hoadon;
+               });
+          });
+
+     $http.get("http://localhost:8080/thongKe/tongDoanhSooffline", { headers })
+          .then(function (response) {
+               $scope.tongDoanhSo = response.data;
+               $scope.tongTien_offline = 0;
+
+               angular.forEach($scope.tongDoanhSo, function (item) {
+                    $scope.tongTien_offline += item.tong_tien_hoadon;
+               });
+          });
+
+
+
      $http.get("http://localhost:8080/thongKe/thongKeTheoNgay", { headers })
           .then(function (response) {
                $scope.tongTienHomNay = 0;
@@ -74,10 +96,12 @@ app.controller("thongKeController", function ($scope, $http) {
 
                let months = [];
                let values = [];
+               // let values1 = [];
 
                data.forEach(function (item) {
                     months.push(item.thang);
                     values.push(item.tong_tien_hoadon);
+                    // values1.push(item.tong_tien_hoadon);
                });
 
                ctx = document.getElementById('myChart').getContext('2d');
