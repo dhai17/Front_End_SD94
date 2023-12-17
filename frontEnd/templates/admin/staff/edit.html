@@ -8,7 +8,12 @@
                     <div class="col-md-6">
                         <label class="form-check-label" for="inputUsername">Họ Tên</label>
                         <input class="form-control" id="inputUsername" type="text" placeholder="Nhập tên nhân viên"
-                            ng-model="editStaff.hoTen">
+                            ng-model="editStaff.hoTen" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-check-label" for="inputSoCanCuoc">Số căn cước</label>
+                        <input class="form-control" id="inputSoCanCuoc" type="text" placeholder="Nhập tên nhân viên"
+                            ng-model="editStaff.soCanCuoc" readonly>
                     </div>
                     <div class="col-md-6">
                         <label class="form-check-label" for="inputLocation">Số điện thoại</label>
@@ -25,7 +30,7 @@
                     <div class="col-md-6">
                         <label class="form-check-label" for="inputDateOfBirth">Ngày sinh</label>
                         <input class="form-control" id="inputDateOfBirth" type="date" placeholder="nhập ngày sinh"
-                            ng-model="editStaff.ngaySinh">
+                            ng-model="editStaff.ngaySinh" readonly>
                     </div>
 
                 </div>
@@ -33,7 +38,7 @@
                     <div class="col-md-6">
                         <label class="form-check-label" for="inputAddress">Địa chỉ</label>
                         <input class="form-control" id="inputAddress" type="text" placeholder="Nhập địa chỉ"
-                            ng-model="editStaff.diaChi">
+                            ng-model="editStaff.diaChi" readonly>
                     </div>
                     <div class="col-md-6 d-flex">
                         <label class="form-check-label me-2" for="statusSelect">Trạng thái</label>

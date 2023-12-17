@@ -218,6 +218,7 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
     quetMQR.addListener("scan", function (noiDung) {
       vm.duLieuQuet = fixVietnameseCharacters(noiDung);
 
+
       let qrCodeParts = vm.duLieuQuet.split(/(?:\||\|\|)/);
 
       vm.createStaff = {
@@ -265,7 +266,11 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
       angular.element(document.getElementById("inputDob")).val(ngaySinhFormatted);
       angular.element(document.getElementById("inputAddress")).val(vm.createStaff.diaChi);
       angular.element(document.getElementById("inputSoCanCuoc")).val(vm.createStaff.soCanCuoc);
+
+
+
       setTimeout(function () {
+        document.getElementById("scanButton").classList.remove("hidden");
         quetMQR.stop();
       }, 2000);
     });
@@ -274,6 +279,7 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
       Instascan.Camera.getCameras()
         .then(function (cameras) {
           if (cameras.length > 0) {
+            document.getElementById("scanButton").classList.add("hidden");
             quetMQR.start(cameras[0]);
           } else {
             console.error("Không tìm thấy camera.");
@@ -327,6 +333,7 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
       diaChi: $scope.createStaff.diaChi,
       gioiTinh: gioiTinh,
       matKhau: $scope.createStaff.matKhau,
+      soCanCuoc: $scope.createStaff.soCanCuoc
     };
 
     if ($scope.createStaff === undefined) {
@@ -345,7 +352,7 @@ app.controller("CreateNhanVienController", function ($scope, $http) {
         // Xử lý thành công nếu có
         Swal.fire({
           icon: "success",
-          title: "Added successfully",
+          title: "Thêm mới thành công",
           showConfirmButton: false,
           timer: 2000,
         }).then(function () {
@@ -389,6 +396,7 @@ app.controller(
       .get("http://localhost:8080/nhanVien/chinhSua/" + idStaff, { headers })
       .then(function (response) {
         const editStaff = response.data;
+        console.log(editStaff);
         $scope.editStaff = editStaff;
 
         if (editStaff.gioiTinh === true) {
@@ -424,7 +432,7 @@ app.controller(
         .then(function (response) {
           Swal.fire({
             icon: "success",
-            title: "Edit success fully",
+            title: "Sửa thành công",
             showConfirmButton: false,
             timer: 2000,
           }).then(function () {
