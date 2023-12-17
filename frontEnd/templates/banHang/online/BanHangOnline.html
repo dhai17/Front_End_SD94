@@ -122,13 +122,13 @@
                                                 <span>{{hoaDonChiTiet.sanPhamChiTiet.kichCo.kichCo}}</span>
                                                 <br>
                                                 <span
-                                                    ng-bind="hoaDonChiTiet.sanPhamChiTiet.sanPham.gia.toLocaleString('vi-VN') + ' VNĐ'"></span>
+                                                    ng-bind="hoaDonChiTiet.sanPhamChiTiet.sanPham.gia.toLocaleString('vi-VN') + ' đ'"></span>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                                 <td>{{hoaDonChiTiet.soLuong}}</td>
-                                <td>{{hoaDonChiTiet.thanhTien.toLocaleString('vi-VN')}} VNĐ</td>
+                                <td>{{hoaDonChiTiet.thanhTien.toLocaleString('vi-VN')}} đ</td>
                             </tr>
                         </tbody>
                     </table>
@@ -147,20 +147,20 @@
                     <hr>
 
                     <p class="cart__discount">Tạm tính: <span id="subtotal">{{tienTamTinh.toLocaleString('vi-VN') + '
-                            VNĐ' }}</span>
+                            đ' }}</span>
                     </p>
 
                     <p class="cart__discount">
                         <label for="shippingFee">Phí vận chuyển: </label>
-                        <label type="text" id="shippingFee" readonly>{{tienShip.toLocaleString('vi-VN') + ' VNĐ'
+                        <label type="text" id="shippingFee" readonly>{{tienShip.toLocaleString('vi-VN') + ' đ'
                             }}</label>
                     </p>
 
                     <p class="cart__discount">Giảm giá đã áp dụng: <span id="tenGiamGia">{{hoaDon.khuyenMai.tenKhuyenMai}}</span></p>
-                    <p class="cart__discount">Giảm giá: <span id="discount">{{hoaDon.tienGiam.toLocaleString('vi-VN') + ' VNĐ' }}</span></p>
+                    <p class="cart__discount">Giảm giá: <span id="discount">{{hoaDon.tienGiam.toLocaleString('vi-VN') + ' đ' }}</span></p>
 
                     <hr>
-                    <p class="tongCongTien">Tổng cộng: <span id="total">{{tongTienHoaDon.toLocaleString('vi-VN') + ' VNĐ' }}</span></p>
+                    <p class="tongCongTien">Tổng cộng: <span id="total">{{tongTienHoaDon.toLocaleString('vi-VN') + ' đ' }}</span></p>
                 </div>
 
                 <a th:href="#" class="cart-link2">Giỏ hàng</a>

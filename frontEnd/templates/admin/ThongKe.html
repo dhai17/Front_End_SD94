@@ -13,6 +13,26 @@
                          </div>
                     </div>
                </div>
+               <div class="col-md-4">
+                    <p>Tổng doanh số bán hàng online</p>
+                    <div class="card">
+                         <div class="card-body" style="text-align: center;">
+                              <h5 class="card-title">Tổng doanh số</h5>
+                              <p class="card-text" id="doanhSo" style="color: red;">{{
+                                   tongTien_online.toLocaleString('vi-VN')}} VNĐ</p>
+                         </div>
+                    </div>
+               </div>
+               <div class="col-md-4">
+                    <p>Tổng doanh số bán hàng tại quầy</p>
+                    <div class="card">
+                         <div class="card-body" style="text-align: center;">
+                              <h5 class="card-title">Tổng doanh số</h5>
+                              <p class="card-text" id="doanhSo" style="color: red;">{{
+                                   tongTien_offline.toLocaleString('vi-VN')}} VNĐ</p>
+                         </div>
+                    </div>
+               </div>
           </div>
           <hr>
           <div class="row">
@@ -101,7 +121,7 @@
                <div class="card mt-3"  style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title" style="text-align: center;">Biểu đồ thống kê</h5>
-                        <canvas id="myChart" style="max-width: 100%; max-height: 390px;"></canvas>
+                        <canvas id="myChart" style="max-width: 100%; max-height: 390px; font-size: 20px;"></canvas>
                     </div>
                 </div>
           </div>

@@ -59,7 +59,7 @@
             <span>{{ hoaDon.tienGiam.toLocaleString('vi-VN') + ' VNĐ' }}</span>
         </p>
         <p>Tổng tiền thanh toán: <span>{{ hoaDon.tongTienDonHang.toLocaleString('vi-VN') + ' VNĐ' }}</span></p>
-
+        <p>Trạng thái thanh toán: <span>{{ hoaDon.loaiHoaDon==0?"Thanh toán khi nhận hàng":"Đã thanh toán" }}</span></p>
     </div>
 
     <br>

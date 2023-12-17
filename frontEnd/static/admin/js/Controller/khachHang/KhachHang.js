@@ -314,7 +314,7 @@ app.controller("EditCustomerController", function ($scope, $routeParams, $http) 
             email: $scope.editCustomer.email,
             ngaySinh: $scope.editCustomer.ngaySinh,
             diaChi: $scope.editCustomer.diaChi,
-            matKhau: $scope.editCustomer.matKhau
+            // matKhau: $scope.editCustomer.matKhau
         };
 
         $http.put("http://localhost:8080/khachHang/luu-chinh-sua", editCustomer, { headers })

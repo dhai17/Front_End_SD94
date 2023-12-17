@@ -126,7 +126,10 @@ app.controller("HDCT_DaThanhToanController", function ($scope, $routeParams, $ht
     }
     $scope.inHoaDon = function(){
         const id = $routeParams.id;
-        $http.get("http://localhost:8080/api/banHang/taiQuay/inHoaDon/"+id, { headers, responseType: 'arraybuffer' })
+        let data = {
+            id: id,
+          };
+        $http.post("http://localhost:8080/api/banHang/taiQuay/inHoaDon/daThanhToan", data, { headers, responseType: 'arraybuffer' })
             .then(function (response) {
                 let pdfBlob = new Blob([response.data], { type: 'application/pdf' });
                 let pdfUrl = URL.createObjectURL(pdfBlob);
