@@ -75,7 +75,7 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
                             showConfirmButton: false,
                             timer: 2000,
                         }).then(() => {
-                            window.location.href = "http://127.0.0.1:5501/templates/customer/home/index.html#!/";
+                            window.location.href = "http://127.0.0.1:5501/templates/customer/home/TrangChu.html#!/";
                         })
                     }).catch(function (e) {
                         const errorMessage = e.data[Object.keys(e.data)[0]];
