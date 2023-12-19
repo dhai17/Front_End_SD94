@@ -199,7 +199,7 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
     $http
       .post("http://localhost:8080/api/muaNgay/add/khuyenMai", data)
       .then(function (response) {
-        const hoaDon = response.data;
+        const hoaDon = response.data.body;
         $scope.$evalAsync(function () {
           $scope.tienTamTinh = hoaDon.tongTienHoaDon;
           $scope.tongTienHoaDon = hoaDon.tongTienDonHang;
