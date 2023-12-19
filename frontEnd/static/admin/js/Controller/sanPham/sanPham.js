@@ -151,12 +151,12 @@ app.controller("ProductController", function ($scope, $http) {
 
   $scope.$watch('searchTerm', function (newVal) {
     if (newVal) {
-      $http.get("http://localhost:8080/customer/sanPham/timKiemTheoTen/" + newVal, { headers })
+      $http.get("http://localhost:8080/sanPham/timKiem=" + newVal, { headers })
         .then(function (response) {
           $scope.promotions = response.data;
         });
     } else {
-      $http.get("http://localhost:8080/customer/sanPham/danhSach", { headers })
+      $http.get("http://localhost:8080/sanPham/danhSach", { headers })
         .then(function (response) {
           $scope.promotions = response.data;
         });
@@ -164,7 +164,7 @@ app.controller("ProductController", function ($scope, $http) {
   });
 
   $scope.searchAll = function (searchTerm) {
-    $http.get("http://localhost:8080/customer/sanPham/timKiemTheoTen/" + searchTerm, { headers })
+    $http.get("http://localhost:8080/sanPham/timKiem=" + searchTerm, { headers })
       .then(function (response) {
         $scope.promotions = response.data;
       });

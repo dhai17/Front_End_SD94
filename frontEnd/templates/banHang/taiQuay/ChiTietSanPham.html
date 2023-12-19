@@ -30,7 +30,8 @@
                             <ul id="marker">
                                 <button class="mauSac-sanPhamcustome" ng-repeat="mauSac in mauSac"
                                     ng-style="{'background-color': mauSac}" ng-click="selectMauSac(mauSac)"
-                                    ng-class="{selected: mauSac === selectedMauSac}" ng-model=mauSac></button>
+                                    ng-class="{selected: mauSac === selectedMauSac}" ng-model=mauSac
+                                    style="border: 1px solid black;"></button>
                                 <input type="hidden" id="mauSacDaChon">
                             </ul>
                         </div>
