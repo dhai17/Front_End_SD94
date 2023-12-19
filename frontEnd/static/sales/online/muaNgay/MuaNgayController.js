@@ -213,6 +213,7 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
 
           let tongTienHoaDon = hoaDon.tongTienHoaDon;
           let tongTienSauGiam = tongTienHoaDon + tienShip - hoaDon.tienGiam;
+          console.log(hoaDon);
 
           $("#total").text(
             tongTienSauGiam.toLocaleString("vi-VN", {
