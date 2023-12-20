@@ -538,18 +538,30 @@ app.controller(
         .catch(function (errorResponse) {
           console.log(errorResponse);
           if (errorResponse.status === 400) {
-            const errors = errorResponse.data;
-            angular.forEach(
-              errors,
-              function (errorMessage, fieldName) {
-                Swal.fire({
-                  icon: "error",
-                  title: errorMessage,
-                  showConfirmButton: false,
-                  timer: 2000,
-                });
+            const errorMessage = errorResponse.data.message;
+            if (errorMessage === "Trùng tên sản phẩm") {
+              Swal.fire({
+                icon: "error",
+                title: errorMessage,
+                showConfirmButton: false,
+                timer: 2000,
+              });
+            } else {
+              if (errorResponse.status === 400) {
+                const errors = errorResponse.data;
+                angular.forEach(
+                  errors,
+                  function (errorMessage, fieldName) {
+                    Swal.fire({
+                      icon: "error",
+                      title: errorMessage,
+                      showConfirmButton: false,
+                      timer: 2000,
+                    });
+                  }
+                );
               }
-            );
+            }
           }
         });
     };

@@ -226,7 +226,7 @@ app.controller(
           if ($scope.tienThieu !== 0) {
             Swal.fire({
               icon: "warning",
-              title: "Tien khach dua khong du",
+              title: "Tiền khách đưa không đủ",
               showConfirmButton: false,
               timer: 2000,
             });
