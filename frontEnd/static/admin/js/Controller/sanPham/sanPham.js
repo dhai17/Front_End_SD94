@@ -1262,6 +1262,16 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
                 timer: 2000,
               });
 
+              $http
+                .get("http://localhost:8080/sanPhamChiTiet/dsCTSP", {
+                  params: { san_pham_id: id },
+                  headers: headers,
+                })
+                .then(function (response) {
+                  const details = response.data;
+                  $scope.details = details;
+                });
+
               // Cập nhật ngữ cảnh AngularJS
               $scope.$apply(function () {
                 details.trangThai = !details.trangThai; // Đảo ngược trạng thái
