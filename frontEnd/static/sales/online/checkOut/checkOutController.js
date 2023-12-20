@@ -76,7 +76,14 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
         let quanHuyen = $("#district option:selected").text();
         let phuongXa = $("#ward option:selected").text();
         let diaChiNhap = $scope.diaChi;
-        let diaChi = diaChiNhap + " - " + phuongXa + " - " + quanHuyen + " - " + tinhThanhPho;
+        let diaChi =
+          diaChiNhap +
+          " - " +
+          phuongXa +
+          " - " +
+          quanHuyen +
+          " - " +
+          tinhThanhPho;
 
         let diaChi2;
         if (
@@ -105,7 +112,10 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
           diaChi: diaChi2,
           nguoiTao: $scope.hoTen,
         };
-        $http.post("http://localhost:8080/api/banHang/online/datHang", data, { headers, })
+        $http
+          .post("http://localhost:8080/api/banHang/online/datHang", data, {
+            headers,
+          })
           .then(function (response) {
             Swal.fire({
               icon: "success",
@@ -113,7 +123,8 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
               showConfirmButton: false,
               timer: 2000,
             }).then(() => {
-              window.location.href = "http://127.0.0.1:5501/templates/customer/home/index.html#!/";
+              window.location.href =
+                "http://127.0.0.1:5501/templates/customer/home/index.html#!/product-list";
             });
           })
           .catch(function (e) {
@@ -124,7 +135,7 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
               showConfirmButton: false,
               timer: 2000,
             });
-          })
+          });
       }
     });
   };
@@ -147,7 +158,14 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
         let quanHuyen = $("#district option:selected").text();
         let phuongXa = $("#ward option:selected").text();
         let diaChiNhap = $scope.diaChi;
-        let diaChi = diaChiNhap + " - " + phuongXa + " - " + quanHuyen + " - " + tinhThanhPho;
+        let diaChi =
+          diaChiNhap +
+          " - " +
+          phuongXa +
+          " - " +
+          quanHuyen +
+          " - " +
+          tinhThanhPho;
 
         let diaChi2;
         if (
@@ -189,7 +207,8 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
             }).then(() => {
               window.location.href = response.data.createURL;
             });
-          }).catch(function (e) {
+          })
+          .catch(function (e) {
             const errorMessage = e.data[Object.keys(e.data)[0]];
             Swal.fire({
               icon: "error",
@@ -197,7 +216,7 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
               showConfirmButton: false,
               timer: 2000,
             });
-          })
+          });
       }
     });
   };
@@ -208,6 +227,12 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
       id: id_HoaDon,
       tenMaGiamGia: a,
     };
+
+    let tienShip = parseFloat(
+      $("#shippingFee")
+        .text()
+        .replace(/[^0-9]/g, "")
+    );
 
     $http
       .post("http://localhost:8080/api/banHang/online/add/khuyenMai", data, {
@@ -225,6 +250,16 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
             showConfirmButton: false,
             timer: 2000,
           });
+
+          let tongTienHoaDon = hoaDon.tongTienHoaDon;
+          let tongTienSauGiam = tongTienHoaDon + tienShip - hoaDon.tienGiam;
+
+          $("#total").text(
+            tongTienSauGiam.toLocaleString("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            })
+          );
         });
       })
       .catch(function (e) {
@@ -237,4 +272,8 @@ app.controller("checkOutController", function ($scope, $routeParams, $http) {
         console.log(e);
       });
   };
+  $scope.quayLaiGioHang = function (){
+    window.location.href =
+    "http://127.0.0.1:5501/templates/customer/home/index.html#!/cart-list";
+  }
 });
