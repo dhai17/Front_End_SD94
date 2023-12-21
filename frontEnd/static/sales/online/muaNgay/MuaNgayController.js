@@ -20,6 +20,64 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
       $scope.hoaDonChiTiet = hoaDonChiTiet;
     });
 
+  $http
+    .get("http://localhost:8080/api/muaNgay/khuyenMai/list")
+    .then(function (response) {
+      const khuyenMai = response.data;
+      $scope.khuyenMai = khuyenMai;
+    });
+
+  $scope.onKhuyenMaiChange = function () {
+    $scope.addKhuyenMai = function () {
+      let data = {
+        id: id_HoaDonMuaNgay,
+        id_khuyenMai: $scope.KhuyenMaiDangChon,
+      };
+
+      let tienShip = parseFloat(
+        $("#shippingFee")
+          .text()
+          .replace(/[^0-9]/g, "")
+      );
+
+      $http
+        .post("http://localhost:8080/api/muaNgay/add/khuyenMai", data)
+        .then(function (response) {
+          const hoaDon = response.data;
+          $scope.$evalAsync(function () {
+            console.log(hoaDon);
+            $scope.tienTamTinh = hoaDon.tongTienHoaDon;
+            $scope.tongTienHoaDon = hoaDon.tongTienDonHang;
+            $scope.hoaDon = hoaDon;
+            Swal.fire({
+              icon: "success",
+              title: "Thêm mã giảm giá thành công",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+
+            let tongTienHoaDon = hoaDon.tongTienHoaDon;
+            let tongTienSauGiam = tongTienHoaDon + tienShip - hoaDon.tienGiam;
+
+            $("#total").text(
+              tongTienSauGiam.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })
+            );
+          });
+        })
+        .catch(function (e) {
+          Swal.fire({
+            icon: "error",
+            title: e.data.mess,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        });
+    };
+  };
+
   function fomatTien(tien) {
     let chuoiDaLoaiBo = tien.replace(/\./g, "").replace(" ₫", "");
     return parseFloat(chuoiDaLoaiBo);
@@ -183,58 +241,58 @@ app.controller("MuaNgayController", function ($scope, $routeParams, $http) {
     });
   };
 
-  $scope.addKhuyenMai = function () {
-    let a = $("#maGiamGia").val();
-    let data = {
-      id: id_HoaDonMuaNgay,
-      tenMaGiamGia: a,
-    };
+  // $scope.addKhuyenMai = function () {
+  //   let a = $("#maGiamGia").val();
+  //   let data = {
+  //     id: id_HoaDonMuaNgay,
+  //     tenMaGiamGia: a,
+  //   };
 
-    let tienShip = parseFloat(
-      $("#shippingFee")
-        .text()
-        .replace(/[^0-9]/g, "")
-    );
+  //   let tienShip = parseFloat(
+  //     $("#shippingFee")
+  //       .text()
+  //       .replace(/[^0-9]/g, "")
+  //   );
 
-    $http
-      .post("http://localhost:8080/api/muaNgay/add/khuyenMai", data)
-      .then(function (response) {
-        const hoaDon = response.data;
-        $scope.$evalAsync(function () {
-          console.log(hoaDon);
-          $scope.tienTamTinh = hoaDon.tongTienHoaDon;
-          $scope.tongTienHoaDon = hoaDon.tongTienDonHang;
-          $scope.hoaDon = hoaDon;
-          Swal.fire({
-            icon: "success",
-            title: "Thêm mã giảm giá thành công",
-            showConfirmButton: false,
-            timer: 2000,
-          });
+  //   $http
+  //     .post("http://localhost:8080/api/muaNgay/add/khuyenMai", data)
+  //     .then(function (response) {
+  //       const hoaDon = response.data;
+  //       $scope.$evalAsync(function () {
+  //         console.log(hoaDon);
+  //         $scope.tienTamTinh = hoaDon.tongTienHoaDon;
+  //         $scope.tongTienHoaDon = hoaDon.tongTienDonHang;
+  //         $scope.hoaDon = hoaDon;
+  //         Swal.fire({
+  //           icon: "success",
+  //           title: "Thêm mã giảm giá thành công",
+  //           showConfirmButton: false,
+  //           timer: 2000,
+  //         });
 
-          let tongTienHoaDon = hoaDon.tongTienHoaDon;
-          let tongTienSauGiam = tongTienHoaDon + tienShip - hoaDon.tienGiam;
+  //         let tongTienHoaDon = hoaDon.tongTienHoaDon;
+  //         let tongTienSauGiam = tongTienHoaDon + tienShip - hoaDon.tienGiam;
 
-          $("#total").text(
-            tongTienSauGiam.toLocaleString("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            })
-          );
-        });
-      })
-      .catch(function (e) {
-        Swal.fire({
-          icon: "error",
-          title: e.data.mess,
-          showConfirmButton: false,
-          timer: 2000,
-        });
-      });
-  };
+  //         $("#total").text(
+  //           tongTienSauGiam.toLocaleString("vi-VN", {
+  //             style: "currency",
+  //             currency: "VND",
+  //           })
+  //         );
+  //       });
+  //     })
+  //     .catch(function (e) {
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: e.data.mess,
+  //         showConfirmButton: false,
+  //         timer: 2000,
+  //       });
+  //     });
+  // };
 
-  $scope.quayLai = function (){
+  $scope.quayLai = function () {
     window.location.href =
-    "http://127.0.0.1:5501/templates/customer/home/index.html#!/product-list";
-  }
+      "http://127.0.0.1:5501/templates/customer/home/index.html#!/product-list";
+  };
 });

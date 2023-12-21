@@ -6,11 +6,16 @@ app.controller("ProductController", function ($scope, $http) {
   };
   // lay ra thong tin nguoi dang nhap
   function parseJwt(token) {
-    let base64Url = token.split('.')[1];
-    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
+    let base64Url = token.split(".")[1];
+    let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    let jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
 
     let payload = JSON.parse(jsonPayload);
     return payload;
@@ -61,10 +66,11 @@ app.controller("ProductController", function ($scope, $http) {
     });
 
   $scope.filterByLoaiSp = function () {
-    $http.get('http://localhost:8080/customer/sanPham/loc/loai_san_pham', {
-      params: { idloaiSanPham: $scope.idloaiSanPham },
-      headers: headers
-    })
+    $http
+      .get("http://localhost:8080/customer/sanPham/loc/loai_san_pham", {
+        params: { idloaiSanPham: $scope.idloaiSanPham },
+        headers: headers,
+      })
       .then(function (response) {
         const promotions = response.data;
         $scope.promotions = promotions;
@@ -72,10 +78,11 @@ app.controller("ProductController", function ($scope, $http) {
   };
 
   $scope.filterByChatLieu = function () {
-    $http.get('http://localhost:8080/customer/sanPham/loc/chat_lieu', {
-      params: { id_chat_lieu: $scope.id_chat_lieu },
-      headers: headers
-    })
+    $http
+      .get("http://localhost:8080/customer/sanPham/loc/chat_lieu", {
+        params: { id_chat_lieu: $scope.id_chat_lieu },
+        headers: headers,
+      })
       .then(function (response) {
         const promotions = response.data;
         $scope.promotions = promotions;
@@ -83,10 +90,11 @@ app.controller("ProductController", function ($scope, $http) {
   };
 
   $scope.filterByNsx = function () {
-    $http.get('http://localhost:8080/customer/sanPham/loc/nha_san_xuat', {
-      params: { id_nsx: $scope.id_nsx },
-      headers: headers
-    })
+    $http
+      .get("http://localhost:8080/customer/sanPham/loc/nha_san_xuat", {
+        params: { id_nsx: $scope.id_nsx },
+        headers: headers,
+      })
       .then(function (response) {
         const promotions = response.data;
         $scope.promotions = promotions;
@@ -94,10 +102,11 @@ app.controller("ProductController", function ($scope, $http) {
   };
 
   $scope.filterByMauSac = function () {
-    $http.get('http://localhost:8080/customer/sanPham/loc/mau_sac', {
-      params: { mauSac_id: $scope.mauSac_id },
-      headers: headers
-    })
+    $http
+      .get("http://localhost:8080/customer/sanPham/loc/mau_sac", {
+        params: { mauSac_id: $scope.mauSac_id },
+        headers: headers,
+      })
       .then(function (response) {
         const promotions = response.data;
         $scope.promotions = promotions;
@@ -105,10 +114,11 @@ app.controller("ProductController", function ($scope, $http) {
   };
 
   $scope.filterByKichCo = function () {
-    $http.get('http://localhost:8080/customer/sanPham/loc/kich_co', {
-      params: { kichCo_id: $scope.kichCo_id },
-      headers: headers
-    })
+    $http
+      .get("http://localhost:8080/customer/sanPham/loc/kich_co", {
+        params: { kichCo_id: $scope.kichCo_id },
+        headers: headers,
+      })
       .then(function (response) {
         const promotions = response.data;
         $scope.promotions = promotions;
@@ -127,10 +137,11 @@ app.controller("ProductController", function ($scope, $http) {
       return;
     }
 
-    $http.get("http://localhost:8080/customer/sanPham/loc/gia", {
-      params: { gia1: $scope.gia1, gia2: $scope.gia2 },
-      headers: headers
-    })
+    $http
+      .get("http://localhost:8080/customer/sanPham/loc/gia", {
+        params: { gia1: $scope.gia1, gia2: $scope.gia2 },
+        headers: headers,
+      })
       .then(function (response) {
         $scope.promotions = response.data;
       })
@@ -148,15 +159,16 @@ app.controller("ProductController", function ($scope, $http) {
       });
   };
 
-
-  $scope.$watch('searchTerm', function (newVal) {
+  $scope.$watch("searchTerm", function (newVal) {
     if (newVal) {
-      $http.get("http://localhost:8080/sanPham/timKiem=" + newVal, { headers })
+      $http
+        .get("http://localhost:8080/sanPham/timKiem=" + newVal, { headers })
         .then(function (response) {
           $scope.promotions = response.data;
         });
     } else {
-      $http.get("http://localhost:8080/sanPham/danhSach", { headers })
+      $http
+        .get("http://localhost:8080/sanPham/danhSach", { headers })
         .then(function (response) {
           $scope.promotions = response.data;
         });
@@ -164,12 +176,12 @@ app.controller("ProductController", function ($scope, $http) {
   });
 
   $scope.searchAll = function (searchTerm) {
-    $http.get("http://localhost:8080/sanPham/timKiem=" + searchTerm, { headers })
+    $http
+      .get("http://localhost:8080/sanPham/timKiem=" + searchTerm, { headers })
       .then(function (response) {
         $scope.promotions = response.data;
       });
   };
-
 
   //Phân trang
   $scope.pager = {
@@ -207,12 +219,12 @@ app.controller("ProductController", function ($scope, $http) {
   };
 
   $scope.create = function (promotion) {
-    if (decodedToken.role === 'STAFF') {
+    if (decodedToken.role === "STAFF") {
       Swal.fire({
-        icon: 'warning',
-        title: 'Bạn không có quyền thao tác',
+        icon: "warning",
+        title: "Bạn không có quyền thao tác",
         showConfirmButton: false,
-        timer: 2000
+        timer: 2000,
       });
       return;
     }
@@ -221,12 +233,12 @@ app.controller("ProductController", function ($scope, $http) {
 
   //Xóa trong danh sách
   $scope.delete = function (promotion) {
-    if (decodedToken.role === 'STAFF') {
+    if (decodedToken.role === "STAFF") {
       Swal.fire({
-        icon: 'warning',
-        title: 'Bạn không có quyền xoá',
+        icon: "warning",
+        title: "Bạn không có quyền xoá",
         showConfirmButton: false,
-        timer: 2000
+        timer: 2000,
       });
       return;
     }
@@ -296,11 +308,16 @@ app.controller(
       Authorization: "Bearer " + token,
     };
     function parseJwt(token) {
-      let base64Url = token.split('.')[1];
-      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
+      let base64Url = token.split(".")[1];
+      let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      let jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map(function (c) {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join("")
+      );
 
       let payload = JSON.parse(jsonPayload);
       return payload;
@@ -320,12 +337,12 @@ app.controller(
       });
 
     $scope.saveEdits = function () {
-      if (decodedToken.role === 'STAFF') {
+      if (decodedToken.role === "STAFF") {
         Swal.fire({
-          icon: 'warning',
-          title: 'Bạn không có quyền thao tác',
+          icon: "warning",
+          title: "Bạn không có quyền thao tác",
           showConfirmButton: false,
-          timer: 2000
+          timer: 2000,
         });
         return;
       }
@@ -344,13 +361,9 @@ app.controller(
       };
 
       $http
-        .put(
-          "http://localhost:8080/sanPhamChiTiet/luuChinhSua",
-          editProduct,
-          {
-            headers,
-          }
-        )
+        .put("http://localhost:8080/sanPhamChiTiet/luuChinhSua", editProduct, {
+          headers,
+        })
         .then(function (response) {
           Swal.fire({
             icon: "success",
@@ -401,11 +414,16 @@ app.controller(
     };
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
-      let base64Url = token.split('.')[1];
-      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
+      let base64Url = token.split(".")[1];
+      let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      let jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map(function (c) {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join("")
+      );
 
       let payload = JSON.parse(jsonPayload);
       return payload;
@@ -450,12 +468,12 @@ app.controller(
     let mauSac_id = [];
     $scope.mauSacDaChon = "";
     $scope.onColorChange = function () {
-      if (decodedToken.role === 'STAFF') {
+      if (decodedToken.role === "STAFF") {
         Swal.fire({
-          icon: 'warning',
-          title: 'Bạn không có quyền thao tác',
+          icon: "warning",
+          title: "Bạn không có quyền thao tác",
           showConfirmButton: false,
-          timer: 2000
+          timer: 2000,
         });
         return;
       }
@@ -470,12 +488,12 @@ app.controller(
     let kichCo_id = [];
     $scope.kichCocDaChon = "";
     $scope.onKichCoChange = function () {
-      if (decodedToken.role === 'STAFF') {
+      if (decodedToken.role === "STAFF") {
         Swal.fire({
-          icon: 'warning',
-          title: 'Bạn không có quyền thao tác',
+          icon: "warning",
+          title: "Bạn không có quyền thao tác",
           showConfirmButton: false,
-          timer: 2000
+          timer: 2000,
         });
         return;
       }
@@ -487,13 +505,14 @@ app.controller(
       }
     };
 
+    //TODO: tao moi san pham
     $scope.saveCreate = function () {
-      if (decodedToken.role === 'STAFF') {
+      if (decodedToken.role === "STAFF") {
         Swal.fire({
-          icon: 'warning',
-          title: 'Bạn không có quyền thao tác',
+          icon: "warning",
+          title: "Bạn không có quyền thao tác",
           showConfirmButton: false,
-          timer: 2000
+          timer: 2000,
         });
         return;
       }
@@ -530,13 +549,9 @@ app.controller(
           });
           const details = response.data.list;
           $scope.details = details;
-          localStorage.setItem(
-            "id_product",
-            response.data.id_product
-          );
+          localStorage.setItem("id_product", response.data.id_product);
         })
         .catch(function (errorResponse) {
-          console.log(errorResponse);
           if (errorResponse.status === 400) {
             const errorMessage = errorResponse.data.message;
             if (errorMessage === "Trùng tên sản phẩm") {
@@ -549,20 +564,69 @@ app.controller(
             } else {
               if (errorResponse.status === 400) {
                 const errors = errorResponse.data;
-                angular.forEach(
-                  errors,
-                  function (errorMessage, fieldName) {
-                    Swal.fire({
-                      icon: "error",
-                      title: errorMessage,
-                      showConfirmButton: false,
-                      timer: 2000,
-                    });
-                  }
-                );
+                angular.forEach(errors, function (errorMessage, fieldName) {
+                  Swal.fire({
+                    icon: "error",
+                    title: errorMessage,
+                    showConfirmButton: false,
+                    timer: 2000,
+                  });
+                });
               }
             }
           }
+        });
+    };
+
+    //TODO: hduong lam san pham chi tiet
+    $scope.luuSanPhamChiTiet = function (details) {
+      const id_product = localStorage.getItem("id_product");
+      const soLuong = $("#soLuongSanPhamChiTiet").val();
+      let data = {
+        sanPhamId: id_product,
+        spctId: details.id,
+        soLuong: soLuong,
+      };
+
+      $http
+        .post(
+          "http://localhost:8080/sanPham/chinhSua-soLuong-SanPhamChiTiet",
+          data,
+          { headers }
+        )
+        .then(function (response) {
+          Swal.fire({
+            icon: "success",
+            title: "Chỉnh sửa thành công",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          const details = response.data;
+          $scope.details = details;
+        });
+    };
+
+    $scope.xoaSanPhamChiTiet = function (details) {
+      const id_product = localStorage.getItem("id_product");
+      let data = {
+        sanPhamId: id_product,
+        spctId: details.id,
+      };
+      $http
+        .post(
+          "http://localhost:8080/sanPham/xoa-SanPhamChiTiet",
+          data,
+          { headers }
+        )
+        .then(function (response) {
+          Swal.fire({
+            icon: "success",
+            title: "Xóa thành công",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          const details = response.data;
+          $scope.details = details;
         });
     };
 
@@ -571,12 +635,12 @@ app.controller(
     };
 
     $scope.themAnh = function () {
-      if (decodedToken.role === 'STAFF') {
+      if (decodedToken.role === "STAFF") {
         Swal.fire({
-          icon: 'warning',
-          title: 'Bạn không có quyền thao tác',
+          icon: "warning",
+          title: "Bạn không có quyền thao tác",
           showConfirmButton: false,
-          timer: 2000
+          timer: 2000,
         });
         return;
       }
@@ -595,12 +659,12 @@ app.controller(
     };
 
     $scope.ThemMoiChatLieu = function () {
-      if (decodedToken.role === 'STAFF') {
+      if (decodedToken.role === "STAFF") {
         Swal.fire({
-          icon: 'warning',
-          title: 'Bạn không có quyền thao tác',
+          icon: "warning",
+          title: "Bạn không có quyền thao tác",
           showConfirmButton: false,
-          timer: 2000
+          timer: 2000,
         });
         return;
       }
@@ -656,12 +720,12 @@ app.controller(
     };
 
     $scope.ThemMoiLoai = function () {
-      if (decodedToken.role === 'STAFF') {
+      if (decodedToken.role === "STAFF") {
         Swal.fire({
-          icon: 'warning',
-          title: 'Bạn không có quyền thao tác',
+          icon: "warning",
+          title: "Bạn không có quyền thao tác",
           showConfirmButton: false,
-          timer: 2000
+          timer: 2000,
         });
         return;
       }
@@ -683,13 +747,9 @@ app.controller(
             loaiSanPham: result.value,
           };
           $http
-            .post(
-              "http://localhost:8080/loaiSanPham/themMoi",
-              data,
-              {
-                headers,
-              }
-            )
+            .post("http://localhost:8080/loaiSanPham/themMoi", data, {
+              headers,
+            })
             .then(function (response) {
               Swal.fire({
                 icon: "success",
@@ -698,10 +758,7 @@ app.controller(
                 timer: 2000,
               });
               $http
-                .get(
-                  "http://localhost:8080/loaiSanPham/danhSach",
-                  { headers }
-                )
+                .get("http://localhost:8080/loaiSanPham/danhSach", { headers })
                 .then(function (response) {
                   const loaiSanPham = response.data;
                   $scope.loaiSanPham = loaiSanPham;
@@ -726,12 +783,12 @@ app.controller(
     };
 
     $scope.ThemMoiHang = function () {
-      if (decodedToken.role === 'STAFF') {
+      if (decodedToken.role === "STAFF") {
         Swal.fire({
-          icon: 'warning',
-          title: 'Bạn không có quyền thao tác',
+          icon: "warning",
+          title: "Bạn không có quyền thao tác",
           showConfirmButton: false,
-          timer: 2000
+          timer: 2000,
         });
         return;
       }
@@ -753,13 +810,9 @@ app.controller(
             name: result.value,
           };
           $http
-            .post(
-              "http://localhost:8080/nhaSanXuat/themMoi",
-              data,
-              {
-                headers,
-              }
-            )
+            .post("http://localhost:8080/nhaSanXuat/themMoi", data, {
+              headers,
+            })
             .then(function (response) {
               Swal.fire({
                 icon: "success",
@@ -768,10 +821,7 @@ app.controller(
                 timer: 2000,
               });
               $http
-                .get(
-                  "http://localhost:8080/nhaSanXuat/danhSach",
-                  { headers }
-                )
+                .get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
                 .then(function (response) {
                   const nhaSanXuat = response.data;
                   $scope.nhaSanXuat = nhaSanXuat;
@@ -796,12 +846,12 @@ app.controller(
     };
 
     $scope.ThemMoiKichCo = function () {
-      if (decodedToken.role === 'STAFF') {
+      if (decodedToken.role === "STAFF") {
         Swal.fire({
-          icon: 'warning',
-          title: 'Bạn không có quyền thao tác',
+          icon: "warning",
+          title: "Bạn không có quyền thao tác",
           showConfirmButton: false,
-          timer: 2000
+          timer: 2000,
         });
         return;
       }
@@ -864,12 +914,12 @@ app.controller(
     };
 
     $scope.ThemMoiMauSac = function () {
-      if (decodedToken.role === 'STAFF') {
+      if (decodedToken.role === "STAFF") {
         Swal.fire({
-          icon: 'warning',
-          title: 'Bạn không có quyền thao tác',
+          icon: "warning",
+          title: "Bạn không có quyền thao tác",
           showConfirmButton: false,
-          timer: 2000
+          timer: 2000,
         });
         return;
       }
@@ -885,15 +935,11 @@ app.controller(
         confirmButtonText: "Xác nhận",
         cancelButtonText: "Huỷ",
         preConfirm: () => {
-          const colorInput =
-            document.getElementById("color-input").value;
-          const nameInput =
-            document.getElementById("name-input").value;
+          const colorInput = document.getElementById("color-input").value;
+          const nameInput = document.getElementById("name-input").value;
 
           if (!nameInput || !colorInput) {
-            Swal.showValidationMessage(
-              "Vui lòng nhập tên và chọn màu sắc"
-            );
+            Swal.showValidationMessage("Vui lòng nhập tên và chọn màu sắc");
           } else {
             let data = {
               tenMauSac: nameInput,
@@ -901,11 +947,7 @@ app.controller(
             };
 
             $http
-              .post(
-                "http://localhost:8080/mauSac/themMoi",
-                data,
-                { headers }
-              )
+              .post("http://localhost:8080/mauSac/themMoi", data, { headers })
               .then(function (response) {
                 // Xử lý thành công nếu có
                 Swal.fire({
@@ -916,10 +958,7 @@ app.controller(
                 });
 
                 $http
-                  .get(
-                    "http://localhost:8080/mauSac/danhSach",
-                    { headers }
-                  )
+                  .get("http://localhost:8080/mauSac/danhSach", { headers })
                   .then(function (response) {
                     const mauSac = response.data;
                     $scope.mauSac = mauSac;
@@ -954,11 +993,16 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
   };
   // lay ra thong tin nguoi dang nhap
   function parseJwt(token) {
-    let base64Url = token.split('.')[1];
-    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
+    let base64Url = token.split(".")[1];
+    let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    let jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
 
     let payload = JSON.parse(jsonPayload);
     return payload;
@@ -996,12 +1040,12 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
     });
 
   $scope.loadImage = function (input) {
-    if (decodedToken.role === 'STAFF') {
+    if (decodedToken.role === "STAFF") {
       Swal.fire({
-        icon: 'warning',
-        title: 'Bạn không có quyền thao tác',
+        icon: "warning",
+        title: "Bạn không có quyền thao tác",
         showConfirmButton: false,
-        timer: 2000
+        timer: 2000,
       });
       return;
     }
@@ -1039,13 +1083,9 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
         };
 
         $http
-          .post(
-            "http://localhost:8080/sanPhamChiTiet/themAnhSanPham",
-            data,
-            {
-              headers,
-            }
-          )
+          .post("http://localhost:8080/sanPhamChiTiet/themAnhSanPham", data, {
+            headers,
+          })
           .then(function (response) {
             Swal.fire({
               icon: "success",
@@ -1061,12 +1101,12 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
   };
 
   $scope.setAnhMacDinh = function (hinhAnh, spcts) {
-    if (decodedToken.role === 'STAFF') {
+    if (decodedToken.role === "STAFF") {
       Swal.fire({
-        icon: 'warning',
-        title: 'Bạn không có quyền thao tác',
+        icon: "warning",
+        title: "Bạn không có quyền thao tác",
         showConfirmButton: false,
-        timer: 2000
+        timer: 2000,
       });
       return;
     }
@@ -1091,12 +1131,12 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
   };
 
   $scope.xoaAnh = function (hinhAnh, spcts) {
-    if (decodedToken.role === 'STAFF') {
+    if (decodedToken.role === "STAFF") {
       Swal.fire({
-        icon: 'warning',
-        title: 'Bạn không có quyền thao tác',
+        icon: "warning",
+        title: "Bạn không có quyền thao tác",
         showConfirmButton: false,
-        timer: 2000
+        timer: 2000,
       });
       return;
     }
@@ -1110,9 +1150,7 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
         headers,
       })
       .then(function (response) {
-        const index = spcts.hinhAnh.findIndex(
-          (item) => item.id === hinhAnh.id
-        );
+        const index = spcts.hinhAnh.findIndex((item) => item.id === hinhAnh.id);
         if (index !== -1) {
           spcts.hinhAnh.splice(index, 1);
         }
@@ -1127,12 +1165,12 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
   };
 
   $scope.themAnhSanPhamHT = function () {
-    if (decodedToken.role === 'STAFF') {
+    if (decodedToken.role === "STAFF") {
       Swal.fire({
-        icon: 'warning',
-        title: 'Bạn không có quyền thao tác',
+        icon: "warning",
+        title: "Bạn không có quyền thao tác",
         showConfirmButton: false,
-        timer: 2000
+        timer: 2000,
       });
       return;
     }
@@ -1140,8 +1178,7 @@ app.controller("ImgController", function ($scope, $http, $routeParams) {
       (spcts) => !spcts.hinhAnh || spcts.hinhAnh.length === 0
     );
     const productsWithoutDefaultImage = $scope.spct.filter(
-      (spcts) =>
-        spcts.hinhAnh && !spcts.hinhAnh.some((anh) => anh.anhMacDinh)
+      (spcts) => spcts.hinhAnh && !spcts.hinhAnh.some((anh) => anh.anhMacDinh)
     );
 
     if (productsWithoutImages.length > 0) {
@@ -1180,11 +1217,16 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
   };
   // lay ra thong tin nguoi dang nhap
   function parseJwt(token) {
-    let base64Url = token.split('.')[1];
-    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
+    let base64Url = token.split(".")[1];
+    let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    let jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
 
     let payload = JSON.parse(jsonPayload);
     return payload;
@@ -1211,12 +1253,12 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
     });
 
   $scope.editSPCT = function (promotion) {
-    if (decodedToken.role === 'STAFF') {
+    if (decodedToken.role === "STAFF") {
       Swal.fire({
-        icon: 'warning',
-        title: 'Bạn không có quyền thao tác',
+        icon: "warning",
+        title: "Bạn không có quyền thao tác",
         showConfirmButton: false,
-        timer: 2000
+        timer: 2000,
       });
       return;
     }
@@ -1225,12 +1267,12 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
   };
 
   $scope.updateTrangThai = function (details) {
-    if (decodedToken.role === 'STAFF') {
+    if (decodedToken.role === "STAFF") {
       Swal.fire({
-        icon: 'warning',
-        title: 'Bạn không có quyền thao tác',
+        icon: "warning",
+        title: "Bạn không có quyền thao tác",
         showConfirmButton: false,
-        timer: 2000
+        timer: 2000,
       });
       return;
     }
@@ -1304,16 +1346,16 @@ app.controller("CTSPController", function ($scope, $routeParams, $http) {
   };
 
   $scope.themSanPhamTuongTu = function () {
-    if (decodedToken.role === 'STAFF') {
+    if (decodedToken.role === "STAFF") {
       Swal.fire({
-        icon: 'warning',
-        title: 'Bạn không có quyền thao tác',
+        icon: "warning",
+        title: "Bạn không có quyền thao tác",
         showConfirmButton: false,
-        timer: 2000
+        timer: 2000,
       });
       return;
     }
-    window.location.href = "#!/themSanPhamTuongTu?id=" + id
+    window.location.href = "#!/themSanPhamTuongTu?id=" + id;
   };
 });
 
@@ -1340,11 +1382,16 @@ app.controller(
     };
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
-      let base64Url = token.split('.')[1];
-      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
+      let base64Url = token.split(".")[1];
+      let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      let jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map(function (c) {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join("")
+      );
 
       let payload = JSON.parse(jsonPayload);
       return payload;
@@ -1356,7 +1403,11 @@ app.controller(
     if (storedImages.length > 0) {
       $scope.spct = storedImages;
     } else {
-      $http.get("http://localhost:8080/sanPhamChiTiet/themAnhSpctId/" + id_product, { headers })
+      $http
+        .get(
+          "http://localhost:8080/sanPhamChiTiet/themAnhSpctId/" + id_product,
+          { headers }
+        )
         .then(function (response) {
           const spct = response.data;
           const uniqueProducts = {};
@@ -1395,13 +1446,9 @@ app.controller(
       }
 
       $http
-        .get(
-          "http://localhost:8080/sanPhamChiTiet/hienThiAnh/" +
-          spcts.id,
-          {
-            headers,
-          }
-        )
+        .get("http://localhost:8080/sanPhamChiTiet/hienThiAnh/" + spcts.id, {
+          headers,
+        })
         .then(function (response) {
           const hinhAnh = response.data;
           spcts.hinhAnh = hinhAnh;
@@ -1447,13 +1494,9 @@ app.controller(
           };
 
           $http
-            .post(
-              "http://localhost:8080/sanPhamChiTiet/themAnhSanPham",
-              data,
-              {
-                headers,
-              }
-            )
+            .post("http://localhost:8080/sanPhamChiTiet/themAnhSanPham", data, {
+              headers,
+            })
             .then(function (response) {
               Swal.fire({
                 icon: "success",
@@ -1469,12 +1512,12 @@ app.controller(
     };
 
     $scope.setAnhMacDinh = function (hinhAnh, spcts) {
-      if (decodedToken.role === 'STAFF') {
+      if (decodedToken.role === "STAFF") {
         Swal.fire({
-          icon: 'warning',
-          title: 'Bạn không có quyền thao tác',
+          icon: "warning",
+          title: "Bạn không có quyền thao tác",
           showConfirmButton: false,
-          timer: 2000
+          timer: 2000,
         });
         return;
       }
@@ -1484,13 +1527,9 @@ app.controller(
       };
 
       $http
-        .put(
-          "http://localhost:8080/sanPhamChiTiet/setAnhMacDinh/",
-          data,
-          {
-            headers,
-          }
-        )
+        .put("http://localhost:8080/sanPhamChiTiet/setAnhMacDinh/", data, {
+          headers,
+        })
         .then(function (response) {
           Swal.fire({
             icon: "success",
@@ -1503,12 +1542,12 @@ app.controller(
     };
 
     $scope.xoaAnh = function (hinhAnh, spcts) {
-      if (decodedToken.role === 'STAFF') {
+      if (decodedToken.role === "STAFF") {
         Swal.fire({
-          icon: 'warning',
-          title: 'Bạn không có quyền thao tác',
+          icon: "warning",
+          title: "Bạn không có quyền thao tác",
           showConfirmButton: false,
-          timer: 2000
+          timer: 2000,
         });
         return;
       }
@@ -1539,12 +1578,12 @@ app.controller(
     };
 
     $scope.themAnhSanPhamHT = function () {
-      if (decodedToken.role === 'STAFF') {
+      if (decodedToken.role === "STAFF") {
         Swal.fire({
-          icon: 'warning',
-          title: 'Bạn không có quyền thao tác',
+          icon: "warning",
+          title: "Bạn không có quyền thao tác",
           showConfirmButton: false,
-          timer: 2000
+          timer: 2000,
         });
         return;
       }
@@ -1552,9 +1591,7 @@ app.controller(
         (spcts) => !spcts.hinhAnh || spcts.hinhAnh.length === 0
       );
       const productsWithoutDefaultImage = $scope.spct.filter(
-        (spcts) =>
-          spcts.hinhAnh &&
-          !spcts.hinhAnh.some((anh) => anh.anhMacDinh)
+        (spcts) => spcts.hinhAnh && !spcts.hinhAnh.some((anh) => anh.anhMacDinh)
       );
 
       if (productsWithoutImages.length > 0) {
