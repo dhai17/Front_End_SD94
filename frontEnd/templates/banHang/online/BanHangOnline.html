@@ -107,8 +107,8 @@
                                     <div style="display: flex; align-items: center;">
                                         <!-- <img th:src="${'/customer/images/' + tenAnhChinhList[iter.index]}" alt=""
                                             style="margin-right: 10px;" width="100px" height="100px"> -->
-                                        <img src='/static/img/{{hoaDonChiTiet.anhSanPham}}'
-                                            style="margin-right: 10px;" width="100px" height="100px">
+                                        <img src='/static/img/{{hoaDonChiTiet.anhSanPham}}' style="margin-right: 10px;"
+                                            width="100px" height="100px">
                                         <div>
                                             <h6>
                                                 <strong>
@@ -138,10 +138,15 @@
                 <br>
                 <div>
                     <div class="div-maGiamGia">
-                        <input type="text" id="maGiamGia" class="maGiamGia" name="maGiamGia"
-                            placeholder="Thêm mã giảm giá">
-                        <button class="btn-apply themMaGiamGiaOnline" type="submit" ng-click="addKhuyenMai()">SỬ
-                            DỤNG</button>
+                        <select id="maGiamGia" class="maGiamGia" name="maGiamGia" ng-model="KhuyenMaiDangChon"
+                            ng-change="onKhuyenMaiChange()">
+                            <option value="">Chọn mã giảm giá</option>
+                            <option id="KhuyenMaiDangChon" ng-repeat="km in khuyenMai" value="{{km.id}}" class="option">
+                                {{km.tenKhuyenMai}}
+                            </option>
+                        </select>
+                        <button class="btn-apply themMaGiamGiaOnline" type="submit" ng-click="addKhuyenMai()"> SỬ DỤNG
+                        </button>
                     </div>
                     <br>
                     <hr>
@@ -156,11 +161,14 @@
                             }}</label>
                     </p>
 
-                    <p class="cart__discount">Giảm giá đã áp dụng: <span id="tenGiamGia">{{hoaDon.khuyenMai.tenKhuyenMai}}</span></p>
-                    <p class="cart__discount">Giảm giá: <span id="discount">{{hoaDon.tienGiam.toLocaleString('vi-VN') + ' đ' }}</span></p>
+                    <p class="cart__discount">Giảm giá đã áp dụng: <span
+                            id="tenGiamGia">{{hoaDon.khuyenMai.tenKhuyenMai}}</span></p>
+                    <p class="cart__discount">Giảm giá: <span id="discount">{{hoaDon.tienGiam.toLocaleString('vi-VN') +
+                            ' đ' }}</span></p>
 
                     <hr>
-                    <p class="tongCongTien">Tổng cộng: <span id="total">{{tongTienHoaDon.toLocaleString('vi-VN') + ' đ' }}</span></p>
+                    <p class="tongCongTien">Tổng cộng: <span id="total">{{tongTienHoaDon.toLocaleString('vi-VN') + ' đ'
+                            }}</span></p>
                 </div>
 
                 <a ng-click="quayLaiGioHang()" class="cart-link2">Giỏ hàng</a>

@@ -581,7 +581,7 @@ app.controller(
     //TODO: hduong lam san pham chi tiet
     $scope.luuSanPhamChiTiet = function (details) {
       const id_product = localStorage.getItem("id_product");
-      const soLuong = $("#soLuongSanPhamChiTiet").val();
+      const soLuong = details.soLuong;
       let data = {
         sanPhamId: id_product,
         spctId: details.id,

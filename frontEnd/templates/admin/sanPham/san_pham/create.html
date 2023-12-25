@@ -257,13 +257,8 @@
                 </div>
               </td>
               <td>
-                <input
-                id="soLuongSanPhamChiTiet"
-                  style="width: 50px; height: 35px; margin-right: 40px"
-                  type="number"
-                  value="{{ details.soLuong }}"
-                  ng-model="soLuongSanPhamChiTiet"
-                />
+                <input id="soLuongSanPhamChiTiet{{ details.id }}" style="width: 50px; height: 35px; margin-right: 40px"
+                  type="number" ng-model="details.soLuong" ng-value="details.soLuong" />
               </td>
               <td>{{ details.mauSac.tenMauSac}}</td>
               <td>{{ details.kichCo.kichCo }}</td>
