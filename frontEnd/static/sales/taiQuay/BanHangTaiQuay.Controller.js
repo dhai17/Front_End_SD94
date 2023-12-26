@@ -106,7 +106,12 @@ app.controller('BanHangTaiQuayController', function ($scope, $http, $routeParams
                     });
                 })
                 .catch(function (e) {
-                    console.log(e);
+                    Swal.fire({
+                        icon: 'warning',
+                        title: e.data.mess,
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
                 });
         };
     };
@@ -117,10 +122,6 @@ app.controller('BanHangTaiQuayController', function ($scope, $http, $routeParams
     };
 
     $scope.themThongTinKhachHang = function () {
-        console.log($scope.hoTenKhachHang);
-        console.log($scope.SDTKhachHang);
-        console.log(khachHangDaChon);
-
         let data = {
             id: khachHangDaChon,
             hoTen: $scope.hoTenKhachHang,
