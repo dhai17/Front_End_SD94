@@ -1,15 +1,15 @@
-app.controller("danhSachSanPhamTaiQuayController", function ($scope, $http) {
-    let token = localStorage.getItem("token");
+app.controller('danhSachSanPhamTaiQuayController', function ($scope, $http) {
+    let token = localStorage.getItem('token');
+    let id_HD_TaiQuay = localStorage.getItem('id_HD_TaiQuay');
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    }
+        Authorization: 'Bearer ' + token,
+    };
 
-    $http.get("http://localhost:8080/customer/sanPham/danhSach", { headers })
-        .then(function (response) {
-            const sanPham = response.data;
-            $scope.sanPham = sanPham;
-        });
+    $http.get('http://localhost:8080/customer/sanPham/danhSach', { headers }).then(function (response) {
+        const sanPham = response.data;
+        $scope.sanPham = sanPham;
+    });
 
     $scope.pager = {
         page: 1,
@@ -25,7 +25,7 @@ app.controller("danhSachSanPhamTaiQuayController", function ($scope, $http) {
         get count() {
             if ($scope.sanPham && $scope.sanPham.length > 0) {
                 let start = (this.page - 1) * this.size;
-                return Math.ceil(1.0 * $scope.sanPham.length / this.size);
+                return Math.ceil((1.0 * $scope.sanPham.length) / this.size);
             } else {
                 // Trả về 0
                 return 0;
@@ -38,7 +38,7 @@ app.controller("danhSachSanPhamTaiQuayController", function ($scope, $http) {
                 pageNumbers.push(i);
             }
             return pageNumbers;
-        }
+        },
     };
 
     $scope.getSanPhamChiTiet = function (sanPham) {
@@ -46,46 +46,37 @@ app.controller("danhSachSanPhamTaiQuayController", function ($scope, $http) {
         window.location.href = '#!/product-details-taiQuay?id=' + id_sanPham;
     };
 
-    $http
-        .get("http://localhost:8080/chatLieu/danhSach", { headers })
-        .then(function (response) {
-            const chatLieu = response.data;
-            $scope.chatLieu = chatLieu;
-        });
+    $http.get('http://localhost:8080/chatLieu/danhSach', { headers }).then(function (response) {
+        const chatLieu = response.data;
+        $scope.chatLieu = chatLieu;
+    });
 
-    $http
-        .get("http://localhost:8080/loaiSanPham/danhSach", { headers })
-        .then(function (response) {
-            const loaiSanPham = response.data;
-            $scope.loaiSanPham = loaiSanPham;
-        });
+    $http.get('http://localhost:8080/loaiSanPham/danhSach', { headers }).then(function (response) {
+        const loaiSanPham = response.data;
+        $scope.loaiSanPham = loaiSanPham;
+    });
 
-    $http
-        .get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
-        .then(function (response) {
-            const nhaSanXuat = response.data;
-            $scope.nhaSanXuat = nhaSanXuat;
-        });
+    $http.get('http://localhost:8080/nhaSanXuat/danhSach', { headers }).then(function (response) {
+        const nhaSanXuat = response.data;
+        $scope.nhaSanXuat = nhaSanXuat;
+    });
 
-    $http
-        .get("http://localhost:8080/mauSac/danhSach", { headers })
-        .then(function (response) {
-            const mauSac = response.data;
-            $scope.mauSac = mauSac;
-        });
+    $http.get('http://localhost:8080/mauSac/danhSach', { headers }).then(function (response) {
+        const mauSac = response.data;
+        $scope.mauSac = mauSac;
+    });
 
-    $http
-        .get("http://localhost:8080/kichCo/danhSach", { headers })
-        .then(function (response) {
-            const kichCo = response.data;
-            $scope.kichCo = kichCo;
-        });
+    $http.get('http://localhost:8080/kichCo/danhSach', { headers }).then(function (response) {
+        const kichCo = response.data;
+        $scope.kichCo = kichCo;
+    });
 
     $scope.filterByLoaiSp = function () {
-        $http.get('http://localhost:8080/customer/sanPham/loc/loai_san_pham', {
-            params: { idloaiSanPham: $scope.idloaiSanPham },
-            headers: headers
-        })
+        $http
+            .get('http://localhost:8080/customer/sanPham/loc/loai_san_pham', {
+                params: { idloaiSanPham: $scope.idloaiSanPham },
+                headers: headers,
+            })
             .then(function (response) {
                 const sanPham = response.data;
                 $scope.sanPham = sanPham;
@@ -93,10 +84,11 @@ app.controller("danhSachSanPhamTaiQuayController", function ($scope, $http) {
     };
 
     $scope.filterByChatLieu = function () {
-        $http.get('http://localhost:8080/customer/sanPham/loc/chat_lieu', {
-            params: { id_chat_lieu: $scope.id_chat_lieu },
-            headers: headers
-        })
+        $http
+            .get('http://localhost:8080/customer/sanPham/loc/chat_lieu', {
+                params: { id_chat_lieu: $scope.id_chat_lieu },
+                headers: headers,
+            })
             .then(function (response) {
                 const sanPham = response.data;
                 $scope.sanPham = sanPham;
@@ -104,10 +96,11 @@ app.controller("danhSachSanPhamTaiQuayController", function ($scope, $http) {
     };
 
     $scope.filterByNsx = function () {
-        $http.get('http://localhost:8080/customer/sanPham/loc/nha_san_xuat', {
-            params: { id_nsx: $scope.id_nsx },
-            headers: headers
-        })
+        $http
+            .get('http://localhost:8080/customer/sanPham/loc/nha_san_xuat', {
+                params: { id_nsx: $scope.id_nsx },
+                headers: headers,
+            })
             .then(function (response) {
                 const sanPham = response.data;
                 $scope.sanPham = sanPham;
@@ -115,10 +108,11 @@ app.controller("danhSachSanPhamTaiQuayController", function ($scope, $http) {
     };
 
     $scope.filterByMauSac = function () {
-        $http.get('http://localhost:8080/customer/sanPham/loc/mau_sac', {
-            params: { mauSac_id: $scope.mauSac_id },
-            headers: headers
-        })
+        $http
+            .get('http://localhost:8080/customer/sanPham/loc/mau_sac', {
+                params: { mauSac_id: $scope.mauSac_id },
+                headers: headers,
+            })
             .then(function (response) {
                 const sanPham = response.data;
                 $scope.sanPham = sanPham;
@@ -126,10 +120,11 @@ app.controller("danhSachSanPhamTaiQuayController", function ($scope, $http) {
     };
 
     $scope.filterByKichCo = function () {
-        $http.get('http://localhost:8080/customer/sanPham/loc/kich_co', {
-            params: { kichCo_id: $scope.kichCo_id },
-            headers: headers
-        })
+        $http
+            .get('http://localhost:8080/customer/sanPham/loc/kich_co', {
+                params: { kichCo_id: $scope.kichCo_id },
+                headers: headers,
+            })
             .then(function (response) {
                 const sanPham = response.data;
                 $scope.sanPham = sanPham;
@@ -137,10 +132,11 @@ app.controller("danhSachSanPhamTaiQuayController", function ($scope, $http) {
     };
 
     $scope.filterByGia = function () {
-        $http.get("http://localhost:8080/customer/sanPham/loc/gia", {
-            params: { gia1: $scope.gia1, gia2: $scope.gia2 },
-            headers: headers
-        })
+        $http
+            .get('http://localhost:8080/customer/sanPham/loc/gia', {
+                params: { gia1: $scope.gia1, gia2: $scope.gia2 },
+                headers: headers,
+            })
             .then(function (response) {
                 $scope.sanPham = response.data;
             });
@@ -148,52 +144,61 @@ app.controller("danhSachSanPhamTaiQuayController", function ($scope, $http) {
 
     $scope.$watch('searchTerm', function (newVal) {
         if (newVal) {
-            $http.get("http://localhost:8080/customer/sanPham/timKiemTheoTen/" + newVal, { headers })
+            $http
+                .get('http://localhost:8080/customer/sanPham/timKiemTheoTen/' + newVal, { headers })
                 .then(function (response) {
                     $scope.sanPham = response.data;
                 });
         } else {
-            $http.get("http://localhost:8080/customer/sanPham/danhSach", { headers })
-                .then(function (response) {
-                    $scope.sanPham = response.data;
-                });
+            $http.get('http://localhost:8080/customer/sanPham/danhSach', { headers }).then(function (response) {
+                $scope.sanPham = response.data;
+            });
         }
     });
 
     $scope.searchAll = function (searchTerm) {
-        $http.get("http://localhost:8080/customer/sanPham/timKiemTheoTen/" + searchTerm, { headers })
+        $http
+            .get('http://localhost:8080/customer/sanPham/timKiemTheoTen/' + searchTerm, { headers })
             .then(function (response) {
                 $scope.sanPham = response.data;
             });
     };
 
     $scope.reLoad = function () {
-        $http.get("http://localhost:8080/customer/sanPham/danhSach", { headers })
-            .then(function (response) {
-                const sanPham = response.data;
-                $scope.$evalAsync(function () {
-                    $scope.sanPham = sanPham;
-                });
+        $http.get('http://localhost:8080/customer/sanPham/danhSach', { headers }).then(function (response) {
+            const sanPham = response.data;
+            $scope.$evalAsync(function () {
+                $scope.sanPham = sanPham;
             });
+        });
+    };
+
+    $scope.quayVe = function () {
+        window.location.href = '#!/banHang?id=' + id_HD_TaiQuay;
     };
 });
 
-app.controller("ChiTietSanPhamTaiQuayController", function ($scope, $routeParams, $http, $window) {
+app.controller('ChiTietSanPhamTaiQuayController', function ($scope, $routeParams, $http, $window) {
     const id_sanPham = $routeParams.id;
-    const id_HD_TaiQuay = localStorage.getItem("id_HD_TaiQuay");
-    let token = localStorage.getItem("token");
+    const id_HD_TaiQuay = localStorage.getItem('id_HD_TaiQuay');
+    let token = localStorage.getItem('token');
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    }
+        Authorization: 'Bearer ' + token,
+    };
     let decodedToken;
     if (token) {
         function parseJwt(token) {
             let base64Url = token.split('.')[1];
             let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
+            let jsonPayload = decodeURIComponent(
+                atob(base64)
+                    .split('')
+                    .map(function (c) {
+                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                    })
+                    .join(''),
+            );
 
             let payload = JSON.parse(jsonPayload);
             return payload;
@@ -202,35 +207,38 @@ app.controller("ChiTietSanPhamTaiQuayController", function ($scope, $routeParams
         decodedToken = parseJwt(token);
     }
 
-    $http.get("http://localhost:8080/customer/sanPham/getSanPham/id=" + id_sanPham, { headers })
+    $http
+        .get('http://localhost:8080/customer/sanPham/getSanPham/id=' + id_sanPham, { headers })
         .then(function (response) {
             const sanPham = response.data;
             $scope.sanPham = sanPham;
         });
 
-    $http.get("http://localhost:8080/customer/sanPham/api/getSize/" + id_sanPham, { headers })
+    $http
+        .get('http://localhost:8080/customer/sanPham/api/getSize/' + id_sanPham, {
+            headers,
+        })
         .then(function (response) {
             const kichCo = response.data;
             $scope.kichCo = kichCo;
         });
 
-    $http.get("http://localhost:8080/customer/sanPham/api/getColor/" + id_sanPham, { headers })
+    $http
+        .get('http://localhost:8080/customer/sanPham/api/getColor/' + id_sanPham, { headers })
         .then(function (response) {
             const mauSac = response.data;
             $scope.mauSac = mauSac;
         });
 
-    $http.get("http://localhost:8080/customer/sanPham/getAnhSanPham/" + id_sanPham)
-        .then(function (response) {
-            const hinhAnh_list = response.data;
-            $scope.hinhAnhs = hinhAnh_list;
-        });
+    $http.get('http://localhost:8080/customer/sanPham/getAnhSanPham/' + id_sanPham).then(function (response) {
+        const hinhAnh_list = response.data;
+        $scope.hinhAnhs = hinhAnh_list;
+    });
 
-    $http.get("http://localhost:8080/customer/sanPham/getAnhMacDinhSanPham/" + id_sanPham)
-        .then(function (response) {
-            const hinhAnh = response.data.anhMacDinh;
-            $scope.hinhAnh = hinhAnh;
-        });
+    $http.get('http://localhost:8080/customer/sanPham/getAnhMacDinhSanPham/' + id_sanPham).then(function (response) {
+        const hinhAnh = response.data.anhMacDinh;
+        $scope.hinhAnh = hinhAnh;
+    });
 
     $scope.selectKichCo = function (kichCo) {
         $scope.selectedKichCo = kichCo;
@@ -252,11 +260,12 @@ app.controller("ChiTietSanPhamTaiQuayController", function ($scope, $routeParams
             let data = {
                 kichCo: newValues[0],
                 maMauSac: newValues[1],
-                sanPhamId: $scope.sanPham.id
-            }
+                sanPhamId: $scope.sanPham.id,
+            };
             kichCo = newValues[0];
             maMauSac = newValues[1];
-            $http.post("http://localhost:8080/customer/sanPham/api/getSoLuong", data, { headers })
+            $http
+                .post('http://localhost:8080/customer/sanPham/api/getSoLuong', data, { headers })
                 .then(function (response) {
                     soLuongGet = document.getElementById('customer-sanPham-soLuongHienCo');
                     if (soLuongGet) {
@@ -265,45 +274,43 @@ app.controller("ChiTietSanPhamTaiQuayController", function ($scope, $routeParams
                     }
                 });
         }
-
     });
 
-    $scope.maMauSac = "";
+    $scope.maMauSac = '';
     $scope.$watch('selectedMauSac', function (newVal, oldVal) {
         if (newVal !== undefined) {
             $scope.maMauSac = newVal;
             let data = {
                 id_SP: id_sanPham,
-                maMauSac: $scope.maMauSac
-            }
-            $http.post("http://localhost:8080/customer/sanPham/getAnhByMauSac", data)
-                .then(function (response) {
-                    const hinhAnh = response.data.anh;
-                    $scope.hinhAnh = hinhAnh;
-                });
+                maMauSac: $scope.maMauSac,
+            };
+            $http.post('http://localhost:8080/customer/sanPham/getAnhByMauSac', data).then(function (response) {
+                const hinhAnh = response.data.anh;
+                $scope.hinhAnh = hinhAnh;
+            });
         }
     });
 
     $scope.quayLai = function () {
         $window.history.back();
-    }
+    };
 
     $scope.themSanPham = function (sanPham) {
         if ($scope.chonSoLuong > soLuongHienCo) {
             Swal.fire({
-                icon: "error",
-                title: "Số lượng thêm không được lớn hơn số lượng hiện có",
+                icon: 'error',
+                title: 'Số lượng thêm không được lớn hơn số lượng hiện có',
                 showConfirmButton: false,
-                timer: 2000
+                timer: 2000,
             });
-            $scope.chonSoLuong = soLuongHienCo
+            $scope.chonSoLuong = soLuongHienCo;
             return;
         } else if ($scope.chonSoLuong < 0) {
             Swal.fire({
-                icon: "error",
-                title: "Số lượng thêm không được nhỏ hơn 0",
+                icon: 'error',
+                title: 'Số lượng thêm không được nhỏ hơn 0',
                 showConfirmButton: false,
-                timer: 2000
+                timer: 2000,
             });
             $scope.chonSoLuong = 1;
             return;
@@ -314,24 +321,27 @@ app.controller("ChiTietSanPhamTaiQuayController", function ($scope, $routeParams
                 maMauSac: maMauSac,
                 san_pham_id: sanPham.id,
                 soLuong: $scope.chonSoLuong,
-                donGia: sanPham.gia
-            }
+                donGia: sanPham.gia,
+            };
 
-            $http.post("http://localhost:8080/api/banHang/taiQuay/themSanPham", data, { headers })
+            $http
+                .post('http://localhost:8080/api/banHang/taiQuay/themSanPham', data, {
+                    headers,
+                })
                 .then(function (response) {
                     Swal.fire({
-                        icon: "success",
-                        title: "Thêm sản phẩm thành công",
+                        icon: 'success',
+                        title: 'Thêm sản phẩm thành công',
                         showConfirmButton: false,
                         timer: 2000,
                     }).then(() => {
-                        window.location.href = "#!/banHang?id=" + id_HD_TaiQuay;
+                        window.location.href = '#!/banHang?id=' + id_HD_TaiQuay;
                     });
                 })
                 .catch(function (e) {
                     const errorMessage = e.data[Object.keys(e.data)[0]];
                     Swal.fire({
-                        icon: "error",
+                        icon: 'error',
                         title: errorMessage,
                         showConfirmButton: false,
                         timer: 2000,

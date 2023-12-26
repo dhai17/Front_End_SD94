@@ -4,19 +4,22 @@
         <div class="card-body">
             <form>
                 <div class="row gx-3 mb-3">
-                    <label class="small mb-1" for="inputUsername">
-                        Tên màu
-                    </label>
+                    <label class="small mb-1" for="inputUsername"> Tên màu </label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-paint-brush"></i></span>
-                        <input class="form-control" id="inputUsername" type="text" placeholder="Nhập tên màu"
-                            ng-model="createColor.tenMauSac">
+                        <input
+                            class="form-control"
+                            id="inputUsername"
+                            type="text"
+                            placeholder="Nhập tên màu"
+                            ng-model="createColor.tenMauSac"
+                        />
                     </div>
                 </div>
 
                 <div class="row gx-3 mb-3">
                     <div id="colorPicker"></div>
-                    <input id="hexInput" class="form-control" type="text" placeholder="Mã màu">
+                    <input id="hexInput" class="form-control" type="text" placeholder="Mã màu" />
                 </div>
 
                 <button class="btn btn-secondary" type="button" ng-click="returnCreate()">

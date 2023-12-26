@@ -42,7 +42,7 @@
 
 /* Biểu tượng mũi tên */
 .tab-button::before {
-    content: "→";
+    content: '→';
     /* Sử dụng mũi tên nghiêng sang phải */
     position: absolute;
     top: 50%;
@@ -64,7 +64,7 @@
     margin-top: 20px;
 }
 
-.fromSearchBill{
+.fromSearchBill {
     margin-bottom: 30px;
 }
 
@@ -72,13 +72,13 @@
 #tableBillChoXacNhan td {
     text-align: center;
 }
-h1{
+h1 {
     color: #696cff;
-    font-size: 35px; 
-    text-align: center; 
-    margin: 20px 0; 
+    font-size: 35px;
+    text-align: center;
+    margin: 20px 0;
     text-transform: uppercase;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 /* button trở lại */
@@ -88,79 +88,79 @@ h1{
     color: #fff;
     border: none;
     border-radius: 4px;
-    }
-    
-    .back-button:hover {
+}
+
+.back-button:hover {
     background-color: #555;
-    }
-    
-    .back-button {
+}
+
+.back-button {
     top: 20px;
     left: 20px;
-    }
-    
-    .back-button {
+}
+
+.back-button {
     font-weight: bold;
-    }
+}
 /* 
     timeline */
 
-    body{
-        background:#eee;
-        margin-top:20px;
-    }
-    .hori-timeline .events {
-        border-top: 3px solid #e9ecef;
-    }
+body {
+    background: #eee;
+    margin-top: 20px;
+}
+.hori-timeline .events {
+    border-top: 3px solid #e9ecef;
+}
+.hori-timeline .events .event-list {
+    display: block;
+    position: relative;
+    text-align: center;
+    padding-top: 70px;
+    margin-right: 0;
+}
+.hori-timeline .events .event-list:before {
+    content: '';
+    position: absolute;
+    height: 36px;
+    border-right: 2px dashed #dee2e6;
+    top: 0;
+}
+.hori-timeline .events .event-list .event-date {
+    position: absolute;
+    top: 38px;
+    left: 0;
+    right: 0;
+    width: 150px;
+    margin: 0 auto;
+    border-radius: 4px;
+    padding: 2px 4px;
+}
+@media (min-width: 1140px) {
     .hori-timeline .events .event-list {
-        display: block;
-        position: relative;
-        text-align: center;
-        padding-top: 70px;
-        margin-right: 0;
-    }
-    .hori-timeline .events .event-list:before {
-        content: "";
-        position: absolute;
-        height: 36px;
-        border-right: 2px dashed #dee2e6;
-        top: 0;
+        display: inline-block;
+        width: 24%;
+        padding-top: 45px;
     }
     .hori-timeline .events .event-list .event-date {
-        position: absolute;
-        top: 38px;
-        left: 0;
-        right: 0;
-        width: 150px;
-        margin: 0 auto;
-        border-radius: 4px;
-        padding: 2px 4px;
+        top: -12px;
     }
-    @media (min-width: 1140px) {
-        .hori-timeline .events .event-list {
-            display: inline-block;
-            width: 24%;
-            padding-top: 45px;
-        }
-        .hori-timeline .events .event-list .event-date {
-            top: -12px;
-        }
-    }
-    .bg-soft-primary {
-        background-color: rgba(64,144,203,.3)!important;
-    }
-    .bg-soft-success {
-        background-color: rgba(71,189,154,.3)!important;
-    }
-    .bg-soft-danger {
-        background-color: rgba(231,76,94,.3)!important;
-    }
-    .bg-soft-warning {
-        background-color: rgba(249,213,112,.3)!important;
-    }
-    .card {
-        border: none;
-        margin-bottom: 24px;
-        -webkit-box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
-        box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
-    }
+}
+.bg-soft-primary {
+    background-color: rgba(64, 144, 203, 0.3) !important;
+}
+.bg-soft-success {
+    background-color: rgba(71, 189, 154, 0.3) !important;
+}
+.bg-soft-danger {
+    background-color: rgba(231, 76, 94, 0.3) !important;
+}
+.bg-soft-warning {
+    background-color: rgba(249, 213, 112, 0.3) !important;
+}
+.card {
+    border: none;
+    margin-bottom: 24px;
+    -webkit-box-shadow: 0 0 13px 0 rgba(236, 236, 241, 0.44);
+    box-shadow: 0 0 13px 0 rgba(236, 236, 241, 0.44);
+}

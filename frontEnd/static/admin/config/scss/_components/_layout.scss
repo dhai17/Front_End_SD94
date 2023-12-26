@@ -325,7 +325,9 @@ html:not(.layout-footer-fixed) .content-wrapper {
     margin-right: 0 !important;
     margin-left: 0 !important;
     transform: translate3d(-100%, 0, 0);
-    will-change: transform, -webkit-transform;
+    will-change:
+      transform,
+      -webkit-transform;
 
     .layout-menu-expanded & {
       transform: translate3d(0, 0, 0) !important;
@@ -458,13 +460,17 @@ html:not(.layout-footer-fixed) .content-wrapper {
 
     .layout-menu {
       transition-duration: $menu-animation-duration;
-      transition-property: transform, -webkit-transform;
+      transition-property:
+        transform,
+        -webkit-transform;
     }
   }
 }
 
 @include media-breakpoint-up(xl) {
-  .layout-menu-collapsed:not(.layout-transitioning):not(.layout-menu-offcanvas):not(.layout-menu-fixed):not(.layout-menu-fixed-offcanvas)
+  .layout-menu-collapsed:not(.layout-transitioning):not(.layout-menu-offcanvas):not(.layout-menu-fixed):not(
+      .layout-menu-fixed-offcanvas
+    )
     .layout-menu {
     transition-duration: $menu-animation-duration;
     transition-property: margin-left, margin-right, width;
@@ -473,7 +479,11 @@ html:not(.layout-footer-fixed) .content-wrapper {
   .layout-transitioning {
     &.layout-menu-offcanvas .layout-menu {
       transition-duration: $menu-animation-duration;
-      transition-property: margin-left, margin-right, transform, -webkit-transform;
+      transition-property:
+        margin-left,
+        margin-right,
+        transform,
+        -webkit-transform;
     }
 
     &.layout-menu-fixed,
@@ -493,7 +503,9 @@ html:not(.layout-footer-fixed) .content-wrapper {
     &.layout-menu-fixed-offcanvas {
       .layout-menu {
         transition-duration: $menu-animation-duration;
-        transition-property: transform, -webkit-transform;
+        transition-property:
+          transform,
+          -webkit-transform;
       }
     }
 

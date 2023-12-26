@@ -74,7 +74,9 @@ td {
     color: #007bff;
     cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
+    transition:
+        background-color 0.3s,
+        color 0.3s;
 }
 
 #productList .pagination-button:hover {

@@ -2,32 +2,62 @@
     <!-- Account details card-->
     <div class="card mb-4">
         <div class="card-header">Sửa khách hàng</div>
-        <div class="card-body" >
+        <div class="card-body">
             <form>
-                <div class="row gx-3 mb-3">   
+                <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="small mb-1" for="inputUsername">Tên khách hàn</label>
-                        <input class="form-control" id="inputUsername" type="text" placeholder="Nhập tên khách hàng" ng-model="editCustomer.hoTen">
+                        <input
+                            class="form-control"
+                            id="inputUsername"
+                            type="text"
+                            placeholder="Nhập tên khách hàng"
+                            ng-model="editCustomer.hoTen"
+                        />
                     </div>
                     <div class="col-md-6">
                         <label class="small mb-1" for="inputLocation">Số điện thoại</label>
-                        <input class="form-control" id="inputLocation" type="text" placeholder="Nhập số điện thoại" ng-model="editCustomer.soDienThoai">
+                        <input
+                            class="form-control"
+                            id="inputLocation"
+                            type="text"
+                            placeholder="Nhập số điện thoại"
+                            ng-model="editCustomer.soDienThoai"
+                        />
                     </div>
                 </div>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="small mb-1" for="inputFirstName">Email</label>
-                        <input class="form-control" id="inputFirstName" type="text" placeholder="Nhập email" ng-model="editCustomer.email">
+                        <input
+                            class="form-control"
+                            id="inputFirstName"
+                            type="text"
+                            placeholder="Nhập email"
+                            ng-model="editCustomer.email"
+                        />
                     </div>
                     <div class="col-md-6">
                         <label class="small mb-1" for="inputLastName">Ngày sinh</label>
-                        <input class="form-control" id="inputLastName" type="text" placeholder="Nhập ngày sinh" ng-model="editCustomer.ngaySinh | date:'dd/MM/yyyy'">
+                        <input
+                            class="form-control"
+                            id="inputLastName"
+                            type="text"
+                            placeholder="Nhập ngày sinh"
+                            ng-model="editCustomer.ngaySinh | date:'dd/MM/yyyy'"
+                        />
                     </div>
                 </div>
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="small mb-1" for="inputLastName">Địa chỉ</label>
-                        <input class="form-control" id="inputLastName" type="text" placeholder="Nhập địa chỉ" ng-model="editCustomer.diaChi">
+                        <input
+                            class="form-control"
+                            id="inputLastName"
+                            type="text"
+                            placeholder="Nhập địa chỉ"
+                            ng-model="editCustomer.diaChi"
+                        />
                     </div>
                 </div>
 
@@ -37,5 +67,3 @@
         </div>
     </div>
 </div>
-
-

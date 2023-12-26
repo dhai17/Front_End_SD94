@@ -1,9 +1,9 @@
-app.controller("cartController", function ($scope, $http, $window) {
-    let token = localStorage.getItem("token");
+app.controller('cartController', function ($scope, $http, $window) {
+    let token = localStorage.getItem('token');
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    }
+        Authorization: 'Bearer ' + token,
+    };
 
     let decodedToken;
 
@@ -11,9 +11,14 @@ app.controller("cartController", function ($scope, $http, $window) {
         function parseJwt(token) {
             let base64Url = token.split('.')[1];
             let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
+            let jsonPayload = decodeURIComponent(
+                atob(base64)
+                    .split('')
+                    .map(function (c) {
+                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                    })
+                    .join(''),
+            );
 
             let payload = JSON.parse(jsonPayload);
             return payload;
@@ -22,21 +27,21 @@ app.controller("cartController", function ($scope, $http, $window) {
         decodedToken = parseJwt(token);
     } else {
         Swal.fire({
-            icon: "error",
-            title: "Bạn cần phải đăng nhập để sử dụng chức năng này",
+            icon: 'error',
+            title: 'Bạn cần phải đăng nhập để sử dụng chức năng này',
             showConfirmButton: false,
             timer: 2000,
         }).then(function () {
-            window.location.href = "http://127.0.0.1:5501/templates/auth/Login.html#!/login"
+            window.location.href = 'http://127.0.0.1:5501/templates/auth/Login.html#!/login';
         });
     }
 
     $scope.soLuongBanDau = 0;
-    $http.get("http://localhost:8080/gioHang/danhSach/" + decodedToken.email, { headers }).then(function (response) {
+    $http.get('http://localhost:8080/gioHang/danhSach/' + decodedToken.email, { headers }).then(function (response) {
         const gioHangChiTiet = response.data;
         gioHangChiTiet.forEach((item) => {
-            $scope.soLuongBanDau = item.soLuong
-        })
+            $scope.soLuongBanDau = item.soLuong;
+        });
         $scope.gioHangChiTiet = gioHangChiTiet;
     });
 
@@ -50,19 +55,19 @@ app.controller("cartController", function ($scope, $http, $window) {
 
     $scope.updateValue = function (gioHangChiTiet) {
         const idCart = gioHangChiTiet.id;
-        const quantity = $("#cart-inputSoLuong").val();
+        const quantity = $('#cart-inputSoLuong').val();
         let data = {
             id: idCart,
-            quanTity: quantity
-        }
-        $http.post("http://localhost:8080/gioHang/sua/soLuong/sanPham", data).then(function (response) {
+            quanTity: quantity,
+        };
+        $http.post('http://localhost:8080/gioHang/sua/soLuong/sanPham', data).then(function (response) {
             const promotions = response.data;
             $scope.promotions = promotions;
             $scope.$evalAsync(function () {
                 $scope.promotions = promotions;
                 Swal.fire({
-                    icon: "success",
-                    title: "Xóa thành công",
+                    icon: 'success',
+                    title: 'Xóa thành công',
                     showConfirmButton: false,
                     timer: 2000,
                 });
@@ -73,12 +78,13 @@ app.controller("cartController", function ($scope, $http, $window) {
     };
 
     $scope.cancelUpdate = function (promotion) {
-        $http.get("http://localhost:8080/gioHang/danhSach/" + decodedToken.email, { headers }).then(function (response) {
-            const gioHangChiTiet = response.data;
-            $scope.gioHangChiTiet = gioHangChiTiet;
-        });
+        $http
+            .get('http://localhost:8080/gioHang/danhSach/' + decodedToken.email, { headers })
+            .then(function (response) {
+                const gioHangChiTiet = response.data;
+                $scope.gioHangChiTiet = gioHangChiTiet;
+            });
     };
-
 
     $scope.deletecart = function (gioHangChiTiet) {
         let id_cart_details = gioHangChiTiet.id;
@@ -93,33 +99,34 @@ app.controller("cartController", function ($scope, $http, $window) {
             if (result.isConfirmed) {
                 let data = {
                     id: id_cart_details,
-                }
-                $http.post("http://localhost:8080/gioHang/xoa/gioHangChiTiet", data, { headers })
+                };
+                $http
+                    .post('http://localhost:8080/gioHang/xoa/gioHangChiTiet', data, { headers })
 
                     .then(function (response) {
-
                         Swal.fire({
-                            icon: "success",
-                            title: "Xóa thành công",
+                            icon: 'success',
+                            title: 'Xóa thành công',
                             showConfirmButton: false,
                             timer: 2000,
                         }).then(() => {
-                            $http.get("http://localhost:8080/gioHang/danhSach/" + decodedToken.email, { headers }).then(function (response) {
-                                const gioHangChiTiet = response.data;
-                                gioHangChiTiet.forEach((item) => {
-                                    $scope.soLuongBanDau = item.soLuong
-                                })
-                                $scope.gioHangChiTiet = gioHangChiTiet;
-                            });
+                            $http
+                                .get('http://localhost:8080/gioHang/danhSach/' + decodedToken.email, { headers })
+                                .then(function (response) {
+                                    const gioHangChiTiet = response.data;
+                                    gioHangChiTiet.forEach((item) => {
+                                        $scope.soLuongBanDau = item.soLuong;
+                                    });
+                                    $scope.gioHangChiTiet = gioHangChiTiet;
+                                });
                         });
-
                     })
                     .catch(function (error) {
-                        console.log("Lỗi");
+                        console.log('Lỗi');
                     });
             }
         });
-    }
+    };
 
     $scope.checkboxDaChon = false;
 
@@ -161,50 +168,56 @@ app.controller("cartController", function ($scope, $http, $window) {
         $scope.checkTatCaDaChon();
     };
 
-    $scope.$watch('gioHangChiTietID', function (newVal, oldVal) {
-        $scope.checkOut = function () {
-            let data = {
-                id_gioHangChiTiet: newVal,
-                tongTien: $scope.tienTamTinh
-            }
-            $http.post("http://localhost:8080/api/banHang/online/checkOut", data, { headers })
-                .then(function (response) {
-                    localStorage.setItem("id_HoaDon", response.data.body)
-                    const id_HoaDon = localStorage.getItem("id_HoaDon");
-                    if (response.data.statusCodeValue === 400) {
+    $scope.$watch(
+        'gioHangChiTietID',
+        function (newVal, oldVal) {
+            $scope.checkOut = function () {
+                let data = {
+                    id_gioHangChiTiet: newVal,
+                    tongTien: $scope.tienTamTinh,
+                };
+                $http
+                    .post('http://localhost:8080/api/banHang/online/checkOut', data, { headers })
+                    .then(function (response) {
+                        localStorage.setItem('id_HoaDon', response.data.body);
+                        const id_HoaDon = localStorage.getItem('id_HoaDon');
+                        if (response.data.statusCodeValue === 400) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: response.data.body.err,
+                                showConfirmButton: false,
+                                timer: 2000,
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Chuyển hướng đến trang đặt hàng',
+                                showConfirmButton: false,
+                                timer: 2000,
+                            }).then(function () {
+                                window.location.href =
+                                    'http://127.0.0.1:5501/templates/banHang/online/BanHangOnline.html?id_HoaDon=' +
+                                    id_HoaDon;
+                            });
+                        }
+                    })
+                    .catch(function (error) {
+                        const errorMessage = error.data[Object.keys(error.data)[0]];
                         Swal.fire({
-                            icon: "error",
-                            title: response.data.body.err,
+                            icon: 'error',
+                            title: errorMessage,
                             showConfirmButton: false,
                             timer: 2000,
                         });
-                    } else {
-                        Swal.fire({
-                            icon: "success",
-                            title: "Chuyển hướng đến trang đặt hàng",
-                            showConfirmButton: false,
-                            timer: 2000
-                        }).then(function () {
-                            window.location.href = "http://127.0.0.1:5501/templates/banHang/online/BanHangOnline.html?id_HoaDon=" + id_HoaDon;
-                        })
-                    }
-
-                })
-                .catch(function (error) {
-                    const errorMessage = error.data[Object.keys(error.data)[0]];
-                    Swal.fire({
-                        icon: "error",
-                        title: errorMessage,
-                        showConfirmButton: false,
-                        timer: 2000,
                     });
-                })
-        }
-    }, true);
+            };
+        },
+        true,
+    );
 
     $scope.tiepTucMuaSam = function () {
         // Replace 'your-product-page-url' with the actual URL of your product page
-        $window.location.href = "http://127.0.0.1:5501/templates/customer/home/index.html#!/product-list";
+        $window.location.href = 'http://127.0.0.1:5501/templates/customer/home/index.html#!/product-list';
     };
 
     $scope.updateSoLuong = function (gioHangChiTiet) {
@@ -212,35 +225,36 @@ app.controller("cartController", function ($scope, $http, $window) {
             id: gioHangChiTiet.id,
             sanPhamChiTiet: gioHangChiTiet.sanPhamChiTiet,
             soLuongCapNhat: gioHangChiTiet.soLuong,
-            email_user: decodedToken.email
-        }
+            email_user: decodedToken.email,
+        };
 
-        $http.post("http://localhost:8080/gioHang/update/soLuongGioHangChiTiet", data, { headers })
+        $http
+            .post('http://localhost:8080/gioHang/update/soLuongGioHangChiTiet', data, { headers })
             .then(function (response) {
                 Swal.fire({
-                    icon: "success",
+                    icon: 'success',
                     title: response.data.success,
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 2000,
                 }).then(() => {
-                    $http.get("http://localhost:8080/gioHang/danhSach/" + decodedToken.email, { headers }).then(function (response) {
-                        const gioHangChiTiet = response.data;
-                        gioHangChiTiet.forEach((item) => {
-                            $scope.soLuongBanDau = item.soLuong
-                        })
-                        $scope.gioHangChiTiet = gioHangChiTiet;
-                    });
-                })
-
+                    $http
+                        .get('http://localhost:8080/gioHang/danhSach/' + decodedToken.email, { headers })
+                        .then(function (response) {
+                            const gioHangChiTiet = response.data;
+                            gioHangChiTiet.forEach((item) => {
+                                $scope.soLuongBanDau = item.soLuong;
+                            });
+                            $scope.gioHangChiTiet = gioHangChiTiet;
+                        });
+                });
             })
             .catch(function (error) {
                 Swal.fire({
-                    icon: "error",
+                    icon: 'error',
                     title: error.data.err,
                     showConfirmButton: false,
-                    timer: 2000
-                })
-            })
-    }
-
+                    timer: 2000,
+                });
+            });
+    };
 });

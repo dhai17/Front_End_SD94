@@ -1,7 +1,7 @@
 <div class="container-fluid" ng-controller="EditProductController">
     <div class="card mb-4" id="editCTSP1">
         <h2 id="h1-XemTruoc" class="text-center">Cập nhật chi tiết sản phẩm</h2>
-        <br>
+        <br />
         <div class="card-body">
             <form>
                 <div class="row gx-3 mb-3">
@@ -18,14 +18,14 @@
                 <div class="row gx-3 mb-3">
                     <div class="col-md-6">
                         <label class="mb-1">Số lượng</label>
-                        <input class="form-control" id="quantity" type="text" ng-model="editproduct.soLuong">
+                        <input class="form-control" id="quantity" type="number" ng-model="editproduct.soLuong" />
                     </div>
                     <div class="col-md-6">
                         <label class="mb-1">Giá bán</label>
-                        <input class="form-control" id="gia" type="text" ng-model="editproduct.sanPham.gia">
+                        <input class="form-control" id="gia" type="number" ng-model="editproduct.sanPham.gia" />
                     </div>
                 </div>
-                <br>
+                <br />
                 <div class="text-right">
                     <button id="btnQuayLai" class="btn btn-primary" type="button" ng-click="returnEdit(editProduct)">
                         <ion-icon name="arrow-back"></ion-icon> Quay lại

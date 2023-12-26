@@ -1,8 +1,6 @@
 <div class="container-fluid" ng-controller="CreateSizeController" id="themMoiCtSP">
     <div class="card mb-4">
-        <div class="card-header">
-            Thêm kích cỡ
-        </div>
+        <div class="card-header">Thêm kích cỡ</div>
         <div class="card-body">
             <form>
                 <div class="row gx-3 mb-3">
@@ -10,8 +8,14 @@
                         <label class="small mb-1" for="name">Kích cỡ</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-ruler"></i></span>
-                            <input class="form-control" id="name" type="text" placeholder="Nhập kích cỡ"
-                                ng-model="createSize.kichCo" required>
+                            <input
+                                class="form-control"
+                                id="name"
+                                type="text"
+                                placeholder="Nhập kích cỡ"
+                                ng-model="createSize.kichCo"
+                                required
+                            />
                         </div>
                     </div>
                 </div>

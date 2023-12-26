@@ -1,6 +1,6 @@
 <div class="container-fluid custom-form" ng-controller="CreateMaterialController" id="themMoiCtSP">
     <div class="card mb-4">
-        <div class="card-header"> Thêm chất liệu sản phẩm</div>
+        <div class="card-header">Thêm chất liệu sản phẩm</div>
         <div class="card-body">
             <form>
                 <div class="row gx-3 mb-3">
@@ -8,8 +8,14 @@
                         <label class="small mb-1" for="name">Chất liệu</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-paint-brush"></i></span>
-                            <input class="form-control" id="name" type="text" placeholder="Nhập chất liệu"
-                                ng-model="createMaterial.chatLieu" required>
+                            <input
+                                class="form-control"
+                                id="name"
+                                type="text"
+                                placeholder="Nhập chất liệu"
+                                ng-model="createMaterial.chatLieu"
+                                required
+                            />
                         </div>
                     </div>
                 </div>

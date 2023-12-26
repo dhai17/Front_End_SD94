@@ -1,4 +1,3 @@
-
 #table-BanHangTaiQuay {
     max-height: 400px;
 }
@@ -50,7 +49,7 @@ select:focus {
     border: none !important;
     box-shadow: none !important;
     outline: none !important;
-    background-color: #F8F9FA;
+    background-color: #f8f9fa;
 }
 
 .xoaHDCT:hover,
