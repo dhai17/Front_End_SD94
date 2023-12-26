@@ -7,7 +7,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-route.js"></script>
         <link rel="stylesheet" href="/static/sales/online/BanHangOnline.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-        <script th:src="@{/admin/js/banHang/banHangOnline/banHangOnline.js}"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css" />
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
@@ -215,17 +214,17 @@
                         Tổng cộng:
                         <span id="total">{{tongTienHoaDon.toLocaleString('vi-VN') + ' VNĐ' }}</span>
                     </p>
-                </div>
 
-                <a ng-click="quayLai()" class="cart-link2">Sản phẩm</a>
+                    <a ng-click="quayLai()" class="cart-link2">Sản phẩm</a>
 
-                <div class="button-container">
-                    <div class="button-group">
-                        <button type="submit" id="buttonThanhToan" class="button-thanhToan" ng-click="thanhToan()">
-                            Thanh toán
-                        </button>
+                    <div class="button-container">
+                        <div class="button-group">
+                            <button type="submit" id="buttonThanhToan" class="button-thanhToan" ng-click="thanhToan()">
+                                Thanh toán
+                            </button>
 
-                        <button id="buttonDatHang" class="button-datHang" ng-click="datHang()">Đặt hàng</button>
+                            <button id="buttonDatHang" class="button-datHang" ng-click="datHang()">Đặt hàng</button>
+                        </div>
                     </div>
                 </div>
             </div>
