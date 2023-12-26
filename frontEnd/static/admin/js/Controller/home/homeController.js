@@ -210,6 +210,16 @@ app.config(function ($routeProvider) {
             controller: 'themSanPhamTuongTuController',
         })
 
+        .when('/hoaDon/danhSachSanPham', {
+            templateUrl: '/templates/admin/hoaDon/online/chinhSua/danhSachSP.html',
+            controller: 'danhSachSanPhamHoaDonController',
+        })
+
+        .when('/chiTietSP_hoaDon', {
+            templateUrl: '/templates/admin/hoaDon/online/chinhSua/chiTietSP.html',
+            controller: 'ChiTietSanPhamHoaDonController',
+        })
+
         .otherwise({
             redirectTo: '/',
         });
