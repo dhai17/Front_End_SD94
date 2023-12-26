@@ -1,3 +1,1 @@
-app.controller("ChiTietSanPhamController", function ($scope, $http) {
-
-});
+app.controller('ChiTietSanPhamController', function ($scope, $http) {});

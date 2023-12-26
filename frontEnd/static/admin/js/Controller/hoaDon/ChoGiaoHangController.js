@@ -1,17 +1,16 @@
-
-app.controller("ChoGiaoHangController", function ($scope, $http) {
-    let token = localStorage.getItem("token");
+app.controller('ChoGiaoHangController', function ($scope, $http) {
+    let token = localStorage.getItem('token');
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    }
+        Authorization: 'Bearer ' + token,
+    };
 
     $scope.loadData = function () {
-        $http.get("http://localhost:8080/hoaDon/datHang/choGiaoHang/danhSach", { headers }).then(function (response) {
+        $http.get('http://localhost:8080/hoaDon/datHang/choGiaoHang/danhSach', { headers }).then(function (response) {
             const pending = response.data;
             $scope.pending = pending;
         });
-    }
+    };
 
     $scope.loadData();
     $scope.toggleSelectAll = function () {
@@ -24,17 +23,20 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
     function parseJwt(token) {
         let base64Url = token.split('.')[1];
         let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
+        let jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                })
+                .join(''),
+        );
 
         let payload = JSON.parse(jsonPayload);
         return payload;
     }
 
     let decodedToken = parseJwt(token);
-
-
 
     $scope.GiaoTatCa = function () {
         const checkOut_email = decodedToken.email;
@@ -44,13 +46,18 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Đã bàn giao',
-            cancelButtonText: 'Chưa'
+            cancelButtonText: 'Chưa',
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = {
-                    email_user: checkOut_email
-                }
-                $http.post("http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang-tatCa", data, { headers })
+                    email_user: checkOut_email,
+                };
+                $http
+                    .post(
+                        'http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang-tatCa',
+                        data,
+                        { headers },
+                    )
                     .then(function (response) {
                         const pending = response.data;
                         $scope.$evalAsync(function () {
@@ -58,10 +65,9 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
                         });
                     });
                 Swal.fire('Xác nhận thành công!', '', 'success');
-            };
+            }
         });
     };
-
 
     //Phân trang
     $scope.pager = {
@@ -79,7 +85,7 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
         get count() {
             if ($scope.pending && $scope.pending.length > 0) {
                 let start = (this.page - 1) * this.size;
-                return Math.ceil(1.0 * $scope.pending.length / this.size);
+                return Math.ceil((1.0 * $scope.pending.length) / this.size);
             } else {
                 // Trả về 0
                 return 0;
@@ -92,11 +98,8 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
                 pageNumbers.push(i);
             }
             return pageNumbers;
-        }
+        },
     };
-
-
-
 
     // xác nhận đơn
     $scope.confirm = function (pending) {
@@ -108,31 +111,35 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
             icon: 'info',
             showCancelButton: true,
             confirmButtonText: 'Có',
-            cancelButtonText: 'Không'
+            cancelButtonText: 'Không',
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = {
                     id: id,
-                    email_user: checkOut_email
-                }
-                $http.post("http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang", data, { headers })
+                    email_user: checkOut_email,
+                };
+                $http
+                    .post('http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang', data, {
+                        headers,
+                    })
                     .then(function (response) {
                         $scope.loadData();
                         Swal.fire('Xác nhận thành công!', '', 'success');
-                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
-                            .then(function (response) {
-                        });
+                        $http
+                            .get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, { headers })
+                            .then(function (response) {});
                     })
                     .catch(function (error) {
                         console.log(error);
-                    })
-            };
+                    });
+            }
         });
     };
     //Tìm kiếm
     $scope.$watch('search', function (newVal) {
         if (newVal) {
-            $http.get("http://localhost:8080/hoaDon/datHang/choGiaoHang/timKiem=" + newVal, { headers })
+            $http
+                .get('http://localhost:8080/hoaDon/datHang/choGiaoHang/timKiem=' + newVal, { headers })
                 .then(function (response) {
                     const pending = response.data;
 
@@ -151,29 +158,29 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
         let formattedDate = formatDate(searchDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http.get("http://localhost:8080/hoaDon/datHang/choGiaoHang/timKiemNgay=" + formattedDate, { headers })
+        $http
+            .get('http://localhost:8080/hoaDon/datHang/choGiaoHang/timKiemNgay=' + formattedDate, { headers })
             .then(function (response) {
                 const pending = response.data;
 
                 $scope.$evalAsync(function () {
                     $scope.pending = pending;
-                })
+                });
             });
-    }
-
+    };
 
     function formatDate(dateString) {
         let date = new Date(dateString);
         let year = date.getFullYear();
-        let month = ("0" + (date.getMonth() + 1)).slice(-2);
-        let day = ("0" + date.getDate()).slice(-2);
-        return year + "-" + month + "-" + day;
+        let month = ('0' + (date.getMonth() + 1)).slice(-2);
+        let day = ('0' + date.getDate()).slice(-2);
+        return year + '-' + month + '-' + day;
     }
 
     //Re load
     $scope.reLoad = function () {
         $scope.loadData();
-    }
+    };
     //Xác nhận đã chọn
 
     // check don da chon
@@ -211,14 +218,17 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Có',
-                    cancelButtonText: 'Không'
+                    cancelButtonText: 'Không',
                 }).then((result) => {
                     if (result.isConfirmed) {
                         let data = {
                             id_hoaDon: id_hoaDon,
-                            email_user: checkOut_email
-                        }
-                        $http.put("http://localhost:8080/hoaDon/datHang/choGiaoHang/giaoDonHang/daChon", data, { headers })
+                            email_user: checkOut_email,
+                        };
+                        $http
+                            .put('http://localhost:8080/hoaDon/datHang/choGiaoHang/giaoDonHang/daChon', data, {
+                                headers,
+                            })
                             .then(function (response) {
                                 const pending = response.data;
                                 $scope.$evalAsync(function () {
@@ -228,61 +238,66 @@ app.controller("ChoGiaoHangController", function ($scope, $http) {
                                 });
                                 Swal.fire('Xác nhận giao đơn thành công!', '', 'success');
                                 let id;
-                                for (id of id_hoaDon){
-                                    $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
-                                    .then(function (response) {
-                                    });
+                                for (id of id_hoaDon) {
+                                    $http
+                                        .get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, {
+                                            headers,
+                                        })
+                                        .then(function (response) {});
                                 }
                             });
-                    };
+                    }
                 });
-
-            };
+            }
         });
     };
 
     // Hoá đơn chi tiết
     $scope.look = function (pending) {
         const id = pending.id;
-        window.location.href = "#!/CTChoGiaoHang?id=" + id;
+        window.location.href = '#!/CTChoGiaoHang?id=' + id;
     };
 });
 
-app.controller("CTChoGiaoHang", function ($scope, $routeParams, $http) {
-    let token = localStorage.getItem("token");
+app.controller('CTChoGiaoHang', function ($scope, $routeParams, $http) {
+    let token = localStorage.getItem('token');
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    }
+        Authorization: 'Bearer ' + token,
+    };
 
     const id = $routeParams.id;
-    $http.get("http://localhost:8080/hoaDon/chiTietHoaDon/choGiaoHang/id=" + id, { headers })
-        .then(function (response) {
-            const respone = response.data;
-            const hdct = respone.list_HDCT;
-            $scope.hdct = hdct;
+    $http.get('http://localhost:8080/hoaDon/chiTietHoaDon/choGiaoHang/id=' + id, { headers }).then(function (response) {
+        const respone = response.data;
+        const hdct = respone.list_HDCT;
+        $scope.hdct = hdct;
 
-            const timeLine_ChoXacNhan = respone.timeLine_ChoXacNhan;
-            $scope.timeLine_ChoXacNhan = timeLine_ChoXacNhan;
+        const timeLine_ChoXacNhan = respone.timeLine_ChoXacNhan;
+        $scope.timeLine_ChoXacNhan = timeLine_ChoXacNhan;
 
-            const timeLine_ChoGiaoHang = respone.timeLine_ChoGiaoHang;
-            $scope.timeLine_ChoGiaoHang = timeLine_ChoGiaoHang;
+        const timeLine_ChoGiaoHang = respone.timeLine_ChoGiaoHang;
+        $scope.timeLine_ChoGiaoHang = timeLine_ChoGiaoHang;
 
-            const hoaDon = respone.hoaDon;
+        const hoaDon = respone.hoaDon;
 
-            $scope.hoaDon = hoaDon;
-        });
+        $scope.hoaDon = hoaDon;
+    });
 
-        $scope.quayLai = function(){
-            window.location.href = "#!/cho-giao-hang";
-        }
+    $scope.quayLai = function () {
+        window.location.href = '#!/cho-giao-hang';
+    };
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
         let base64Url = token.split('.')[1];
         let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
+        let jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                })
+                .join(''),
+        );
 
         let payload = JSON.parse(jsonPayload);
         return payload;
@@ -300,33 +315,38 @@ app.controller("CTChoGiaoHang", function ($scope, $routeParams, $http) {
             icon: 'info',
             showCancelButton: true,
             confirmButtonText: 'Có',
-            cancelButtonText: 'Không'
+            cancelButtonText: 'Không',
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = {
                     id: id,
-                    email_user: checkOut_email
-                }
-                $http.post("http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang", data, { headers })
+                    email_user: checkOut_email,
+                };
+                $http
+                    .post('http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang', data, {
+                        headers,
+                    })
                     .then(function (response) {
                         $scope.quayLai();
                         Swal.fire('Xác nhận thành công!', '', 'success');
-                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
-                            .then(function (response) {
-                        });
+                        $http
+                            .get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, { headers })
+                            .then(function (response) {});
                     })
                     .catch(function (error) {
                         console.log(error);
-                    })
-
-            };
+                    });
+            }
         });
     };
-    
 
-    $scope.inHoaDon = function(){
+    $scope.inHoaDon = function () {
         const id = $routeParams.id;
-        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/inHoaDon/"+id, { headers, responseType: 'arraybuffer' })
+        $http
+            .get('http://localhost:8080/hoaDon/datHang/choXacNhan/inHoaDon/' + id, {
+                headers,
+                responseType: 'arraybuffer',
+            })
             .then(function (response) {
                 let pdfBlob = new Blob([response.data], { type: 'application/pdf' });
                 let pdfUrl = URL.createObjectURL(pdfBlob);
@@ -337,8 +357,6 @@ app.controller("CTChoGiaoHang", function ($scope, $routeParams, $http) {
                 } else {
                     alert('Vui lòng cho phép trình duyệt mở popup để xem và lưu hóa đơn.');
                 }
-        });
-    }
+            });
+    };
 });
-
-

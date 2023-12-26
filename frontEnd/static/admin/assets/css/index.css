@@ -8,7 +8,7 @@ a {
 }
 
 /* Đặt khoảng cách 5px giữa các phần tử con */
-.d-flex>* {
+.d-flex > * {
     margin-right: 5px;
 }
 
@@ -83,9 +83,9 @@ a {
     margin-bottom: 30px;
     position: relative;
     top: 0;
-    -webkit-transition: .3s all ease;
-    -o-transition: .3s all ease;
-    transition: .3s all ease;
+    -webkit-transition: 0.3s all ease;
+    -o-transition: 0.3s all ease;
+    transition: 0.3s all ease;
 }
 
 .product-section .product-item h3 {
@@ -119,9 +119,9 @@ a {
     border-radius: 50%;
     opacity: 0;
     visibility: hidden;
-    -webkit-transition: .3s all ease;
-    -o-transition: .3s all ease;
-    transition: .3s all ease;
+    -webkit-transition: 0.3s all ease;
+    -o-transition: 0.3s all ease;
+    transition: 0.3s all ease;
 }
 
 .product-section .product-item .icon-cross img {
@@ -138,14 +138,14 @@ a {
     left: 0;
     right: 0;
     position: absolute;
-    content: "";
+    content: '';
     background: #dce5e4;
     height: 0%;
     z-index: -1;
     border-radius: 10px;
-    -webkit-transition: .3s all ease;
-    -o-transition: .3s all ease;
-    transition: .3s all ease;
+    -webkit-transition: 0.3s all ease;
+    -o-transition: 0.3s all ease;
+    transition: 0.3s all ease;
 }
 
 .product-section .product-item:hover .product-thumbnail {
@@ -162,7 +162,6 @@ a {
     height: 70%;
 }
 
-
 .popular-product {
     padding: 0 0 7rem 0;
 }
@@ -176,9 +175,9 @@ a {
 .popular-product .product-item-sm a {
     text-decoration: none;
     color: #2f2f2f;
-    -webkit-transition: .3s all ease;
-    -o-transition: .3s all ease;
-    transition: .3s all ease;
+    -webkit-transition: 0.3s all ease;
+    -o-transition: 0.3s all ease;
+    transition: 0.3s all ease;
 }
 
 .popular-product .product-item-sm a:hover {
@@ -200,7 +199,7 @@ a {
 }
 
 .popular-product .product-item-sm .thumbnail:before {
-    content: "";
+    content: '';
     position: absolute;
     border-radius: 20px;
     background: #dce5e4;
@@ -243,7 +242,9 @@ a {
     font-size: 13px;
     text-align: center;
     text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition:
+        background-color 0.3s ease,
+        transform 0.2s ease;
 }
 
 .kichCo-sanPhamcustomer:hover {
@@ -270,7 +271,9 @@ a {
     margin-left: 6px;
     /* Biến thành hình tròn */
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition:
+        background-color 0.3s ease,
+        transform 0.2s ease;
 }
 
 .mauSac-sanPhamcustome:hover {
@@ -331,7 +334,7 @@ td button:hover {
 
 .card {
     border: none;
-    overflow: hidden
+    overflow: hidden;
 }
 
 .thumbnail_images ul {
@@ -339,7 +342,7 @@ td button:hover {
     justify-content: center;
     display: flex;
     align-items: center;
-    margin-top: 10px
+    margin-top: 10px;
 }
 
 .thumbnail_images ul li {
@@ -347,11 +350,11 @@ td button:hover {
     padding: 10px;
     border: 2px solid #eee;
     cursor: pointer;
-    transition: all 0.5s
+    transition: all 0.5s;
 }
 
 .thumbnail_images ul li:hover {
-    border: 2px solid #000
+    border: 2px solid #000;
 }
 
 .main_image {
@@ -361,7 +364,7 @@ td button:hover {
     border-bottom: 1px solid #eee;
     height: 400px;
     width: 100%;
-    overflow: hidden
+    overflow: hidden;
 }
 
 .heart {
@@ -371,26 +374,26 @@ td button:hover {
     border-radius: 50%;
     display: flex;
     justify-content: center;
-    align-items: center
+    align-items: center;
 }
 
 .content p {
-    font-size: 12px
+    font-size: 12px;
 }
 
 .ratings span {
     font-size: 14px;
-    margin-left: 12px
+    margin-left: 12px;
 }
 
 .colors {
-    margin-top: 5px
+    margin-top: 5px;
 }
 
 .colors ul {
     list-style: none;
     display: flex;
-    padding-left: 0px
+    padding-left: 0px;
 }
 
 .colors ul li {
@@ -399,31 +402,31 @@ td button:hover {
     display: flex;
     border-radius: 50%;
     margin-right: 10px;
-    cursor: pointer
+    cursor: pointer;
 }
 
 .colors ul li:nth-child(1) {
-    background-color: #6c704d
+    background-color: #6c704d;
 }
 
 .colors ul li:nth-child(2) {
-    background-color: #96918b
+    background-color: #96918b;
 }
 
 .colors ul li:nth-child(3) {
-    background-color: #68778e
+    background-color: #68778e;
 }
 
 .colors ul li:nth-child(4) {
-    background-color: #263f55
+    background-color: #263f55;
 }
 
 .colors ul li:nth-child(5) {
-    background-color: black
+    background-color: black;
 }
 
 .right-side {
-    position: relative
+    position: relative;
 }
 
 .search-option {
@@ -438,7 +441,7 @@ td button:hover {
     left: 30%;
     bottom: -250px;
     transition: all 0.5s;
-    cursor: pointer
+    cursor: pointer;
 }
 
 .search-option .first-search {
@@ -446,14 +449,14 @@ td button:hover {
     top: 20px;
     left: 90px;
     font-size: 20px;
-    opacity: 1000
+    opacity: 1000;
 }
 
 .search-option .inputs {
     opacity: 0;
     transition: all 0.5s ease;
     transition-delay: 0.5s;
-    position: relative
+    position: relative;
 }
 
 .search-option .inputs input {
@@ -467,43 +470,43 @@ td button:hover {
     color: #fff;
     border-bottom: 1px solid #eee;
     transition: all 0.5s;
-    z-index: 10
+    z-index: 10;
 }
 
 .search-option .inputs input:focus {
     box-shadow: none;
     outline: none;
-    z-index: 10
+    z-index: 10;
 }
 
 .search-option:hover {
     border-radius: 0px;
     width: 100%;
-    left: 0px
+    left: 0px;
 }
 
 .search-option:hover .inputs {
-    opacity: 1
+    opacity: 1;
 }
 
 .search-option:hover .first-search {
     left: 27px;
     top: 25px;
-    font-size: 15px
+    font-size: 15px;
 }
 
 .search-option:hover .inputs input {
-    top: 20px
+    top: 20px;
 }
 
 .search-option .share {
     position: absolute;
     right: 20px;
-    top: 22px
+    top: 22px;
 }
 
 .buttons .btn {
     height: 50px;
     width: 150px;
-    border-radius: 0px !important
+    border-radius: 0px !important;
 }

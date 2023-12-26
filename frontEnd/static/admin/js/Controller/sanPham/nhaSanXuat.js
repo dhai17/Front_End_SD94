@@ -1,28 +1,31 @@
-app.controller("ProducerController", function ($scope, $http) {
-
-    let token = localStorage.getItem("token");
+app.controller('ProducerController', function ($scope, $http) {
+    let token = localStorage.getItem('token');
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    }
+        Authorization: 'Bearer ' + token,
+    };
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
         let base64Url = token.split('.')[1];
         let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-    
+        let jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                })
+                .join(''),
+        );
+
         let payload = JSON.parse(jsonPayload);
         return payload;
-      }
-      let decodedToken = parseJwt(token);
+    }
+    let decodedToken = parseJwt(token);
 
-    $http.get("http://localhost:8080/nhaSanXuat/danhSach", { headers })
-        .then(function (response) {
-            const promotions = response.data;
-            $scope.promotions = promotions;
-        });
+    $http.get('http://localhost:8080/nhaSanXuat/danhSach', { headers }).then(function (response) {
+        const promotions = response.data;
+        $scope.promotions = promotions;
+    });
 
     //Phân trang
     $scope.pager = {
@@ -57,10 +60,10 @@ app.controller("ProducerController", function ($scope, $http) {
     $scope.deleteProducer = function (promotion) {
         if (decodedToken.role === 'STAFF') {
             Swal.fire({
-              icon: 'warning',
-              title: 'Bạn không có quyền thao tác',
-              showConfirmButton: false,
-              timer: 2000
+                icon: 'warning',
+                title: 'Bạn không có quyền thao tác',
+                showConfirmButton: false,
+                timer: 2000,
             });
             return;
         }
@@ -74,34 +77,34 @@ app.controller("ProducerController", function ($scope, $http) {
             cancelButtonText: 'Hủy',
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.delete("http://localhost:8080/nhaSanXuat/xoa/" + idProducer, { headers })
+                $http
+                    .delete('http://localhost:8080/nhaSanXuat/xoa/' + idProducer, { headers })
                     .then(function (response) {
                         const promotions = response.data;
                         $scope.$evalAsync(function () {
                             $scope.promotions = promotions;
                             Swal.fire({
-                                icon: "success",
-                                title: "Xóa thành công",
+                                icon: 'success',
+                                title: 'Xóa thành công',
                                 showConfirmButton: false,
                                 timer: 2000,
                             });
                         });
-
                     })
                     .catch(function (error) {
-                        console.log("Error");
+                        console.log('Error');
                     });
             }
         });
-    }
+    };
 
     $scope.editProducer = function (promotion) {
         if (decodedToken.role === 'STAFF') {
             Swal.fire({
-              icon: 'warning',
-              title: 'Bạn không có quyền thao tác',
-              showConfirmButton: false,
-              timer: 2000
+                icon: 'warning',
+                title: 'Bạn không có quyền thao tác',
+                showConfirmButton: false,
+                timer: 2000,
             });
             return;
         }
@@ -112,56 +115,54 @@ app.controller("ProducerController", function ($scope, $http) {
     $scope.createProducer = function (promotion) {
         if (decodedToken.role === 'STAFF') {
             Swal.fire({
-              icon: 'warning',
-              title: 'Bạn không có quyền thao tác',
-              showConfirmButton: false,
-              timer: 2000
+                icon: 'warning',
+                title: 'Bạn không có quyền thao tác',
+                showConfirmButton: false,
+                timer: 2000,
             });
             return;
         }
         window.location.href = '#!/create-Producer?id=';
     };
-
 });
 
-app.controller("CreateProducerController", function ($scope, $http) {
-
-    let token = localStorage.getItem("token");
+app.controller('CreateProducerController', function ($scope, $http) {
+    let token = localStorage.getItem('token');
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    }
+        Authorization: 'Bearer ' + token,
+    };
 
     $scope.saveCreate = function () {
-
         if ($scope.createProducer === undefined) {
             Swal.fire({
-                icon: "error",
-                title: "Vui lòng nhập đầy đủ thông tin",
+                icon: 'error',
+                title: 'Vui lòng nhập đầy đủ thông tin',
                 showConfirmButton: false,
                 timer: 2000,
             });
             return;
         }
 
-        $http.post("http://localhost:8080/nhaSanXuat/themMoi", $scope.createProducer, { headers })
+        $http
+            .post('http://localhost:8080/nhaSanXuat/themMoi', $scope.createProducer, { headers })
             .then(function (response) {
                 Swal.fire({
-                    icon: "success",
-                    title: "Thêm mới thành công",
+                    icon: 'success',
+                    title: 'Thêm mới thành công',
                     showConfirmButton: false,
                     timer: 2000,
                 }).then(function () {
-                    sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-Producer";
+                    sessionStorage.setItem('isConfirmed', true);
+                    window.location.href = '#!/list-Producer';
                 });
             })
             .catch(function (error) {
                 if (error.status === 400) {
                     const errorMessage = error.data.message;
                     Swal.fire({
-                        icon: "error",
-                        title: errorMessage + "",
+                        icon: 'error',
+                        title: errorMessage + '',
                         showConfirmButton: false,
                         timer: 2000,
                     });
@@ -172,56 +173,51 @@ app.controller("CreateProducerController", function ($scope, $http) {
     };
 
     $scope.returnCreate = function () {
-        window.location.href = "#!/list-Producer"
+        window.location.href = '#!/list-Producer';
     };
-
 });
 
-
 //
-app.controller("EditProducerController", function ($scope, $routeParams, $http) {
-
-    let token = localStorage.getItem("token");
+app.controller('EditProducerController', function ($scope, $routeParams, $http) {
+    let token = localStorage.getItem('token');
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    }
+        Authorization: 'Bearer ' + token,
+    };
 
     let idProducer = $routeParams.id;
 
-    $http.get("http://localhost:8080/nhaSanXuat/chinhSua/" + idProducer, { headers })
-        .then(function (response) {
-            let editProducer = response.data;
-            $scope.editProducer = editProducer;
-        });
-
+    $http.get('http://localhost:8080/nhaSanXuat/chinhSua/' + idProducer, { headers }).then(function (response) {
+        let editProducer = response.data;
+        $scope.editProducer = editProducer;
+    });
 
     $scope.saveEdits = function () {
-
         let editProducer = {
             id: idProducer,
             name: $scope.editProducer.name,
             diaChi: $scope.editProducer.diaChi,
         };
 
-        $http.put("http://localhost:8080/nhaSanXuat/luuChinhSua", editProducer, { headers })
+        $http
+            .put('http://localhost:8080/nhaSanXuat/luuChinhSua', editProducer, { headers })
             .then(function (response) {
                 Swal.fire({
-                    icon: "success",
-                    title: "Sửa thành công",
+                    icon: 'success',
+                    title: 'Sửa thành công',
                     showConfirmButton: false,
                     timer: 2000,
                 }).then(function () {
-                    sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-Producer";
+                    sessionStorage.setItem('isConfirmed', true);
+                    window.location.href = '#!/list-Producer';
                 });
             })
             .catch(function (errorResponse) {
                 if (errorResponse.status === 400) {
                     const errorMassage = errorResponse.data.message;
                     Swal.fire({
-                        icon: "error",
-                        title: errorMassage + "",
+                        icon: 'error',
+                        title: errorMassage + '',
                         showConfirmButton: false,
                         timer: 2000,
                     });
@@ -231,6 +227,6 @@ app.controller("EditProducerController", function ($scope, $routeParams, $http) 
 
     //Return
     $scope.returnEdit = function () {
-        window.location.href = "#!/list-Producer"
+        window.location.href = '#!/list-Producer';
     };
 });

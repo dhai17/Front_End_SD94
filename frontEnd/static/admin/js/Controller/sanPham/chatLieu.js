@@ -1,28 +1,31 @@
-app.controller("MaterialController", function ($scope, $http) {
-
-    let token = localStorage.getItem("token");
+app.controller('MaterialController', function ($scope, $http) {
+    let token = localStorage.getItem('token');
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    }
+        Authorization: 'Bearer ' + token,
+    };
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
         let base64Url = token.split('.')[1];
         let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-    
+        let jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                })
+                .join(''),
+        );
+
         let payload = JSON.parse(jsonPayload);
         return payload;
-      }
-      let decodedToken = parseJwt(token);
+    }
+    let decodedToken = parseJwt(token);
 
-    $http.get("http://localhost:8080/chatLieu/danhSach", { headers })
-        .then(function (response) {
-            const promotions = response.data;
-            $scope.promotions = promotions;
-        });
+    $http.get('http://localhost:8080/chatLieu/danhSach', { headers }).then(function (response) {
+        const promotions = response.data;
+        $scope.promotions = promotions;
+    });
 
     $scope.pager = {
         page: 1,
@@ -57,13 +60,13 @@ app.controller("MaterialController", function ($scope, $http) {
         let idMaterial = promotion.id;
         if (decodedToken.role === 'STAFF') {
             Swal.fire({
-              icon: 'warning',
-              title: 'Bạn không có quyền thao tác',
-              showConfirmButton: false,
-              timer: 2000
+                icon: 'warning',
+                title: 'Bạn không có quyền thao tác',
+                showConfirmButton: false,
+                timer: 2000,
             });
             return;
-          }
+        }
         Swal.fire({
             title: 'Xác nhận xóa chất liệu',
             text: 'Bạn có chắc chắn muốn xóa chất liệu này?',
@@ -73,37 +76,37 @@ app.controller("MaterialController", function ($scope, $http) {
             cancelButtonText: 'Hủy',
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.delete("http://localhost:8080/chatLieu/xoa/" + idMaterial, { headers })
+                $http
+                    .delete('http://localhost:8080/chatLieu/xoa/' + idMaterial, { headers })
                     .then(function (response) {
                         const promotions = response.data;
                         $scope.$evalAsync(function () {
                             $scope.promotions = promotions;
                             Swal.fire({
-                                icon: "success",
-                                title: "Xóa thành công",
+                                icon: 'success',
+                                title: 'Xóa thành công',
                                 showConfirmButton: false,
                                 timer: 2000,
                             });
                         });
-
                     })
                     .catch(function (error) {
-                        console.log("Error");
+                        console.log('Error');
                     });
             }
         });
-    }
+    };
 
     $scope.editMaterial = function (promotion) {
         if (decodedToken.role === 'STAFF') {
             Swal.fire({
-              icon: 'warning',
-              title: 'Bạn không có quyền thao tác',
-              showConfirmButton: false,
-              timer: 2000
+                icon: 'warning',
+                title: 'Bạn không có quyền thao tác',
+                showConfirmButton: false,
+                timer: 2000,
             });
             return;
-          }
+        }
         let idMaterial = promotion.id;
         window.location.href = '#!/edit-Material?id=' + idMaterial;
     };
@@ -111,77 +114,81 @@ app.controller("MaterialController", function ($scope, $http) {
     $scope.createMateriall = function (promotion) {
         if (decodedToken.role === 'STAFF') {
             Swal.fire({
-              icon: 'warning',
-              title: 'Bạn không có quyền thao tác',
-              showConfirmButton: false,
-              timer: 2000
+                icon: 'warning',
+                title: 'Bạn không có quyền thao tác',
+                showConfirmButton: false,
+                timer: 2000,
             });
             return;
         }
         window.location.href = '#!/create-Material?id=';
     };
-
 });
 
-app.controller("CreateMaterialController", function ($scope, $http) {
-
-    let token = localStorage.getItem("token");
+app.controller('CreateMaterialController', function ($scope, $http) {
+    let token = localStorage.getItem('token');
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    }
+        Authorization: 'Bearer ' + token,
+    };
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
         let base64Url = token.split('.')[1];
         let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-    
+        let jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                })
+                .join(''),
+        );
+
         let payload = JSON.parse(jsonPayload);
         return payload;
-      }
-      let decodedToken = parseJwt(token);
+    }
+    let decodedToken = parseJwt(token);
 
     $scope.saveCreate = function () {
         if (decodedToken.role === 'STAFF') {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Bạn không có quyền thao tác',
-          showConfirmButton: false,
-          timer: 2000
-        });
-        return;
-      }
-
-        if ($scope.createMaterial === undefined) {
             Swal.fire({
-                icon: "error",
-                title: "Vui lòng nhập đầy đủ thông tin",
+                icon: 'warning',
+                title: 'Bạn không có quyền thao tác',
                 showConfirmButton: false,
                 timer: 2000,
             });
             return;
         }
 
-        $http.post("http://localhost:8080/chatLieu/themMoi", $scope.createMaterial, { headers })
+        if ($scope.createMaterial === undefined) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Vui lòng nhập đầy đủ thông tin',
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+
+        $http
+            .post('http://localhost:8080/chatLieu/themMoi', $scope.createMaterial, { headers })
             .then(function (response) {
                 Swal.fire({
-                    icon: "success",
-                    title: "Thêm mới thành công",
+                    icon: 'success',
+                    title: 'Thêm mới thành công',
                     showConfirmButton: false,
                     timer: 2000,
                 }).then(function () {
-                    sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-Material";
+                    sessionStorage.setItem('isConfirmed', true);
+                    window.location.href = '#!/list-Material';
                 });
             })
             .catch(function (error) {
                 if (error.status === 400) {
                     const errorMessage = error.data.message;
                     Swal.fire({
-                        icon: "error",
-                        title: errorMessage + "",
+                        icon: 'error',
+                        title: errorMessage + '',
                         showConfirmButton: false,
                         timer: 2000,
                     });
@@ -192,73 +199,75 @@ app.controller("CreateMaterialController", function ($scope, $http) {
     };
 
     $scope.returnCreate = function () {
-        window.location.href = "#!/list-Material"
+        window.location.href = '#!/list-Material';
     };
-
 });
 
-
 //
-app.controller("EditMaterialController", function ($scope, $routeParams, $http) {
-    let token = localStorage.getItem("token");
+app.controller('EditMaterialController', function ($scope, $routeParams, $http) {
+    let token = localStorage.getItem('token');
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    }
+        Authorization: 'Bearer ' + token,
+    };
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
         let base64Url = token.split('.')[1];
         let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-    
+        let jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                })
+                .join(''),
+        );
+
         let payload = JSON.parse(jsonPayload);
         return payload;
-      }
-      let decodedToken = parseJwt(token);
+    }
+    let decodedToken = parseJwt(token);
     let idMaterial = $routeParams.id;
 
-    $http.get("http://localhost:8080/chatLieu/chinhSua/" + idMaterial, { headers })
-        .then(function (response) {
-            let editMaterial = response.data;
-            $scope.editMaterial = editMaterial;
-        });
-
+    $http.get('http://localhost:8080/chatLieu/chinhSua/' + idMaterial, { headers }).then(function (response) {
+        let editMaterial = response.data;
+        $scope.editMaterial = editMaterial;
+    });
 
     $scope.saveEdits = function () {
         if (decodedToken.role === 'STAFF') {
             Swal.fire({
-              icon: 'warning',
-              title: 'Bạn không có quyền thao tác',
-              showConfirmButton: false,
-              timer: 2000
+                icon: 'warning',
+                title: 'Bạn không có quyền thao tác',
+                showConfirmButton: false,
+                timer: 2000,
             });
             return;
-          }
+        }
         let editMaterial = {
             id: idMaterial,
             chatLieu: $scope.editMaterial.chatLieu,
         };
 
-        $http.put("http://localhost:8080/chatLieu/luuChinhSua", editMaterial, { headers })
+        $http
+            .put('http://localhost:8080/chatLieu/luuChinhSua', editMaterial, { headers })
             .then(function (response) {
                 Swal.fire({
-                    icon: "success",
-                    title: "Sửa thành công",
+                    icon: 'success',
+                    title: 'Sửa thành công',
                     showConfirmButton: false,
                     timer: 2000,
                 }).then(function () {
-                    sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-Material";
+                    sessionStorage.setItem('isConfirmed', true);
+                    window.location.href = '#!/list-Material';
                 });
             })
             .catch(function (errorResponse) {
                 if (errorResponse.status === 400) {
                     const errorMassage = errorResponse.data.message;
                     Swal.fire({
-                        icon: "error",
-                        title: errorMassage + "",
+                        icon: 'error',
+                        title: errorMassage + '',
                         showConfirmButton: false,
                         timer: 2000,
                     });
@@ -268,6 +277,6 @@ app.controller("EditMaterialController", function ($scope, $routeParams, $http) 
 
     //Return
     $scope.returnEdit = function () {
-        window.location.href = "#!/list-Material"
+        window.location.href = '#!/list-Material';
     };
 });

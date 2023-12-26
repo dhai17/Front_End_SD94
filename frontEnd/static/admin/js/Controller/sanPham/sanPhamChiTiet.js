@@ -1,23 +1,21 @@
-app.controller("ProductDetailsController", function ($scope, $http) {
+app.controller('ProductDetailsController', function ($scope, $http) {
+    $http.get('http://localhost:8080/sanPhamChiTiet/danhSach').then(function (response) {
+        const promotions = response.data;
 
-    $http.get("http://localhost:8080/sanPhamChiTiet/danhSach")
-        .then(function (response) {
-            const promotions = response.data;
-
-            promotions.forEach(function (promotion) {
-                promotion.status2 = getStatusText(promotion.status);
-            });
-
-            $scope.promotions = promotions;
+        promotions.forEach(function (promotion) {
+            promotion.status2 = getStatusText(promotion.status);
         });
+
+        $scope.promotions = promotions;
+    });
 
     function getStatusText(status) {
         if (status == 0) {
-            return "Active";
+            return 'Active';
         } else if (status == 1) {
-            return "Expired";
+            return 'Expired';
         } else {
-            return "Awaiting";
+            return 'Awaiting';
         }
     }
 
@@ -37,7 +35,7 @@ app.controller("ProductDetailsController", function ($scope, $http) {
         get count() {
             if ($scope.promotions && $scope.promotions.length > 0) {
                 let start = (this.page - 1) * this.size;
-                return Math.ceil(1.0 * $scope.promotions.length / this.size);
+                return Math.ceil((1.0 * $scope.promotions.length) / this.size);
             } else {
                 // Trả về 0
                 return 0;
@@ -50,7 +48,7 @@ app.controller("ProductDetailsController", function ($scope, $http) {
                 pageNumbers.push(i);
             }
             return pageNumbers;
-        }
+        },
     };
 
     //Chuyển hướng đến trang edit theo id
@@ -63,7 +61,8 @@ app.controller("ProductDetailsController", function ($scope, $http) {
     $scope.delete = function (promotion) {
         let idProDetails = promotion.id;
 
-        $http.delete("http://localhost:8080/api/productDetails/deleteprodtuctDetails/" + idProDetails)
+        $http
+            .delete('http://localhost:8080/api/productDetails/deleteprodtuctDetails/' + idProDetails)
             .then(function (response) {
                 const promotions = response.data;
 
@@ -76,22 +75,21 @@ app.controller("ProductDetailsController", function ($scope, $http) {
                 $scope.$evalAsync(function () {
                     $scope.promotions = promotions;
                     Swal.fire({
-                        icon: "success",
-                        title: "Xóa thành công",
+                        icon: 'success',
+                        title: 'Xóa thành công',
                         showConfirmButton: false,
                         timer: 2000,
                     });
                 });
-
             })
             .catch(function (error) {
-                console.log("Error");
+                console.log('Error');
             });
-    }
+    };
 
     // Re load
     $scope.reLoad = function () {
-        $http.get("http://localhost:8080/api/productDetails/list").then(function (response) {
+        $http.get('http://localhost:8080/api/productDetails/list').then(function (response) {
             const promotions = response.data;
             promotions.forEach(function (promotion) {
                 promotion.status2 = getStatusText(promotion.status);
@@ -99,22 +97,19 @@ app.controller("ProductDetailsController", function ($scope, $http) {
 
             $scope.$evalAsync(function () {
                 $scope.promotions = promotions;
-            })
+            });
         });
-    }
-
+    };
 });
 
 //Edit controller
-app.controller("EditProductDetailsController", function ($scope, $routeParams, $http) {
+app.controller('EditProductDetailsController', function ($scope, $routeParams, $http) {
     let idProDetails = $routeParams.id;
 
-    $http.get("http://localhost:8080/sanPhamChiTiet/chinhSua/" + idProDetails)
-        .then(function (response) {
-            const editproductDetails = response.data;
-            $scope.editproductDetails = editproductDetails;
-        });
-
+    $http.get('http://localhost:8080/sanPhamChiTiet/chinhSua/' + idProDetails).then(function (response) {
+        const editproductDetails = response.data;
+        $scope.editproductDetails = editproductDetails;
+    });
 
     //Lưu edit
     $scope.saveEdit = function () {
@@ -129,24 +124,25 @@ app.controller("EditProductDetailsController", function ($scope, $routeParams, $
             percentproductDetails: $scope.editproductDetails.percentproductDetails,
         };
 
-        $http.put("http://localhost:8080/sanPhamChiTiet/luuChinhSua", editproductDetails)
+        $http
+            .put('http://localhost:8080/sanPhamChiTiet/luuChinhSua', editproductDetails)
             .then(function (response) {
                 Swal.fire({
-                    icon: "success",
-                    title: "Sửa thành công",
+                    icon: 'success',
+                    title: 'Sửa thành công',
                     showConfirmButton: false,
                     timer: 2000,
                 }).then(function () {
-                    sessionStorage.setItem("isConfirmed", true);
-                    window.location.href = "#!/list-productDetails";
+                    sessionStorage.setItem('isConfirmed', true);
+                    window.location.href = '#!/list-productDetails';
                 });
             })
             .catch(function (errorResponse) {
                 if (errorResponse.status === 400) {
                     const errorMassage = errorResponse.data.message;
                     Swal.fire({
-                        icon: "error",
-                        title: errorMassage + "",
+                        icon: 'error',
+                        title: errorMassage + '',
                         showConfirmButton: false,
                         timer: 2000,
                     });
@@ -156,11 +152,6 @@ app.controller("EditProductDetailsController", function ($scope, $routeParams, $
 
     //Return
     $scope.returnEdit = function () {
-        window.location.href = "#!/list-ProductDetails"
+        window.location.href = '#!/list-ProductDetails';
     };
 });
-
-
-
-
-

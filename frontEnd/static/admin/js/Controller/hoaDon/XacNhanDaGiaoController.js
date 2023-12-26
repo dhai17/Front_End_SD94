@@ -1,38 +1,42 @@
-app.controller("XacNhanDaGiaoController", function ($scope, $http) {
-    let token = localStorage.getItem("token");
+app.controller('XacNhanDaGiaoController', function ($scope, $http) {
+    let token = localStorage.getItem('token');
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    }
-    $scope.soDonHang=0;
+        Authorization: 'Bearer ' + token,
+    };
+    $scope.soDonHang = 0;
     $scope.loadDataDG = function () {
-        $http.get("http://localhost:8080/hoaDon/datHang/dangGiaoHang/danhSach", { headers }).then(function (response) {
-            $scope.soDonHang=response.data.length;
+        $http.get('http://localhost:8080/hoaDon/datHang/dangGiaoHang/danhSach', { headers }).then(function (response) {
+            $scope.soDonHang = response.data.length;
         });
-    }
+    };
     $scope.loadDataDG();
     $scope.loadData = function () {
-        $http.get("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/danhSach", { headers }).then(function (response) {
+        $http.get('http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/danhSach', { headers }).then(function (response) {
             const pending = response.data;
             $scope.pending = pending;
         });
-    }
+    };
 
     $scope.loadData();
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
         let base64Url = token.split('.')[1];
         let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
+        let jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                })
+                .join(''),
+        );
 
         let payload = JSON.parse(jsonPayload);
         return payload;
     }
 
     let decodedToken = parseJwt(token);
-
 
     //Phân trang
     $scope.pager = {
@@ -50,7 +54,7 @@ app.controller("XacNhanDaGiaoController", function ($scope, $http) {
         get count() {
             if ($scope.pending && $scope.pending.length > 0) {
                 let start = (this.page - 1) * this.size;
-                return Math.ceil(1.0 * $scope.pending.length / this.size);
+                return Math.ceil((1.0 * $scope.pending.length) / this.size);
             } else {
                 // Trả về 0
                 return 0;
@@ -63,11 +67,8 @@ app.controller("XacNhanDaGiaoController", function ($scope, $http) {
                 pageNumbers.push(i);
             }
             return pageNumbers;
-        }
+        },
     };
-
-
-
 
     // xác nhận đơn
     $scope.confirm = function (pending) {
@@ -79,25 +80,26 @@ app.controller("XacNhanDaGiaoController", function ($scope, $http) {
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Đã giao',
-            cancelButtonText: 'Chưa'
+            cancelButtonText: 'Chưa',
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = {
                     id: id,
-                    email_user: checkOut_email
-                }
-                $http.post("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/capNhatTrangThai/daGiaoHang", data, { headers })
+                    email_user: checkOut_email,
+                };
+                $http
+                    .post('http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/capNhatTrangThai/daGiaoHang', data, {
+                        headers,
+                    })
                     .then(function (response) {
                         $scope.loadData();
                         Swal.fire('Xác nhận thành công!', '', 'success');
-                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
-                            .then(function (response) {
-                        });
+                        $http
+                            .get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, { headers })
+                            .then(function (response) {});
                     })
-                    .catch(function (error) {
-
-                    })
-            };
+                    .catch(function (error) {});
+            }
         });
     };
 
@@ -112,38 +114,39 @@ app.controller("XacNhanDaGiaoController", function ($scope, $http) {
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Có',
-            cancelButtonText: 'Không'
+            cancelButtonText: 'Không',
         }).then((result) => {
             if (result.isConfirmed) {
                 const cancelReason = document.getElementById('cancelReason').value;
                 let data = {
                     id: id,
                     email_user: checkOut_email,
-                    ghiChu: cancelReason  // Include the cancel reason in the data
-                }
-                $http.post("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/capNhatTrangThai/huyDon5", data, { headers })
+                    ghiChu: cancelReason, // Include the cancel reason in the data
+                };
+                $http
+                    .post('http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/capNhatTrangThai/huyDon5', data, {
+                        headers,
+                    })
                     .then(function (response) {
                         $scope.loadData();
                         ///end lệnh
                         Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
-                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
-                            .then(function (response) {
-                        });
+                        $http
+                            .get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, { headers })
+                            .then(function (response) {});
                     })
                     .catch(function (error) {
                         console.log(error);
-                    })
-
-
-            };
+                    });
+            }
         });
-
     };
 
     //Tìm kiếm
     $scope.$watch('search', function (newVal) {
         if (newVal) {
-            $http.get("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/timKiem=" + newVal, { headers })
+            $http
+                .get('http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/timKiem=' + newVal, { headers })
                 .then(function (response) {
                     const pending = response.data;
 
@@ -162,53 +165,54 @@ app.controller("XacNhanDaGiaoController", function ($scope, $http) {
         let formattedDate = formatDate(searchDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http.get("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/timKiemNgay=" + formattedDate, { headers })
+        $http
+            .get('http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/timKiemNgay=' + formattedDate, { headers })
             .then(function (response) {
                 const pending = response.data;
 
                 $scope.$evalAsync(function () {
                     $scope.pending = pending;
-                })
+                });
             });
-    }
-
+    };
 
     function formatDate(dateString) {
         let date = new Date(dateString);
         let year = date.getFullYear();
-        let month = ("0" + (date.getMonth() + 1)).slice(-2);
-        let day = ("0" + date.getDate()).slice(-2);
-        return year + "-" + month + "-" + day;
+        let month = ('0' + (date.getMonth() + 1)).slice(-2);
+        let day = ('0' + date.getDate()).slice(-2);
+        return year + '-' + month + '-' + day;
     }
 
     //Re load
     $scope.reLoad = function () {
         $scope.loadData();
-    }
+    };
     // Hoá đơn chi tiết
     $scope.look = function (pending) {
         const id = pending.id;
-        window.location.href = "#!/CTXacNhanDaGiao?id=" + id;
+        window.location.href = '#!/CTXacNhanDaGiao?id=' + id;
     };
 });
 
-app.controller("CTXacNhanDaGiao", function ($scope, $routeParams, $http) {
-    let token = localStorage.getItem("token");
+app.controller('CTXacNhanDaGiao', function ($scope, $routeParams, $http) {
+    let token = localStorage.getItem('token');
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    }
+        Authorization: 'Bearer ' + token,
+    };
     const id = $routeParams.id;
     $scope.loadData = function () {
-        $http.get("http://localhost:8080/hoaDon/chiTietHoaDon/xacNhanDaGiao/id=" + id, { headers })
+        $http
+            .get('http://localhost:8080/hoaDon/chiTietHoaDon/xacNhanDaGiao/id=' + id, { headers })
             .then(function (response) {
                 const respone = response.data;
                 const hdct = respone.list_HDCT;
                 $scope.hdct = hdct;
-    
+
                 const timeLine_ChoXacNhan = respone.timeLine_ChoXacNhan;
                 $scope.timeLine_ChoXacNhan = timeLine_ChoXacNhan;
-    
+
                 const timeLine_ChoGiaoHang = respone.timeLine_ChoGiaoHang;
                 $scope.timeLine_ChoGiaoHang = timeLine_ChoGiaoHang;
 
@@ -217,25 +221,30 @@ app.controller("CTXacNhanDaGiao", function ($scope, $routeParams, $http) {
 
                 const timeLine_XacNhanDaGiao = respone.timeLine_XacNhanDaGiao;
                 $scope.timeLine_XacNhanDaGiao = timeLine_XacNhanDaGiao;
-    
+
                 const hoaDon = respone.hoaDon;
-    
+
                 $scope.hoaDon = hoaDon;
             });
-    }
+    };
 
     $scope.loadData();
 
-    $scope.quayLai = function(){
-        window.location.href = "#!/xac-nhan-da-giao";
-    }
+    $scope.quayLai = function () {
+        window.location.href = '#!/xac-nhan-da-giao';
+    };
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
         let base64Url = token.split('.')[1];
         let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
+        let jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                })
+                .join(''),
+        );
 
         let payload = JSON.parse(jsonPayload);
         return payload;
@@ -252,25 +261,26 @@ app.controller("CTXacNhanDaGiao", function ($scope, $routeParams, $http) {
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Đã giao',
-            cancelButtonText: 'Chưa'
+            cancelButtonText: 'Chưa',
         }).then((result) => {
             if (result.isConfirmed) {
                 let data = {
                     id: id,
-                    email_user: checkOut_email
-                }
-                $http.post("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/capNhatTrangThai/daGiaoHang", data, { headers })
+                    email_user: checkOut_email,
+                };
+                $http
+                    .post('http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/capNhatTrangThai/daGiaoHang', data, {
+                        headers,
+                    })
                     .then(function (response) {
                         $scope.quayLai();
                         Swal.fire('Xác nhận thành công!', '', 'success');
-                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
-                            .then(function (response) {
-                        });
+                        $http
+                            .get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, { headers })
+                            .then(function (response) {});
                     })
-                    .catch(function (error) {
-
-                    })
-            };
+                    .catch(function (error) {});
+            }
         });
     };
 
@@ -285,37 +295,31 @@ app.controller("CTXacNhanDaGiao", function ($scope, $routeParams, $http) {
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Có',
-            cancelButtonText: 'Không'
+            cancelButtonText: 'Không',
         }).then((result) => {
             if (result.isConfirmed) {
                 const cancelReason1 = document.getElementById('cancelReason').value;
                 let data = {
                     id: id,
                     email_user: checkOut_email,
-                    ghiChu: cancelReason1  // Include the cancel reason in the data
-                }
-                $http.post("http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/capNhatTrangThai/huyDon5", data, { headers })
+                    ghiChu: cancelReason1, // Include the cancel reason in the data
+                };
+                $http
+                    .post('http://localhost:8080/hoaDon/datHang/xacNhanDaGiao/capNhatTrangThai/huyDon5', data, {
+                        headers,
+                    })
                     .then(function (response) {
                         $scope.quayLai();
                         ///end lệnh
                         Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
-                        $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
-                            .then(function (response) {
-                        });
+                        $http
+                            .get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, { headers })
+                            .then(function (response) {});
                     })
                     .catch(function (error) {
                         console.log(error);
-                    })
-
-
-            };
+                    });
+            }
         });
-
     };
-
 });
-
-
-
-
-

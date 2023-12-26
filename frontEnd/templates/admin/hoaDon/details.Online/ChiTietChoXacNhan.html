@@ -1,10 +1,10 @@
 <div class="container-fluid" layout:fragment="content" :ng-controller="CTChoXacNhan">
     <h1>CHI TIẾT HÓA ĐƠN</h1>
     <div th:object="${hoaDon}">
-        <input type="hidden" id="IDHoaDonCXN">
+        <input type="hidden" id="IDHoaDonCXN" />
         <p>Mã đơn: <span>{{ hoaDon.maHoaDon}}</span></p>
         <p>Ngày tạo: <span>{{ hoaDon.createdDate | date:'dd/MM/yyyy' }}</span></p>
-        <p>Tên khách hàng: <spanx>{{ hoaDon.nguoiNhan}}</span></p>
+        <p>Tên khách hàng: <span>{{ hoaDon.nguoiNhan}}</span></p>
 
         <div class="table-wrapper">
             <table class="table">
@@ -22,15 +22,21 @@
                     <tr ng-repeat="CTChoXacNhan in hdct">
                         <td>{{$index + 1}}</td>
                         <td>
-                            <div style="display: flex; align-items: center;">
-                                <img src='/static/img/{{CTChoXacNhan.anhSanPham}}' alt=""
-                                    style="margin-right: 10px;" width="100px" height="100px">
+                            <div style="display: flex; align-items: center">
+                                <img
+                                    src="/static/img/{{CTChoXacNhan.anhSanPham}}"
+                                    alt=""
+                                    style="margin-right: 10px"
+                                    width="100px"
+                                    height="100px"
+                                />
 
                                 <div>
                                     <h6>
                                         <strong>
-                                            <span style="text-transform: uppercase" class="TenSP">{{
-                                                CTChoXacNhan.sanPhamChiTiet.sanPham.tenSanPham}}</span>
+                                            <span style="text-transform: uppercase" class="TenSP"
+                                                >{{ CTChoXacNhan.sanPhamChiTiet.sanPham.tenSanPham}}</span
+                                            >
                                         </strong>
                                     </h6>
                                     <div class="ThongTinSP">
@@ -43,9 +49,7 @@
                         </td>
                         <td>{{ CTChoXacNhan.donGia.toLocaleString('vi-VN') + ' VNĐ' }}</td>
 
-                        <td>
-                            {{ CTChoXacNhan.soLuong}}
-                        </td>
+                        <td>{{ CTChoXacNhan.soLuong}}</td>
 
                         <td>{{ CTChoXacNhan.thanhTien.toLocaleString('vi-VN') + ' VNĐ' }}</td>
                     </tr>
@@ -55,21 +59,22 @@
 
         <p>Tổng giá trị đơn hàng: <span>{{ hoaDon.tongTienHoaDon.toLocaleString('vi-VN') + ' VNĐ' }}</span></p>
         <p>Phí vận chuyển: <span>{{ hoaDon.tienShip.toLocaleString('vi-VN') + ' VNĐ' }}</span></p>
-        <p>Giảm giá:
+        <p>
+            Giảm giá:
             <span>{{ hoaDon.tienGiam.toLocaleString('vi-VN') + ' VNĐ' }}</span>
         </p>
         <p>Tổng tiền thanh toán: <span>{{ hoaDon.tongTienDonHang.toLocaleString('vi-VN') + ' VNĐ' }}</span></p>
         <p>Trạng thái thanh toán: <span>{{ hoaDon.loaiHoaDon==0?"Thanh toán khi nhận hàng":"Đã thanh toán" }}</span></p>
     </div>
 
-    <br>
-    <hr>
+    <br />
+    <hr />
     <div class="container-fluid my-auto d-flex align-items-center">
         <div class="mx-auto">
             <h1>Lịch sử hoá đơn</h1>
         </div>
     </div>
-    <br>
+    <br />
 
     <div class="container-fluid">
         <div class="main-timeline">
@@ -87,28 +92,31 @@
                 <div class="timeline-content">
                     <h5 class="title">Chờ xác nhận</h5>
                     <p class="description"><strong>Thao tác: </strong>Tạo đơn hàng</p>
-                    <p><strong>Người tạo đơn: </strong><span>{{timeLine.nguoiThaoTac}}</span>
-                    </p>
+                    <p><strong>Người tạo đơn: </strong><span>{{timeLine.nguoiThaoTac}}</span></p>
                 </div>
             </div>
         </div>
-        <br>
+        <br />
 
         <div class="button-group" id="button-chiTietHoaDon">
             <!--XÁC NHẬN ĐƠN HÀNG-->
-            <button class="action-button XacNhanDon"  ng-click="confirm ()"> Xác nhận
+            <button class="action-button XacNhanDon" ng-click="confirm ()">
+                Xác nhận
                 <i class="fas fa-check"></i>
             </button>
 
             <!--HỦY ĐƠN HÀNG-->
-            <button class="action-button HuyDon" ng-click="refuseBill()"> Hủy đơn
+            <button class="action-button HuyDon" ng-click="refuseBill()">
+                Hủy đơn
                 <i class="fas fa-times"></i>
             </button>
 
-            <button class="action-button inHoaDonChiTiet" ng-click="inHoaDon()">In hóa đơn
+            <button class="action-button inHoaDonChiTiet" ng-click="inHoaDon()">
+                In hóa đơn
                 <i class="fas fa-receipt"></i>
             </button>
-            <button class="action-button" ng-click="quayLai()">Quay lại
+            <button class="action-button" ng-click="quayLai()">
+                Quay lại
                 <i class="fas fa-arrow-left"></i>
             </button>
         </div>

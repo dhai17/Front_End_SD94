@@ -1,11 +1,18 @@
 {
-  "dependencies": {
-    "angular-jwt": "^0.1.11",
-    "install": "^0.13.0",
-    "jspdf": "^2.5.1",
-    "ng-dialog": "^1.4.0",
-    "ng-file-upload": "^12.2.13",
-    "ng-webcam": "^1.0.0",
-    "npm": "^10.2.3"
-  }
+    "dependencies": {
+        "angular-jwt": "^0.1.11",
+        "install": "^0.13.0",
+        "jspdf": "^2.5.1",
+        "ng-dialog": "^1.4.0",
+        "ng-file-upload": "^12.2.13",
+        "ng-webcam": "^1.0.0",
+        "npm": "^10.2.3"
+    },
+    "scripts": {
+        "format": "prettier --write **/*.js **/*.html **/*.css **/*.scss",
+        "start": ""
+    },
+    "devDependencies": {
+        "prettier": "^3.1.1"
+    }
 }

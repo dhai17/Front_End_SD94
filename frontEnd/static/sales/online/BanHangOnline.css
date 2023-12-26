@@ -30,14 +30,14 @@ body {
     color: #333333;
     font-size: 2em;
     font-weight: normal;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .cac-title {
     color: #333333;
     font-size: 20px;
     font-weight: normal;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 #thongTinGiaohang {
@@ -136,7 +136,7 @@ body {
     margin: 0 10px; /* Cách đều 10px cả hai bên (trái và phải) của button */
     height: 45px; /* Chiều cao 40px */
     width: 125px; /* Chiều rộng 50px */
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 16px;
 }
 
@@ -152,13 +152,11 @@ body {
     background-color: #1ab7ea;
 }
 
-
 .button-group {
     display: flex;
     align-items: center;
     margin-top: 30px;
 }
-
 
 .diaChi {
     width: 100%;
@@ -185,7 +183,7 @@ body {
     margin-bottom: 6px;
 }
 
-.sub-panel.diaChi input[type="text"],
+.sub-panel.diaChi input[type='text'],
 .sub-panel.diaChi textarea,
 .sub-panel.diaChi select {
     flex-basis: 100%;
@@ -194,12 +192,12 @@ body {
     border-radius: 5px;
     font-size: 16px;
     color: #333;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     margin-bottom: 15px;
 }
 
 .sub-panel.diaChi textarea.placeholder {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 20px;
 }
 
@@ -207,18 +205,18 @@ body {
     flex-basis: 33.33%;
 }
 
-.sub-panel.diaChi .input-group input[type="text"] {
+.sub-panel.diaChi .input-group input[type='text'] {
     flex-basis: calc(33.33% - 10px);
     margin-right: 10px;
 }
 
-.sub-panel.diaChi input[type="text"]:hover,
+.sub-panel.diaChi input[type='text']:hover,
 .sub-panel.diaChi textarea:hover,
 .sub-panel.diaChi select:hover {
     border: 2px solid #338dbc;
 }
 
-.sub-panel.diaChi input[type="text"]:focus,
+.sub-panel.diaChi input[type='text']:focus,
 .sub-panel.diaChi textarea:focus,
 .sub-panel.diaChi select:focus {
     outline: none;
@@ -233,7 +231,7 @@ body {
     border-radius: 5px;
     font-size: 16px;
     color: #333;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     margin-bottom: 15px;
 }
 
@@ -316,7 +314,7 @@ body {
     margin-bottom: 10px;
 }
 
-.sub-panel.thanhToan input[type="radio"] {
+.sub-panel.thanhToan input[type='radio'] {
     margin-right: 10px;
     appearance: none;
     -webkit-appearance: none;
@@ -328,7 +326,7 @@ body {
     outline: none;
 }
 
-.sub-panel.thanhToan input[type="radio"]:checked {
+.sub-panel.thanhToan input[type='radio']:checked {
     /* Thêm CSS cho radio button khi được chọn để màu đen */
     background-color: #338dbc;
     width: 18px;
@@ -347,7 +345,7 @@ body {
     padding-left: 30px;
     font-size: 19px;
     cursor: pointer;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: black;
 }
 
@@ -401,16 +399,16 @@ body {
 .tablea {
     width: 100%;
     border-collapse: collapse; /* Xóa khoảng cách giữa các ô */
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .TenSP {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 1em;
 }
 
 .ThongTinSP {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.8em;
 }
 
@@ -419,7 +417,7 @@ div.cart__discount,
 div.cart__discount label,
 div.cart__discount p,
 div.cart__discount span {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 16px;
     margin: 0;
     padding: 0;
@@ -434,7 +432,7 @@ div.cart__discount hr {
 p.cart__discount {
     font-size: 16px; /* Font size tăng lên */
     font-weight: normal;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     display: flex;
     justify-content: space-between; /* Căn trái và phải */
     /*color: #333333;*/
@@ -443,25 +441,25 @@ p.cart__discount {
 
 p.tongCongTien {
     font-size: 20px; /* Font size tăng lên */
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     display: flex;
     justify-content: space-between;
-    color: #4B4B4B;
+    color: #4b4b4b;
     /*color: #777;*/
 }
 
 p.tongCongTien span {
     font-size: 22px; /* Font size tăng lên */
     font-weight: 300; /* Độ đậm tăng lên */
-    color: #4B4B4B; /* Màu chữ */
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #4b4b4b; /* Màu chữ */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .maGiamGia {
     width: 300px;
     height: 50px;
     padding: 10px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 16px;
     border: 1px solid #777;
     border-radius: 5px;
@@ -475,12 +473,12 @@ p.tongCongTien span {
 
 .themMaGiamGiaOnline {
     height: 45px;
-    background-color: #C8C8C8;
+    background-color: #c8c8c8;
     color: #fff;
     border: none;
     border-radius: 5px;
     margin-left: 10px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.2s;
@@ -498,4 +496,3 @@ p.tongCongTien span {
 .text-thuongHieu {
     margin: 0; /* Loại bỏ khoảng cách mặc định của thẻ h1 */
 }
-

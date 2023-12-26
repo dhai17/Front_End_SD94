@@ -10,7 +10,9 @@
     font-size: 13px;
     text-align: center;
     text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition:
+        background-color 0.3s ease,
+        transform 0.2s ease;
 }
 
 .kichCo-sanPhamcustomer:hover {
@@ -37,7 +39,9 @@
     margin-left: 6px;
     /* Biến thành hình tròn */
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition:
+        background-color 0.3s ease,
+        transform 0.2s ease;
 }
 
 .mauSac-sanPhamcustome:hover {

@@ -1,4 +1,3 @@
-
 <div ng-controller="ChoGiaoHangController">
     <div class="container-fluid my-auto d-flex align-items-center">
         <div class="mx-auto">
@@ -19,33 +18,53 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between fromSearchBill">
             <div class="d-flex">
-                <input class="form-control me-1" type="search" placeholder="Tìm kiếm" aria-label="Search"
-                    ng-model="search">
+                <input
+                    class="form-control me-1"
+                    type="search"
+                    placeholder="Tìm kiếm"
+                    aria-label="Search"
+                    ng-model="search"
+                />
 
-                <input class="form-control me-1" type="date" placeholder="Search" aria-label="Search"
-                    ng-model="searchDate">
-                <button class="btn btn-primary btn-sm" type="submit"
-                    ng-click="searchDateBill(searchDate)">Tìm kiếm</button>
+                <input
+                    class="form-control me-1"
+                    type="date"
+                    placeholder="Search"
+                    aria-label="Search"
+                    ng-model="searchDate"
+                />
+                <button class="btn btn-primary btn-sm" type="submit" ng-click="searchDateBill(searchDate)">
+                    Tìm kiếm
+                </button>
 
-                <button type="button" class="dt-button buttons-html5 btn btn-white btn-success btn-bold"
-                    data-toggle="tooltip" title='Tải lại dữ liệu' ng-click="reLoad()">
+                <button
+                    type="button"
+                    class="dt-button buttons-html5 btn btn-white btn-success btn-bold"
+                    data-toggle="tooltip"
+                    title="Tải lại dữ liệu"
+                    ng-click="reLoad()"
+                >
                     <span> <i class="fas fa-sync-alt"></i></span>
                 </button>
-            </div>            
+            </div>
             <div class="button-bill">
-                <button class="btn btn-primary btn-sm" type="submit" ng-click="xacNhanDonDaChon()"
+                <button
+                    class="btn btn-primary btn-sm"
+                    type="submit"
+                    ng-click="xacNhanDonDaChon()"
                     ng-show="coCheckboxDaChon"
-                    >Xác nhận đơn đã chọn</button>
+                >
+                    Xác nhận đơn đã chọn
+                </button>
                 <button class="btn btn-primary btn-sm" type="submit" ng-click="GiaoTatCa()">Giao tất cả</button>
             </div>
-            
         </div>
     </div>
     <table class="table align-middle mb-1 bg-white" id="tableBillChoGiaoHang">
         <thead class="bg-light">
             <tr>
                 <th>
-                    <input type="checkbox" class="checkbox" ng-model="selectAll" ng-change="toggleSelectAll()">
+                    <input type="checkbox" class="checkbox" ng-model="selectAll" ng-change="toggleSelectAll()" />
                 </th>
                 <th>#</th>
                 <th>Mã HD</th>
@@ -60,7 +79,7 @@
         <tbody>
             <tr ng-repeat="pending in pager.pending">
                 <td>
-                    <input type="checkbox" class="checkbox" ng-model="pending.selected" ng-change="updateSelectAll()">
+                    <input type="checkbox" class="checkbox" ng-model="pending.selected" ng-change="updateSelectAll()" />
                 </td>
                 <td>{{$index + 1}}</td>
                 <td>{{ pending.maHoaDon }}</td>

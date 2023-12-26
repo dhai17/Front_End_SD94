@@ -9,7 +9,7 @@ a {
 }
 
 /* Đặt khoảng cách 5px giữa các phần tử con */
-.d-flex>* {
+.d-flex > * {
     margin-right: 5px;
 }
 
