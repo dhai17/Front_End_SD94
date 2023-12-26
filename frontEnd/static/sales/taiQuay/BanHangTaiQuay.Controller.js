@@ -92,6 +92,7 @@ app.controller('BanHangTaiQuayController', function ($scope, $http, $routeParams
                 .post('http://localhost:8080/api/banHang/taiQuay/add/khuyenMai', data, { headers })
                 .then(function (response) {
                     const hoaDon = response.data;
+                    console.log(hoaDon);
                     $scope.$evalAsync(function () {
                         $scope.tienTamTinh = hoaDon.tongTienHoaDon;
                         $scope.tongTienHoaDon = hoaDon.tongTienDonHang;
