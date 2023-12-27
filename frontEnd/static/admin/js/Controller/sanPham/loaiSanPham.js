@@ -175,7 +175,7 @@ app.controller('CreateLineController', function ($scope, $http) {
         window.location.href = '#!/list-Line';
     };
 });
-    
+
 app.controller('EditLineController', function ($scope, $routeParams, $http) {
     let token = localStorage.getItem('token');
     let headers = {

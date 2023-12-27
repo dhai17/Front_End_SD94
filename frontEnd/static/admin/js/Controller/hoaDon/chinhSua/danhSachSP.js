@@ -349,6 +349,4 @@ app.controller('ChiTietSanPhamHoaDonController', function ($scope, $routeParams,
                 });
         }
     };
-
-   
 });
