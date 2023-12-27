@@ -5,7 +5,16 @@
         <p>Mã đơn: <span>{{ hoaDon.maHoaDon}}</span></p>
         <p>Ngày tạo: <span>{{ hoaDon.createdDate | date:'dd/MM/yyyy' }}</span></p>
         <p>Tên khách hàng: <span>{{ hoaDon.nguoiNhan}}</span></p>
-
+        <button
+            type="button"
+            class="dt-button buttons-html5 btn btn-white btn-success btn-bold"
+            data-toggle="tooltip"
+            title="Tải lại dữ liệu"
+            ng-click="danhSachSanPham()"
+        >
+            <span> <i class="fas fa-sync-alt"></i></span>
+            Thêm sản phẩm
+        </button>
         <div class="table-wrapper">
             <table class="table">
                 <thead>
@@ -15,6 +24,7 @@
                         <th scope="col">Đơn giá</th>
                         <th scope="col">Số lượng</th>
                         <th scope="col">Thành tiền</th>
+                        <th scope="col">Thao tác</th>
                     </tr>
                 </thead>
 
@@ -49,9 +59,30 @@
                         </td>
                         <td>{{ CTChoXacNhan.donGia.toLocaleString('vi-VN') + ' VNĐ' }}</td>
 
-                        <td>{{ CTChoXacNhan.soLuong}}</td>
+                        <td>
+                            <div class="button-group" id="button-group-GHCT">
+                                <input ng-model="CTChoXacNhan.soLuong"/>
+                                <button
+                                    ng-click="updateSoLuong(CTChoXacNhan)"
+                                    id="xacNhan-updateSoLuongGioHangCT"
+                                    class="fas fa-check btn-icon btn-primary"
+                                ></button>
+                            </div>
+                        </td>
 
                         <td>{{ CTChoXacNhan.thanhTien.toLocaleString('vi-VN') + ' VNĐ' }}</td>
+
+                        <td>
+                            <div class="button-group">
+                                <button
+                                    type="button"
+                                    class="btn btn-link btn-sm btn-rounded"
+                                    ng-click="deleteHDCT(CTChoXacNhan)"
+                                >
+                                    <i class="bx bx-trash me-2"></i>
+                                </button>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>

@@ -224,7 +224,7 @@ app.controller('cartController', function ($scope, $http, $window) {
         let data = {
             id: gioHangChiTiet.id,
             sanPhamChiTiet: gioHangChiTiet.sanPhamChiTiet,
-            soLuongCapNhat: gioHangChiTiet.soLuong,
+            SoLuongCapNhat: gioHangChiTiet.soLuong,
             email_user: decodedToken.email,
         };
 

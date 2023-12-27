@@ -132,39 +132,6 @@ app.controller('ChoXacNhanController', function ($scope, $http) {
         });
     };
 
-    // từ chối xác nhận ( trạng thái đã huỷ đơn 5)
-    // $scope.refuseBill = function (pending) {
-    //     const id = pending.id;
-    //     const checkOut_email = decodedToken.email;
-    //     Swal.fire({
-    //         title: 'Xác nhận huỷ đơn hàng',
-    //         text: 'Bạn có muốn huỷ đơn hàng này không?',
-    //         icon: 'question',
-    //         showCancelButton: true,
-    //         confirmButtonText: 'Có',
-    //         cancelButtonText: 'Không'
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             let data = {
-    //                 id: id,
-    //                 email_user: checkOut_email
-    //             }
-    //             $http.post("http://localhost:8080/hoaDon/datHang/choXacNhan/capNhatTrangThai/huyDon", data, { headers })
-    //                 .then(function (response) {
-    //                     $scope.loadData();
-    //                     Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
-    //                     $http.get("http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/"+id, { headers})
-    //                         .then(function (response) {
-    //                     });
-    //                 })
-    //                 .catch(function (error) {
-    //                     console.log(error);
-    //                 })
-
-    //         };
-    //     });
-
-    // };
     $scope.refuseBill = function (pending) {
         const id = pending.id;
         const checkOut_email = decodedToken.email;
@@ -505,5 +472,102 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
                     alert('Vui lòng cho phép trình duyệt mở popup để xem và lưu hóa đơn.');
                 }
             });
+    };
+
+    $scope.danhSachSanPham = function () {
+        window.location.href = '#!/hoaDon/danhSachSanPham?id=' + id;
+        localStorage.setItem('id_hoa_don_chinh_sua', id);
+    };
+
+    $scope.updateSoLuong = function (CTChoXacNhan) {
+        let data = {
+            id: CTChoXacNhan.id,
+            sanPhamChiTiet: CTChoXacNhan.sanPhamChiTiet,
+            soLuongcapNhat: CTChoXacNhan.soLuong,
+        };
+
+        $http
+            .post('http://localhost:8080/hoaDon/ChinhSua/update-soluong', data, { headers })
+            .then(function (response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: response.data.success,
+                    showConfirmButton: false,
+                    timer: 2000,
+                }).then(() => {
+                    $http
+                        .get('http://localhost:8080/hoaDon/chiTietHoaDon/choXacNhan/id=' + id, { headers })
+                        .then(function (response) {
+                            const respone = response.data;
+                            const hdct = respone.list_HDCT;
+                            $scope.hdct = hdct;
+
+                            const timeLine = respone.timeLine;
+                            $scope.timeLine = timeLine;
+
+                            const hoaDon = respone.hoaDon;
+
+                            $scope.hoaDon = hoaDon;
+                        });
+                });
+            })
+            .catch(function (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: error.data.err,
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            });
+    };
+
+    $scope.deleteHDCT = function (CTChoXacNhan) {
+        Swal.fire({
+            title: 'Xác nhận xóa ',
+            text: 'Bạn có chắc chắn muốn xóa?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let data = {
+                    id: CTChoXacNhan.id,
+                };
+
+                $http
+                    .post('http://localhost:8080/hoaDon/ChinhSua/xoa-hdct', data, { headers })
+                    .then(function (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: response.data.success,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        }).then(() => {
+                            $http
+                                .get('http://localhost:8080/hoaDon/chiTietHoaDon/choXacNhan/id=' + id, { headers })
+                                .then(function (response) {
+                                    const respone = response.data;
+                                    const hdct = respone.list_HDCT;
+                                    $scope.hdct = hdct;
+
+                                    const timeLine = respone.timeLine;
+                                    $scope.timeLine = timeLine;
+                                    const hoaDon = respone.hoaDon;
+
+                                    $scope.hoaDon = hoaDon;
+                                });
+                        });
+                    })
+                    .catch(function (error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: error.data.err,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                    });
+            }
+        });
     };
 });
