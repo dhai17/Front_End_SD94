@@ -77,8 +77,10 @@ app.controller('CTDaHuyCustomer', function ($scope, $routeParams, $http) {
         $scope.timeLine_DaHuy = timeLine_DaHuy;
 
         const hoaDon = respone.hoaDon;
-
         $scope.hoaDon = hoaDon;
+
+        const lsHoaDons = respone.lsHoaDons;
+        $scope.lsHoaDons = lsHoaDons;
     });
     $scope.quayLai = function () {
         window.location.href = '#!/daHuy-Customer';

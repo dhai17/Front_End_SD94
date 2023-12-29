@@ -83,8 +83,10 @@ app.controller('CTDaGiaoHangCustomer', function ($scope, $routeParams, $http) {
         $scope.timeLine_DaGiaoHang = timeLine_DaGiaoHang;
 
         const hoaDon = respone.hoaDon;
-
         $scope.hoaDon = hoaDon;
+
+        const lsHoaDons = respone.lsHoaDons;
+        $scope.lsHoaDons = lsHoaDons;
     });
     $scope.quayLai = function () {
         window.location.href = '#!/daGiaoHang-Customer';

@@ -353,8 +353,11 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
                 $scope.timeLine = timeLine;
 
                 const hoaDon = respone.hoaDon;
-
                 $scope.hoaDon = hoaDon;
+
+                const lsHoaDons = respone.lsHoaDons;
+                console.log(lsHoaDons);
+                $scope.lsHoaDons = lsHoaDons;
             });
     };
     // lay ra thong tin nguoi dang nhap
@@ -484,6 +487,7 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
             id: CTChoXacNhan.id,
             sanPhamChiTiet: CTChoXacNhan.sanPhamChiTiet,
             soLuongcapNhat: CTChoXacNhan.soLuong,
+            email_user: decodedToken.email,
         };
 
         $http
@@ -533,31 +537,43 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
             if (result.isConfirmed) {
                 let data = {
                     id: CTChoXacNhan.id,
+                    email_user: decodedToken.email,
                 };
 
                 $http
                     .post('http://localhost:8080/hoaDon/ChinhSua/xoa-hdct', data, { headers })
                     .then(function (response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: response.data.success,
-                            showConfirmButton: false,
-                            timer: 2000,
-                        }).then(() => {
-                            $http
-                                .get('http://localhost:8080/hoaDon/chiTietHoaDon/choXacNhan/id=' + id, { headers })
-                                .then(function (response) {
-                                    const respone = response.data;
-                                    const hdct = respone.list_HDCT;
-                                    $scope.hdct = hdct;
+                        if (!response.data.err) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.data.success,
+                                showConfirmButton: false,
+                                timer: 2000,
+                            }).then(() => {
+                                $http
+                                    .get('http://localhost:8080/hoaDon/chiTietHoaDon/choXacNhan/id=' + id, { headers })
+                                    .then(function (response) {
+                                        const respone = response.data;
+                                        const hdct = respone.list_HDCT;
+                                        $scope.hdct = hdct;
 
-                                    const timeLine = respone.timeLine;
-                                    $scope.timeLine = timeLine;
-                                    const hoaDon = respone.hoaDon;
+                                        const timeLine = respone.timeLine;
+                                        $scope.timeLine = timeLine;
+                                        const hoaDon = respone.hoaDon;
 
-                                    $scope.hoaDon = hoaDon;
-                                });
-                        });
+                                        $scope.hoaDon = hoaDon;
+                                    });
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: response.data.err,
+                                showConfirmButton: false,
+                                timer: 2000,
+                            }).then(() => {
+                                window.location.href = '#!/list-PurchaseBill';
+                            });
+                        }
                     })
                     .catch(function (error) {
                         Swal.fire({

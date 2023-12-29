@@ -127,8 +127,10 @@ app.controller('CTChoXacNhanCustomer', function ($scope, $routeParams, $http) {
         $scope.timeLine = timeLine;
 
         const hoaDon = respone.hoaDon;
-
         $scope.hoaDon = hoaDon;
+
+        const lsHoaDons = respone.lsHoaDons;
+        $scope.lsHoaDons = lsHoaDons;
     });
 
     $scope.huyDonCT = function () {

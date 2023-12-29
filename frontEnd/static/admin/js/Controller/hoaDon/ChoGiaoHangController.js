@@ -279,8 +279,10 @@ app.controller('CTChoGiaoHang', function ($scope, $routeParams, $http) {
         $scope.timeLine_ChoGiaoHang = timeLine_ChoGiaoHang;
 
         const hoaDon = respone.hoaDon;
-
         $scope.hoaDon = hoaDon;
+
+        const lsHoaDons = respone.lsHoaDons;
+        $scope.lsHoaDons = lsHoaDons;
     });
 
     $scope.quayLai = function () {
