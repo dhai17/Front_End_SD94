@@ -5,14 +5,8 @@
         <p>Mã đơn: <span>{{ hoaDon.maHoaDon}}</span></p>
         <p>Ngày tạo: <span>{{ hoaDon.createdDate | date:'dd/MM/yyyy' }}</span></p>
         <p>Tên khách hàng: <span>{{ hoaDon.nguoiNhan}}</span></p>
-        <button
-            type="button"
-            class="dt-button buttons-html5 btn btn-white btn-success btn-bold"
-            data-toggle="tooltip"
-            title="Tải lại dữ liệu"
-            ng-click="danhSachSanPham()"
-        >
-            <span> <i class="fas fa-sync-alt"></i></span>
+        <button class="btn btn-dark px-4 rounded-pill" ng-click="danhSachSanPham()">
+            <i class="fas fa-fw fa-shopping-cart"></i>
             Thêm sản phẩm
         </button>
         <div class="table-wrapper">
