@@ -58,9 +58,9 @@ app.controller('cartController', function ($scope, $http, $window) {
         const quantity = $('#cart-inputSoLuong').val();
         let data = {
             id: idCart,
-            quanTity: quantity,
+            soLuongCapNhat: quantity,
         };
-        $http.post('http://localhost:8080/gioHang/sua/soLuong/sanPham', data).then(function (response) {
+        $http.post('http://localhost:8080/gioHang/sua/soLuong/sanPham', data, { headers }).then(function (response) {
             const promotions = response.data;
             $scope.promotions = promotions;
             $scope.$evalAsync(function () {
@@ -224,7 +224,7 @@ app.controller('cartController', function ($scope, $http, $window) {
         let data = {
             id: gioHangChiTiet.id,
             sanPhamChiTiet: gioHangChiTiet.sanPhamChiTiet,
-            SoLuongCapNhat: gioHangChiTiet.soLuong,
+            soLuongCapNhat: gioHangChiTiet.soLuong,
             email_user: decodedToken.email,
         };
 
