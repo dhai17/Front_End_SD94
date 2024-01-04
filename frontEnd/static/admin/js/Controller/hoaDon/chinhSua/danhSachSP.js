@@ -6,6 +6,24 @@ app.controller('danhSachSanPhamHoaDonController', function ($scope, $http) {
         Authorization: 'Bearer ' + token,
     };
 
+    function parseJwt(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                })
+                .join(''),
+        );
+
+        let payload = JSON.parse(jsonPayload);
+        return payload;
+    }
+
+    let decodedToken = parseJwt(token);
+
     $http.get('http://localhost:8080/customer/sanPham/danhSach', { headers }).then(function (response) {
         const sanPham = response.data;
         $scope.sanPham = sanPham;
@@ -186,6 +204,7 @@ app.controller('ChiTietSanPhamHoaDonController', function ($scope, $routeParams,
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token,
     };
+
     let decodedToken;
     if (token) {
         function parseJwt(token) {
@@ -322,6 +341,7 @@ app.controller('ChiTietSanPhamHoaDonController', function ($scope, $routeParams,
                 san_pham_id: sanPham.id,
                 soLuong: $scope.chonSoLuong,
                 donGia: sanPham.gia,
+                email_user: decodedToken.email,
             };
 
             $http

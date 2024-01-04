@@ -164,8 +164,10 @@ app.controller('CTDangGiaoHangCustomer', function ($scope, $routeParams, $http) 
             $scope.timeLine_DangGiaoHang = timeLine_DangGiaoHang;
 
             const hoaDon = respone.hoaDon;
-
             $scope.hoaDon = hoaDon;
+
+            const lsHoaDons = respone.lsHoaDons;
+            $scope.lsHoaDons = lsHoaDons;
         });
 
     $scope.daNhanDuocHangCT = function () {

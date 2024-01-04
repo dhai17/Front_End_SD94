@@ -222,6 +222,9 @@ app.controller('CTDangGiaoHang', function ($scope, $routeParams, $http) {
                 const hoaDon = respone.hoaDon;
 
                 $scope.hoaDon = hoaDon;
+
+                const lsHoaDons = respone.lsHoaDons;
+                $scope.lsHoaDons = lsHoaDons;
             });
     };
 

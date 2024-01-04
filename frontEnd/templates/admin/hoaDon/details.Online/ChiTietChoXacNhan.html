@@ -1,5 +1,6 @@
-<div class="container-fluid" layout:fragment="content" :ng-controller="CTChoXacNhan">
+<div class="container-fluid" layout:fragment="content" ng-controller="CTChoXacNhan">
     <h1>CHI TIẾT HÓA ĐƠN</h1>
+
     <div th:object="${hoaDon}">
         <input type="hidden" id="IDHoaDonCXN" />
         <p>Mã đơn: <span>{{ hoaDon.maHoaDon}}</span></p>
@@ -94,11 +95,34 @@
 
     <br />
     <hr />
-    <div class="container-fluid my-auto d-flex align-items-center">
-        <div class="mx-auto">
-            <h1>Lịch sử hoá đơn</h1>
+    <div class="mx-auto">
+        <h1>Lịch sử hoá đơn</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="table-wrapper">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Ngày thực hiện</th>
+                        <th scope="col">Người thực hiện</th>
+                        <th scope="col">Thao tác</th>
+                        <th scope="col">Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="lsHoaDons in lsHoaDons">
+                        <td>{{lsHoaDons.ngayTao| date:'dd/MM/yyyy' }}</td>
+                        <td>{{lsHoaDons.nguoiThaoTac}}</td>
+                        <td>{{lsHoaDons.thaoTac}}</td>
+                        <td>Thành công</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+    <br />
+    <br />
+    <hr />
     <br />
 
     <div class="container-fluid">
