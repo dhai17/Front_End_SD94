@@ -246,6 +246,8 @@ app.controller('cartController', function ($scope, $http, $window) {
                             });
                             $scope.gioHangChiTiet = gioHangChiTiet;
                         });
+
+                    window.location.reload();
                 });
             })
             .catch(function (error) {
