@@ -55,206 +55,192 @@ app.controller('checkOutController', function ($scope, $routeParams, $http) {
         return parseFloat(chuoiDaLoaiBo);
     }
 
+    function api_thanhToan() {
+        let a = $('#total').text();
+        let b = $('#shippingFee').text();
+        let c = $('#subtotal').text();
+
+        let tinhThanhPho = $('#province option:selected').text();
+        let quanHuyen = $('#district option:selected').text();
+        let phuongXa = $('#ward option:selected').text();
+        let diaChiNhap = $scope.diaChi;
+        let diaChi = diaChiNhap + ' - ' + phuongXa + ' - ' + quanHuyen + ' - ' + tinhThanhPho;
+
+        let diaChi2;
+        if (
+            diaChi.includes('Chọn Tỉnh/Thành phố') ||
+            diaChi.includes('Chọn Quận/Huyện') ||
+            diaChi.includes('Chọn Phường/Xã')
+        ) {
+            diaChi2 = '';
+        } else {
+            diaChi2 = diaChi;
+        }
+
+        const tongTienHoaDon = fomatTien(c);
+        const tienShip = fomatTien(b);
+        const tongTienDonHang = fomatTien(a);
+
+        let data = {
+            id: id_HoaDon,
+            ghiChu: $scope.ghiChu,
+            email: $scope.email,
+            soDienThoai: $scope.soDienThoai,
+            tienShip: tienShip,
+            tongTienHoaDon: tongTienHoaDon,
+            tongTienDonHang: tongTienDonHang,
+            email_user: decodedToken.email,
+            diaChi: diaChi2,
+            nguoiTao: $scope.hoTen,
+            loaiHoaDon: 2,
+        };
+
+        $http
+            .post('http://localhost:8080/payment/create', data)
+            .then(function (response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Đang chuyển hướng sang trang thanh toán',
+                    showConfirmButton: false,
+                    timer: 2000,
+                }).then(() => {
+                    window.location.href = response.data.createURL;
+                });
+            })
+            .catch(function (e) {
+                const errorMessage = e.data[Object.keys(e.data)[0]];
+                Swal.fire({
+                    icon: 'error',
+                    title: errorMessage,
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            });
+    }
+
+    function api_datHang() {
+        let a = $('#total').text();
+        let b = $('#shippingFee').text();
+        let c = $('#subtotal').text();
+
+        let tinhThanhPho = $('#province option:selected').text();
+        let quanHuyen = $('#district option:selected').text();
+        let phuongXa = $('#ward option:selected').text();
+        let diaChiNhap = $scope.diaChi;
+        let diaChi = diaChiNhap + ' - ' + phuongXa + ' - ' + quanHuyen + ' - ' + tinhThanhPho;
+
+        let diaChi2;
+        if (
+            diaChi.includes('Chọn Tỉnh/Thành phố') ||
+            diaChi.includes('Chọn Quận/Huyện') ||
+            diaChi.includes('Chọn Phường/Xã')
+        ) {
+            diaChi2 = '';
+        } else {
+            diaChi2 = diaChi;
+        }
+
+        const tongTienHoaDon = fomatTien(c);
+        const tienShip = fomatTien(b);
+        const tongTienDonHang = fomatTien(a);
+
+        let data = {
+            id: id_HoaDon,
+            ghiChu: $scope.ghiChu,
+            email: $scope.email,
+            soDienThoai: $scope.soDienThoai,
+            tienShip: tienShip,
+            tongTienHoaDon: tongTienHoaDon,
+            tongTienDonHang: tongTienDonHang,
+            email_user: decodedToken.email,
+            diaChi: diaChi2,
+            nguoiTao: $scope.hoTen,
+        };
+        $http
+            .post('http://localhost:8080/api/banHang/online/datHang', data, {
+                headers,
+            })
+            .then(function (response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Đặt hàng thành công',
+                    showConfirmButton: false,
+                    timer: 2000,
+                }).then(() => {
+                    window.location.href = 'http://127.0.0.1:5501/templates/customer/home/index.html#!/product-list';
+                });
+            })
+            .catch(function (e) {
+                const errorMessage = e.data[Object.keys(e.data)[0]];
+                Swal.fire({
+                    icon: 'error',
+                    title: errorMessage,
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            });
+    }
+
     $scope.datHang = function () {
-        Swal.fire({
-            title: 'Xác nhận đặt hàng',
-            text: 'Bạn có muốn đặt hàng không?',
-            icon: 'success',
-            showCancelButton: true,
-            confirmButtonText: 'Đồng ý',
-            cancelButtonText: 'Hủy',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let a = $('#total').text();
-                let b = $('#shippingFee').text();
-                let c = $('#subtotal').text();
-
-                let tinhThanhPho = $('#province option:selected').text();
-                let quanHuyen = $('#district option:selected').text();
-                let phuongXa = $('#ward option:selected').text();
-                let diaChiNhap = $scope.diaChi;
-                let diaChi = diaChiNhap + ' - ' + phuongXa + ' - ' + quanHuyen + ' - ' + tinhThanhPho;
-
-                let diaChi2;
-                if (
-                    diaChi.includes('Chọn Tỉnh/Thành phố') ||
-                    diaChi.includes('Chọn Quận/Huyện') ||
-                    diaChi.includes('Chọn Phường/Xã')
-                ) {
-                    diaChi2 = '';
-                } else {
-                    diaChi2 = diaChi;
+        if (!$scope.email || !$scope.email.trim()) {
+            Swal.fire({
+                title: 'Cảnh báo',
+                text: 'Nếu không điền email bạn sẽ không nhận được tình trạng đơn hàng, bạn có muốn tiếp tục không?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Đồng ý',
+                cancelButtonText: 'Hủy',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    api_datHang();
                 }
-
-                const tongTienHoaDon = fomatTien(c);
-                const tienShip = fomatTien(b);
-                const tongTienDonHang = fomatTien(a);
-
-                let data = {
-                    id: id_HoaDon,
-                    ghiChu: $scope.ghiChu,
-                    email: $scope.email,
-                    soDienThoai: $scope.soDienThoai,
-                    tienShip: tienShip,
-                    tongTienHoaDon: tongTienHoaDon,
-                    tongTienDonHang: tongTienDonHang,
-                    email_user: decodedToken.email,
-                    diaChi: diaChi2,
-                    nguoiTao: $scope.hoTen,
-                };
-                $http
-                    .post('http://localhost:8080/api/banHang/online/datHang', data, {
-                        headers,
-                    })
-                    .then(function (response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Đặt hàng thành công',
-                            showConfirmButton: false,
-                            timer: 2000,
-                        }).then(() => {
-                            window.location.href =
-                                'http://127.0.0.1:5501/templates/customer/home/index.html#!/product-list';
-                        });
-                    })
-                    .catch(function (e) {
-                        const errorMessage = e.data[Object.keys(e.data)[0]];
-                        Swal.fire({
-                            icon: 'error',
-                            title: errorMessage,
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
-                    });
-            }
-        });
+            });
+        } else {
+            Swal.fire({
+                title: 'Xác nhận đặt hàng',
+                text: 'Bạn có muốn đặt hàng không?',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: 'Đồng ý',
+                cancelButtonText: 'Hủy',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    api_datHang();
+                }
+            });
+        }
     };
 
     $scope.thanhToan = function () {
-        Swal.fire({
-            title: 'Xác nhận đặt hàng',
-            text: 'Bạn có muốn đặt hàng không?',
-            icon: 'success',
-            showCancelButton: true,
-            confirmButtonText: 'Đồng ý',
-            cancelButtonText: 'Hủy',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let a = $('#total').text();
-                let b = $('#shippingFee').text();
-                let c = $('#subtotal').text();
-
-                let tinhThanhPho = $('#province option:selected').text();
-                let quanHuyen = $('#district option:selected').text();
-                let phuongXa = $('#ward option:selected').text();
-                let diaChiNhap = $scope.diaChi;
-                let diaChi = diaChiNhap + ' - ' + phuongXa + ' - ' + quanHuyen + ' - ' + tinhThanhPho;
-
-                let diaChi2;
-                if (
-                    diaChi.includes('Chọn Tỉnh/Thành phố') ||
-                    diaChi.includes('Chọn Quận/Huyện') ||
-                    diaChi.includes('Chọn Phường/Xã')
-                ) {
-                    diaChi2 = '';
-                } else {
-                    diaChi2 = diaChi;
+        if (!$scope.email || !$scope.email.trim()) {
+            Swal.fire({
+                title: 'Cảnh báo',
+                text: 'Nếu không điền email bạn sẽ không nhận được tình trạng đơn hàng, bạn có muốn tiếp tục không?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Đồng ý',
+                cancelButtonText: 'Hủy',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    api_thanhToan();
                 }
-
-                const tongTienHoaDon = fomatTien(c);
-                const tienShip = fomatTien(b);
-                const tongTienDonHang = fomatTien(a);
-
-                let data = {
-                    id: id_HoaDon,
-                    ghiChu: $scope.ghiChu,
-                    email: $scope.email,
-                    soDienThoai: $scope.soDienThoai,
-                    tienShip: tienShip,
-                    tongTienHoaDon: tongTienHoaDon,
-                    tongTienDonHang: tongTienDonHang,
-                    email_user: decodedToken.email,
-                    diaChi: diaChi2,
-                    nguoiTao: $scope.hoTen,
-                    loaiHoaDon: 2,
-                };
-
-                $http
-                    .post('http://localhost:8080/payment/create', data)
-                    .then(function (response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Đang chuyển hướng sang trang thanh toán',
-                            showConfirmButton: false,
-                            timer: 2000,
-                        }).then(() => {
-                            window.location.href = response.data.createURL;
-                        });
-                    })
-                    .catch(function (e) {
-                        const errorMessage = e.data[Object.keys(e.data)[0]];
-                        Swal.fire({
-                            icon: 'error',
-                            title: errorMessage,
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
-                    });
-            }
-        });
+            });
+        } else {
+            Swal.fire({
+                title: 'Xác nhận đặt hàng',
+                text: 'Bạn có muốn đặt hàng không?',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: 'Đồng ý',
+                cancelButtonText: 'Hủy',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    api_thanhToan();
+                }
+            });
+        }
     };
 
-    // $scope.addKhuyenMai = function () {
-    //   let a = $("#maGiamGia").val();
-    //   let data = {
-    //     id: id_HoaDon,
-    //     tenMaGiamGia: a,
-    //   };
-
-    //   let tienShip = parseFloat(
-    //     $("#shippingFee")
-    //       .text()
-    //       .replace(/[^0-9]/g, "")
-    //   );
-
-    //   $http
-    //     .post("http://localhost:8080/api/banHang/online/add/khuyenMai", data, {
-    //       headers,
-    //     })
-    //     .then(function (response) {
-    //       const hoaDon = response.data;
-    //       $scope.$evalAsync(function () {
-    //         $scope.tienTamTinh = hoaDon.tongTienHoaDon;
-    //         $scope.tongTienHoaDon = hoaDon.tongTienDonHang;
-    //         $scope.hoaDon = hoaDon;
-    //         Swal.fire({
-    //           icon: "success",
-    //           title: "Thêm mã giảm giá thành công",
-    //           showConfirmButton: false,
-    //           timer: 2000,
-    //         });
-
-    //         let tongTienHoaDon = hoaDon.tongTienHoaDon;
-    //         let tongTienSauGiam = tongTienHoaDon + tienShip - hoaDon.tienGiam;
-
-    //         $("#total").text(
-    //           tongTienSauGiam.toLocaleString("vi-VN", {
-    //             style: "currency",
-    //             currency: "VND",
-    //           })
-    //         );
-    //       });
-    //     })
-    //     .catch(function (e) {
-    //       Swal.fire({
-    //         icon: "error",
-    //         title: e.data.mess,
-    //         showConfirmButton: false,
-    //         timer: 2000,
-    //       });
-    //       console.log(e);
-    //     });
-    // };
     $http
         .get('http://localhost:8080/api/banHang/online/khuyenMai/list', {
             headers,
