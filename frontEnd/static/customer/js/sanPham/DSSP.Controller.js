@@ -225,6 +225,15 @@ app.controller('ChiTietSanPhamController', function ($scope, $routeParams, $http
         decodedToken = parseJwt(token);
     }
 
+    $scope.isButtonVisible1 = true;
+    $scope.isButtonVisible2 = true;
+
+    if(decodedToken){
+        $scope.isButtonVisible1 = false;
+    }else{
+        $scope.isButtonVisible2 = false;
+    }
+
     $http
         .get('http://localhost:8080/customer/sanPham/getSanPham/id=' + id_sanPham, { headers })
         .then(function (response) {
