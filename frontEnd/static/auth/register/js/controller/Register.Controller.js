@@ -18,7 +18,7 @@ app.controller('RegisterController', function ($scope, $http) {
                     timer: 2000,
                 }).then(function () {
                     sessionStorage.setItem('isConfirmed', true);
-                    window.location.href = 'http://127.0.0.1:5501/templates/auth/Login.html#!/login';
+                    window.location.href = 'http://127.0.0.1:5501/#!/login';
                 });
             })
             .catch(function (error) {
@@ -34,6 +34,6 @@ app.controller('RegisterController', function ($scope, $http) {
     };
 
     $scope.returnDangNhap = function () {
-        window.location.href = 'http://127.0.0.1:5501/templates/auth/Login.html#!/login';
+        window.location.href = 'http://127.0.0.1:5501/#!/login';
     };
 });

@@ -1,15 +1,33 @@
 app.controller('LogoutController', function ($scope, $http) {
+    let token = localStorage.getItem('token');
+
+    // $scope.showButtonDangXuat = true;
+    // $scope.showButtonDangNhap = true;
+
+    if (token) {
+        $scope.showButtonDangXuat = true;
+        $scope.showButtonDangNhap = false;
+        console.log('a');
+    } else if (!token) {
+        $scope.showButtonDangXuat = false;
+        $scope.showButtonDangNhap = true;
+        console.log(token);
+        console.log('b');
+    }
+
     $scope.logout = function () {
         localStorage.removeItem('token');
         Swal.fire({
             icon: 'success',
-            title: 'Đang chuyển hướng ra trang đăng nhập',
+            title: 'Đăng xuất thành công',
             showConfirmButton: false,
             timer: 2000,
         }).then(function () {
-            window.location.href = 'http://127.0.0.1:5501/templates/Auth/Login.html#!/login';
+            window.location.href = 'http://127.0.0.1:5501/templates/customer/home/index.html#!/';
+            window.location.reload();
         });
     };
+
     $scope.DangKy = function () {
         localStorage.removeItem('token');
         Swal.fire({
@@ -19,6 +37,18 @@ app.controller('LogoutController', function ($scope, $http) {
             timer: 2000,
         }).then(function () {
             window.location.href = 'http://127.0.0.1:5501/templates/auth/Register.html#!/';
+        });
+    };
+
+    $scope.login = function () {
+        localStorage.removeItem('token');
+        Swal.fire({
+            icon: 'success',
+            title: 'Đang chuyển hướng ra trang đăng nhập',
+            showConfirmButton: false,
+            timer: 2000,
+        }).then(function () {
+            window.location.href = 'http://127.0.0.1:5501/#!/login';
         });
     };
 });

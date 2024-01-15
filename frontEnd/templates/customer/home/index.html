@@ -45,10 +45,7 @@
     </head>
 
     <body>
-        <nav
-            class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark"
-            arial-label="Furni navigation bar"
-        >
+        <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
             <div class="container">
                 <a class="navbar-brand" href="index.html">Adudas<span>.</span></a>
 
@@ -76,17 +73,9 @@
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
                             <!-- User -->
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                <a
-                                    class="nav-link dropdown-toggle hide-arrow"
-                                    href="javascript:void(0);"
-                                    data-bs-toggle="dropdown"
-                                >
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img
-                                            src="/static/customer/assets/images/user.svg"
-                                            alt
-                                            class="w-px-40 h-auto rounded-circle"
-                                        />
+                                        <img src="/static/customer/assets/images/user.svg" alt class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -97,19 +86,34 @@
                                         </a>
                                     </li>
                                     <li ng-controller="LogoutController">
-                                        <a class="dropdown-item" href="#!/" id="dangXuat-homeAdmin" ng-click="logout()">
+                                        <button
+                                            class="dropdown-item"
+                                            href="#!/"
+                                            id="dangXuat-homeAdmin"
+                                            ng-click="logout()"
+                                            ng-show="showButtonDangXuat"
+                                        >
                                             <i class="fas fa-sign-out-alt me-2"></i>
                                             <span class="align-middle">Đăng xuất</span>
-                                        </a>
+                                        </button>
+
+                                        <button
+                                            class="dropdown-item"
+                                            href="#!/"
+                                            id="dangXuat-homeAdmin"
+                                            ng-click="login()"
+                                            ng-show="showButtonDangNhap"
+                                        >
+                                            <i class="fas fa-sign-out-alt me-2"></i>
+                                            <span class="align-middle">Đăng nhập</span>
+                                        </button>
                                     </li>
                                 </ul>
                             </li>
                             <!--/ User -->
                         </ul>
                         <li>
-                            <a class="nav-link" href="#!/cart-list"
-                                ><img src="/static/customer/assets/images/cart.svg"
-                            /></a>
+                            <a class="nav-link" href="#!/cart-list"><img src="/static/customer/assets/images/cart.svg" /></a>
                         </li>
                     </ul>
                 </div>
@@ -123,8 +127,8 @@
                         <div class="intro-excerpt">
                             <h1>Cửa hàng bán giày trực tuyến <span clsas="d-block">Adudas</span></h1>
                             <p class="mb-4">
-                                Đối với chúng tôi, mỗi khách hàng là một thượng đế. Chúng tôi đặt ra một mục tiêu duy
-                                nhất là làm hài lòng tất cả khách hàng
+                                Đối với chúng tôi, mỗi khách hàng là một thượng đế. Chúng tôi đặt ra một mục tiêu duy nhất là làm hài lòng
+                                tất cả khách hàng
                             </p>
                             <p><a href="" class="btn btn-secondary me-2">Khám phá sản phẩm</a></p>
                         </div>
@@ -150,8 +154,8 @@
                             <a href="#" class="footer-logo">Adudas<span>.</span></a>
                         </div>
                         <p class="mb-4">
-                            Chúng tôi luôn mang đến cho khách hàng những trải nghiệm mua sắm tuyệt vời nhất. Chúng tôi ở
-                            đây để đem đến cho các bạn những sản phẩm chất lượng cũng như với giá thành phải chăng
+                            Chúng tôi luôn mang đến cho khách hàng những trải nghiệm mua sắm tuyệt vời nhất. Chúng tôi ở đây để đem đến cho
+                            các bạn những sản phẩm chất lượng cũng như với giá thành phải chăng
                         </p>
 
                         <ul class="list-unstyled custom-social">
