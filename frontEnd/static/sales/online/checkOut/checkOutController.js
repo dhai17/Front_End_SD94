@@ -151,23 +151,26 @@ app.controller('checkOutController', function ($scope, $routeParams, $http) {
                 headers,
             })
             .then(function (response) {
+                console.log(response);
                 Swal.fire({
                     icon: 'success',
                     title: 'Đặt hàng thành công',
                     showConfirmButton: false,
                     timer: 2000,
                 }).then(() => {
-                    window.location.href = 'http://127.0.0.1:5501/templates/customer/home/index.html#!/product-list';
+                    // window.location.href = 'http://127.0.0.1:5501/templates/customer/home/index.html#!/product-list';
                 });
             })
             .catch(function (e) {
-                const errorMessage = e.data[Object.keys(e.data)[0]];
+                console.log(e);
+                    const errorMessage = e.data[Object.keys(e.data)[0]];
                 Swal.fire({
                     icon: 'error',
                     title: errorMessage,
                     showConfirmButton: false,
                     timer: 3000,
                 });
+                return;
             });
     }
 

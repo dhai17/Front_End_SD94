@@ -6,22 +6,11 @@
         <p>Mã đơn: <span>{{ hoaDon.maHoaDon}}</span></p>
         <p>Ngày tạo: <span>{{ hoaDon.createdDate | date:'dd/MM/yyyy' }}</span></p>
         <p>Tên khách hàng: <span>{{ hoaDon.nguoiNhan}}</span></p>
-
-        <div>
-            <button
-                type="button"
-                class="dt-button buttons-html5 btn btn-white btn-success btn-bold"
-                data-toggle="tooltip"
-                title="Tải lại dữ liệu"
-                ng-click="danhSachSanPham()"
-                id="button-them-moi-san-pham-vaoHD"
-            >
-                <span> <i class="fas fa-plus"></i></span>
-                Thêm sản phẩm
-            </button>
-        </div>
-
-        <div class="table-wrapper" id="table-hd">
+        <button class="btn btn-dark px-4 rounded-pill" ng-click="danhSachSanPham()" ng-if="hoaDon.loaiHoaDon==0">
+            <i class="fas fa-fw fa-shopping-cart"></i>
+            Thêm sản phẩm
+        </button>
+        <div class="table-wrapper">
             <table class="table">
                 <thead>
                     <tr>
@@ -30,7 +19,7 @@
                         <th scope="col">Đơn giá</th>
                         <th scope="col">Số lượng</th>
                         <th scope="col">Thành tiền</th>
-                        <th scope="col">Thao tác</th>
+                        <th scope="col" ng-if="hoaDon.loaiHoaDon==0">Thao tác</th>
                     </tr>
                 </thead>
 
@@ -71,7 +60,7 @@
                                 <button
                                     ng-click="updateSoLuong(CTChoXacNhan)"
                                     id="xacNhan-updateSoLuongGioHangCT"
-                                    class="fas fa-check btn-icon btn-primary"
+                                    class="fas fa-check btn-icon btn-primary" ng-if="hoaDon.loaiHoaDon==0"
                                 ></button>
                             </div>
                         </td>
@@ -80,7 +69,15 @@
 
                         <td>
                             <div class="button-group">
+<<<<<<< HEAD
                                 <button type="button" class="btn btn-link btn-sm btn-rounded" ng-click="deleteHDCT(CTChoXacNhan)">
+=======
+                                <button
+                                    type="button"
+                                    class="btn btn-link btn-sm btn-rounded"
+                                    ng-click="deleteHDCT(CTChoXacNhan)" ng-if="hoaDon.loaiHoaDon==0"
+                                >
+>>>>>>> da7180b1121c6a274b39b056f7cfb44e9e8c4111
                                     <i class="bx bx-trash me-2"></i>
                                 </button>
                             </div>
