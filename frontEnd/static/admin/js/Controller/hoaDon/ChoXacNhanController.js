@@ -348,16 +348,9 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
             const hoaDon = respone.hoaDon;
             $scope.hoaDon = hoaDon;
 
-<<<<<<< HEAD
             const lsHoaDons = respone.lsHoaDons;
-            console.log(lsHoaDons);
             $scope.lsHoaDons = lsHoaDons;
-        });
-=======
-                const lsHoaDons = respone.lsHoaDons;
-                $scope.lsHoaDons = lsHoaDons;
             });
->>>>>>> da7180b1121c6a274b39b056f7cfb44e9e8c4111
     };
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
@@ -506,15 +499,11 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
 
                         const hoaDon = respone.hoaDon;
 
-<<<<<<< HEAD
+
                         $scope.hoaDon = hoaDon;
-                    });
-=======
-                            $scope.hoaDon = hoaDon;
-                            const lsHoaDons = respone.lsHoaDons;
-                            $scope.lsHoaDons = lsHoaDons;
+                        const lsHoaDons = respone.lsHoaDons;
+                        $scope.lsHoaDons = lsHoaDons;
                         });
->>>>>>> da7180b1121c6a274b39b056f7cfb44e9e8c4111
                 });
             })
             .catch(function (error) {
