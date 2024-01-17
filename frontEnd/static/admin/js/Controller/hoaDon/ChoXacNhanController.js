@@ -357,7 +357,6 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
                 $scope.hoaDon = hoaDon;
 
                 const lsHoaDons = respone.lsHoaDons;
-                console.log(lsHoaDons);
                 $scope.lsHoaDons = lsHoaDons;
             });
     };
@@ -513,6 +512,8 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
                             const hoaDon = respone.hoaDon;
 
                             $scope.hoaDon = hoaDon;
+                            const lsHoaDons = respone.lsHoaDons;
+                            $scope.lsHoaDons = lsHoaDons;
                         });
                 });
             })
@@ -563,6 +564,8 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
                                         const hoaDon = respone.hoaDon;
 
                                         $scope.hoaDon = hoaDon;
+                                        const lsHoaDons = respone.lsHoaDons;
+                                        $scope.lsHoaDons = lsHoaDons;
                                     });
                             });
                         } else {
