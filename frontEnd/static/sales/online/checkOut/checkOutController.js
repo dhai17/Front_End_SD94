@@ -158,7 +158,7 @@ app.controller('checkOutController', function ($scope, $routeParams, $http) {
                     showConfirmButton: false,
                     timer: 2000,
                 }).then(() => {
-                    // window.location.href = 'http://127.0.0.1:5501/templates/customer/home/index.html#!/product-list';
+                    window.location.href = 'http://127.0.0.1:5501/templates/customer/home/index.html#!/product-list';
                 });
             })
             .catch(function (e) {
