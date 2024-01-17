@@ -267,6 +267,7 @@ app.controller('EditKhuyenMaiController', function ($scope, $routeParams, $http)
                 $http
                     .put('http://localhost:8080/khuyenMai/luuChinhSua', editkhuyenMai, { headers })
                     .then(function (response) {
+                        console.log(response);
                         Swal.fire({
                             icon: 'success',
                             title: 'Sửa thành công',
@@ -279,6 +280,7 @@ app.controller('EditKhuyenMaiController', function ($scope, $routeParams, $http)
                     })
                     .catch(function (errorResponse) {
                         if (errorResponse.status === 400) {
+                            console.log(errorResponse.data);
                             const errorMassage = errorResponse.data.message;
                             Swal.fire({
                                 icon: 'error',

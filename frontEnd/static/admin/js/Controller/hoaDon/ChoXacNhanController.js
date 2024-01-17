@@ -4,13 +4,23 @@ app.controller('ChoXacNhanController', function ($scope, $http) {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token,
     };
+
     $scope.loadData = function () {
         $http.get('http://localhost:8080/hoaDon/datHang/choXacNhan/danhSach', { headers }).then(function (response) {
             const pending = response.data;
-            console.log(pending);
             $scope.pending = pending;
         });
     };
+
+    function getStatusText(status) {
+        if (status == 0) {
+            return 'Đang hoạt động';
+        } else if (status == 1) {
+            return 'Chờ hoạt động';
+        } else {
+            return 'Hết hạn';
+        }
+    }
 
     $scope.loadData();
     // lay ra thong tin nguoi dang nhap
@@ -117,14 +127,24 @@ app.controller('ChoXacNhanController', function ($scope, $http) {
                         headers,
                     })
                     .then(function (response) {
-                        const pending = response.data;
-                        $scope.$evalAsync(function () {
-                            $scope.pending = pending;
-                        });
-                        Swal.fire('Xác nhận thành công!', '', 'success');
-                        $http
-                            .get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, { headers })
-                            .then(function (response) {});
+                        if(response.data.statusCodeValue === 200){
+                            const pending = response.data;
+                            $scope.$evalAsync(function () {
+                                $scope.pending = pending;
+                            });
+                            Swal.fire('Xác nhận thành công!', '', 'success');
+                            $http
+                                .get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, { headers })
+                                .then(function (response) {});
+                        }else if(response.data.statusCodeValue === 400){
+                            Swal.fire({
+                                icon: 'error',
+                                title: response.data.body.err,
+                                showConfirmButton: false,
+                                timer: 2000,
+                            });
+                        }
+                        
                     })
                     .catch(function (error) {
                         console.log(error);
