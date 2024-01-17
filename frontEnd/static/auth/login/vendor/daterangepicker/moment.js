@@ -129,11 +129,7 @@
                 (!flags.meridiem || (flags.meridiem && parsedParts));
 
             if (m._strict) {
-                m._isValid =
-                    m._isValid &&
-                    flags.charsLeftOver === 0 &&
-                    flags.unusedTokens.length === 0 &&
-                    flags.bigHour === undefined;
+                m._isValid = m._isValid && flags.charsLeftOver === 0 && flags.unusedTokens.length === 0 && flags.bigHour === undefined;
             }
         }
         return m._isValid;
@@ -258,11 +254,7 @@
     }
 
     function warn(msg) {
-        if (
-            utils_hooks__hooks.suppressDeprecationWarnings === false &&
-            typeof console !== 'undefined' &&
-            console.warn
-        ) {
+        if (utils_hooks__hooks.suppressDeprecationWarnings === false && typeof console !== 'undefined' && console.warn) {
             console.warn('Deprecation warning: ' + msg);
         }
     }
@@ -275,9 +267,7 @@
                 utils_hooks__hooks.deprecationHandler(null, msg);
             }
             if (firstTime) {
-                warn(
-                    msg + '\nArguments: ' + Array.prototype.slice.call(arguments).join(', ') + '\n' + new Error().stack,
-                );
+                warn(msg + '\nArguments: ' + Array.prototype.slice.call(arguments).join(', ') + '\n' + new Error().stack);
                 firstTime = false;
             }
             return fn.apply(this, arguments);
@@ -596,11 +586,7 @@
         var absNumber = '' + Math.abs(number),
             zerosToFill = targetLength - absNumber.length,
             sign = number >= 0;
-        return (
-            (sign ? (forceSign ? '+' : '') : '-') +
-            Math.pow(10, Math.max(0, zerosToFill)).toString().substr(1) +
-            absNumber
-        );
+        return (sign ? (forceSign ? '+' : '') : '-') + Math.pow(10, Math.max(0, zerosToFill)).toString().substr(1) + absNumber;
     }
 
     var formattingTokens =
@@ -719,8 +705,7 @@
 
     // any word (or two) characters or numbers including two/three word month in arabic.
     // includes scottish gaelic two word and hyphenated months
-    var matchWord =
-        /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i;
+    var matchWord = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i;
 
     var regexes = {};
 
@@ -861,8 +846,7 @@
     // LOCALES
 
     var MONTHS_IN_FORMAT = /D[oD]?(\[[^\[\]]*\]|\s+)+MMMM?/;
-    var defaultLocaleMonths =
-        'January_February_March_April_May_June_July_August_September_October_November_December'.split('_');
+    var defaultLocaleMonths = 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_');
     function localeMonths(m, format) {
         return isArray(this._months)
             ? this._months[m.month()]
@@ -1076,9 +1060,7 @@
                     ? MONTH
                     : a[DATE] < 1 || a[DATE] > daysInMonth(a[YEAR], a[MONTH])
                       ? DATE
-                      : a[HOUR] < 0 ||
-                          a[HOUR] > 24 ||
-                          (a[HOUR] === 24 && (a[MINUTE] !== 0 || a[SECOND] !== 0 || a[MILLISECOND] !== 0))
+                      : a[HOUR] < 0 || a[HOUR] > 24 || (a[HOUR] === 24 && (a[MINUTE] !== 0 || a[SECOND] !== 0 || a[MILLISECOND] !== 0))
                         ? HOUR
                         : a[MINUTE] < 0 || a[MINUTE] > 59
                           ? MINUTE
@@ -1444,12 +1426,7 @@
         }
 
         // Check for 24:00:00.000
-        if (
-            config._a[HOUR] === 24 &&
-            config._a[MINUTE] === 0 &&
-            config._a[SECOND] === 0 &&
-            config._a[MILLISECOND] === 0
-        ) {
+        if (config._a[HOUR] === 24 && config._a[MINUTE] === 0 && config._a[SECOND] === 0 && config._a[MILLISECOND] === 0) {
             config._nextDay = true;
             config._a[HOUR] = 0;
         }
@@ -1906,9 +1883,7 @@
         var res, diff;
         if (model._isUTC) {
             res = model.clone();
-            diff =
-                (isMoment(input) || isDate(input) ? input.valueOf() : local__createLocal(input).valueOf()) -
-                res.valueOf();
+            diff = (isMoment(input) || isDate(input) ? input.valueOf() : local__createLocal(input).valueOf()) - res.valueOf();
             // Use low-level api, because this fn is low-level api.
             res._d.setTime(res._d.valueOf() + diff);
             utils_hooks__hooks.updateOffset(res, false);
@@ -2026,9 +2001,7 @@
     }
 
     function isDaylightSavingTime() {
-        return (
-            this.utcOffset() > this.clone().month(0).utcOffset() || this.utcOffset() > this.clone().month(5).utcOffset()
-        );
+        return this.utcOffset() > this.clone().month(0).utcOffset() || this.utcOffset() > this.clone().month(5).utcOffset();
     }
 
     function isDaylightSavingTimeShifted() {
@@ -2192,11 +2165,7 @@
             if (period !== null && !isNaN(+period)) {
                 deprecateSimple(
                     name,
-                    'moment().' +
-                        name +
-                        '(period, number) is deprecated. Please use moment().' +
-                        name +
-                        '(number, period).',
+                    'moment().' + name + '(period, number) is deprecated. Please use moment().' + name + '(number, period).',
                 );
                 tmp = val;
                 val = period;
@@ -2963,20 +2932,11 @@
             mom = create_utc__createUTC([2000, 1]).day(i);
             if (strict && !this._fullWeekdaysParse[i]) {
                 this._fullWeekdaysParse[i] = new RegExp('^' + this.weekdays(mom, '').replace('.', '.?') + '$', 'i');
-                this._shortWeekdaysParse[i] = new RegExp(
-                    '^' + this.weekdaysShort(mom, '').replace('.', '.?') + '$',
-                    'i',
-                );
+                this._shortWeekdaysParse[i] = new RegExp('^' + this.weekdaysShort(mom, '').replace('.', '.?') + '$', 'i');
                 this._minWeekdaysParse[i] = new RegExp('^' + this.weekdaysMin(mom, '').replace('.', '.?') + '$', 'i');
             }
             if (!this._weekdaysParse[i]) {
-                regex =
-                    '^' +
-                    this.weekdays(mom, '') +
-                    '|^' +
-                    this.weekdaysShort(mom, '') +
-                    '|^' +
-                    this.weekdaysMin(mom, '');
+                regex = '^' + this.weekdays(mom, '') + '|^' + this.weekdaysShort(mom, '') + '|^' + this.weekdaysMin(mom, '');
                 this._weekdaysParse[i] = new RegExp(regex.replace('.', ''), 'i');
             }
             // test the regex
@@ -3053,9 +3013,7 @@
                 return this._weekdaysShortRegex;
             }
         } else {
-            return this._weekdaysShortStrictRegex && isStrict
-                ? this._weekdaysShortStrictRegex
-                : this._weekdaysShortRegex;
+            return this._weekdaysShortStrictRegex && isStrict ? this._weekdaysShortStrictRegex : this._weekdaysShortRegex;
         }
     }
 
@@ -3724,21 +3682,14 @@
         ordinalParse: /\d{1,2}(th|st|nd|rd)/,
         ordinal: function (number) {
             var b = number % 10,
-                output =
-                    toInt((number % 100) / 10) === 1 ? 'th' : b === 1 ? 'st' : b === 2 ? 'nd' : b === 3 ? 'rd' : 'th';
+                output = toInt((number % 100) / 10) === 1 ? 'th' : b === 1 ? 'st' : b === 2 ? 'nd' : b === 3 ? 'rd' : 'th';
             return number + output;
         },
     });
 
     // Side effect imports
-    utils_hooks__hooks.lang = deprecate(
-        'moment.lang is deprecated. Use moment.locale instead.',
-        locale_locales__getSetGlobalLocale,
-    );
-    utils_hooks__hooks.langData = deprecate(
-        'moment.langData is deprecated. Use moment.localeData instead.',
-        locale_locales__getLocale,
-    );
+    utils_hooks__hooks.lang = deprecate('moment.lang is deprecated. Use moment.locale instead.', locale_locales__getSetGlobalLocale);
+    utils_hooks__hooks.langData = deprecate('moment.langData is deprecated. Use moment.localeData instead.', locale_locales__getLocale);
 
     var mathAbs = Math.abs;
 
@@ -3880,9 +3831,7 @@
 
     // TODO: Use this.as('ms')?
     function duration_as__valueOf() {
-        return (
-            this._milliseconds + this._days * 864e5 + (this._months % 12) * 2592e6 + toInt(this._months / 12) * 31536e6
-        );
+        return this._milliseconds + this._days * 864e5 + (this._months % 12) * 2592e6 + toInt(this._months / 12) * 31536e6;
     }
 
     function makeAs(alias) {

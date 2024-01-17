@@ -24,25 +24,21 @@ app.controller('BanHangTaiQuayController', function ($scope, $http, $routeParams
 
     let decodedToken = parseJwt(token);
 
-    $http
-        .get('http://localhost:8080/api/banHang/taiQuay/getHoaDonChitiet/' + id_HoaDonTaiQuay, { headers })
-        .then(function (response) {
-            const hoaDonChiTiet = response.data;
-            $scope.hoaDonChiTiet = hoaDonChiTiet;
-        });
+    $http.get('http://localhost:8080/api/banHang/taiQuay/getHoaDonChitiet/' + id_HoaDonTaiQuay, { headers }).then(function (response) {
+        const hoaDonChiTiet = response.data;
+        $scope.hoaDonChiTiet = hoaDonChiTiet;
+    });
 
     $scope.tongTienHoaDon;
     $scope.tienThieu;
     $scope.tienTraLai = '';
 
-    $http
-        .get('http://localhost:8080/api/banHang/taiQuay/getHoaDon/' + id_HoaDonTaiQuay, { headers })
-        .then(function (response) {
-            const hoaDon = response.data;
-            $scope.tongTienHoaDon = hoaDon.tongTienHoaDon;
-            $scope.tienThieu = hoaDon.tongTienHoaDon;
-            $scope.hoaDon = hoaDon;
-        });
+    $http.get('http://localhost:8080/api/banHang/taiQuay/getHoaDon/' + id_HoaDonTaiQuay, { headers }).then(function (response) {
+        const hoaDon = response.data;
+        $scope.tongTienHoaDon = hoaDon.tongTienHoaDon;
+        $scope.tienThieu = hoaDon.tongTienHoaDon;
+        $scope.hoaDon = hoaDon;
+    });
 
     $scope.tienKhachDua = '';
 

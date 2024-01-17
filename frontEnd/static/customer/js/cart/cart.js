@@ -78,12 +78,10 @@ app.controller('cartController', function ($scope, $http, $window) {
     };
 
     $scope.cancelUpdate = function (promotion) {
-        $http
-            .get('http://localhost:8080/gioHang/danhSach/' + decodedToken.email, { headers })
-            .then(function (response) {
-                const gioHangChiTiet = response.data;
-                $scope.gioHangChiTiet = gioHangChiTiet;
-            });
+        $http.get('http://localhost:8080/gioHang/danhSach/' + decodedToken.email, { headers }).then(function (response) {
+            const gioHangChiTiet = response.data;
+            $scope.gioHangChiTiet = gioHangChiTiet;
+        });
     };
 
     $scope.deletecart = function (gioHangChiTiet) {
@@ -196,8 +194,7 @@ app.controller('cartController', function ($scope, $http, $window) {
                                 timer: 2000,
                             }).then(function () {
                                 window.location.href =
-                                    'http://127.0.0.1:5501/templates/banHang/online/BanHangOnline.html?id_HoaDon=' +
-                                    id_HoaDon;
+                                    'http://127.0.0.1:5501/templates/banHang/online/BanHangOnline.html?id_HoaDon=' + id_HoaDon;
                             });
                         }
                     })
@@ -237,15 +234,13 @@ app.controller('cartController', function ($scope, $http, $window) {
                     showConfirmButton: false,
                     timer: 2000,
                 }).then(() => {
-                    $http
-                        .get('http://localhost:8080/gioHang/danhSach/' + decodedToken.email, { headers })
-                        .then(function (response) {
-                            const gioHangChiTiet = response.data;
-                            gioHangChiTiet.forEach((item) => {
-                                $scope.soLuongBanDau = item.soLuong;
-                            });
-                            $scope.gioHangChiTiet = gioHangChiTiet;
+                    $http.get('http://localhost:8080/gioHang/danhSach/' + decodedToken.email, { headers }).then(function (response) {
+                        const gioHangChiTiet = response.data;
+                        gioHangChiTiet.forEach((item) => {
+                            $scope.soLuongBanDau = item.soLuong;
                         });
+                        $scope.gioHangChiTiet = gioHangChiTiet;
+                    });
 
                     window.location.reload();
                 });

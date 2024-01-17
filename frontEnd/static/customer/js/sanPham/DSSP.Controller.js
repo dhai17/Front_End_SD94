@@ -167,11 +167,9 @@ app.controller('danhSachSanPhamController', function ($scope, $http) {
 
     $scope.$watch('searchTerm', function (newVal) {
         if (newVal) {
-            $http
-                .get('http://localhost:8080/customer/sanPham/timKiemTheoTen/' + newVal, { headers })
-                .then(function (response) {
-                    $scope.sanPham = response.data;
-                });
+            $http.get('http://localhost:8080/customer/sanPham/timKiemTheoTen/' + newVal, { headers }).then(function (response) {
+                $scope.sanPham = response.data;
+            });
         } else {
             $http.get('http://localhost:8080/customer/sanPham/danhSach', { headers }).then(function (response) {
                 $scope.sanPham = response.data;
@@ -180,11 +178,9 @@ app.controller('danhSachSanPhamController', function ($scope, $http) {
     });
 
     $scope.searchAll = function (searchTerm) {
-        $http
-            .get('http://localhost:8080/customer/sanPham/timKiemTheoTen/' + searchTerm, { headers })
-            .then(function (response) {
-                $scope.sanPham = response.data;
-            });
+        $http.get('http://localhost:8080/customer/sanPham/timKiemTheoTen/' + searchTerm, { headers }).then(function (response) {
+            $scope.sanPham = response.data;
+        });
     };
 
     $scope.reLoad = function () {
@@ -228,18 +224,16 @@ app.controller('ChiTietSanPhamController', function ($scope, $routeParams, $http
     $scope.isButtonVisible1 = true;
     $scope.isButtonVisible2 = true;
 
-    if(decodedToken){
+    if (decodedToken) {
         $scope.isButtonVisible1 = false;
-    }else{
+    } else {
         $scope.isButtonVisible2 = false;
     }
 
-    $http
-        .get('http://localhost:8080/customer/sanPham/getSanPham/id=' + id_sanPham, { headers })
-        .then(function (response) {
-            const sanPham = response.data;
-            $scope.sanPham = sanPham;
-        });
+    $http.get('http://localhost:8080/customer/sanPham/getSanPham/id=' + id_sanPham, { headers }).then(function (response) {
+        const sanPham = response.data;
+        $scope.sanPham = sanPham;
+    });
 
     $http
         .get('http://localhost:8080/customer/sanPham/api/getSize/' + id_sanPham, {
@@ -250,12 +244,10 @@ app.controller('ChiTietSanPhamController', function ($scope, $routeParams, $http
             $scope.kichCo = kichCo;
         });
 
-    $http
-        .get('http://localhost:8080/customer/sanPham/api/getColor/' + id_sanPham, { headers })
-        .then(function (response) {
-            const mauSac = response.data;
-            $scope.mauSac = mauSac;
-        });
+    $http.get('http://localhost:8080/customer/sanPham/api/getColor/' + id_sanPham, { headers }).then(function (response) {
+        const mauSac = response.data;
+        $scope.mauSac = mauSac;
+    });
 
     $http.get('http://localhost:8080/customer/sanPham/getAnhSanPham/' + id_sanPham).then(function (response) {
         const hinhAnh_list = response.data;
@@ -291,15 +283,13 @@ app.controller('ChiTietSanPhamController', function ($scope, $routeParams, $http
             kichCo = newValues[0];
             maMauSac = newValues[1];
 
-            $http
-                .post('http://localhost:8080/customer/sanPham/api/getSoLuong', data, { headers })
-                .then(function (response) {
-                    soLuongGet = document.getElementById('customer-sanPham-soLuongHienCo');
-                    if (soLuongGet) {
-                        soLuongGet.innerText = response.data;
-                        $scope.soLuongHienCo = response.data;
-                    }
-                });
+            $http.post('http://localhost:8080/customer/sanPham/api/getSoLuong', data, { headers }).then(function (response) {
+                soLuongGet = document.getElementById('customer-sanPham-soLuongHienCo');
+                if (soLuongGet) {
+                    soLuongGet.innerText = response.data;
+                    $scope.soLuongHienCo = response.data;
+                }
+            });
         }
     });
 
@@ -404,8 +394,7 @@ app.controller('ChiTietSanPhamController', function ($scope, $routeParams, $http
                         localStorage.setItem('id_HoaDonMuaNgay', response.data.id_hoa_don);
                         const id_HoaDonMuaNgay = localStorage.getItem('id_HoaDonMuaNgay');
                         window.location.href =
-                            'http://127.0.0.1:5501/templates/banHang/muaNgay/CheckOut.html?id_HoaDonMuaNgay=' +
-                            id_HoaDonMuaNgay;
+                            'http://127.0.0.1:5501/templates/banHang/muaNgay/CheckOut.html?id_HoaDonMuaNgay=' + id_HoaDonMuaNgay;
                     });
                 }
             })

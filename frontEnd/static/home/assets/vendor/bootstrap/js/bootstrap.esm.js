@@ -29,9 +29,7 @@ const Data = {
         if (!instanceMap.has(key) && instanceMap.size !== 0) {
             // eslint-disable-next-line no-console
             console.error(
-                `Bootstrap doesn't allow more than one instance per element. Bound instance: ${
-                    Array.from(instanceMap.keys())[0]
-                }.`,
+                `Bootstrap doesn't allow more than one instance per element. Bound instance: ${Array.from(instanceMap.keys())[0]}.`,
             );
             return;
         }
@@ -415,9 +413,7 @@ function bootstrapDelegationHandler(element, selector, fn) {
     };
 }
 function findHandler(events, callable, delegationSelector = null) {
-    return Object.values(events).find(
-        (event) => event.callable === callable && event.delegationSelector === delegationSelector,
-    );
+    return Object.values(events).find((event) => event.callable === callable && event.delegationSelector === delegationSelector);
 }
 function normalizeParameters(originalTypeEvent, handler, delegationFunction) {
     const isDelegated = typeof handler === 'string';
@@ -442,8 +438,7 @@ function addHandler(element, originalTypeEvent, handler, delegationFunction, one
             return function (event) {
                 if (
                     !event.relatedTarget ||
-                    (event.relatedTarget !== event.delegateTarget &&
-                        !event.delegateTarget.contains(event.relatedTarget))
+                    (event.relatedTarget !== event.delegateTarget && !event.delegateTarget.contains(event.relatedTarget))
                 ) {
                     return fn.call(this, event);
                 }
@@ -459,9 +454,7 @@ function addHandler(element, originalTypeEvent, handler, delegationFunction, one
         return;
     }
     const uid = makeEventUid(callable, originalTypeEvent.replace(namespaceRegex, ''));
-    const fn = isDelegated
-        ? bootstrapDelegationHandler(element, handler, callable)
-        : bootstrapHandler(element, callable);
+    const fn = isDelegated ? bootstrapDelegationHandler(element, handler, callable) : bootstrapHandler(element, callable);
     fn.delegationSelector = isDelegated ? handler : null;
     fn.callable = callable;
     fn.oneOff = oneOff;
@@ -623,9 +616,7 @@ const Manipulator = {
             return {};
         }
         const attributes = {};
-        const bsKeys = Object.keys(element.dataset).filter(
-            (key) => key.startsWith('bs') && !key.startsWith('bsConfig'),
-        );
+        const bsKeys = Object.keys(element.dataset).filter((key) => key.startsWith('bs') && !key.startsWith('bsConfig'));
         for (const key of bsKeys) {
             let pureKey = key.replace(/^bs/, '');
             pureKey = pureKey.charAt(0).toLowerCase() + pureKey.slice(1, pureKey.length);
@@ -829,16 +820,7 @@ const SelectorEngine = {
         return [];
     },
     focusableChildren(element) {
-        const focusables = [
-            'a',
-            'button',
-            'input',
-            'textarea',
-            'select',
-            'details',
-            '[tabindex]',
-            '[contenteditable="true"]',
-        ]
+        const focusables = ['a', 'button', 'input', 'textarea', 'select', 'details', '[tabindex]', '[contenteditable="true"]']
             .map((selector) => `${selector}:not([tabindex^="-"])`)
             .join(',');
         return this.find(focusables, element).filter((el) => !isDisabled(el) && isVisible(el));
@@ -1132,10 +1114,7 @@ class Swipe extends Config {
         }
     }
     _eventIsPointerPenTouch(event) {
-        return (
-            this._supportPointerEvents &&
-            (event.pointerType === POINTER_TYPE_PEN || event.pointerType === POINTER_TYPE_TOUCH)
-        );
+        return this._supportPointerEvents && (event.pointerType === POINTER_TYPE_PEN || event.pointerType === POINTER_TYPE_TOUCH);
     }
 
     // Static
@@ -1338,10 +1317,7 @@ class Carousel extends BaseComponent {
             if (this.touchTimeout) {
                 clearTimeout(this.touchTimeout);
             }
-            this.touchTimeout = setTimeout(
-                () => this._maybeEnableCycle(),
-                TOUCHEVENT_COMPAT_WAIT + this._config.interval,
-            );
+            this.touchTimeout = setTimeout(() => this._maybeEnableCycle(), TOUCHEVENT_COMPAT_WAIT + this._config.interval);
         };
         const swipeConfig = {
             leftCallback: () => this._slide(this._directionToOrder(DIRECTION_LEFT)),
@@ -1570,9 +1546,7 @@ class Collapse extends BaseComponent {
         const toggleList = SelectorEngine.find(SELECTOR_DATA_TOGGLE$4);
         for (const elem of toggleList) {
             const selector = SelectorEngine.getSelectorFromElement(elem);
-            const filterElement = SelectorEngine.find(selector).filter(
-                (foundElement) => foundElement === this._element,
-            );
+            const filterElement = SelectorEngine.find(selector).filter((foundElement) => foundElement === this._element);
             if (selector !== null && filterElement.length) {
                 this._triggerArray.push(elem);
             }
@@ -2076,8 +2050,7 @@ class Dropdown extends BaseComponent {
             // Tab navigation through the dropdown menu or events from contained inputs shouldn't close the menu
             if (
                 context._menu.contains(event.target) &&
-                ((event.type === 'keyup' && event.key === TAB_KEY$1) ||
-                    /input|select|option|textarea|form/i.test(event.target.tagName))
+                ((event.type === 'keyup' && event.key === TAB_KEY$1) || /input|select|option|textarea|form/i.test(event.target.tagName))
             ) {
                 continue;
             }
@@ -2403,16 +2376,8 @@ class ScrollBarHelper {
         // give padding to element to balance the hidden scrollbar width
         this._setElementAttributes(this._element, PROPERTY_PADDING, (calculatedValue) => calculatedValue + width);
         // trick: We adjust positive paddingRight and negative marginRight to sticky-top elements to keep showing fullwidth
-        this._setElementAttributes(
-            SELECTOR_FIXED_CONTENT,
-            PROPERTY_PADDING,
-            (calculatedValue) => calculatedValue + width,
-        );
-        this._setElementAttributes(
-            SELECTOR_STICKY_CONTENT,
-            PROPERTY_MARGIN,
-            (calculatedValue) => calculatedValue - width,
-        );
+        this._setElementAttributes(SELECTOR_FIXED_CONTENT, PROPERTY_PADDING, (calculatedValue) => calculatedValue + width);
+        this._setElementAttributes(SELECTOR_STICKY_CONTENT, PROPERTY_MARGIN, (calculatedValue) => calculatedValue - width);
     }
     reset() {
         this._resetElementAttributes(this._element, 'overflow');
@@ -3069,9 +3034,7 @@ const allowedAttribute = (attribute, allowedAttributeList) => {
     }
 
     // Check if a regular expression validates the attribute.
-    return allowedAttributeList
-        .filter((attributeRegex) => attributeRegex instanceof RegExp)
-        .some((regex) => regex.test(attributeName));
+    return allowedAttributeList.filter((attributeRegex) => attributeRegex instanceof RegExp).some((regex) => regex.test(attributeName));
 };
 function sanitizeHtml(unsafeHtml, allowList, sanitizeFunction) {
     if (!unsafeHtml.length) {
@@ -3296,10 +3259,7 @@ const Default$3 = {
     sanitizeFn: null,
     selector: false,
     template:
-        '<div class="tooltip" role="tooltip">' +
-        '<div class="tooltip-arrow"></div>' +
-        '<div class="tooltip-inner"></div>' +
-        '</div>',
+        '<div class="tooltip" role="tooltip">' + '<div class="tooltip-arrow"></div>' + '<div class="tooltip-inner"></div>' + '</div>',
     title: '',
     trigger: 'hover focus',
 };
@@ -3531,9 +3491,7 @@ class Tooltip extends BaseComponent {
         };
     }
     _getTitle() {
-        return (
-            this._resolvePossibleFunction(this._config.title) || this._element.getAttribute('data-bs-original-title')
-        );
+        return this._resolvePossibleFunction(this._config.title) || this._element.getAttribute('data-bs-original-title');
     }
 
     // Private
@@ -3613,20 +3571,13 @@ class Tooltip extends BaseComponent {
         const triggers = this._config.trigger.split(' ');
         for (const trigger of triggers) {
             if (trigger === 'click') {
-                EventHandler.on(
-                    this._element,
-                    this.constructor.eventName(EVENT_CLICK$1),
-                    this._config.selector,
-                    (event) => {
-                        const context = this._initializeOnDelegatedTarget(event);
-                        context.toggle();
-                    },
-                );
+                EventHandler.on(this._element, this.constructor.eventName(EVENT_CLICK$1), this._config.selector, (event) => {
+                    const context = this._initializeOnDelegatedTarget(event);
+                    context.toggle();
+                });
             } else if (trigger !== TRIGGER_MANUAL) {
                 const eventIn =
-                    trigger === TRIGGER_HOVER
-                        ? this.constructor.eventName(EVENT_MOUSEENTER)
-                        : this.constructor.eventName(EVENT_FOCUSIN$1);
+                    trigger === TRIGGER_HOVER ? this.constructor.eventName(EVENT_MOUSEENTER) : this.constructor.eventName(EVENT_FOCUSIN$1);
                 const eventOut =
                     trigger === TRIGGER_HOVER
                         ? this.constructor.eventName(EVENT_MOUSELEAVE)
@@ -3638,8 +3589,9 @@ class Tooltip extends BaseComponent {
                 });
                 EventHandler.on(this._element, eventOut, this._config.selector, (event) => {
                     const context = this._initializeOnDelegatedTarget(event);
-                    context._activeTrigger[event.type === 'focusout' ? TRIGGER_FOCUS : TRIGGER_HOVER] =
-                        context._element.contains(event.relatedTarget);
+                    context._activeTrigger[event.type === 'focusout' ? TRIGGER_FOCUS : TRIGGER_HOVER] = context._element.contains(
+                        event.relatedTarget,
+                    );
                     context._leave();
                 });
             }
@@ -4065,9 +4017,7 @@ class ScrollSpy extends BaseComponent {
     _activateParents(target) {
         // Activate dropdown parents
         if (target.classList.contains(CLASS_NAME_DROPDOWN_ITEM)) {
-            SelectorEngine.findOne(SELECTOR_DROPDOWN_TOGGLE$1, target.closest(SELECTOR_DROPDOWN)).classList.add(
-                CLASS_NAME_ACTIVE$1,
-            );
+            SelectorEngine.findOne(SELECTOR_DROPDOWN_TOGGLE$1, target.closest(SELECTOR_DROPDOWN)).classList.add(CLASS_NAME_ACTIVE$1);
             return;
         }
         for (const listGroup of SelectorEngine.parents(target, SELECTOR_NAV_LIST_GROUP)) {

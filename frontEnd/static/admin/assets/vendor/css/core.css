@@ -38,8 +38,8 @@
     --bs-black-rgb: 67, 89, 113;
     --bs-body-color-rgb: 105, 122, 141;
     --bs-body-bg-rgb: 245, 245, 249;
-    --bs-font-sans-serif: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell',
-        'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    --bs-font-sans-serif: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+        'Droid Sans', 'Helvetica Neue', sans-serif;
     --bs-font-monospace: 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     --bs-root-font-size: 16px;
@@ -2945,9 +2945,7 @@ textarea.form-control-lg {
 }
 
 .input-group
-    > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(
-        .invalid-feedback
-    ) {
+    > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
     margin-left: -1px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -16789,9 +16787,7 @@ html:not(.layout-footer-fixed) .content-wrapper {
     }
 
     .layout-navbar-fixed:not(.layout-menu-collapsed) .layout-content-navbar:not(.layout-without-menu) .layout-navbar,
-    .layout-menu-fixed.layout-navbar-fixed:not(.layout-menu-collapsed)
-        .layout-content-navbar:not(.layout-without-menu)
-        .layout-navbar,
+    .layout-menu-fixed.layout-navbar-fixed:not(.layout-menu-collapsed) .layout-content-navbar:not(.layout-without-menu) .layout-navbar,
     .layout-menu-fixed-offcanvas.layout-navbar-fixed:not(.layout-menu-collapsed)
         .layout-content-navbar:not(.layout-without-menu)
         .layout-navbar {
@@ -16942,9 +16938,7 @@ html:not(.layout-footer-fixed) .content-wrapper {
 }
 
 @media (min-width: 1200px) {
-    .layout-menu-collapsed:not(.layout-transitioning):not(.layout-menu-offcanvas):not(.layout-menu-fixed):not(
-            .layout-menu-fixed-offcanvas
-        )
+    .layout-menu-collapsed:not(.layout-transitioning):not(.layout-menu-offcanvas):not(.layout-menu-fixed):not(.layout-menu-fixed-offcanvas)
         .layout-menu {
         transition-duration: 0.3s;
         transition-property: margin-left, margin-right, width;
@@ -16976,8 +16970,7 @@ html:not(.layout-footer-fixed) .content-wrapper {
         transition-property: left, right;
     }
 
-    .layout-transitioning:not(.layout-menu-offcanvas):not(.layout-menu-fixed):not(.layout-menu-fixed-offcanvas)
-        .layout-menu {
+    .layout-transitioning:not(.layout-menu-offcanvas):not(.layout-menu-fixed):not(.layout-menu-fixed-offcanvas) .layout-menu {
         transition-duration: 0.3s;
         transition-property: margin-left, margin-right, width;
     }
@@ -17098,9 +17091,7 @@ html:not(.layout-footer-fixed) .content-wrapper {
 }
 
 @media (min-width: 1200px) {
-    .layout-menu-collapsed:not(.layout-menu-hover):not(.layout-menu-offcanvas):not(.layout-menu-fixed-offcanvas)
-        .layout-menu
-        .app-brand {
+    .layout-menu-collapsed:not(.layout-menu-hover):not(.layout-menu-offcanvas):not(.layout-menu-fixed-offcanvas) .layout-menu .app-brand {
         width: 5.25rem;
     }
 

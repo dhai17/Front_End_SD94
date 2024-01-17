@@ -25,12 +25,10 @@ app.controller('choXacNhanCustomerController', function ($scope, $http) {
         decodedToken = parseJwt(token);
     }
 
-    $http
-        .get('http://localhost:8080/customer/donHang/choXacNhan/' + decodedToken.email, { headers })
-        .then(function (response) {
-            const hoaDon = response.data;
-            $scope.hoaDons = hoaDon;
-        });
+    $http.get('http://localhost:8080/customer/donHang/choXacNhan/' + decodedToken.email, { headers }).then(function (response) {
+        const hoaDon = response.data;
+        $scope.hoaDons = hoaDon;
+    });
 
     $scope.customerhuyDon = function (hoaDon) {
         Swal.fire({
@@ -47,18 +45,16 @@ app.controller('choXacNhanCustomerController', function ($scope, $http) {
                     nguoi_thao_tac: decodedToken.email,
                 };
 
-                $http
-                    .post('http://localhost:8080/customer/donHang/huyDonCustomer/', data, { headers })
-                    .then(function (response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Hủy đơn hàng thành công',
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
-                        const hoaDon = response.data;
-                        $scope.hoaDons = hoaDon;
+                $http.post('http://localhost:8080/customer/donHang/huyDonCustomer/', data, { headers }).then(function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Hủy đơn hàng thành công',
+                        showConfirmButton: false,
+                        timer: 2000,
                     });
+                    const hoaDon = response.data;
+                    $scope.hoaDons = hoaDon;
+                });
             }
         });
     };
@@ -148,17 +144,15 @@ app.controller('CTChoXacNhanCustomer', function ($scope, $routeParams, $http) {
                     nguoi_thao_tac: decodedToken.email,
                 };
 
-                $http
-                    .post('http://localhost:8080/customer/donHang/huyDonCustomer/', data, { headers })
-                    .then(function (response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Hủy đơn hàng thành công',
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
-                        window.location.href = '#!/don-hang';
+                $http.post('http://localhost:8080/customer/donHang/huyDonCustomer/', data, { headers }).then(function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Hủy đơn hàng thành công',
+                        showConfirmButton: false,
+                        timer: 2000,
                     });
+                    window.location.href = '#!/don-hang';
+                });
             }
         });
     };

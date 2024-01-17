@@ -25,12 +25,10 @@ app.controller('daGiaoHangCustomerController', function ($scope, $http) {
         decodedToken = parseJwt(token);
     }
 
-    $http
-        .get('http://localhost:8080/customer/donHang/daGiaoHang/' + decodedToken.email, { headers })
-        .then(function (response) {
-            const hoaDon = response.data;
-            $scope.hoaDons = hoaDon;
-        });
+    $http.get('http://localhost:8080/customer/donHang/daGiaoHang/' + decodedToken.email, { headers }).then(function (response) {
+        const hoaDon = response.data;
+        $scope.hoaDons = hoaDon;
+    });
 
     $scope.tochoXacNhan = function () {
         window.location.href = '#!/don-hang';

@@ -920,16 +920,12 @@
 
     proto.getXValue = function (x) {
         var isHorizontal = this.layout._getOption('horizontal');
-        return this.layout.options.percentPosition && !isHorizontal
-            ? (x / this.layout.size.width) * 100 + '%'
-            : x + 'px';
+        return this.layout.options.percentPosition && !isHorizontal ? (x / this.layout.size.width) * 100 + '%' : x + 'px';
     };
 
     proto.getYValue = function (y) {
         var isHorizontal = this.layout._getOption('horizontal');
-        return this.layout.options.percentPosition && isHorizontal
-            ? (y / this.layout.size.height) * 100 + '%'
-            : y + 'px';
+        return this.layout.options.percentPosition && isHorizontal ? (y / this.layout.size.height) * 100 + '%' : y + 'px';
     };
 
     proto._transitionTo = function (x, y) {
@@ -1296,23 +1292,17 @@
     /* jshint strict: false */ /* globals define, module, require */
     if (typeof define == 'function' && define.amd) {
         // AMD - RequireJS
-        define('outlayer/outlayer', [
-            'ev-emitter/ev-emitter',
-            'get-size/get-size',
-            'fizzy-ui-utils/utils',
-            './item',
-        ], function (EvEmitter, getSize, utils, Item) {
+        define('outlayer/outlayer', ['ev-emitter/ev-emitter', 'get-size/get-size', 'fizzy-ui-utils/utils', './item'], function (
+            EvEmitter,
+            getSize,
+            utils,
+            Item,
+        ) {
             return factory(window, EvEmitter, getSize, utils, Item);
         });
     } else if (typeof module == 'object' && module.exports) {
         // CommonJS - Browserify, Webpack
-        module.exports = factory(
-            window,
-            require('ev-emitter'),
-            require('get-size'),
-            require('fizzy-ui-utils'),
-            require('./item'),
-        );
+        module.exports = factory(window, require('ev-emitter'), require('get-size'), require('fizzy-ui-utils'), require('./item'));
     } else {
         // browser global
         window.Outlayer = factory(window, window.EvEmitter, window.getSize, window.fizzyUIUtils, window.Outlayer.Item);

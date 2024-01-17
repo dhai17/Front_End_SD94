@@ -68,16 +68,14 @@ app.controller('DaHuyController', function ($scope, $http) {
     //Tìm kiếm
     $scope.$watch('search', function (newVal) {
         if (newVal) {
-            $http
-                .get('http://localhost:8080/hoaDon/taiQuay/daHuy/timKiem=' + newVal, { headers })
-                .then(function (response) {
-                    const pending = response.data;
+            $http.get('http://localhost:8080/hoaDon/taiQuay/daHuy/timKiem=' + newVal, { headers }).then(function (response) {
+                const pending = response.data;
 
-                    // Cập nhật lại dữ liệu trong table nhưng không load lại trang
-                    $scope.$evalAsync(function () {
-                        $scope.pending = pending;
-                    });
+                // Cập nhật lại dữ liệu trong table nhưng không load lại trang
+                $scope.$evalAsync(function () {
+                    $scope.pending = pending;
                 });
+            });
         } else {
             $scope.loadData();
         }
@@ -88,15 +86,13 @@ app.controller('DaHuyController', function ($scope, $http) {
         let formattedDate = formatDate(searchDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http
-            .get('http://localhost:8080/hoaDon/taiQuay/daHuy/timKiemNgay=' + formattedDate, { headers })
-            .then(function (response) {
-                const pending = response.data;
+        $http.get('http://localhost:8080/hoaDon/taiQuay/daHuy/timKiemNgay=' + formattedDate, { headers }).then(function (response) {
+            const pending = response.data;
 
-                $scope.$evalAsync(function () {
-                    $scope.pending = pending;
-                });
+            $scope.$evalAsync(function () {
+                $scope.pending = pending;
             });
+        });
     };
 
     function formatDate(dateString) {

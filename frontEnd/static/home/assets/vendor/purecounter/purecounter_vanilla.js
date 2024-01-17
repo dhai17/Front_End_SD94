@@ -19,10 +19,7 @@
             638: function (e) {
                 function t(e, t, r) {
                     return (
-                        t in e
-                            ? Object.defineProperty(e, t, { value: r, enumerable: !0, configurable: !0, writable: !0 })
-                            : (e[t] = r),
-                        e
+                        t in e ? Object.defineProperty(e, t, { value: r, enumerable: !0, configurable: !0, writable: !0 }) : (e[t] = r), e
                     );
                 }
                 function r(e) {

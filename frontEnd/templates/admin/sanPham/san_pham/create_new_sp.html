@@ -34,9 +34,7 @@
                                         ng-change="onColorChange()"
                                     >
                                         <option value="">Chọn màu sắc</option>
-                                        <option ng-repeat="mauSac in mauSac" value="{{mauSac}}">
-                                            {{mauSac.tenMauSac}}
-                                        </option>
+                                        <option ng-repeat="mauSac in mauSac" value="{{mauSac}}">{{mauSac.tenMauSac}}</option>
                                     </select>
                                 </div>
 
@@ -58,11 +56,7 @@
                                         ng-model="selectedSizes"
                                     >
                                         <option value="">Chọn kích cỡ</option>
-                                        <option
-                                            ng-repeat="kichCos in kichCo"
-                                            value="{{kichCos}}"
-                                            ng-click="getIdSize(kichCos)"
-                                        >
+                                        <option ng-repeat="kichCos in kichCo" value="{{kichCos}}" ng-click="getIdSize(kichCos)">
                                             {{kichCos.kichCo}}
                                         </option>
                                     </select>
@@ -79,12 +73,7 @@
                         <ion-icon name="arrow-back"></ion-icon> Quay lại
                     </button>
 
-                    <button
-                        id="btnCapNhat"
-                        class="btn btn-primary"
-                        type="button"
-                        ng-click="LuuThemMoiSanPhamTuongTu(editProduct)"
-                    >
+                    <button id="btnCapNhat" class="btn btn-primary" type="button" ng-click="LuuThemMoiSanPhamTuongTu(editProduct)">
                         <ion-icon name="save"></ion-icon> Cập nhật
                     </button>
                 </div>

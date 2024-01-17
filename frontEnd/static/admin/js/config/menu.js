@@ -62,9 +62,7 @@ class Menu {
                 if (menuItem) this._topParent = menuItem.childNodes[0];
             }
 
-            const toggleLink = e.target.classList.contains('menu-toggle')
-                ? e.target
-                : Menu._findParent(e.target, 'menu-toggle', false);
+            const toggleLink = e.target.classList.contains('menu-toggle') ? e.target : Menu._findParent(e.target, 'menu-toggle', false);
 
             if (toggleLink) {
                 e.preventDefault();

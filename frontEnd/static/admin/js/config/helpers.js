@@ -185,9 +185,7 @@ const Helpers = {
     _triggerEvent(name) {
         this._triggerWindowEvent(`layout${name}`);
 
-        this._listeners
-            .filter((listener) => listener.event === name)
-            .forEach((listener) => listener.callback.call(null));
+        this._listeners.filter((listener) => listener.event === name).forEach((listener) => listener.callback.call(null));
     },
 
     // ---
@@ -199,10 +197,7 @@ const Helpers = {
             document.head.appendChild(this._styleEl);
         }
 
-        const newStyle = INLINE_STYLES.replace(/\{navbarHeight\}/gi, navbarHeight).replace(
-            /\{footerHeight\}/gi,
-            footerHeight,
-        );
+        const newStyle = INLINE_STYLES.replace(/\{navbarHeight\}/gi, navbarHeight).replace(/\{footerHeight\}/gi, footerHeight);
 
         if (this._curStyle !== newStyle) {
             this._curStyle = newStyle;
@@ -272,9 +267,7 @@ const Helpers = {
         clonedEl.style.visibility = 'hidden';
         clonedEl.style.position = 'absolute';
 
-        Array.prototype.slice
-            .call(clonedEl.querySelectorAll('.collapse.show'))
-            .forEach((el) => this._removeClass('show', el));
+        Array.prototype.slice.call(clonedEl.querySelectorAll('.collapse.show')).forEach((el) => this._removeClass('show', el));
 
         layoutNavbar.parentNode.insertBefore(clonedEl, layoutNavbar);
 
@@ -576,8 +569,7 @@ const Helpers = {
 
     update() {
         if (
-            (this.getLayoutNavbar() &&
-                ((!this.isSmallScreen() && this.isLayoutNavbarFull() && this.isFixed()) || this.isNavbarFixed())) ||
+            (this.getLayoutNavbar() && ((!this.isSmallScreen() && this.isLayoutNavbarFull() && this.isFixed()) || this.isNavbarFixed())) ||
             (this.getLayoutFooter() && this.isFooterFixed())
         ) {
             this._updateInlineStyle(this._getNavbarHeight(), this._getFooterHeight());
@@ -601,8 +593,7 @@ const Helpers = {
 
     isRtl() {
         return (
-            document.querySelector('body').getAttribute('dir') === 'rtl' ||
-            document.querySelector('html').getAttribute('dir') === 'rtl'
+            document.querySelector('body').getAttribute('dir') === 'rtl' || document.querySelector('html').getAttribute('dir') === 'rtl'
         );
     },
 
@@ -611,10 +602,7 @@ const Helpers = {
     },
 
     isSmallScreen() {
-        return (
-            (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth) <
-            this.LAYOUT_BREAKPOINT
-        );
+        return (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth) < this.LAYOUT_BREAKPOINT;
     },
 
     isLayoutNavbarFull() {
@@ -633,10 +621,7 @@ const Helpers = {
     },
 
     isNavbarFixed() {
-        return (
-            this._hasClass('layout-navbar-fixed') ||
-            (!this.isSmallScreen() && this.isFixed() && this.isLayoutNavbarFull())
-        );
+        return this._hasClass('layout-navbar-fixed') || (!this.isSmallScreen() && this.isFixed() && this.isLayoutNavbarFull());
     },
 
     isFooterFixed() {
@@ -774,8 +759,7 @@ const Helpers = {
                             listening = false;
                         };
                         recognition.onresult = (event) => {
-                            el.closest('.input-group').querySelector('.form-control').value =
-                                event.results[0][0].transcript;
+                            el.closest('.input-group').querySelector('.form-control').value = event.results[0][0].transcript;
                         };
                         recognition.onspeechend = () => {
                             listening = false;
@@ -812,12 +796,7 @@ const Helpers = {
 
                 targetEl.forEach((tel) => {
                     tel.classList.toggle('show');
-                    if (
-                        typeof overlay !== 'undefined' &&
-                        overlay !== null &&
-                        overlay !== false &&
-                        typeof appOverlay !== 'undefined'
-                    ) {
+                    if (typeof overlay !== 'undefined' && overlay !== null && overlay !== false && typeof appOverlay !== 'undefined') {
                         if (tel.classList.contains('show')) {
                             appOverlay[0].classList.add('show');
                         } else {

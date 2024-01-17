@@ -8,8 +8,7 @@
         ? (module.exports = factory(require('@popperjs/core')))
         : typeof define === 'function' && define.amd
           ? define(['@popperjs/core'], factory)
-          : ((global = typeof globalThis !== 'undefined' ? globalThis : global || self),
-            (global.bootstrap = factory(global.Popper)));
+          : ((global = typeof globalThis !== 'undefined' ? globalThis : global || self), (global.bootstrap = factory(global.Popper)));
 })(this, function (Popper) {
     'use strict';
 
@@ -62,9 +61,7 @@
             if (!instanceMap.has(key) && instanceMap.size !== 0) {
                 // eslint-disable-next-line no-console
                 console.error(
-                    `Bootstrap doesn't allow more than one instance per element. Bound instance: ${
-                        Array.from(instanceMap.keys())[0]
-                    }.`,
+                    `Bootstrap doesn't allow more than one instance per element. Bound instance: ${Array.from(instanceMap.keys())[0]}.`,
                 );
                 return;
             }
@@ -448,9 +445,7 @@
         };
     }
     function findHandler(events, callable, delegationSelector = null) {
-        return Object.values(events).find(
-            (event) => event.callable === callable && event.delegationSelector === delegationSelector,
-        );
+        return Object.values(events).find((event) => event.callable === callable && event.delegationSelector === delegationSelector);
     }
     function normalizeParameters(originalTypeEvent, handler, delegationFunction) {
         const isDelegated = typeof handler === 'string';
@@ -475,8 +470,7 @@
                 return function (event) {
                     if (
                         !event.relatedTarget ||
-                        (event.relatedTarget !== event.delegateTarget &&
-                            !event.delegateTarget.contains(event.relatedTarget))
+                        (event.relatedTarget !== event.delegateTarget && !event.delegateTarget.contains(event.relatedTarget))
                     ) {
                         return fn.call(this, event);
                     }
@@ -492,9 +486,7 @@
             return;
         }
         const uid = makeEventUid(callable, originalTypeEvent.replace(namespaceRegex, ''));
-        const fn = isDelegated
-            ? bootstrapDelegationHandler(element, handler, callable)
-            : bootstrapHandler(element, callable);
+        const fn = isDelegated ? bootstrapDelegationHandler(element, handler, callable) : bootstrapHandler(element, callable);
         fn.delegationSelector = isDelegated ? handler : null;
         fn.callable = callable;
         fn.oneOff = oneOff;
@@ -534,11 +526,7 @@
             if (typeof originalTypeEvent !== 'string' || !element) {
                 return;
             }
-            const [isDelegated, callable, typeEvent] = normalizeParameters(
-                originalTypeEvent,
-                handler,
-                delegationFunction,
-            );
+            const [isDelegated, callable, typeEvent] = normalizeParameters(originalTypeEvent, handler, delegationFunction);
             const inNamespace = typeEvent !== originalTypeEvent;
             const events = getElementEvents(element);
             const storeElementEvent = events[typeEvent] || {};
@@ -660,9 +648,7 @@
                 return {};
             }
             const attributes = {};
-            const bsKeys = Object.keys(element.dataset).filter(
-                (key) => key.startsWith('bs') && !key.startsWith('bsConfig'),
-            );
+            const bsKeys = Object.keys(element.dataset).filter((key) => key.startsWith('bs') && !key.startsWith('bsConfig'));
             for (const key of bsKeys) {
                 let pureKey = key.replace(/^bs/, '');
                 pureKey = pureKey.charAt(0).toLowerCase() + pureKey.slice(1, pureKey.length);
@@ -866,16 +852,7 @@
             return [];
         },
         focusableChildren(element) {
-            const focusables = [
-                'a',
-                'button',
-                'input',
-                'textarea',
-                'select',
-                'details',
-                '[tabindex]',
-                '[contenteditable="true"]',
-            ]
+            const focusables = ['a', 'button', 'input', 'textarea', 'select', 'details', '[tabindex]', '[contenteditable="true"]']
                 .map((selector) => `${selector}:not([tabindex^="-"])`)
                 .join(',');
             return this.find(focusables, element).filter((el) => !isDisabled(el) && isVisible(el));
@@ -1169,10 +1146,7 @@
             }
         }
         _eventIsPointerPenTouch(event) {
-            return (
-                this._supportPointerEvents &&
-                (event.pointerType === POINTER_TYPE_PEN || event.pointerType === POINTER_TYPE_TOUCH)
-            );
+            return this._supportPointerEvents && (event.pointerType === POINTER_TYPE_PEN || event.pointerType === POINTER_TYPE_TOUCH);
         }
 
         // Static
@@ -1375,10 +1349,7 @@
                 if (this.touchTimeout) {
                     clearTimeout(this.touchTimeout);
                 }
-                this.touchTimeout = setTimeout(
-                    () => this._maybeEnableCycle(),
-                    TOUCHEVENT_COMPAT_WAIT + this._config.interval,
-                );
+                this.touchTimeout = setTimeout(() => this._maybeEnableCycle(), TOUCHEVENT_COMPAT_WAIT + this._config.interval);
             };
             const swipeConfig = {
                 leftCallback: () => this._slide(this._directionToOrder(DIRECTION_LEFT)),
@@ -1427,8 +1398,7 @@
             }
             const activeElement = this._getActive();
             const isNext = order === ORDER_NEXT;
-            const nextElement =
-                element || getNextActiveElement(this._getItems(), activeElement, isNext, this._config.wrap);
+            const nextElement = element || getNextActiveElement(this._getItems(), activeElement, isNext, this._config.wrap);
             if (nextElement === activeElement) {
                 return;
             }
@@ -1608,9 +1578,7 @@
             const toggleList = SelectorEngine.find(SELECTOR_DATA_TOGGLE$4);
             for (const elem of toggleList) {
                 const selector = SelectorEngine.getSelectorFromElement(elem);
-                const filterElement = SelectorEngine.find(selector).filter(
-                    (foundElement) => foundElement === this._element,
-                );
+                const filterElement = SelectorEngine.find(selector).filter((foundElement) => foundElement === this._element);
                 if (selector !== null && filterElement.length) {
                     this._triggerArray.push(elem);
                 }
@@ -2068,9 +2036,7 @@
             };
         }
         _selectMenuItem({ key, target }) {
-            const items = SelectorEngine.find(SELECTOR_VISIBLE_ITEMS, this._menu).filter((element) =>
-                isVisible(element),
-            );
+            const items = SelectorEngine.find(SELECTOR_VISIBLE_ITEMS, this._menu).filter((element) => isVisible(element));
             if (!items.length) {
                 return;
             }
@@ -2443,16 +2409,8 @@
             // give padding to element to balance the hidden scrollbar width
             this._setElementAttributes(this._element, PROPERTY_PADDING, (calculatedValue) => calculatedValue + width);
             // trick: We adjust positive paddingRight and negative marginRight to sticky-top elements to keep showing fullwidth
-            this._setElementAttributes(
-                SELECTOR_FIXED_CONTENT,
-                PROPERTY_PADDING,
-                (calculatedValue) => calculatedValue + width,
-            );
-            this._setElementAttributes(
-                SELECTOR_STICKY_CONTENT,
-                PROPERTY_MARGIN,
-                (calculatedValue) => calculatedValue - width,
-            );
+            this._setElementAttributes(SELECTOR_FIXED_CONTENT, PROPERTY_PADDING, (calculatedValue) => calculatedValue + width);
+            this._setElementAttributes(SELECTOR_STICKY_CONTENT, PROPERTY_MARGIN, (calculatedValue) => calculatedValue - width);
         }
         reset() {
             this._resetElementAttributes(this._element, 'overflow');
@@ -3089,16 +3047,7 @@
     };
     // js-docs-end allow-list
 
-    const uriAttributes = new Set([
-        'background',
-        'cite',
-        'href',
-        'itemtype',
-        'longdesc',
-        'poster',
-        'src',
-        'xlink:href',
-    ]);
+    const uriAttributes = new Set(['background', 'cite', 'href', 'itemtype', 'longdesc', 'poster', 'src', 'xlink:href']);
 
     /**
      * A pattern that recognizes URLs that are safe wrt. XSS in URL navigation
@@ -3345,10 +3294,7 @@
         sanitizeFn: null,
         selector: false,
         template:
-            '<div class="tooltip" role="tooltip">' +
-            '<div class="tooltip-arrow"></div>' +
-            '<div class="tooltip-inner"></div>' +
-            '</div>',
+            '<div class="tooltip" role="tooltip">' + '<div class="tooltip-arrow"></div>' + '<div class="tooltip-inner"></div>' + '</div>',
         title: '',
         trigger: 'hover focus',
     };
@@ -3580,10 +3526,7 @@
             };
         }
         _getTitle() {
-            return (
-                this._resolvePossibleFunction(this._config.title) ||
-                this._element.getAttribute('data-bs-original-title')
-            );
+            return this._resolvePossibleFunction(this._config.title) || this._element.getAttribute('data-bs-original-title');
         }
 
         // Private
@@ -3663,15 +3606,10 @@
             const triggers = this._config.trigger.split(' ');
             for (const trigger of triggers) {
                 if (trigger === 'click') {
-                    EventHandler.on(
-                        this._element,
-                        this.constructor.eventName(EVENT_CLICK$1),
-                        this._config.selector,
-                        (event) => {
-                            const context = this._initializeOnDelegatedTarget(event);
-                            context.toggle();
-                        },
-                    );
+                    EventHandler.on(this._element, this.constructor.eventName(EVENT_CLICK$1), this._config.selector, (event) => {
+                        const context = this._initializeOnDelegatedTarget(event);
+                        context.toggle();
+                    });
                 } else if (trigger !== TRIGGER_MANUAL) {
                     const eventIn =
                         trigger === TRIGGER_HOVER
@@ -3688,8 +3626,9 @@
                     });
                     EventHandler.on(this._element, eventOut, this._config.selector, (event) => {
                         const context = this._initializeOnDelegatedTarget(event);
-                        context._activeTrigger[event.type === 'focusout' ? TRIGGER_FOCUS : TRIGGER_HOVER] =
-                            context._element.contains(event.relatedTarget);
+                        context._activeTrigger[event.type === 'focusout' ? TRIGGER_FOCUS : TRIGGER_HOVER] = context._element.contains(
+                            event.relatedTarget,
+                        );
                         context._leave();
                     });
                 }
@@ -4115,9 +4054,7 @@
         _activateParents(target) {
             // Activate dropdown parents
             if (target.classList.contains(CLASS_NAME_DROPDOWN_ITEM)) {
-                SelectorEngine.findOne(SELECTOR_DROPDOWN_TOGGLE$1, target.closest(SELECTOR_DROPDOWN)).classList.add(
-                    CLASS_NAME_ACTIVE$1,
-                );
+                SelectorEngine.findOne(SELECTOR_DROPDOWN_TOGGLE$1, target.closest(SELECTOR_DROPDOWN)).classList.add(CLASS_NAME_ACTIVE$1);
                 return;
             }
             for (const listGroup of SelectorEngine.parents(target, SELECTOR_NAV_LIST_GROUP)) {
@@ -4302,9 +4239,7 @@
             this._queueCallback(complete, element, element.classList.contains(CLASS_NAME_FADE$1));
         }
         _keydown(event) {
-            if (
-                ![ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY, HOME_KEY, END_KEY].includes(event.key)
-            ) {
+            if (![ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY, HOME_KEY, END_KEY].includes(event.key)) {
                 return;
             }
             event.stopPropagation(); // stopPropagation/preventDefault both added to support up/down keys without scrolling the page

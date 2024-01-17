@@ -43,12 +43,10 @@ app.controller('checkOutController', function ($scope, $routeParams, $http) {
             $scope.hoaDon = hoaDon;
         });
 
-    $http
-        .get('http://localhost:8080/api/banHang/online/getHoaDonChiTiet/' + id_HoaDon, { headers })
-        .then(function (response) {
-            const hoaDonChiTiet = response.data;
-            $scope.hoaDonChiTiet = hoaDonChiTiet;
-        });
+    $http.get('http://localhost:8080/api/banHang/online/getHoaDonChiTiet/' + id_HoaDon, { headers }).then(function (response) {
+        const hoaDonChiTiet = response.data;
+        $scope.hoaDonChiTiet = hoaDonChiTiet;
+    });
 
     function fomatTien(tien) {
         let chuoiDaLoaiBo = tien.replace(/\./g, '').replace(' ₫', '');
@@ -67,11 +65,7 @@ app.controller('checkOutController', function ($scope, $routeParams, $http) {
         let diaChi = diaChiNhap + ' - ' + phuongXa + ' - ' + quanHuyen + ' - ' + tinhThanhPho;
 
         let diaChi2;
-        if (
-            diaChi.includes('Chọn Tỉnh/Thành phố') ||
-            diaChi.includes('Chọn Quận/Huyện') ||
-            diaChi.includes('Chọn Phường/Xã')
-        ) {
+        if (diaChi.includes('Chọn Tỉnh/Thành phố') || diaChi.includes('Chọn Quận/Huyện') || diaChi.includes('Chọn Phường/Xã')) {
             diaChi2 = '';
         } else {
             diaChi2 = diaChi;
@@ -130,11 +124,7 @@ app.controller('checkOutController', function ($scope, $routeParams, $http) {
         let diaChi = diaChiNhap + ' - ' + phuongXa + ' - ' + quanHuyen + ' - ' + tinhThanhPho;
 
         let diaChi2;
-        if (
-            diaChi.includes('Chọn Tỉnh/Thành phố') ||
-            diaChi.includes('Chọn Quận/Huyện') ||
-            diaChi.includes('Chọn Phường/Xã')
-        ) {
+        if (diaChi.includes('Chọn Tỉnh/Thành phố') || diaChi.includes('Chọn Quận/Huyện') || diaChi.includes('Chọn Phường/Xã')) {
             diaChi2 = '';
         } else {
             diaChi2 = diaChi;
@@ -173,7 +163,7 @@ app.controller('checkOutController', function ($scope, $routeParams, $http) {
             })
             .catch(function (e) {
                 console.log(e);
-                    const errorMessage = e.data[Object.keys(e.data)[0]];
+                const errorMessage = e.data[Object.keys(e.data)[0]];
                 Swal.fire({
                     icon: 'error',
                     title: errorMessage,

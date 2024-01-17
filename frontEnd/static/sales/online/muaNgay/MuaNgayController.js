@@ -87,11 +87,7 @@ app.controller('MuaNgayController', function ($scope, $routeParams, $http) {
         let diaChi = diaChiNhap + ' - ' + phuongXa + ' - ' + quanHuyen + ' - ' + tinhThanhPho;
 
         let diaChi2;
-        if (
-            diaChi.includes('Chọn Tỉnh/Thành phố') ||
-            diaChi.includes('Chọn Quận/Huyện') ||
-            diaChi.includes('Chọn Phường/Xã')
-        ) {
+        if (diaChi.includes('Chọn Tỉnh/Thành phố') || diaChi.includes('Chọn Quận/Huyện') || diaChi.includes('Chọn Phường/Xã')) {
             diaChi2 = '';
         } else {
             diaChi2 = diaChi;
@@ -147,11 +143,7 @@ app.controller('MuaNgayController', function ($scope, $routeParams, $http) {
         let diaChi = diaChiNhap + ' - ' + phuongXa + ' - ' + quanHuyen + ' - ' + tinhThanhPho;
 
         let diaChi2;
-        if (
-            diaChi.includes('Chọn Tỉnh/Thành phố') ||
-            diaChi.includes('Chọn Quận/Huyện') ||
-            diaChi.includes('Chọn Phường/Xã')
-        ) {
+        if (diaChi.includes('Chọn Tỉnh/Thành phố') || diaChi.includes('Chọn Quận/Huyện') || diaChi.includes('Chọn Phường/Xã')) {
             diaChi2 = '';
         } else {
             diaChi2 = diaChi;

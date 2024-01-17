@@ -49,9 +49,7 @@
                                 </div>
                             </th>
                             <td class="border-0 align-middle">
-                                <strong
-                                    >{{hoaDonChiTiet.sanPhamChiTiet.sanPham.gia.toLocaleString('vi-VN')}} VNĐ</strong
-                                >
+                                <strong>{{hoaDonChiTiet.sanPhamChiTiet.sanPham.gia.toLocaleString('vi-VN')}} VNĐ</strong>
                             </td>
                             <td class="border-0 align-middle">{{hoaDonChiTiet.soLuong}}</td>
                             <td class="border-0 align-middle">
@@ -104,12 +102,7 @@
                             ng-change="onKhuyenMaiChange()"
                         >
                             <option value="">Chọn mã giảm giá</option>
-                            <option
-                                id="KhuyenMaiDangChon"
-                                ng-repeat="km in khuyenMai"
-                                value="{{km.tenKhuyenMai}}"
-                                class="option"
-                            >
+                            <option id="KhuyenMaiDangChon" ng-repeat="km in khuyenMai" value="{{km.tenKhuyenMai}}" class="option">
                                 {{km.tenKhuyenMai}}
                             </option>
                         </select>
@@ -157,9 +150,7 @@
                             ng-change="onKhachHangChange()"
                         >
                             <option value="">Chọn khách hàng</option>
-                            <option ng-repeat="kh in khachHangList" value="{{kh.id}}" class="option">
-                                {{kh.hoTen}}
-                            </option>
+                            <option ng-repeat="kh in khachHangList" value="{{kh.id}}" class="option">{{kh.hoTen}}</option>
                         </select>
                     </div>
 
@@ -209,8 +200,7 @@
                         </li>
 
                         <li class="d-flex justify-content-between py-3 border-bottom">
-                            <strong class="text-muted">Ngày tạo</strong
-                            ><strong>{{hoaDon.createdDate| date:'dd/MM/yyyy' }}</strong>
+                            <strong class="text-muted">Ngày tạo</strong><strong>{{hoaDon.createdDate| date:'dd/MM/yyyy' }}</strong>
                         </li>
 
                         <li class="d-flex justify-content-between py-3 border-bottom">
@@ -230,9 +220,7 @@
 
                         <li class="d-flex justify-content-between py-3 border-bottom">
                             <strong class="text-muted">Tạm tính</strong
-                            ><strong id="tongTienHang-taiQuay"
-                                >{{hoaDon.tongTienHoaDon.toLocaleString('vi-VN')}} VNĐ</strong
-                            >
+                            ><strong id="tongTienHang-taiQuay">{{hoaDon.tongTienHoaDon.toLocaleString('vi-VN')}} VNĐ</strong>
                         </li>
 
                         <li class="d-flex justify-content-between py-3 border-bottom">
@@ -249,20 +237,11 @@
                     </ul>
 
                     <div class="button-group" style="float: right">
-                        <button
-                            type="submit"
-                            class="btn btn-dark px-4 rounded-pill HuyDonBanTaiQuay"
-                            ng-click="huyDon()"
-                        >
+                        <button type="submit" class="btn btn-dark px-4 rounded-pill HuyDonBanTaiQuay" ng-click="huyDon()">
                             <i class="fas fa-trash"></i> Hủy đơn
                         </button>
 
-                        <button
-                            type="submit"
-                            class="btn btn-dark px-4 rounded-pill"
-                            id="thanhToanHoaDonTaiQuay"
-                            ng-click="thanhToan()"
-                        >
+                        <button type="submit" class="btn btn-dark px-4 rounded-pill" id="thanhToanHoaDonTaiQuay" ng-click="thanhToan()">
                             <i class="bi bi-currency-dollar"></i> Thanh toán
                         </button>
                     </div>

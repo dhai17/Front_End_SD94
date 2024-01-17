@@ -50,10 +50,7 @@ var tns = (function () {
         var e = '';
         return (
             t.fake &&
-                ((e = n.style.overflow),
-                (t.style.background = ''),
-                (t.style.overflow = n.style.overflow = 'hidden'),
-                n.appendChild(t)),
+                ((e = n.style.overflow), (t.style.background = ''), (t.style.overflow = n.style.overflow = 'hidden'), n.appendChild(t)),
             e
         );
     }
@@ -106,8 +103,7 @@ var tns = (function () {
     }
     function Ki(t, e) {
         t = r(t) || t instanceof Array ? t : [t];
-        for (var n = (e = e instanceof Array ? e : [e]).length, i = t.length; i--; )
-            for (var a = n; a--; ) t[i].removeAttribute(e[a]);
+        for (var n = (e = e instanceof Array ? e : [e]).length, i = t.length; i--; ) for (var a = n; a--; ) t[i].removeAttribute(e[a]);
     }
     function Ji(t) {
         for (var e = [], n = 0, i = t.length; n < i; n++) e.push(t[n]);
@@ -140,12 +136,7 @@ var tns = (function () {
     function ta(t, e) {
         var n = !1;
         return (
-            /^Webkit/.test(t)
-                ? (n = 'webkit' + e + 'End')
-                : /^O/.test(t)
-                  ? (n = 'o' + e + 'End')
-                  : t && (n = e.toLowerCase() + 'end'),
-            n
+            /^Webkit/.test(t) ? (n = 'webkit' + e + 'End') : /^O/.test(t) ? (n = 'o' + e + 'End') : t && (n = e.toLowerCase() + 'end'), n
         );
     }
     var a = !1;
@@ -259,19 +250,16 @@ var tns = (function () {
             var t = navigator.userAgent,
                 i = new Date();
             try {
-                (e = h.localStorage) ? (e.setItem(i, i), (n = e.getItem(i) == i), e.removeItem(i)) : (n = !1),
-                    n || (e = {});
+                (e = h.localStorage) ? (e.setItem(i, i), (n = e.getItem(i) == i), e.removeItem(i)) : (n = !1), n || (e = {});
             } catch (t) {
                 n = !1;
             }
             n &&
                 (e.tnsApp &&
                     e.tnsApp !== t &&
-                    ['tC', 'tPL', 'tMQ', 'tTf', 't3D', 'tTDu', 'tTDe', 'tADu', 'tADe', 'tTE', 'tAE'].forEach(
-                        function (t) {
-                            e.removeItem(t);
-                        },
-                    ),
+                    ['tC', 'tPL', 'tMQ', 'tTf', 't3D', 'tTDu', 'tTDe', 'tADu', 'tADe', 'tTE', 'tAE'].forEach(function (t) {
+                        e.removeItem(t);
+                    }),
                 (localStorage.tnsApp = t));
         }
         var r,
@@ -294,14 +282,7 @@ var tns = (function () {
                               a = !1;
                           e.appendChild(i);
                           try {
-                              for (
-                                  var r,
-                                      o = '(10px * 10)',
-                                      u = ['calc' + o, '-moz-calc' + o, '-webkit-calc' + o],
-                                      l = 0;
-                                  l < 3;
-                                  l++
-                              )
+                              for (var r, o = '(10px * 10)', u = ['calc' + o, '-moz-calc' + o, '-webkit-calc' + o], l = 0; l < 3; l++)
                                   if (((r = u[l]), (i.style.width = r), 100 === i.offsetWidth)) {
                                       a = r.replace(o, '');
                                       break;
@@ -330,10 +311,7 @@ var tns = (function () {
                               (r.innerHTML = o),
                               a.appendChild(r),
                               n.appendChild(a),
-                              (t =
-                                  Math.abs(
-                                      a.getBoundingClientRect().left - r.children[67].getBoundingClientRect().left,
-                                  ) < 2),
+                              (t = Math.abs(a.getBoundingClientRect().left - r.children[67].getBoundingClientRect().left) < 2),
                               n.fake ? zi(n, i) : a.remove(),
                               t
                           );
@@ -500,10 +478,7 @@ var tns = (function () {
                                       var i = k[n][t];
                                       i && (ot || i < K) && e.push(i);
                                   }
-                              return (
-                                  e.length || e.push(0),
-                                  Math.ceil(ot ? vt / Math.min.apply(null, e) : Math.max.apply(null, e))
-                              );
+                              return e.length || e.push(0), Math.ceil(ot ? vt / Math.min.apply(null, e) : Math.max.apply(null, e));
                           }
                       })()),
                       (nt = I ? Math.ceil((5 * et - K) / 2) : 4 * et - K),
@@ -574,12 +549,7 @@ var tns = (function () {
                         if (!Qi(e, 'data-nav')) return;
                         var n = [a.LEFT, a.RIGHT, a.ENTER, a.SPACE].indexOf(t.keyCode),
                             i = Number(Xi(e, 'data-nav'));
-                        0 <= n &&
-                            (0 === n
-                                ? 0 < i && gi(Be[i - 1])
-                                : 1 === n
-                                  ? i < De - 1 && gi(Be[i + 1])
-                                  : ci((ke = i), t));
+                        0 <= n && (0 === n ? 0 < i && gi(Be[i - 1]) : 1 === n ? i < De - 1 && gi(Be[i + 1]) : ci((ke = i), t));
                     },
                 },
                 oe = {
@@ -670,9 +640,7 @@ var tns = (function () {
                 d &&
                     ((Pt = d),
                     (zt = 'translate'),
-                    v
-                        ? ((zt += q ? '3d(' : '3d(0px, '), (Wt = q ? ', 0px, 0px)' : ', 0px)'))
-                        : ((zt += q ? 'X(' : 'Y('), (Wt = ')'))),
+                    v ? ((zt += q ? '3d(' : '3d(0px, '), (Wt = q ? ', 0px, 0px)' : ', 0px)')) : ((zt += q ? 'X(' : 'Y('), (Wt = ')'))),
                 I && (G.className = G.className.replace('tns-vpfix', '')),
                 (function () {
                     dn('gutter');
@@ -726,18 +694,12 @@ var tns = (function () {
                         }
                     q &&
                         (g || rt
-                            ? (Wi(
-                                  Bt,
-                                  '#' + Zt + ' > .tns-item',
-                                  'font-size:' + h.getComputedStyle(Y[0]).fontSize + ';',
-                                  Fi(Bt),
-                              ),
+                            ? (Wi(Bt, '#' + Zt + ' > .tns-item', 'font-size:' + h.getComputedStyle(Y[0]).fontSize + ';', Fi(Bt)),
                               Wi(Bt, '#' + Zt, 'font-size:0;', Fi(Bt)))
                             : I &&
                               qi(Y, function (t, e) {
                                   var n;
-                                  t.style.marginLeft =
-                                      ((n = e), y ? y + '(' + 100 * n + '% / ' + Ht + ')' : (100 * n) / Ht + '%');
+                                  t.style.marginLeft = ((n = e), y ? y + '(' + 100 * n + '% / ' + Ht + ')' : (100 * n) / Ht + '%');
                               }));
                     if (H) {
                         if (x) {
@@ -775,8 +737,7 @@ var tns = (function () {
                                 p = vn('autoHeight', a),
                                 m = vn('gutter', a);
                             x && S && vn('autoHeight', a) && 'speed' in r && (o = '#' + Zt + '-mw{' + xn(d) + '}'),
-                                ('edgePadding' in r || 'gutter' in r) &&
-                                    (u = '#' + Zt + '-iw{' + pn(v, m, f, d, p) + '}'),
+                                ('edgePadding' in r || 'gutter' in r) && (u = '#' + Zt + '-iw{' + pn(v, m, f, d, p) + '}'),
                                 I &&
                                     q &&
                                     !rt &&
@@ -784,16 +745,12 @@ var tns = (function () {
                                     (l = 'width:' + mn(f, m, c) + ';'),
                                 x && 'speed' in r && (l += xn(d)),
                                 l && (l = '#' + Zt + '{' + l + '}'),
-                                ('fixedWidth' in r || (ot && 'gutter' in r) || (!I && 'items' in r)) &&
-                                    (s += hn(f, m, c)),
+                                ('fixedWidth' in r || (ot && 'gutter' in r) || (!I && 'items' in r)) && (s += hn(f, m, c)),
                                 'gutter' in r && (s += yn(m)),
                                 !I && 'speed' in r && (x && (s += xn(d)), b && (s += bn(d))),
                                 s && (s = '#' + Zt + ' > .tns-item{' + s + '}'),
                                 (i = o + u + l + s) &&
-                                    Bt.insertRule(
-                                        '@media (min-width: ' + a / 16 + 'em) {' + i + '}',
-                                        Bt.cssRules.length,
-                                    );
+                                    Bt.insertRule('@media (min-width: ' + a / 16 + 'em) {' + i + '}', Bt.cssRules.length);
                         }
                 })(),
                 Cn();
@@ -833,22 +790,14 @@ var tns = (function () {
                                     (s = Number(e.style[n].replace(i, '').replace(a, '').replace(l, ''))),
                                     (c = ((t - s) / r) * u),
                                     setTimeout(function t() {
-                                        (r -= u),
-                                            (s += c),
-                                            (e.style[n] = i + s + l + a),
-                                            0 < r ? setTimeout(t, u) : o();
+                                        (r -= u), (s += c), (e.style[n] = i + s + l + a), 0 < r ? setTimeout(t, u) : o();
                                     }, u)),
                               q || Ni();
                       }
                     : function () {
                           Ot = [];
                           var t = {};
-                          (t[C] = t[w] = si),
-                              na(Y[jt], t),
-                              ea(Y[qt], t),
-                              oi(jt, P, z, !0),
-                              oi(qt, W, P),
-                              (C && w && mt && Zi(G)) || si();
+                          (t[C] = t[w] = si), na(Y[jt], t), ea(Y[qt], t), oi(jt, P, z, !0), oi(qt, W, P), (C && w && mt && Zi(G)) || si();
                       };
             return {
                 version: '2.9.2',
@@ -1035,9 +984,7 @@ var tns = (function () {
             var t,
                 e = un();
             return (
-                (t = ve ? e : ot || rt ? Math.ceil(((e + 1) * De) / K - 1) : Math.floor(e / ft)),
-                !yt && I && qt === Gt && (t = De - 1),
-                t
+                (t = ve ? e : ot || rt ? Math.ceil(((e + 1) * De) / K - 1) : Math.floor(e / ft)), !yt && I && qt === Gt && (t = De - 1), t
             );
         }
         function sn() {
@@ -1053,12 +1000,7 @@ var tns = (function () {
                     var n,
                         i,
                         a = D.createElement('div');
-                    return (
-                        e.appendChild(a),
-                        (i = (n = a.getBoundingClientRect()).right - n.left),
-                        a.remove(),
-                        i || t(e.parentNode)
-                    );
+                    return e.appendChild(a), (i = (n = a.getBoundingClientRect()).right - n.left), a.remove(), i || t(e.parentNode);
                 })(Q) - t
             );
         }
@@ -1071,18 +1013,13 @@ var tns = (function () {
             if ((null == e && (e = J), 'items' === t && ot)) return Math.floor((st + lt) / (ot + lt)) || 1;
             var n = O[t];
             if (k) for (var i in k) e >= parseInt(i) && t in k[i] && (n = k[i][t]);
-            return (
-                'slideBy' === t && 'page' === n && (n = vn('items')),
-                I || ('slideBy' !== t && 'items' !== t) || (n = Math.floor(n)),
-                n
-            );
+            return 'slideBy' === t && 'page' === n && (n = vn('items')), I || ('slideBy' !== t && 'items' !== t) || (n = Math.floor(n)), n;
         }
         function pn(t, e, n, i, a) {
             var r = '';
             if (void 0 !== t) {
                 var o = t;
-                e && (o -= e),
-                    (r = q ? 'margin: 0 ' + o + 'px 0 ' + t + 'px;' : 'margin: ' + t + 'px 0 ' + o + 'px 0;');
+                e && (o -= e), (r = q ? 'margin: 0 ' + o + 'px 0 ' + t + 'px;' : 'margin: ' + t + 'px 0 ' + o + 'px 0;');
             } else if (e && !n) {
                 var u = '-' + e + 'px';
                 r = 'margin: 0 ' + (q ? u + ' 0 0' : '0 ' + u + ' 0') + ';';
@@ -1122,9 +1059,7 @@ var tns = (function () {
                 var t = G.querySelectorAll('img');
                 qi(t, function (t) {
                     var e = t.src;
-                    e && e.indexOf('data:image') < 0
-                        ? (ea(t, xe), (t.src = ''), (t.src = e), Vi(t, 'loading'))
-                        : St || zn(t);
+                    e && e.indexOf('data:image') < 0 ? (ea(t, xe), (t.src = ''), (t.src = e), Vi(t, 'loading')) : St || zn(t);
                 }),
                     Oi(function () {
                         jn(Ji(t), function () {
@@ -1152,10 +1087,7 @@ var tns = (function () {
             } else Mn();
         }
         function Mn() {
-            (q && !rt) || (Yn(), rt ? ((Rt = ni()), ee && (ne = Ln()), (Gt = Ft()), an($t || ne)) : Ni()),
-                I && ai(),
-                Tn(),
-                En();
+            (q && !rt) || (Yn(), rt ? ((Rt = ni()), ee && (ne = Ln()), (Gt = Ft()), an($t || ne)) : Ni()), I && ai(), Tn(), En();
         }
         function Tn() {
             if (
@@ -1232,8 +1164,7 @@ var tns = (function () {
                     (Me = j.querySelector('.tns-controls'))),
                 (Ee && Ae) || ((Ee = Me.children[0]), (Ae = Me.children[1])),
                 O.controlsContainer && Yi(Me, { 'aria-label': 'Carousel Navigation', tabindex: '0' }),
-                (O.controlsContainer || (O.prevButton && O.nextButton)) &&
-                    Yi([Ee, Ae], { 'aria-controls': Zt, tabindex: '-1' }),
+                (O.controlsContainer || (O.prevButton && O.nextButton)) && Yi([Ee, Ae], { 'aria-controls': Zt, tabindex: '-1' }),
                 (O.controlsContainer || (O.prevButton && O.nextButton)) &&
                     (Yi(Ee, { 'data-controls': 'prev' }), Yi(Ae, { 'data-controls': 'next' })),
                 (Ce = Un(Ee)),
@@ -1324,8 +1255,7 @@ var tns = (function () {
                     (st = fn()),
                     (q && !rt) || $t || (Yn(), q || (Ni(), (i = !0))),
                     (ot || rt) && ((Rt = ni()), (Gt = Ft())),
-                    (e || ot) &&
-                        ((ft = vn('items')), (dt = vn('slideBy')), (r = ft !== l) && (ot || rt || (Gt = Ft()), en())),
+                    (e || ot) && ((ft = vn('items')), (dt = vn('slideBy')), (r = ft !== l) && (ot || rt || (Gt = Ft()), en())),
                     e &&
                         $t !== s &&
                         ($t
@@ -1350,23 +1280,14 @@ var tns = (function () {
                             : (!(function () {
                                   if (!ie) return;
                                   ut && H && (V.style.margin = '');
-                                  if (Dt)
-                                      for (var t = 'tns-transparent', e = Dt; e--; )
-                                          I && Gi(Y[e], t), Gi(Y[Ht - e - 1], t);
+                                  if (Dt) for (var t = 'tns-transparent', e = Dt; e--; ) I && Gi(Y[e], t), Gi(Y[Ht - e - 1], t);
                                   On(), (ie = !1);
                               })(),
                               (i = !0))),
                     an($t || ne),
                     Tt || (Nt = Lt = !1),
                     pt !== f && (pt ? ea(D, le) : na(D, le)),
-                    xt !== d &&
-                        (xt
-                            ? Me
-                                ? _i(Me)
-                                : (Ee && _i(Ee), Ae && _i(Ae))
-                            : Me
-                              ? Ui(Me)
-                              : (Ee && Ui(Ee), Ae && Ui(Ae))),
+                    xt !== d && (xt ? (Me ? _i(Me) : (Ee && _i(Ee), Ae && _i(Ae))) : Me ? Ui(Me) : (Ee && Ui(Ee), Ae && Ui(Ae))),
                     Ct !== v && (Ct ? _i(Se) : Ui(Se)),
                     wt !== p && (wt ? ea(G, se, O.preventScrollOnTouch) : na(G, se)),
                     Mt !== m && (Mt ? ea(G, ce) : na(G, ce)),
@@ -1389,21 +1310,14 @@ var tns = (function () {
                 } else ct && (ot || rt) && (i = !0);
                 if (
                     ((r || (ot && !rt)) && ((De = Li()), Bi()),
-                    (a = qt !== x)
-                        ? (Ut.emit('indexChanged', Si()), (i = !0))
-                        : r
-                          ? a || Vn()
-                          : (ot || rt) && (Pn(), Kn(), kn()),
+                    (a = qt !== x) ? (Ut.emit('indexChanged', Si()), (i = !0)) : r ? a || Vn() : (ot || rt) && (Pn(), Kn(), kn()),
                     r &&
                         !I &&
                         (function () {
                             for (var t = qt + Math.min(K, ft), e = Ht; e--; ) {
                                 var n = Y[e];
                                 qt <= e && e < t
-                                    ? (Vi(n, 'tns-moving'),
-                                      (n.style.left = (100 * (e - qt)) / ft + '%'),
-                                      Vi(n, P),
-                                      Gi(n, W))
+                                    ? (Vi(n, 'tns-moving'), (n.style.left = (100 * (e - qt)) / ft + '%'), Vi(n, P), Gi(n, W))
                                     : n.style.left && ((n.style.left = ''), Vi(n, W), Gi(n, P)),
                                     Gi(n, z);
                             }
@@ -1457,9 +1371,7 @@ var tns = (function () {
         }
         function Hn() {
             if (!te) {
-                if (
-                    ((Bt.disabled = !0), (G.className = G.className.replace(_t.substring(1), '')), Ki(G, ['style']), yt)
-                )
+                if (((Bt.disabled = !0), (G.className = G.className.replace(_t.substring(1), '')), Ki(G, ['style']), yt))
                     for (var t = Dt; t--; ) I && Ui(Y[t]), Ui(Y[Ht - t - 1]);
                 if (((q && I) || Ki(V, ['style']), !I))
                     for (var e = qt, n = qt + K; e < n; e++) {
@@ -1485,12 +1397,7 @@ var tns = (function () {
                 i,
                 a,
                 r = qt;
-            if (
-                (ct || ut
-                    ? (rt || ot) && ((i = -(parseFloat(t) + ut)), (a = i + st + 2 * ut))
-                    : rt && ((i = _[qt]), (a = i + st)),
-                rt)
-            )
+            if ((ct || ut ? (rt || ot) && ((i = -(parseFloat(t) + ut)), (a = i + st + 2 * ut)) : rt && ((i = _[qt]), (a = i + st)), rt))
                 _.forEach(function (t, e) {
                     e < Ht && ((ct || ut) && t <= i + 0.5 && (r = e), 0.5 <= a - t && (n = e));
                 });
@@ -1626,20 +1533,14 @@ var tns = (function () {
                     e = we ? Ae.disabled : _n(Ae),
                     n = qt <= Vt,
                     i = !ht && Gt <= qt;
-                n && !t && Zn(Ce, Ee, !0),
-                    !n && t && Zn(Ce, Ee, !1),
-                    i && !e && Zn(we, Ae, !0),
-                    !i && e && Zn(we, Ae, !1);
+                n && !t && Zn(Ce, Ee, !0), !n && t && Zn(Ce, Ee, !1), i && !e && Zn(we, Ae, !0), !i && e && Zn(we, Ae, !1);
             }
         }
         function ti(t, e) {
             x && (t.style[x] = e);
         }
         function ei(t) {
-            return (
-                null == t && (t = qt),
-                rt ? (st - (ut ? lt : 0) - (_[t + 1] - _[t] - lt)) / 2 : ot ? (st - ot) / 2 : (ft - 1) / 2
-            );
+            return null == t && (t = qt), rt ? (st - (ut ? lt : 0) - (_[t + 1] - _[t] - lt)) / 2 : ot ? (st - ot) / 2 : (ft - 1) / 2;
         }
         function ni() {
             var t = st + (ut ? lt : 0) - (ot ? (ot + lt) * Ht : _[Ht]);
@@ -1868,8 +1769,7 @@ var tns = (function () {
                                   var e = -(Je + a);
                                   if (e <= 0) qt = Vt;
                                   else if (e >= _[Ht - 1]) qt = Gt;
-                                  else
-                                      for (var n = 0; n < Ht && e >= _[n]; ) e > _[(qt = n)] && a < 0 && (qt += 1), n++;
+                                  else for (var n = 0; n < Ht && e >= _[n]; ) e > _[(qt = n)] && a < 0 && (qt += 1), n++;
                               }
                               ui(i, a), Ut.emit(Ci(i) ? 'touchEnd' : 'dragEnd', Si(i));
                           }))

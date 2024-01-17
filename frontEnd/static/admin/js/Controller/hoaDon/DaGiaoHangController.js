@@ -48,16 +48,14 @@ app.controller('DaGiaoHangController', function ($scope, $http) {
     //Tìm kiếm
     $scope.$watch('search', function (newVal) {
         if (newVal) {
-            $http
-                .get('http://localhost:8080/hoaDon/datHang/daGiaoHang/timKiem=' + newVal, { headers })
-                .then(function (response) {
-                    const pending = response.data;
+            $http.get('http://localhost:8080/hoaDon/datHang/daGiaoHang/timKiem=' + newVal, { headers }).then(function (response) {
+                const pending = response.data;
 
-                    // Cập nhật lại dữ liệu trong table nhưng không load lại trang
-                    $scope.$evalAsync(function () {
-                        $scope.pending = pending;
-                    });
+                // Cập nhật lại dữ liệu trong table nhưng không load lại trang
+                $scope.$evalAsync(function () {
+                    $scope.pending = pending;
                 });
+            });
         } else {
             $scope.loadData();
         }
@@ -68,15 +66,13 @@ app.controller('DaGiaoHangController', function ($scope, $http) {
         let formattedDate = formatDate(searchDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http
-            .get('http://localhost:8080/hoaDon/datHang/daGiaoHang/timKiemNgay=' + formattedDate, { headers })
-            .then(function (response) {
-                const pending = response.data;
+        $http.get('http://localhost:8080/hoaDon/datHang/daGiaoHang/timKiemNgay=' + formattedDate, { headers }).then(function (response) {
+            const pending = response.data;
 
-                $scope.$evalAsync(function () {
-                    $scope.pending = pending;
-                });
+            $scope.$evalAsync(function () {
+                $scope.pending = pending;
             });
+        });
     };
 
     function formatDate(dateString) {
@@ -123,31 +119,29 @@ app.controller('CTDaGiaoHang', function ($scope, $routeParams, $http) {
     let decodedToken = parseJwt(token);
     const id = $routeParams.id;
     $scope.loadData = function () {
-        $http
-            .get('http://localhost:8080/hoaDon/chiTietHoaDon/daGiaoHang/id=' + id, { headers })
-            .then(function (response) {
-                const respone = response.data;
-                const hdct = respone.list_HDCT;
-                $scope.hdct = hdct;
+        $http.get('http://localhost:8080/hoaDon/chiTietHoaDon/daGiaoHang/id=' + id, { headers }).then(function (response) {
+            const respone = response.data;
+            const hdct = respone.list_HDCT;
+            $scope.hdct = hdct;
 
-                const timeLine_ChoXacNhan = respone.timeLine_ChoXacNhan;
-                $scope.timeLine_ChoXacNhan = timeLine_ChoXacNhan;
+            const timeLine_ChoXacNhan = respone.timeLine_ChoXacNhan;
+            $scope.timeLine_ChoXacNhan = timeLine_ChoXacNhan;
 
-                const timeLine_ChoGiaoHang = respone.timeLine_ChoGiaoHang;
-                $scope.timeLine_ChoGiaoHang = timeLine_ChoGiaoHang;
+            const timeLine_ChoGiaoHang = respone.timeLine_ChoGiaoHang;
+            $scope.timeLine_ChoGiaoHang = timeLine_ChoGiaoHang;
 
-                const timeLine_DangGiaoHang = respone.timeLine_DangGiaoHang;
-                $scope.timeLine_DangGiaoHang = timeLine_DangGiaoHang;
+            const timeLine_DangGiaoHang = respone.timeLine_DangGiaoHang;
+            $scope.timeLine_DangGiaoHang = timeLine_DangGiaoHang;
 
-                const timeLine_DaGiaoHang = respone.timeLine_DaGiaoHang;
-                $scope.timeLine_DaGiaoHang = timeLine_DaGiaoHang;
+            const timeLine_DaGiaoHang = respone.timeLine_DaGiaoHang;
+            $scope.timeLine_DaGiaoHang = timeLine_DaGiaoHang;
 
-                const hoaDon = respone.hoaDon;
-                $scope.hoaDon = hoaDon;
+            const hoaDon = respone.hoaDon;
+            $scope.hoaDon = hoaDon;
 
-                const lsHoaDons = respone.lsHoaDons;
-                $scope.lsHoaDons = lsHoaDons;
-            });
+            const lsHoaDons = respone.lsHoaDons;
+            $scope.lsHoaDons = lsHoaDons;
+        });
     };
 
     $scope.loadData();

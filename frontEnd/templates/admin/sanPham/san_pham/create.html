@@ -54,9 +54,7 @@
                             <div class="input-group flex-grow-1 border rounded-pill p-2">
                                 <select class="form-control border-0" ng-model="createProduct.chatLieu">
                                     <option value="">Chọn chất liệu</option>
-                                    <option ng-repeat="chatLieu in chatLieu" value="{{chatLieu.id}}">
-                                        {{chatLieu.chatLieu}}
-                                    </option>
+                                    <option ng-repeat="chatLieu in chatLieu" value="{{chatLieu.id}}">{{chatLieu.chatLieu}}</option>
                                 </select>
                             </div>
                             <button class="button ml-2 p-2" id="button-themNgay" ng-click="ThemMoiChatLieu()">
@@ -90,9 +88,7 @@
                             <div class="input-group flex-grow-1 border rounded-pill p-2">
                                 <select class="form-control border-0" ng-model="createProduct.nhaSanXuat">
                                     <option value="">Chọn nhà sản xuất</option>
-                                    <option ng-repeat="nhaSanXuat in nhaSanXuat" value="{{nhaSanXuat.id}}">
-                                        {{nhaSanXuat.name}}
-                                    </option>
+                                    <option ng-repeat="nhaSanXuat in nhaSanXuat" value="{{nhaSanXuat.id}}">{{nhaSanXuat.name}}</option>
                                 </select>
                             </div>
                             <button class="button ml-2 p-2" id="button-themNgay" ng-click="ThemMoiHang()">
@@ -107,16 +103,9 @@
                         <label for="countries" class="small mb-1">Màu sắc</label>
                         <div class="form-inline mb-4">
                             <div class="input-group flex-grow-1 border rounded-pill p-2">
-                                <select
-                                    name="mauSac"
-                                    class="form-control border-0"
-                                    ng-model="selectedColor"
-                                    ng-change="onColorChange()"
-                                >
+                                <select name="mauSac" class="form-control border-0" ng-model="selectedColor" ng-change="onColorChange()">
                                     <option value="">Chọn màu sắc</option>
-                                    <option ng-repeat="mauSac in mauSac" value="{{mauSac}}">
-                                        {{mauSac.tenMauSac}}
-                                    </option>
+                                    <option ng-repeat="mauSac in mauSac" value="{{mauSac}}">{{mauSac.tenMauSac}}</option>
                                 </select>
                                 <div class="input-group-append border-0">
                                     <input
@@ -149,11 +138,7 @@
                                     ng-model="selectedSizes"
                                 >
                                     <option value="">Chọn kích cỡ</option>
-                                    <option
-                                        ng-repeat="kichCos in kichCo"
-                                        value="{{kichCos}}"
-                                        ng-click="getIdSize(kichCos)"
-                                    >
+                                    <option ng-repeat="kichCos in kichCo" value="{{kichCos}}" ng-click="getIdSize(kichCos)">
                                         {{kichCos.kichCo}}
                                     </option>
                                 </select>

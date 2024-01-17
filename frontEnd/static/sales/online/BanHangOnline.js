@@ -13,9 +13,7 @@ $(document).ready(function () {
             const provinceSelect = $('#province');
 
             provinces.forEach(function (province) {
-                provinceSelect.append(
-                    "<option value='" + province.ProvinceID + "'>" + province.ProvinceName + '</option>',
-                );
+                provinceSelect.append("<option value='" + province.ProvinceID + "'>" + province.ProvinceName + '</option>');
             });
         },
         error: function (xhr, status, error) {
@@ -45,9 +43,7 @@ $(document).ready(function () {
                     const districts = response.data;
                     const districtSelect = $('#district');
                     districts.forEach(function (district) {
-                        districtSelect.append(
-                            "<option value='" + district.DistrictID + "'>" + district.DistrictName + '</option>',
-                        );
+                        districtSelect.append("<option value='" + district.DistrictID + "'>" + district.DistrictName + '</option>');
                     });
 
                     districtSelect.prop('disabled', false);
@@ -186,8 +182,7 @@ $(document).ready(function () {
         const shippingFee = parseFloat($('#shippingFee').text().replace(/[^\d]/g, ''));
 
         // Tính toán giá trị giảm giá dựa vào loại giảm giá và giá trị giảm giá
-        const discountAmount =
-            discountType === 'percentage' ? (subtotal + shippingFee) * (discountValue / 100) : discountValue;
+        const discountAmount = discountType === 'percentage' ? (subtotal + shippingFee) * (discountValue / 100) : discountValue;
 
         // Tính tổng tiền sau giảm giá
         let total = subtotal + shippingFee - discountAmount;
