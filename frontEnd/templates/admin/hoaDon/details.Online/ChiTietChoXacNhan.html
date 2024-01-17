@@ -6,10 +6,16 @@
         <p>Mã đơn: <span>{{ hoaDon.maHoaDon}}</span></p>
         <p>Ngày tạo: <span>{{ hoaDon.createdDate | date:'dd/MM/yyyy' }}</span></p>
         <p>Tên khách hàng: <span>{{ hoaDon.nguoiNhan}}</span></p>
-        <button class="btn btn-dark px-4 rounded-pill" ng-click="danhSachSanPham()" ng-if="hoaDon.loaiHoaDon==0">
-            <i class="fas fa-fw fa-shopping-cart"></i>
-            Thêm sản phẩm
-        </button>
+
+        <div>
+            <button type="button" class="dt-button buttons-html5 btn btn-white btn-success btn-bold"
+                data-toggle="tooltip" title="Tải lại dữ liệu" ng-click="danhSachSanPham()" ng-if="hoaDon.loaiHoaDon==0"
+                id="button-them-moi-san-pham-vaoHD">
+                <span> <i class="fas fa-plus"></i></span>
+                Thêm sản phẩm
+            </button>
+        </div>
+
         <div class="table-wrapper">
             <table class="table">
                 <thead>
@@ -28,20 +34,14 @@
                         <td>{{$index + 1}}</td>
                         <td>
                             <div style="display: flex; align-items: center">
-                                <img
-                                    src="/static/img/{{CTChoXacNhan.anhSanPham}}"
-                                    alt=""
-                                    style="margin-right: 10px"
-                                    width="100px"
-                                    height="100px"
-                                />
+                                <img src="/static/img/{{CTChoXacNhan.anhSanPham}}" alt="" style="margin-right: 10px"
+                                    width="100px" height="100px" />
 
                                 <div>
                                     <h6>
                                         <strong>
-                                            <span style="text-transform: uppercase" class="TenSP"
-                                                >{{ CTChoXacNhan.sanPhamChiTiet.sanPham.tenSanPham}}</span
-                                            >
+                                            <span style="text-transform: uppercase" class="TenSP">{{
+                                                CTChoXacNhan.sanPhamChiTiet.sanPham.tenSanPham}}</span>
                                         </strong>
                                     </h6>
                                     <div class="ThongTinSP">
@@ -57,11 +57,8 @@
                         <td>
                             <div class="button-group" id="button-group-GHCT">
                                 <input ng-model="CTChoXacNhan.soLuong" />
-                                <button
-                                    ng-click="updateSoLuong(CTChoXacNhan)"
-                                    id="xacNhan-updateSoLuongGioHangCT"
-                                    class="fas fa-check btn-icon btn-primary" ng-if="hoaDon.loaiHoaDon==0"
-                                ></button>
+                                <button ng-click="updateSoLuong(CTChoXacNhan)" id="xacNhan-updateSoLuongGioHangCT"
+                                    class="fas fa-check btn-icon btn-primary" ng-if="hoaDon.loaiHoaDon==0"></button>
                             </div>
                         </td>
 
@@ -69,11 +66,8 @@
 
                         <td>
                             <div class="button-group">
-                                <button
-                                    type="button"
-                                    class="btn btn-link btn-sm btn-rounded"
-                                    ng-click="deleteHDCT(CTChoXacNhan)" ng-if="hoaDon.loaiHoaDon==0"
-                                >
+                                <button type="button" class="btn btn-link btn-sm btn-rounded"
+                                    ng-click="deleteHDCT(CTChoXacNhan)" ng-if="hoaDon.loaiHoaDon==0">
                                     <i class="bx bx-trash me-2"></i>
                                 </button>
                             </div>
