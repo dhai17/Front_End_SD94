@@ -348,8 +348,8 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
             const hoaDon = respone.hoaDon;
             $scope.hoaDon = hoaDon;
 
-                const lsHoaDons = respone.lsHoaDons;
-                $scope.lsHoaDons = lsHoaDons;
+            const lsHoaDons = respone.lsHoaDons;
+            $scope.lsHoaDons = lsHoaDons;
             });
     };
     // lay ra thong tin nguoi dang nhap
@@ -499,9 +499,10 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
 
                         const hoaDon = respone.hoaDon;
 
-                            $scope.hoaDon = hoaDon;
-                            const lsHoaDons = respone.lsHoaDons;
-                            $scope.lsHoaDons = lsHoaDons;
+
+                        $scope.hoaDon = hoaDon;
+                        const lsHoaDons = respone.lsHoaDons;
+                        $scope.lsHoaDons = lsHoaDons;
                         });
                 });
             })
