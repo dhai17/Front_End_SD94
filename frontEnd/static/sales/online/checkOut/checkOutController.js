@@ -107,7 +107,7 @@ app.controller('checkOutController', function ($scope, $routeParams, $http) {
                     icon: 'error',
                     title: errorMessage,
                     showConfirmButton: false,
-                    timer: 2000,
+                    timer: 3000,
                 });
             });
     }
@@ -168,7 +168,7 @@ app.controller('checkOutController', function ($scope, $routeParams, $http) {
                     icon: 'error',
                     title: errorMessage,
                     showConfirmButton: false,
-                    timer: 2000,
+                    timer: 3000,
                 });
                 return;
             });
