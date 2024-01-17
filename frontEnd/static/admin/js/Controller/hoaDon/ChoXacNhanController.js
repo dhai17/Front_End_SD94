@@ -7,6 +7,7 @@ app.controller('ChoXacNhanController', function ($scope, $http) {
     $scope.loadData = function () {
         $http.get('http://localhost:8080/hoaDon/datHang/choXacNhan/danhSach', { headers }).then(function (response) {
             const pending = response.data;
+            console.log(pending);
             $scope.pending = pending;
         });
     };

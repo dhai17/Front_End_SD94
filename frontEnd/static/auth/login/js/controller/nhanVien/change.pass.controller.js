@@ -21,7 +21,7 @@ app.controller('changePassController', function ($scope, $http) {
                     showConfirmButton: false,
                     timer: 2000,
                 }).then(() => {
-                    window.location.href = 'http://127.0.0.1:5501/templates/auth/Login.html#!/login';
+                    window.location.href = 'http://127.0.0.1:5501/#!/login';
                 });
             })
 

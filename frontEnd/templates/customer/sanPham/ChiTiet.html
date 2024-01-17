@@ -79,8 +79,22 @@
                     </div>
 
                     <div class="buttons d-flex flex-row mt-5 gap-3">
-                        <button class="btn btn-outline-dark" ng-click="muaNgay(sanPham)">Mua ngay</button>
-                        <button class="btn btn-dark" ng-click="addToCart(sanPham)">Thêm vào giỏ</button>
+                        <button
+                            class="btn btn-outline-dark"
+                            id="button-muaNgay-customer"
+                            ng-click="muaNgay(sanPham)"
+                            ng-show="isButtonVisible1"
+                        >
+                            Mua ngay
+                        </button>
+                        <button
+                            class="btn btn-dark"
+                            id="button-themGioHang-customer"
+                            ng-click="addToCart(sanPham)"
+                            ng-show="isButtonVisible2"
+                        >
+                            Thêm vào giỏ
+                        </button>
                     </div>
                 </div>
             </div>
