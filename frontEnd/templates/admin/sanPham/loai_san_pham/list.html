@@ -26,11 +26,7 @@
                             <button type="button" class="btn btn-link" ng-click="editLine(promotion)">
                                 <i class="bx bx-edit me-2"></i>
                             </button>
-                            <button
-                                type="button"
-                                class="btn btn-link btn-sm btn-rounded"
-                                ng-click="deleteLine(promotion)"
-                            >
+                            <button type="button" class="btn btn-link btn-sm btn-rounded" ng-click="deleteLine(promotion)">
                                 <i class="bx bx-trash me-2"></i>
                             </button>
                         </div>
@@ -60,19 +56,13 @@
                 <div class="modal-body">Bạn có chắc chắn muốn xóa?</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-danger" ng-click="deleteLine(promotion)" data-dismiss="modal">
-                        Xóa
-                    </button>
+                    <button type="button" class="btn btn-danger" ng-click="deleteLine(promotion)" data-dismiss="modal">Xóa</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="card-footer text-center">
-        <button
-            class="btn btn-secondary mx-1"
-            ng-repeat="pageNumber in pager.pageNumbers"
-            ng-click="pager.page = pageNumber"
-        >
+        <button class="btn btn-secondary mx-1" ng-repeat="pageNumber in pager.pageNumbers" ng-click="pager.page = pageNumber">
             {{pageNumber}}
         </button>
     </div>

@@ -6,14 +6,7 @@
           : (e.AOS = t());
 })(this, function () {
     'use strict';
-    var e =
-            'undefined' != typeof window
-                ? window
-                : 'undefined' != typeof global
-                  ? global
-                  : 'undefined' != typeof self
-                    ? self
-                    : {},
+    var e = 'undefined' != typeof window ? window : 'undefined' != typeof global ? global : 'undefined' != typeof self ? self : {},
         t = 'Expected a function',
         n = NaN,
         o = '[object Symbol]',
@@ -81,9 +74,7 @@
         return (
             (n = w(n) || 0),
             g(o) &&
-                ((l = !!o.leading),
-                (r = (f = 'maxWait' in o) ? m(w(o.maxWait) || 0, n) : r),
-                (v = 'trailing' in o ? !!o.trailing : v)),
+                ((l = !!o.leading), (r = (f = 'maxWait' in o) ? m(w(o.maxWait) || 0, n) : r), (v = 'trailing' in o ? !!o.trailing : v)),
             (O.cancel = function () {
                 void 0 !== s && clearTimeout(s), (d = 0), (i = u = a = s = void 0);
             }),
@@ -335,8 +326,7 @@
                         key: 'ie11',
                         value: function () {
                             return (
-                                '-ms-scroll-limit' in document.documentElement.style &&
-                                '-ms-ime-align' in document.documentElement.style
+                                '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style
                             );
                         },
                     },
@@ -560,9 +550,7 @@
                           : window.addEventListener('load', function () {
                                 ce(!0);
                             }),
-                      'DOMContentLoaded' === ae.startEvent &&
-                          ['complete', 'interactive'].indexOf(document.readyState) > -1 &&
-                          ce(!0),
+                      'DOMContentLoaded' === ae.startEvent && ['complete', 'interactive'].indexOf(document.readyState) > -1 && ce(!0),
                       window.addEventListener('resize', $(ce, ae.debounceDelay, !0)),
                       window.addEventListener('orientationchange', $(ce, ae.debounceDelay, !0)),
                       oe)

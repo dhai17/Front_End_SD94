@@ -25,12 +25,10 @@ app.controller('dangGiaoHangCustomerController', function ($scope, $http) {
         decodedToken = parseJwt(token);
     }
 
-    $http
-        .get('http://localhost:8080/customer/donHang/dangGiaoHang/' + decodedToken.email, { headers })
-        .then(function (response) {
-            const hoaDon = response.data;
-            $scope.hoaDons = hoaDon;
-        });
+    $http.get('http://localhost:8080/customer/donHang/dangGiaoHang/' + decodedToken.email, { headers }).then(function (response) {
+        const hoaDon = response.data;
+        $scope.hoaDons = hoaDon;
+    });
 
     $scope.DaNhanDuocHang = function (hoaDon) {
         Swal.fire({
@@ -47,18 +45,16 @@ app.controller('dangGiaoHangCustomerController', function ($scope, $http) {
                     nguoi_thao_tac: decodedToken.email,
                 };
 
-                $http
-                    .post('http://localhost:8080/customer/donHang/daNhanDuocHang/', data, { headers })
-                    .then(function (response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Thao tác thành công',
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
-                        const hoaDon = response.data;
-                        $scope.hoaDons = hoaDon;
+                $http.post('http://localhost:8080/customer/donHang/daNhanDuocHang/', data, { headers }).then(function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thao tác thành công',
+                        showConfirmButton: false,
+                        timer: 2000,
                     });
+                    const hoaDon = response.data;
+                    $scope.hoaDons = hoaDon;
+                });
             }
         });
     };
@@ -77,18 +73,16 @@ app.controller('dangGiaoHangCustomerController', function ($scope, $http) {
                     nguoi_thao_tac: decodedToken.email,
                 };
 
-                $http
-                    .post('http://localhost:8080/customer/donHang/daNhanTatCa/', data, { headers })
-                    .then(function (response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Thao tác thành công',
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
-                        const hoaDon = response.data;
-                        $scope.hoaDons = hoaDon;
+                $http.post('http://localhost:8080/customer/donHang/daNhanTatCa/', data, { headers }).then(function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thao tác thành công',
+                        showConfirmButton: false,
+                        timer: 2000,
                     });
+                    const hoaDon = response.data;
+                    $scope.hoaDons = hoaDon;
+                });
             }
         });
     };
@@ -147,28 +141,26 @@ app.controller('CTDangGiaoHangCustomer', function ($scope, $routeParams, $http) 
     }
 
     const id = $routeParams.id;
-    $http
-        .get('http://localhost:8080/hoaDon/chiTietHoaDon/dangGiaoHang/id=' + id, { headers })
-        .then(function (response) {
-            const respone = response.data;
-            const hdct = respone.list_HDCT;
-            $scope.hdct = hdct;
+    $http.get('http://localhost:8080/hoaDon/chiTietHoaDon/dangGiaoHang/id=' + id, { headers }).then(function (response) {
+        const respone = response.data;
+        const hdct = respone.list_HDCT;
+        $scope.hdct = hdct;
 
-            const timeLine_ChoXacNhan = respone.timeLine_ChoXacNhan;
-            $scope.timeLine_ChoXacNhan = timeLine_ChoXacNhan;
+        const timeLine_ChoXacNhan = respone.timeLine_ChoXacNhan;
+        $scope.timeLine_ChoXacNhan = timeLine_ChoXacNhan;
 
-            const timeLine_ChoGiaoHang = respone.timeLine_ChoGiaoHang;
-            $scope.timeLine_ChoGiaoHang = timeLine_ChoGiaoHang;
+        const timeLine_ChoGiaoHang = respone.timeLine_ChoGiaoHang;
+        $scope.timeLine_ChoGiaoHang = timeLine_ChoGiaoHang;
 
-            const timeLine_DangGiaoHang = respone.timeLine_DangGiaoHang;
-            $scope.timeLine_DangGiaoHang = timeLine_DangGiaoHang;
+        const timeLine_DangGiaoHang = respone.timeLine_DangGiaoHang;
+        $scope.timeLine_DangGiaoHang = timeLine_DangGiaoHang;
 
-            const hoaDon = respone.hoaDon;
-            $scope.hoaDon = hoaDon;
+        const hoaDon = respone.hoaDon;
+        $scope.hoaDon = hoaDon;
 
-            const lsHoaDons = respone.lsHoaDons;
-            $scope.lsHoaDons = lsHoaDons;
-        });
+        const lsHoaDons = respone.lsHoaDons;
+        $scope.lsHoaDons = lsHoaDons;
+    });
 
     $scope.daNhanDuocHangCT = function () {
         Swal.fire({
@@ -185,17 +177,15 @@ app.controller('CTDangGiaoHangCustomer', function ($scope, $routeParams, $http) 
                     nguoi_thao_tac: decodedToken.email,
                 };
 
-                $http
-                    .post('http://localhost:8080/customer/donHang/daNhanDuocHang/', data, { headers })
-                    .then(function (response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Thao tác thành công',
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
-                        window.location.href = '#!/dangGiaoHang-Customer';
+                $http.post('http://localhost:8080/customer/donHang/daNhanDuocHang/', data, { headers }).then(function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thao tác thành công',
+                        showConfirmButton: false,
+                        timer: 2000,
                     });
+                    window.location.href = '#!/dangGiaoHang-Customer';
+                });
             }
         });
     };

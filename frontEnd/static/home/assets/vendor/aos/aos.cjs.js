@@ -157,10 +157,7 @@ var Detector = (function () {
         {
             key: 'ie11',
             value: function ie11() {
-                return (
-                    '-ms-scroll-limit' in document.documentElement.style &&
-                    '-ms-ime-align' in document.documentElement.style
-                );
+                return '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style;
             },
         },
     ]);

@@ -8,8 +8,7 @@
         ? (module.exports = factory())
         : typeof define === 'function' && define.amd
           ? define(factory)
-          : ((global = typeof globalThis !== 'undefined' ? globalThis : global || self),
-            (global.bootstrap = factory()));
+          : ((global = typeof globalThis !== 'undefined' ? globalThis : global || self), (global.bootstrap = factory()));
 })(this, function () {
     'use strict';
 
@@ -37,9 +36,7 @@
             if (!instanceMap.has(key) && instanceMap.size !== 0) {
                 // eslint-disable-next-line no-console
                 console.error(
-                    `Bootstrap doesn't allow more than one instance per element. Bound instance: ${
-                        Array.from(instanceMap.keys())[0]
-                    }.`,
+                    `Bootstrap doesn't allow more than one instance per element. Bound instance: ${Array.from(instanceMap.keys())[0]}.`,
                 );
                 return;
             }
@@ -423,9 +420,7 @@
         };
     }
     function findHandler(events, callable, delegationSelector = null) {
-        return Object.values(events).find(
-            (event) => event.callable === callable && event.delegationSelector === delegationSelector,
-        );
+        return Object.values(events).find((event) => event.callable === callable && event.delegationSelector === delegationSelector);
     }
     function normalizeParameters(originalTypeEvent, handler, delegationFunction) {
         const isDelegated = typeof handler === 'string';
@@ -450,8 +445,7 @@
                 return function (event) {
                     if (
                         !event.relatedTarget ||
-                        (event.relatedTarget !== event.delegateTarget &&
-                            !event.delegateTarget.contains(event.relatedTarget))
+                        (event.relatedTarget !== event.delegateTarget && !event.delegateTarget.contains(event.relatedTarget))
                     ) {
                         return fn.call(this, event);
                     }
@@ -467,9 +461,7 @@
             return;
         }
         const uid = makeEventUid(callable, originalTypeEvent.replace(namespaceRegex, ''));
-        const fn = isDelegated
-            ? bootstrapDelegationHandler(element, handler, callable)
-            : bootstrapHandler(element, callable);
+        const fn = isDelegated ? bootstrapDelegationHandler(element, handler, callable) : bootstrapHandler(element, callable);
         fn.delegationSelector = isDelegated ? handler : null;
         fn.callable = callable;
         fn.oneOff = oneOff;
@@ -509,11 +501,7 @@
             if (typeof originalTypeEvent !== 'string' || !element) {
                 return;
             }
-            const [isDelegated, callable, typeEvent] = normalizeParameters(
-                originalTypeEvent,
-                handler,
-                delegationFunction,
-            );
+            const [isDelegated, callable, typeEvent] = normalizeParameters(originalTypeEvent, handler, delegationFunction);
             const inNamespace = typeEvent !== originalTypeEvent;
             const events = getElementEvents(element);
             const storeElementEvent = events[typeEvent] || {};
@@ -635,9 +623,7 @@
                 return {};
             }
             const attributes = {};
-            const bsKeys = Object.keys(element.dataset).filter(
-                (key) => key.startsWith('bs') && !key.startsWith('bsConfig'),
-            );
+            const bsKeys = Object.keys(element.dataset).filter((key) => key.startsWith('bs') && !key.startsWith('bsConfig'));
             for (const key of bsKeys) {
                 let pureKey = key.replace(/^bs/, '');
                 pureKey = pureKey.charAt(0).toLowerCase() + pureKey.slice(1, pureKey.length);
@@ -841,16 +827,7 @@
             return [];
         },
         focusableChildren(element) {
-            const focusables = [
-                'a',
-                'button',
-                'input',
-                'textarea',
-                'select',
-                'details',
-                '[tabindex]',
-                '[contenteditable="true"]',
-            ]
+            const focusables = ['a', 'button', 'input', 'textarea', 'select', 'details', '[tabindex]', '[contenteditable="true"]']
                 .map((selector) => `${selector}:not([tabindex^="-"])`)
                 .join(',');
             return this.find(focusables, element).filter((el) => !isDisabled(el) && isVisible(el));
@@ -1144,10 +1121,7 @@
             }
         }
         _eventIsPointerPenTouch(event) {
-            return (
-                this._supportPointerEvents &&
-                (event.pointerType === POINTER_TYPE_PEN || event.pointerType === POINTER_TYPE_TOUCH)
-            );
+            return this._supportPointerEvents && (event.pointerType === POINTER_TYPE_PEN || event.pointerType === POINTER_TYPE_TOUCH);
         }
 
         // Static
@@ -1350,10 +1324,7 @@
                 if (this.touchTimeout) {
                     clearTimeout(this.touchTimeout);
                 }
-                this.touchTimeout = setTimeout(
-                    () => this._maybeEnableCycle(),
-                    TOUCHEVENT_COMPAT_WAIT + this._config.interval,
-                );
+                this.touchTimeout = setTimeout(() => this._maybeEnableCycle(), TOUCHEVENT_COMPAT_WAIT + this._config.interval);
             };
             const swipeConfig = {
                 leftCallback: () => this._slide(this._directionToOrder(DIRECTION_LEFT)),
@@ -1402,8 +1373,7 @@
             }
             const activeElement = this._getActive();
             const isNext = order === ORDER_NEXT;
-            const nextElement =
-                element || getNextActiveElement(this._getItems(), activeElement, isNext, this._config.wrap);
+            const nextElement = element || getNextActiveElement(this._getItems(), activeElement, isNext, this._config.wrap);
             if (nextElement === activeElement) {
                 return;
             }
@@ -1583,9 +1553,7 @@
             const toggleList = SelectorEngine.find(SELECTOR_DATA_TOGGLE$4);
             for (const elem of toggleList) {
                 const selector = SelectorEngine.getSelectorFromElement(elem);
-                const filterElement = SelectorEngine.find(selector).filter(
-                    (foundElement) => foundElement === this._element,
-                );
+                const filterElement = SelectorEngine.find(selector).filter((foundElement) => foundElement === this._element);
                 if (selector !== null && filterElement.length) {
                     this._triggerArray.push(elem);
                 }
@@ -1893,9 +1861,7 @@
             Object.keys(state.elements).forEach(function (name) {
                 var element = state.elements[name];
                 var attributes = state.attributes[name] || {};
-                var styleProperties = Object.keys(
-                    state.styles.hasOwnProperty(name) ? state.styles[name] : initialStyles[name],
-                ); // Set all values to an empty string to unset them
+                var styleProperties = Object.keys(state.styles.hasOwnProperty(name) ? state.styles[name] : initialStyles[name]); // Set all values to an empty string to unset them
 
                 var style = styleProperties.reduce(function (style, property) {
                     style[property] = '';
@@ -2205,15 +2171,10 @@
         var arrowRect = getLayoutRect(arrowElement);
         var minProp = axis === 'y' ? top : left;
         var maxProp = axis === 'y' ? bottom : right;
-        var endDiff =
-            state.rects.reference[len] + state.rects.reference[axis] - popperOffsets[axis] - state.rects.popper[len];
+        var endDiff = state.rects.reference[len] + state.rects.reference[axis] - popperOffsets[axis] - state.rects.popper[len];
         var startDiff = popperOffsets[axis] - state.rects.reference[axis];
         var arrowOffsetParent = getOffsetParent(arrowElement);
-        var clientSize = arrowOffsetParent
-            ? axis === 'y'
-                ? arrowOffsetParent.clientHeight || 0
-                : arrowOffsetParent.clientWidth || 0
-            : 0;
+        var clientSize = arrowOffsetParent ? (axis === 'y' ? arrowOffsetParent.clientHeight || 0 : arrowOffsetParent.clientWidth || 0) : 0;
         var centerToReference = endDiff / 2 - startDiff / 2; // Make sure the arrow doesn't overflow the popper if the center point is
         // outside of the popper bounds
 
@@ -2396,9 +2357,7 @@
                 (_Object$assign[sideY] = hasY ? '0' : ''),
                 (_Object$assign[sideX] = hasX ? '0' : ''),
                 (_Object$assign.transform =
-                    (win.devicePixelRatio || 1) <= 1
-                        ? 'translate(' + x + 'px, ' + y + 'px)'
-                        : 'translate3d(' + x + 'px, ' + y + 'px, 0)'),
+                    (win.devicePixelRatio || 1) <= 1 ? 'translate(' + x + 'px, ' + y + 'px)' : 'translate3d(' + x + 'px, ' + y + 'px, 0)'),
                 _Object$assign),
             );
         }
@@ -2602,12 +2561,7 @@
         var winScroll = getWindowScroll(element);
         var body = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
         var width = max(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
-        var height = max(
-            html.scrollHeight,
-            html.clientHeight,
-            body ? body.scrollHeight : 0,
-            body ? body.clientHeight : 0,
-        );
+        var height = max(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
         var x = -winScroll.scrollLeft + getWindowScrollBarX(element);
         var y = -winScroll.scrollTop;
 
@@ -2661,13 +2615,9 @@
         }
 
         var scrollParent = getScrollParent(element);
-        var isBody =
-            scrollParent ===
-            ((_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body);
+        var isBody = scrollParent === ((_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body);
         var win = getWindow(scrollParent);
-        var target = isBody
-            ? [win].concat(win.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : [])
-            : scrollParent;
+        var target = isBody ? [win].concat(win.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : []) : scrollParent;
         var updatedList = list.concat(target);
         return isBody
             ? updatedList // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
@@ -2716,11 +2666,7 @@
         } // $FlowFixMe[incompatible-return]: https://github.com/facebook/flow/issues/1414
 
         return clippingParents.filter(function (clippingParent) {
-            return (
-                isElement(clippingParent) &&
-                contains(clippingParent, clipperElement) &&
-                getNodeName(clippingParent) !== 'body'
-            );
+            return isElement(clippingParent) && contains(clippingParent, clipperElement) && getNodeName(clippingParent) !== 'body';
         });
     } // Gets the maximum area that the element is visible in due to any number of
     // clipping parents
@@ -2832,9 +2778,7 @@
             altBoundary = _options$altBoundary === void 0 ? false : _options$altBoundary,
             _options$padding = _options.padding,
             padding = _options$padding === void 0 ? 0 : _options$padding;
-        var paddingObject = mergePaddingObject(
-            typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements),
-        );
+        var paddingObject = mergePaddingObject(typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements));
         var altContext = elementContext === popper ? reference : popper;
         var popperRect = state.rects.popper;
         var element = state.elements[altBoundary ? altContext : elementContext];
@@ -2924,11 +2868,7 @@
         }
 
         var oppositePlacement = getOppositePlacement(placement);
-        return [
-            getOppositeVariationPlacement(placement),
-            oppositePlacement,
-            getOppositeVariationPlacement(oppositePlacement),
-        ];
+        return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
     }
 
     function flip(_ref) {
@@ -3326,11 +3266,7 @@
                     : 0;
             var tetherMin = offset + minOffset - offsetModifierValue - clientOffset;
             var tetherMax = offset + maxOffset - offsetModifierValue;
-            var preventedOffset = within(
-                tether ? min(min$1, tetherMin) : min$1,
-                offset,
-                tether ? max(max$1, tetherMax) : max$1,
-            );
+            var preventedOffset = within(tether ? min(min$1, tetherMin) : min$1, offset, tether ? max(max$1, tetherMax) : max$1);
             popperOffsets[mainAxis] = preventedOffset;
             data[mainAxis] = preventedOffset - offset;
         }
@@ -3359,18 +3295,10 @@
 
             var _tetherMin = isOriginSide
                 ? _min
-                : _offset -
-                  referenceRect[_len] -
-                  popperRect[_len] -
-                  _offsetModifierValue +
-                  normalizedTetherOffsetValue.altAxis;
+                : _offset - referenceRect[_len] - popperRect[_len] - _offsetModifierValue + normalizedTetherOffsetValue.altAxis;
 
             var _tetherMax = isOriginSide
-                ? _offset +
-                  referenceRect[_len] +
-                  popperRect[_len] -
-                  _offsetModifierValue -
-                  normalizedTetherOffsetValue.altAxis
+                ? _offset + referenceRect[_len] + popperRect[_len] - _offsetModifierValue - normalizedTetherOffsetValue.altAxis
                 : _max;
 
             var _preventedOffset =
@@ -3585,8 +3513,7 @@
             var instance = {
                 state: state,
                 setOptions: function setOptions(setOptionsAction) {
-                    var options =
-                        typeof setOptionsAction === 'function' ? setOptionsAction(state.options) : setOptionsAction;
+                    var options = typeof setOptionsAction === 'function' ? setOptionsAction(state.options) : setOptionsAction;
                     cleanupModifierEffects();
                     state.options = Object.assign({}, defaultOptions, state.options, options);
                     state.scrollParents = {
@@ -3599,9 +3526,7 @@
                     }; // Orders the modifiers based on their dependencies and `phase`
                     // properties
 
-                    var orderedModifiers = orderModifiers(
-                        mergeByName([].concat(defaultModifiers, state.options.modifiers)),
-                    ); // Strip out disabled modifiers
+                    var orderedModifiers = orderModifiers(mergeByName([].concat(defaultModifiers, state.options.modifiers))); // Strip out disabled modifiers
 
                     state.orderedModifiers = orderedModifiers.filter(function (m) {
                         return m.enabled;
@@ -3629,11 +3554,7 @@
                     } // Store the reference and popper rects to be read by modifiers
 
                     state.rects = {
-                        reference: getCompositeRect(
-                            reference,
-                            getOffsetParent(popper),
-                            state.options.strategy === 'fixed',
-                        ),
+                        reference: getCompositeRect(reference, getOffsetParent(popper), state.options.strategy === 'fixed'),
                         popper: getLayoutRect(popper),
                     }; // Modifiers have the ability to reset the current update cycle. The
                     // most common use case for this is the `flip` modifier changing the
@@ -4077,9 +3998,7 @@
             };
         }
         _selectMenuItem({ key, target }) {
-            const items = SelectorEngine.find(SELECTOR_VISIBLE_ITEMS, this._menu).filter((element) =>
-                isVisible(element),
-            );
+            const items = SelectorEngine.find(SELECTOR_VISIBLE_ITEMS, this._menu).filter((element) => isVisible(element));
             if (!items.length) {
                 return;
             }
@@ -4452,16 +4371,8 @@
             // give padding to element to balance the hidden scrollbar width
             this._setElementAttributes(this._element, PROPERTY_PADDING, (calculatedValue) => calculatedValue + width);
             // trick: We adjust positive paddingRight and negative marginRight to sticky-top elements to keep showing fullwidth
-            this._setElementAttributes(
-                SELECTOR_FIXED_CONTENT,
-                PROPERTY_PADDING,
-                (calculatedValue) => calculatedValue + width,
-            );
-            this._setElementAttributes(
-                SELECTOR_STICKY_CONTENT,
-                PROPERTY_MARGIN,
-                (calculatedValue) => calculatedValue - width,
-            );
+            this._setElementAttributes(SELECTOR_FIXED_CONTENT, PROPERTY_PADDING, (calculatedValue) => calculatedValue + width);
+            this._setElementAttributes(SELECTOR_STICKY_CONTENT, PROPERTY_MARGIN, (calculatedValue) => calculatedValue - width);
         }
         reset() {
             this._resetElementAttributes(this._element, 'overflow');
@@ -5098,16 +5009,7 @@
     };
     // js-docs-end allow-list
 
-    const uriAttributes = new Set([
-        'background',
-        'cite',
-        'href',
-        'itemtype',
-        'longdesc',
-        'poster',
-        'src',
-        'xlink:href',
-    ]);
+    const uriAttributes = new Set(['background', 'cite', 'href', 'itemtype', 'longdesc', 'poster', 'src', 'xlink:href']);
 
     /**
      * A pattern that recognizes URLs that are safe wrt. XSS in URL navigation
@@ -5354,10 +5256,7 @@
         sanitizeFn: null,
         selector: false,
         template:
-            '<div class="tooltip" role="tooltip">' +
-            '<div class="tooltip-arrow"></div>' +
-            '<div class="tooltip-inner"></div>' +
-            '</div>',
+            '<div class="tooltip" role="tooltip">' + '<div class="tooltip-arrow"></div>' + '<div class="tooltip-inner"></div>' + '</div>',
         title: '',
         trigger: 'hover focus',
     };
@@ -5589,10 +5488,7 @@
             };
         }
         _getTitle() {
-            return (
-                this._resolvePossibleFunction(this._config.title) ||
-                this._element.getAttribute('data-bs-original-title')
-            );
+            return this._resolvePossibleFunction(this._config.title) || this._element.getAttribute('data-bs-original-title');
         }
 
         // Private
@@ -5672,15 +5568,10 @@
             const triggers = this._config.trigger.split(' ');
             for (const trigger of triggers) {
                 if (trigger === 'click') {
-                    EventHandler.on(
-                        this._element,
-                        this.constructor.eventName(EVENT_CLICK$1),
-                        this._config.selector,
-                        (event) => {
-                            const context = this._initializeOnDelegatedTarget(event);
-                            context.toggle();
-                        },
-                    );
+                    EventHandler.on(this._element, this.constructor.eventName(EVENT_CLICK$1), this._config.selector, (event) => {
+                        const context = this._initializeOnDelegatedTarget(event);
+                        context.toggle();
+                    });
                 } else if (trigger !== TRIGGER_MANUAL) {
                     const eventIn =
                         trigger === TRIGGER_HOVER
@@ -5697,8 +5588,9 @@
                     });
                     EventHandler.on(this._element, eventOut, this._config.selector, (event) => {
                         const context = this._initializeOnDelegatedTarget(event);
-                        context._activeTrigger[event.type === 'focusout' ? TRIGGER_FOCUS : TRIGGER_HOVER] =
-                            context._element.contains(event.relatedTarget);
+                        context._activeTrigger[event.type === 'focusout' ? TRIGGER_FOCUS : TRIGGER_HOVER] = context._element.contains(
+                            event.relatedTarget,
+                        );
                         context._leave();
                     });
                 }
@@ -6124,9 +6016,7 @@
         _activateParents(target) {
             // Activate dropdown parents
             if (target.classList.contains(CLASS_NAME_DROPDOWN_ITEM)) {
-                SelectorEngine.findOne(SELECTOR_DROPDOWN_TOGGLE$1, target.closest(SELECTOR_DROPDOWN)).classList.add(
-                    CLASS_NAME_ACTIVE$1,
-                );
+                SelectorEngine.findOne(SELECTOR_DROPDOWN_TOGGLE$1, target.closest(SELECTOR_DROPDOWN)).classList.add(CLASS_NAME_ACTIVE$1);
                 return;
             }
             for (const listGroup of SelectorEngine.parents(target, SELECTOR_NAV_LIST_GROUP)) {
@@ -6311,9 +6201,7 @@
             this._queueCallback(complete, element, element.classList.contains(CLASS_NAME_FADE$1));
         }
         _keydown(event) {
-            if (
-                ![ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY, HOME_KEY, END_KEY].includes(event.key)
-            ) {
+            if (![ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY, HOME_KEY, END_KEY].includes(event.key)) {
                 return;
             }
             event.stopPropagation(); // stopPropagation/preventDefault both added to support up/down keys without scrolling the page

@@ -20,12 +20,7 @@
         );
     }
     var s = {
-            strings: [
-                'These are the default values...',
-                'You know what you should do?',
-                'Use your own!',
-                'Have a great day!',
-            ],
+            strings: ['These are the default values...', 'You know what you should do?', 'Use your own!', 'Have a great day!'],
             stringsElement: null,
             typeSpeed: 0,
             startDelay: 0,
@@ -205,9 +200,7 @@
                 void 0 === t && (t = !0),
                     clearInterval(this.timeout),
                     this.replaceText(''),
-                    this.cursor &&
-                        this.cursor.parentNode &&
-                        (this.cursor.parentNode.removeChild(this.cursor), (this.cursor = null)),
+                    this.cursor && this.cursor.parentNode && (this.cursor.parentNode.removeChild(this.cursor), (this.cursor = null)),
                     (this.strPos = 0),
                     (this.arrayPos = 0),
                     (this.curLoop = 0),
@@ -230,8 +223,7 @@
                 var e = this;
                 this.fadeOut &&
                     this.el.classList.contains(this.fadeOutClass) &&
-                    (this.el.classList.remove(this.fadeOutClass),
-                    this.cursor && this.cursor.classList.remove(this.fadeOutClass));
+                    (this.el.classList.remove(this.fadeOutClass), this.cursor && this.cursor.classList.remove(this.fadeOutClass));
                 var i = this.humanizer(this.typeSpeed),
                     r = 1;
                 !0 !== this.pause.status
@@ -258,8 +250,7 @@
                           e.timeout = setTimeout(function () {
                               e.toggleBlinking(!1),
                                   s >= t.length ? e.doneTyping(t, s) : e.keepTyping(t, s, r),
-                                  e.temporaryPause &&
-                                      ((e.temporaryPause = !1), e.options.onTypingResumed(e.arrayPos, e));
+                                  e.temporaryPause && ((e.temporaryPause = !1), e.options.onTypingResumed(e.arrayPos, e));
                           }, i);
                       }, i))
                     : this.setPauseStatus(t, s, !0);
@@ -297,10 +288,7 @@
                             : s <= e.stopNum &&
                               (e.arrayPos++,
                               e.arrayPos === e.strings.length
-                                  ? ((e.arrayPos = 0),
-                                    e.options.onLastStringBackspaced(),
-                                    e.shuffleStringsIfNeeded(),
-                                    e.begin())
+                                  ? ((e.arrayPos = 0), e.options.onLastStringBackspaced(), e.shuffleStringsIfNeeded(), e.begin())
                                   : e.typewrite(e.strings[e.sequence[e.arrayPos]], s));
                     }, i);
                 } else this.setPauseStatus(t, s, !1);
@@ -316,9 +304,7 @@
                     (this.pause.status ||
                         (this.cursorBlinking !== t &&
                             ((this.cursorBlinking = t),
-                            t
-                                ? this.cursor.classList.add('typed-cursor--blink')
-                                : this.cursor.classList.remove('typed-cursor--blink'))));
+                            t ? this.cursor.classList.add('typed-cursor--blink') : this.cursor.classList.remove('typed-cursor--blink'))));
             }),
             (s.humanizer = function (t) {
                 return Math.round((Math.random() * t) / 2) + t;

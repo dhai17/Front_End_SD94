@@ -33,34 +33,10 @@
                             <p class="cac-title" id="thongTinGiaohang">Thông tin giao hàng</p>
 
                             <div>
-                                <input
-                                    type="text"
-                                    id="checkOut-HoTen"
-                                    name="hoTen"
-                                    placeholder="Nhập họ và tên"
-                                    ng-model="hoTen"
-                                />
-                                <input
-                                    type="text"
-                                    id="checkOut-SDT"
-                                    name="sdt"
-                                    placeholder="Nhập số điện thoại"
-                                    ng-model="soDienThoai"
-                                />
-                                <input
-                                    type="text"
-                                    id="checkOut-email"
-                                    name="nhapEmail"
-                                    placeholder="Nhập email"
-                                    ng-model="email"
-                                />
-                                <input
-                                    type="text"
-                                    id="checkOut-diaChi"
-                                    name="addressInput"
-                                    placeholder="Nhập địa chỉ"
-                                    ng-model="diaChi"
-                                />
+                                <input type="text" id="checkOut-HoTen" name="hoTen" placeholder="Nhập họ và tên" ng-model="hoTen" />
+                                <input type="text" id="checkOut-SDT" name="sdt" placeholder="Nhập số điện thoại" ng-model="soDienThoai" />
+                                <input type="text" id="checkOut-email" name="nhapEmail" placeholder="Nhập email" ng-model="email" />
+                                <input type="text" id="checkOut-diaChi" name="addressInput" placeholder="Nhập địa chỉ" ng-model="diaChi" />
                             </div>
 
                             <div class="chon-dia-chi">
@@ -81,12 +57,7 @@
                                 </div>
                             </div>
 
-                            <textarea
-                                id="note"
-                                name="note"
-                                placeholder="Nhập ghi chú cho đơn hàng"
-                                ng-model="ghiChu"
-                            ></textarea>
+                            <textarea id="note" name="note" placeholder="Nhập ghi chú cho đơn hàng" ng-model="ghiChu"></textarea>
                         </div>
 
                         <hr />
@@ -172,32 +143,21 @@
                                 ng-change="onKhuyenMaiChange()"
                             >
                                 <option value="">Chọn mã giảm giá</option>
-                                <option
-                                    id="KhuyenMaiDangChon"
-                                    ng-repeat="km in khuyenMai"
-                                    value="{{km.id}}"
-                                    class="option"
-                                >
+                                <option id="KhuyenMaiDangChon" ng-repeat="km in khuyenMai" value="{{km.id}}" class="option">
                                     {{km.tenKhuyenMai}}
                                 </option>
                             </select>
-                            <button class="btn-apply themMaGiamGiaOnline" type="submit" ng-click="addKhuyenMai()">
-                                SỬ DỤNG
-                            </button>
+                            <button class="btn-apply themMaGiamGiaOnline" type="submit" ng-click="addKhuyenMai()">SỬ DỤNG</button>
                         </div>
                     </div>
                     <br />
                     <hr />
 
-                    <p class="cart__discount">
-                        Tạm tính: <span id="subtotal"> {{tienTamTinh.toLocaleString('vi-VN') + ' VNĐ' }}</span>
-                    </p>
+                    <p class="cart__discount">Tạm tính: <span id="subtotal"> {{tienTamTinh.toLocaleString('vi-VN') + ' VNĐ' }}</span></p>
 
                     <p class="cart__discount">
                         <label for="shippingFee">Phí vận chuyển: </label>
-                        <label type="text" id="shippingFee" readonly
-                            >{{tienShip.toLocaleString('vi-VN') + ' VNĐ' }}</label
-                        >
+                        <label type="text" id="shippingFee" readonly>{{tienShip.toLocaleString('vi-VN') + ' VNĐ' }}</label>
                     </p>
 
                     <p class="cart__discount">
@@ -219,9 +179,7 @@
 
                     <div class="button-container">
                         <div class="button-group">
-                            <button type="submit" id="buttonThanhToan" class="button-thanhToan" ng-click="thanhToan()">
-                                Thanh toán
-                            </button>
+                            <button type="submit" id="buttonThanhToan" class="button-thanhToan" ng-click="thanhToan()">Thanh toán</button>
 
                             <button id="buttonDatHang" class="button-datHang" ng-click="datHang()">Đặt hàng</button>
                         </div>

@@ -109,40 +109,36 @@ app.controller('thongKeController', function ($scope, $http) {
     $scope.thang = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     $scope.locTheoThang = function (thang) {
         $scope.thangLoad = thang;
-        $http
-            .get('http://localhost:8080/thongKe/thongKeTheothangTruyenVao/' + thang, { headers })
-            .then(function (response) {
-                $scope.tongTienThang = 0;
-                $scope.hangBanDuocThang = 0;
+        $http.get('http://localhost:8080/thongKe/thongKeTheothangTruyenVao/' + thang, { headers }).then(function (response) {
+            $scope.tongTienThang = 0;
+            $scope.hangBanDuocThang = 0;
 
-                angular.forEach(response.data, function (item) {
-                    $scope.hangBanDuocThang += item.so_san_pham_da_ban;
-                    $scope.tongTienThang += item.tong_tien_hoadon;
-                });
+            angular.forEach(response.data, function (item) {
+                $scope.hangBanDuocThang += item.so_san_pham_da_ban;
+                $scope.tongTienThang += item.tong_tien_hoadon;
             });
+        });
     };
 
     $scope.nam = [2023, 2024, 2025];
     $scope.locTheoNam = function (nam) {
         $scope.namLoad = nam;
-        $http
-            .get('http://localhost:8080/thongKe/thongKeTheoNamTruyenVao/' + nam, { headers })
-            .then(function (response) {
-                let data = response.data;
+        $http.get('http://localhost:8080/thongKe/thongKeTheoNamTruyenVao/' + nam, { headers }).then(function (response) {
+            let data = response.data;
 
-                months = [];
-                values = [];
+            months = [];
+            values = [];
 
-                data.forEach(function (item) {
-                    months.push(item.thang);
-                    values.push(item.tong_tien_hoadon);
-                });
-
-                if (window.myChart) {
-                    window.myChart.destroy();
-                }
-
-                createChart(months, values);
+            data.forEach(function (item) {
+                months.push(item.thang);
+                values.push(item.tong_tien_hoadon);
             });
+
+            if (window.myChart) {
+                window.myChart.destroy();
+            }
+
+            createChart(months, values);
+        });
     };
 });

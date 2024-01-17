@@ -365,11 +365,7 @@
                                 } else if (depName === 'module') {
                                     //CommonJS module spec 1.1
                                     cjsModule = args[i] = handlers.module(name);
-                                } else if (
-                                    hasProp(defined, depName) ||
-                                    hasProp(waiting, depName) ||
-                                    hasProp(defining, depName)
-                                ) {
+                                } else if (hasProp(defined, depName) || hasProp(waiting, depName) || hasProp(defining, depName)) {
                                     args[i] = callDep(depName);
                                 } else if (map.p) {
                                     map.p.load(map.n, makeRequire(relName, true), makeLoad(depName), {});
@@ -826,9 +822,7 @@
                 this.clear();
                 this.hideLoading();
 
-                var $message = $(
-                    '<li role="treeitem" aria-live="assertive"' + ' class="select2-results__option"></li>',
-                );
+                var $message = $('<li role="treeitem" aria-live="assertive"' + ' class="select2-results__option"></li>');
 
                 var message = this.options.get('translations').get(params.message);
 
@@ -918,10 +912,7 @@
                         // id needs to be converted to a string when comparing
                         var id = '' + item.id;
 
-                        if (
-                            (item.element != null && item.element.selected) ||
-                            (item.element == null && $.inArray(id, selectedIds) > -1)
-                        ) {
+                        if ((item.element != null && item.element.selected) || (item.element == null && $.inArray(id, selectedIds) > -1)) {
                             $option.attr('aria-selected', 'true');
                         } else {
                             $option.attr('aria-selected', 'false');
@@ -1335,9 +1326,7 @@
 
             BaseSelection.prototype.render = function () {
                 var $selection = $(
-                    '<span class="select2-selection" role="combobox" ' +
-                        ' aria-haspopup="true" aria-expanded="false">' +
-                        '</span>',
+                    '<span class="select2-selection" role="combobox" ' + ' aria-haspopup="true" aria-expanded="false">' + '</span>',
                 );
 
                 this._tabindex = 0;
@@ -1423,10 +1412,7 @@
                 // key is pressed, possibly along with others.
                 window.setTimeout(function () {
                     // Don't trigger `blur` if the focus is still in the selection
-                    if (
-                        document.activeElement == self.$selection[0] ||
-                        $.contains(self.$selection[0], document.activeElement)
-                    ) {
+                    if (document.activeElement == self.$selection[0] || $.contains(self.$selection[0], document.activeElement)) {
                         return;
                     }
 
@@ -1478,104 +1464,100 @@
             return BaseSelection;
         });
 
-        S2.define(
-            'select2/selection/single',
-            ['jquery', './base', '../utils', '../keys'],
-            function ($, BaseSelection, Utils, KEYS) {
-                function SingleSelection() {
-                    SingleSelection.__super__.constructor.apply(this, arguments);
-                }
+        S2.define('select2/selection/single', ['jquery', './base', '../utils', '../keys'], function ($, BaseSelection, Utils, KEYS) {
+            function SingleSelection() {
+                SingleSelection.__super__.constructor.apply(this, arguments);
+            }
 
-                Utils.Extend(SingleSelection, BaseSelection);
+            Utils.Extend(SingleSelection, BaseSelection);
 
-                SingleSelection.prototype.render = function () {
-                    var $selection = SingleSelection.__super__.render.call(this);
+            SingleSelection.prototype.render = function () {
+                var $selection = SingleSelection.__super__.render.call(this);
 
-                    $selection.addClass('select2-selection--single');
+                $selection.addClass('select2-selection--single');
 
-                    $selection.html(
-                        '<span class="select2-selection__rendered"></span>' +
-                            '<span class="select2-selection__arrow" role="presentation">' +
-                            '<b role="presentation"></b>' +
-                            '</span>',
-                    );
+                $selection.html(
+                    '<span class="select2-selection__rendered"></span>' +
+                        '<span class="select2-selection__arrow" role="presentation">' +
+                        '<b role="presentation"></b>' +
+                        '</span>',
+                );
 
-                    return $selection;
-                };
+                return $selection;
+            };
 
-                SingleSelection.prototype.bind = function (container, $container) {
-                    var self = this;
+            SingleSelection.prototype.bind = function (container, $container) {
+                var self = this;
 
-                    SingleSelection.__super__.bind.apply(this, arguments);
+                SingleSelection.__super__.bind.apply(this, arguments);
 
-                    var id = container.id + '-container';
+                var id = container.id + '-container';
 
-                    this.$selection.find('.select2-selection__rendered').attr('id', id);
-                    this.$selection.attr('aria-labelledby', id);
+                this.$selection.find('.select2-selection__rendered').attr('id', id);
+                this.$selection.attr('aria-labelledby', id);
 
-                    this.$selection.on('mousedown', function (evt) {
-                        // Only respond to left clicks
-                        if (evt.which !== 1) {
-                            return;
-                        }
-
-                        self.trigger('toggle', {
-                            originalEvent: evt,
-                        });
-                    });
-
-                    this.$selection.on('focus', function (evt) {
-                        // User focuses on the container
-                    });
-
-                    this.$selection.on('blur', function (evt) {
-                        // User exits the container
-                    });
-
-                    container.on('focus', function (evt) {
-                        if (!container.isOpen()) {
-                            self.$selection.focus();
-                        }
-                    });
-
-                    container.on('selection:update', function (params) {
-                        self.update(params.data);
-                    });
-                };
-
-                SingleSelection.prototype.clear = function () {
-                    this.$selection.find('.select2-selection__rendered').empty();
-                };
-
-                SingleSelection.prototype.display = function (data, container) {
-                    var template = this.options.get('templateSelection');
-                    var escapeMarkup = this.options.get('escapeMarkup');
-
-                    return escapeMarkup(template(data, container));
-                };
-
-                SingleSelection.prototype.selectionContainer = function () {
-                    return $('<span></span>');
-                };
-
-                SingleSelection.prototype.update = function (data) {
-                    if (data.length === 0) {
-                        this.clear();
+                this.$selection.on('mousedown', function (evt) {
+                    // Only respond to left clicks
+                    if (evt.which !== 1) {
                         return;
                     }
 
-                    var selection = data[0];
+                    self.trigger('toggle', {
+                        originalEvent: evt,
+                    });
+                });
 
-                    var $rendered = this.$selection.find('.select2-selection__rendered');
-                    var formatted = this.display(selection, $rendered);
+                this.$selection.on('focus', function (evt) {
+                    // User focuses on the container
+                });
 
-                    $rendered.empty().append(formatted);
-                    $rendered.prop('title', selection.title || selection.text);
-                };
+                this.$selection.on('blur', function (evt) {
+                    // User exits the container
+                });
 
-                return SingleSelection;
-            },
-        );
+                container.on('focus', function (evt) {
+                    if (!container.isOpen()) {
+                        self.$selection.focus();
+                    }
+                });
+
+                container.on('selection:update', function (params) {
+                    self.update(params.data);
+                });
+            };
+
+            SingleSelection.prototype.clear = function () {
+                this.$selection.find('.select2-selection__rendered').empty();
+            };
+
+            SingleSelection.prototype.display = function (data, container) {
+                var template = this.options.get('templateSelection');
+                var escapeMarkup = this.options.get('escapeMarkup');
+
+                return escapeMarkup(template(data, container));
+            };
+
+            SingleSelection.prototype.selectionContainer = function () {
+                return $('<span></span>');
+            };
+
+            SingleSelection.prototype.update = function (data) {
+                if (data.length === 0) {
+                    this.clear();
+                    return;
+                }
+
+                var selection = data[0];
+
+                var $rendered = this.$selection.find('.select2-selection__rendered');
+                var formatted = this.display(selection, $rendered);
+
+                $rendered.empty().append(formatted);
+                $rendered.prop('title', selection.title || selection.text);
+            };
+
+            return SingleSelection;
+        });
 
         S2.define('select2/selection/multiple', ['jquery', './base', '../utils'], function ($, BaseSelection, Utils) {
             function MultipleSelection($element, options) {
@@ -1733,8 +1715,7 @@
                 if (this.placeholder == null) {
                     if (this.options.get('debug') && window.console && console.error) {
                         console.error(
-                            'Select2: The `allowClear` option should be used in combination ' +
-                                'with the `placeholder` option.',
+                            'Select2: The `allowClear` option should be used in combination ' + 'with the `placeholder` option.',
                         );
                     }
                 }
@@ -2025,16 +2006,7 @@
 
             EventRelay.prototype.bind = function (decorated, container, $container) {
                 var self = this;
-                var relayEvents = [
-                    'open',
-                    'opening',
-                    'close',
-                    'closing',
-                    'select',
-                    'selecting',
-                    'unselect',
-                    'unselecting',
-                ];
+                var relayEvents = ['open', 'opening', 'close', 'closing', 'select', 'selecting', 'unselect', 'unselecting'];
 
                 var preventableEvents = ['opening', 'closing', 'selecting', 'unselecting'];
 
@@ -3426,8 +3398,7 @@
                                 // Check to make sure that the response included a `results` key.
                                 if (!results || !results.results || !$.isArray(results.results)) {
                                     console.error(
-                                        'Select2: The AJAX results did not return an array in the ' +
-                                            '`results` key of the response.',
+                                        'Select2: The AJAX results did not return an array in the ' + '`results` key of the response.',
                                     );
                                 }
                             }
@@ -3607,10 +3578,7 @@
             Tokenizer.prototype.bind = function (decorated, container, $container) {
                 decorated.call(this, container, $container);
 
-                this.$search =
-                    container.dropdown.$search ||
-                    container.selection.$search ||
-                    $container.find('.select2-search__field');
+                this.$search = container.dropdown.$search || container.selection.$search || $container.find('.select2-search__field');
             };
 
             Tokenizer.prototype.query = function (decorated, params, callback) {
@@ -3809,9 +3777,7 @@
             Utils.Extend(Dropdown, Utils.Observable);
 
             Dropdown.prototype.render = function () {
-                var $dropdown = $(
-                    '<span class="select2-dropdown">' + '<span class="select2-results"></span>' + '</span>',
-                );
+                var $dropdown = $('<span class="select2-dropdown">' + '<span class="select2-results"></span>' + '</span>');
 
                 $dropdown.attr('dir', this.options.get('dir'));
 
@@ -4595,11 +4561,7 @@
                             options.dropdownAdapter = Utils.Decorate(options.dropdownAdapter, CloseOnSelect);
                         }
 
-                        if (
-                            options.dropdownCssClass != null ||
-                            options.dropdownCss != null ||
-                            options.adaptDropdownCssClass != null
-                        ) {
+                        if (options.dropdownCssClass != null || options.dropdownCss != null || options.adaptDropdownCssClass != null) {
                             var DropdownCSS = require(options.amdBase + 'compat/dropdownCss');
 
                             options.dropdownAdapter = Utils.Decorate(options.dropdownAdapter, DropdownCSS);
@@ -4628,11 +4590,7 @@
                             options.selectionAdapter = Utils.Decorate(options.selectionAdapter, SelectionSearch);
                         }
 
-                        if (
-                            options.containerCssClass != null ||
-                            options.containerCss != null ||
-                            options.adaptContainerCssClass != null
-                        ) {
+                        if (options.containerCssClass != null || options.containerCss != null || options.adaptContainerCssClass != null) {
                             var ContainerCSS = require(options.amdBase + 'compat/containerCss');
 
                             options.selectionAdapter = Utils.Decorate(options.selectionAdapter, ContainerCSS);
@@ -4805,124 +4763,120 @@
             },
         );
 
-        S2.define(
-            'select2/options',
-            ['require', 'jquery', './defaults', './utils'],
-            function (require, $, Defaults, Utils) {
-                function Options(options, $element) {
-                    this.options = options;
+        S2.define('select2/options', ['require', 'jquery', './defaults', './utils'], function (require, $, Defaults, Utils) {
+            function Options(options, $element) {
+                this.options = options;
 
-                    if ($element != null) {
-                        this.fromElement($element);
-                    }
+                if ($element != null) {
+                    this.fromElement($element);
+                }
 
-                    this.options = Defaults.apply(this.options);
+                this.options = Defaults.apply(this.options);
 
-                    if ($element && $element.is('input')) {
-                        var InputCompat = require(this.get('amdBase') + 'compat/inputData');
+                if ($element && $element.is('input')) {
+                    var InputCompat = require(this.get('amdBase') + 'compat/inputData');
 
-                        this.options.dataAdapter = Utils.Decorate(this.options.dataAdapter, InputCompat);
+                    this.options.dataAdapter = Utils.Decorate(this.options.dataAdapter, InputCompat);
+                }
+            }
+
+            Options.prototype.fromElement = function ($e) {
+                var excludedData = ['select2'];
+
+                if (this.options.multiple == null) {
+                    this.options.multiple = $e.prop('multiple');
+                }
+
+                if (this.options.disabled == null) {
+                    this.options.disabled = $e.prop('disabled');
+                }
+
+                if (this.options.language == null) {
+                    if ($e.prop('lang')) {
+                        this.options.language = $e.prop('lang').toLowerCase();
+                    } else if ($e.closest('[lang]').prop('lang')) {
+                        this.options.language = $e.closest('[lang]').prop('lang');
                     }
                 }
 
-                Options.prototype.fromElement = function ($e) {
-                    var excludedData = ['select2'];
-
-                    if (this.options.multiple == null) {
-                        this.options.multiple = $e.prop('multiple');
-                    }
-
-                    if (this.options.disabled == null) {
-                        this.options.disabled = $e.prop('disabled');
-                    }
-
-                    if (this.options.language == null) {
-                        if ($e.prop('lang')) {
-                            this.options.language = $e.prop('lang').toLowerCase();
-                        } else if ($e.closest('[lang]').prop('lang')) {
-                            this.options.language = $e.closest('[lang]').prop('lang');
-                        }
-                    }
-
-                    if (this.options.dir == null) {
-                        if ($e.prop('dir')) {
-                            this.options.dir = $e.prop('dir');
-                        } else if ($e.closest('[dir]').prop('dir')) {
-                            this.options.dir = $e.closest('[dir]').prop('dir');
-                        } else {
-                            this.options.dir = 'ltr';
-                        }
-                    }
-
-                    $e.prop('disabled', this.options.disabled);
-                    $e.prop('multiple', this.options.multiple);
-
-                    if ($e.data('select2Tags')) {
-                        if (this.options.debug && window.console && console.warn) {
-                            console.warn(
-                                'Select2: The `data-select2-tags` attribute has been changed to ' +
-                                    'use the `data-data` and `data-tags="true"` attributes and will be ' +
-                                    'removed in future versions of Select2.',
-                            );
-                        }
-
-                        $e.data('data', $e.data('select2Tags'));
-                        $e.data('tags', true);
-                    }
-
-                    if ($e.data('ajaxUrl')) {
-                        if (this.options.debug && window.console && console.warn) {
-                            console.warn(
-                                'Select2: The `data-ajax-url` attribute has been changed to ' +
-                                    '`data-ajax--url` and support for the old attribute will be removed' +
-                                    ' in future versions of Select2.',
-                            );
-                        }
-
-                        $e.attr('ajax--url', $e.data('ajaxUrl'));
-                        $e.data('ajax--url', $e.data('ajaxUrl'));
-                    }
-
-                    var dataset = {};
-
-                    // Prefer the element's `dataset` attribute if it exists
-                    // jQuery 1.x does not correctly handle data attributes with multiple dashes
-                    if ($.fn.jquery && $.fn.jquery.substr(0, 2) == '1.' && $e[0].dataset) {
-                        dataset = $.extend(true, {}, $e[0].dataset, $e.data());
+                if (this.options.dir == null) {
+                    if ($e.prop('dir')) {
+                        this.options.dir = $e.prop('dir');
+                    } else if ($e.closest('[dir]').prop('dir')) {
+                        this.options.dir = $e.closest('[dir]').prop('dir');
                     } else {
-                        dataset = $e.data();
+                        this.options.dir = 'ltr';
+                    }
+                }
+
+                $e.prop('disabled', this.options.disabled);
+                $e.prop('multiple', this.options.multiple);
+
+                if ($e.data('select2Tags')) {
+                    if (this.options.debug && window.console && console.warn) {
+                        console.warn(
+                            'Select2: The `data-select2-tags` attribute has been changed to ' +
+                                'use the `data-data` and `data-tags="true"` attributes and will be ' +
+                                'removed in future versions of Select2.',
+                        );
                     }
 
-                    var data = $.extend(true, {}, dataset);
+                    $e.data('data', $e.data('select2Tags'));
+                    $e.data('tags', true);
+                }
 
-                    data = Utils._convertData(data);
-
-                    for (var key in data) {
-                        if ($.inArray(key, excludedData) > -1) {
-                            continue;
-                        }
-
-                        if ($.isPlainObject(this.options[key])) {
-                            $.extend(this.options[key], data[key]);
-                        } else {
-                            this.options[key] = data[key];
-                        }
+                if ($e.data('ajaxUrl')) {
+                    if (this.options.debug && window.console && console.warn) {
+                        console.warn(
+                            'Select2: The `data-ajax-url` attribute has been changed to ' +
+                                '`data-ajax--url` and support for the old attribute will be removed' +
+                                ' in future versions of Select2.',
+                        );
                     }
 
-                    return this;
-                };
+                    $e.attr('ajax--url', $e.data('ajaxUrl'));
+                    $e.data('ajax--url', $e.data('ajaxUrl'));
+                }
 
-                Options.prototype.get = function (key) {
-                    return this.options[key];
-                };
+                var dataset = {};
 
-                Options.prototype.set = function (key, val) {
-                    this.options[key] = val;
-                };
+                // Prefer the element's `dataset` attribute if it exists
+                // jQuery 1.x does not correctly handle data attributes with multiple dashes
+                if ($.fn.jquery && $.fn.jquery.substr(0, 2) == '1.' && $e[0].dataset) {
+                    dataset = $.extend(true, {}, $e[0].dataset, $e.data());
+                } else {
+                    dataset = $e.data();
+                }
 
-                return Options;
-            },
-        );
+                var data = $.extend(true, {}, dataset);
+
+                data = Utils._convertData(data);
+
+                for (var key in data) {
+                    if ($.inArray(key, excludedData) > -1) {
+                        continue;
+                    }
+
+                    if ($.isPlainObject(this.options[key])) {
+                        $.extend(this.options[key], data[key]);
+                    } else {
+                        this.options[key] = data[key];
+                    }
+                }
+
+                return this;
+            };
+
+            Options.prototype.get = function (key) {
+                return this.options[key];
+            };
+
+            Options.prototype.set = function (key, val) {
+                this.options[key] = val;
+            };
+
+            return Options;
+        });
 
         S2.define('select2/core', ['jquery', './options', './utils', './keys'], function ($, Options, Utils, KEYS) {
             var Select2 = function ($element, options) {
@@ -6236,10 +6190,7 @@
 
                                 if (instance == null && window.console && console.error) {
                                     console.error(
-                                        "The select2('" +
-                                            options +
-                                            "') method was called on an " +
-                                            'element that is not using Select2.',
+                                        "The select2('" + options + "') method was called on an " + 'element that is not using Select2.',
                                     );
                                 }
 

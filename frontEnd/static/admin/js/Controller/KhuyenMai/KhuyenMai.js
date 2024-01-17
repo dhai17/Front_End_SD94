@@ -178,19 +178,17 @@ app.controller('KhuyenMaiController', function ($scope, $http) {
         let formattedDate = formatDate(selectedDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http
-            .get('http://localhost:8080/khuyenMai/timKiemNgay=' + formattedDate, { headers })
-            .then(function (response) {
-                const promotions = response.data;
-                promotions.forEach(function (promotion) {
-                    promotion.trangThai2 = getStatusText(promotion.status);
-                    promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
-                });
-
-                $scope.$evalAsync(function () {
-                    $scope.promotions = promotions;
-                });
+        $http.get('http://localhost:8080/khuyenMai/timKiemNgay=' + formattedDate, { headers }).then(function (response) {
+            const promotions = response.data;
+            promotions.forEach(function (promotion) {
+                promotion.trangThai2 = getStatusText(promotion.status);
+                promotion.fomattienGiamToiDa = fomatMaxValue(promotion.tienGiamToiDa);
             });
+
+            $scope.$evalAsync(function () {
+                $scope.promotions = promotions;
+            });
+        });
     };
 
     function formatDate(dateString) {

@@ -197,10 +197,7 @@
 
         // .offsetParent will return the closest TD or TABLE in case
         // no offsetParent is present, I hate this job...
-        if (
-            ['TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 &&
-            getStyleComputedProperty(offsetParent, 'position') === 'static'
-        ) {
+        if (['TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
             return getOffsetParent(offsetParent);
         }
 
@@ -793,8 +790,7 @@
         var measurement = isHoriz ? 'height' : 'width';
         var secondaryMeasurement = !isHoriz ? 'height' : 'width';
 
-        popperOffsets[mainSide] =
-            referenceOffsets[mainSide] + referenceOffsets[measurement] / 2 - popperRect[measurement] / 2;
+        popperOffsets[mainSide] = referenceOffsets[mainSide] + referenceOffsets[measurement] / 2 - popperRect[measurement] / 2;
         if (placement === secondarySide) {
             popperOffsets[secondarySide] = referenceOffsets[secondarySide] - popperRect[secondaryMeasurement];
         } else {
@@ -1212,8 +1208,7 @@
                 'WARNING: `gpuAcceleration` option moved to `computeStyle` modifier and will not be supported in future versions of Popper.js!',
             );
         }
-        var gpuAcceleration =
-            legacyGpuAccelerationOption !== undefined ? legacyGpuAccelerationOption : options.gpuAcceleration;
+        var gpuAcceleration = legacyGpuAccelerationOption !== undefined ? legacyGpuAccelerationOption : options.gpuAcceleration;
 
         var offsetParent = getOffsetParent(data.instance.popper);
         var offsetParentRect = getBoundingClientRect(offsetParent);
@@ -1389,10 +1384,7 @@
 
         // Compute the sideValue using the updated popper offsets
         // take popper margin in account because we don't have this info available
-        var popperMarginSide = getStyleComputedProperty(data.instance.popper, 'margin' + sideCapitalized).replace(
-            'px',
-            '',
-        );
+        var popperMarginSide = getStyleComputedProperty(data.instance.popper, 'margin' + sideCapitalized).replace('px', '');
         var sideValue = center - getClientRect(data.offsets.popper)[side] - popperMarginSide;
 
         // prevent arrowElement from being placed not contiguously to its popper
@@ -1516,12 +1508,7 @@
             return data;
         }
 
-        var boundaries = getBoundaries(
-            data.instance.popper,
-            data.instance.reference,
-            options.padding,
-            options.boundariesElement,
-        );
+        var boundaries = getBoundaries(data.instance.popper, data.instance.reference, options.padding, options.boundariesElement);
 
         var placement = data.placement.split('-')[0];
         var placementOpposite = getOppositePlacement(placement);
@@ -1840,12 +1827,7 @@
             boundariesElement = getOffsetParent(boundariesElement);
         }
 
-        var boundaries = getBoundaries(
-            data.instance.popper,
-            data.instance.reference,
-            options.padding,
-            boundariesElement,
-        );
+        var boundaries = getBoundaries(data.instance.popper, data.instance.reference, options.padding, boundariesElement);
         options.boundaries = boundaries;
 
         var order = options.priority;
@@ -1863,10 +1845,7 @@
                 var mainSide = placement === 'right' ? 'left' : 'top';
                 var value = popper[mainSide];
                 if (popper[placement] > boundaries[placement] && !options.escapeWithReference) {
-                    value = Math.min(
-                        popper[mainSide],
-                        boundaries[placement] - (placement === 'right' ? popper.width : popper.height),
-                    );
+                    value = Math.min(popper[mainSide], boundaries[placement] - (placement === 'right' ? popper.width : popper.height));
                 }
                 return defineProperty({}, mainSide, value);
             },
@@ -1932,12 +1911,7 @@
             return modifier.name === 'preventOverflow';
         }).boundaries;
 
-        if (
-            refRect.bottom < bound.top ||
-            refRect.left > bound.right ||
-            refRect.top > bound.bottom ||
-            refRect.right < bound.left
-        ) {
+        if (refRect.bottom < bound.top || refRect.left > bound.right || refRect.top > bound.bottom || refRect.right < bound.left) {
             // Avoid unnecessary DOM access if visibility hasn't changed
             if (data.hide === true) {
                 return data;
@@ -1976,8 +1950,7 @@
 
         var subtractLength = ['top', 'left'].indexOf(basePlacement) === -1;
 
-        popper[isHoriz ? 'left' : 'top'] =
-            reference[basePlacement] - (subtractLength ? popper[isHoriz ? 'width' : 'height'] : 0);
+        popper[isHoriz ? 'left' : 'top'] = reference[basePlacement] - (subtractLength ? popper[isHoriz ? 'width' : 'height'] : 0);
 
         data.placement = getOppositePlacement(placement);
         data.offsets.popper = getClientRect(popper);

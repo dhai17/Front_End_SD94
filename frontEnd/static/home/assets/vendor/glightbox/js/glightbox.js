@@ -812,11 +812,7 @@
 
                     var ignoreDragFor = ['a', 'button', 'input'];
 
-                    if (
-                        evt.target &&
-                        evt.target.nodeName &&
-                        ignoreDragFor.indexOf(evt.target.nodeName.toLowerCase()) >= 0
-                    ) {
+                    if (evt.target && evt.target.nodeName && ignoreDragFor.indexOf(evt.target.nodeName.toLowerCase()) >= 0) {
                         console.log('ignore drag for this touched element', evt.target.nodeName.toLowerCase());
                         return;
                     }
@@ -961,10 +957,7 @@
                         this.sx2 = this.sy2 = null;
                     }
 
-                    if (
-                        (this.x2 && Math.abs(this.x1 - this.x2) > 30) ||
-                        (this.y2 && Math.abs(this.y1 - this.y2) > 30)
-                    ) {
+                    if ((this.x2 && Math.abs(this.x1 - this.x2) > 30) || (this.y2 && Math.abs(this.y1 - this.y2) > 30)) {
                         evt.direction = this._swipeDirection(this.x1, this.x2, this.y1, this.y2);
                         this.swipeTimeout = setTimeout(function () {
                             self.swipe.dispatch(evt, self.element);
@@ -1028,13 +1021,7 @@
             {
                 key: '_swipeDirection',
                 value: function _swipeDirection(x1, x2, y1, y2) {
-                    return Math.abs(x1 - x2) >= Math.abs(y1 - y2)
-                        ? x1 - x2 > 0
-                            ? 'Left'
-                            : 'Right'
-                        : y1 - y2 > 0
-                          ? 'Up'
-                          : 'Down';
+                    return Math.abs(x1 - x2) >= Math.abs(y1 - y2) ? (x1 - x2 > 0 ? 'Left' : 'Right') : y1 - y2 > 0 ? 'Up' : 'Down';
                 },
             },
             {
@@ -1228,8 +1215,7 @@
                         mediaImage = media.querySelector('img');
                     }
 
-                    var windowWidth =
-                        window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+                    var windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
                     if (windowWidth > 769) {
                         media = currentSlide.querySelector('.ginner-container');
@@ -1705,11 +1691,7 @@
                     var clicked = e.target.nodeName.toLowerCase();
                     var exludeClicks = ['input', 'select', 'textarea', 'button', 'a'];
 
-                    if (
-                        e.target.classList.contains('nodrag') ||
-                        closest(e.target, '.nodrag') ||
-                        exludeClicks.indexOf(clicked) !== -1
-                    ) {
+                    if (e.target.classList.contains('nodrag') || closest(e.target, '.nodrag') || exludeClicks.indexOf(clicked) !== -1) {
                         this.active = false;
                         return;
                     }
@@ -2312,12 +2294,10 @@
                 key: 'setSize',
                 value: function setSize(data, settings) {
                     var element = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-                    var defaultWith =
-                        data.type == 'video' ? this.checkSize(settings.videosWidth) : this.checkSize(settings.width);
+                    var defaultWith = data.type == 'video' ? this.checkSize(settings.videosWidth) : this.checkSize(settings.width);
                     var defaultHeight = this.checkSize(settings.height);
                     data.width = has(data, 'width') && data.width !== '' ? this.checkSize(data.width) : defaultWith;
-                    data.height =
-                        has(data, 'height') && data.height !== '' ? this.checkSize(data.height) : defaultHeight;
+                    data.height = has(data, 'height') && data.height !== '' ? this.checkSize(data.height) : defaultHeight;
 
                     if (element && data.type == 'image') {
                         data._hasCustomWidth = element.dataset.width ? true : false;
@@ -2772,10 +2752,7 @@
 
                     this.build();
 
-                    animateElement(
-                        this.overlay,
-                        this.settings.openEffect === 'none' ? 'none' : this.settings.cssEfects.fade['in'],
-                    );
+                    animateElement(this.overlay, this.settings.openEffect === 'none' ? 'none' : this.settings.cssEfects.fade['in']);
 
                     var body = document.body;
                     var scrollBar = window.innerWidth - document.documentElement.clientWidth;
@@ -2885,8 +2862,7 @@
                     }
 
                     this.slideDescription = slideNode.querySelector('.gslide-description');
-                    this.slideDescriptionContained =
-                        this.slideDescription && hasClass(this.slideDescription.parentNode, 'gslide-media');
+                    this.slideDescriptionContained = this.slideDescription && hasClass(this.slideDescription.parentNode, 'gslide-media');
 
                     if (this.settings.preload) {
                         this.preloadSlide(index + 1);
@@ -3087,12 +3063,8 @@
                         slide: this.prevActiveSlide,
                         slideNode: this.prevActiveSlide,
                         slideIndex: this.prevActiveSlide,
-                        slideConfig: isNil(this.prevActiveSlideIndex)
-                            ? null
-                            : this.elements[this.prevActiveSlideIndex].slideConfig,
-                        trigger: isNil(this.prevActiveSlideIndex)
-                            ? null
-                            : this.elements[this.prevActiveSlideIndex].node,
+                        slideConfig: isNil(this.prevActiveSlideIndex) ? null : this.elements[this.prevActiveSlideIndex].slideConfig,
+                        trigger: isNil(this.prevActiveSlideIndex) ? null : this.elements[this.prevActiveSlideIndex].node,
                         player: this.getSlidePlayerInstance(this.prevActiveSlideIndex),
                     };
                     var nextData = {
@@ -3183,12 +3155,8 @@
                             slide: this.prevActiveSlide,
                             slideNode: this.prevActiveSlide,
                             slideIndex: this.prevActiveSlideIndex,
-                            slideConfig: isNil(this.prevActiveSlideIndex)
-                                ? null
-                                : this.elements[this.prevActiveSlideIndex].slideConfig,
-                            trigger: isNil(this.prevActiveSlideIndex)
-                                ? null
-                                : this.elements[this.prevActiveSlideIndex].node,
+                            slideConfig: isNil(this.prevActiveSlideIndex) ? null : this.elements[this.prevActiveSlideIndex].slideConfig,
+                            trigger: isNil(this.prevActiveSlideIndex) ? null : this.elements[this.prevActiveSlideIndex].node,
                             player: this.getSlidePlayerInstance(this.prevActiveSlideIndex),
                         },
                         current: {
@@ -3412,11 +3380,7 @@
                     var list = [];
                     this.elements = this.elements ? this.elements : [];
 
-                    if (
-                        !isNil(this.settings.elements) &&
-                        isArray(this.settings.elements) &&
-                        this.settings.elements.length
-                    ) {
+                    if (!isNil(this.settings.elements) && isArray(this.settings.elements) && this.settings.elements.length) {
                         each(this.settings.elements, function (el, i) {
                             var slide = new Slide(el, _this6, i);
                             var elData = slide.getConfig();
@@ -3601,11 +3565,7 @@
                                     !hasClass(document.body, 'glightbox-mobile') &&
                                     !closest(e.target, '.ginner-container')
                                 ) {
-                                    if (
-                                        !closest(e.target, '.gbtn') &&
-                                        !hasClass(e.target, 'gnext') &&
-                                        !hasClass(e.target, 'gprev')
-                                    ) {
+                                    if (!closest(e.target, '.gbtn') && !hasClass(e.target, 'gnext') && !hasClass(e.target, 'gprev')) {
                                         _this7.close();
                                     }
                                 }
@@ -3719,11 +3679,7 @@
                             winHeight = winHeight - description.offsetHeight;
                         }
 
-                        if (
-                            maxWidth > winWidth ||
-                            maxHeight > winHeight ||
-                            (winHeight < maxHeight && winWidth > maxWidth)
-                        ) {
+                        if (maxWidth > winWidth || maxHeight > winHeight || (winHeight < maxHeight && winWidth > maxWidth)) {
                             var vwidth = video.offsetWidth;
                             var vheight = video.offsetHeight;
 
@@ -3820,57 +3776,47 @@
 
                     addClass(this.modal, 'glightbox-closing');
 
-                    animateElement(
-                        this.overlay,
-                        this.settings.openEffect == 'none' ? 'none' : this.settings.cssEfects.fade.out,
-                    );
+                    animateElement(this.overlay, this.settings.openEffect == 'none' ? 'none' : this.settings.cssEfects.fade.out);
 
-                    animateElement(
-                        this.activeSlide,
-                        this.settings.cssEfects[this.settings.closeEffect].out,
-                        function () {
-                            _this8.activeSlide = null;
-                            _this8.prevActiveSlideIndex = null;
-                            _this8.prevActiveSlide = null;
-                            _this8.built = false;
+                    animateElement(this.activeSlide, this.settings.cssEfects[this.settings.closeEffect].out, function () {
+                        _this8.activeSlide = null;
+                        _this8.prevActiveSlideIndex = null;
+                        _this8.prevActiveSlide = null;
+                        _this8.built = false;
 
-                            if (_this8.events) {
-                                for (var _key in _this8.events) {
-                                    if (_this8.events.hasOwnProperty(_key)) {
-                                        _this8.events[_key].destroy();
-                                    }
+                        if (_this8.events) {
+                            for (var _key in _this8.events) {
+                                if (_this8.events.hasOwnProperty(_key)) {
+                                    _this8.events[_key].destroy();
                                 }
-
-                                _this8.events = null;
                             }
 
-                            var body = document.body;
+                            _this8.events = null;
+                        }
 
-                            removeClass(html, 'glightbox-open');
+                        var body = document.body;
 
-                            removeClass(
-                                body,
-                                'glightbox-open touching gdesc-open glightbox-touch glightbox-mobile gscrollbar-fixer',
-                            );
+                        removeClass(html, 'glightbox-open');
 
-                            _this8.modal.parentNode.removeChild(_this8.modal);
+                        removeClass(body, 'glightbox-open touching gdesc-open glightbox-touch glightbox-mobile gscrollbar-fixer');
 
-                            _this8.trigger('close');
+                        _this8.modal.parentNode.removeChild(_this8.modal);
 
-                            if (isFunction(_this8.settings.onClose)) {
-                                _this8.settings.onClose();
-                            }
+                        _this8.trigger('close');
 
-                            var styles = document.querySelector('.gcss-styles');
+                        if (isFunction(_this8.settings.onClose)) {
+                            _this8.settings.onClose();
+                        }
 
-                            if (styles) {
-                                styles.parentNode.removeChild(styles);
-                            }
+                        var styles = document.querySelector('.gcss-styles');
 
-                            _this8.lightboxOpen = false;
-                            _this8.closing = null;
-                        },
-                    );
+                        if (styles) {
+                            styles.parentNode.removeChild(styles);
+                        }
+
+                        _this8.lightboxOpen = false;
+                        _this8.closing = null;
+                    });
                 },
             },
             {

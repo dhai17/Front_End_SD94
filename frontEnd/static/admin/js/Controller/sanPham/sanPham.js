@@ -561,18 +561,16 @@ app.controller('CreateProductController', function ($scope, $http, $routeParams)
             soLuong: soLuong,
         };
 
-        $http
-            .post('http://localhost:8080/sanPham/chinhSua-soLuong-SanPhamChiTiet', data, { headers })
-            .then(function (response) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Chỉnh sửa thành công',
-                    showConfirmButton: false,
-                    timer: 2000,
-                });
-                const details = response.data;
-                $scope.details = details;
+        $http.post('http://localhost:8080/sanPham/chinhSua-soLuong-SanPhamChiTiet', data, { headers }).then(function (response) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Chỉnh sửa thành công',
+                showConfirmButton: false,
+                timer: 2000,
             });
+            const details = response.data;
+            $scope.details = details;
+        });
     };
 
     $scope.xoaSanPhamChiTiet = function (details) {
@@ -1133,9 +1131,7 @@ app.controller('ImgController', function ($scope, $http, $routeParams) {
             return;
         }
         const productsWithoutImages = $scope.spct.filter((spcts) => !spcts.hinhAnh || spcts.hinhAnh.length === 0);
-        const productsWithoutDefaultImage = $scope.spct.filter(
-            (spcts) => spcts.hinhAnh && !spcts.hinhAnh.some((anh) => anh.anhMacDinh),
-        );
+        const productsWithoutDefaultImage = $scope.spct.filter((spcts) => spcts.hinhAnh && !spcts.hinhAnh.some((anh) => anh.anhMacDinh));
 
         if (productsWithoutImages.length > 0) {
             Swal.fire({
@@ -1256,31 +1252,29 @@ app.controller('CTSPController', function ($scope, $routeParams, $http) {
                         id: details.id,
                     };
 
-                    $http
-                        .post('http://localhost:8080/sanPhamChiTiet/update/trangThai', data, { headers })
-                        .then(function (response) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Chuyển trạng thái thành công',
-                                showConfirmButton: false,
-                                timer: 2000,
-                            });
-
-                            $http
-                                .get('http://localhost:8080/sanPhamChiTiet/dsCTSP', {
-                                    params: { san_pham_id: id },
-                                    headers: headers,
-                                })
-                                .then(function (response) {
-                                    const details = response.data;
-                                    $scope.details = details;
-                                });
-
-                            // Cập nhật ngữ cảnh AngularJS
-                            $scope.$apply(function () {
-                                details.trangThai = !details.trangThai; // Đảo ngược trạng thái
-                            });
+                    $http.post('http://localhost:8080/sanPhamChiTiet/update/trangThai', data, { headers }).then(function (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Chuyển trạng thái thành công',
+                            showConfirmButton: false,
+                            timer: 2000,
                         });
+
+                        $http
+                            .get('http://localhost:8080/sanPhamChiTiet/dsCTSP', {
+                                params: { san_pham_id: id },
+                                headers: headers,
+                            })
+                            .then(function (response) {
+                                const details = response.data;
+                                $scope.details = details;
+                            });
+
+                        // Cập nhật ngữ cảnh AngularJS
+                        $scope.$apply(function () {
+                            details.trangThai = !details.trangThai; // Đảo ngược trạng thái
+                        });
+                    });
                 }
             } else if (result.dismiss === Swal.DismissReason.cancel) {
                 $scope.$apply(function () {
@@ -1351,24 +1345,22 @@ app.controller('EditImgController', function ($scope, $http, $routeParams, Image
     if (storedImages.length > 0) {
         $scope.spct = storedImages;
     } else {
-        $http
-            .get('http://localhost:8080/sanPhamChiTiet/themAnhSpctId/' + id_product, { headers })
-            .then(function (response) {
-                const spct = response.data;
-                const uniqueProducts = {};
+        $http.get('http://localhost:8080/sanPhamChiTiet/themAnhSpctId/' + id_product, { headers }).then(function (response) {
+            const spct = response.data;
+            const uniqueProducts = {};
 
-                spct.forEach(function (product) {
-                    const mauSacId = product.mauSac.id;
-                    if (!uniqueProducts[mauSacId]) {
-                        uniqueProducts[mauSacId] = product;
-                    }
-                });
-
-                $scope.spct = Object.values(uniqueProducts);
-                $scope.spct.forEach(function (spcts) {
-                    updateImageData(spcts);
-                });
+            spct.forEach(function (product) {
+                const mauSacId = product.mauSac.id;
+                if (!uniqueProducts[mauSacId]) {
+                    uniqueProducts[mauSacId] = product;
+                }
             });
+
+            $scope.spct = Object.values(uniqueProducts);
+            $scope.spct.forEach(function (spcts) {
+                updateImageData(spcts);
+            });
+        });
     }
 
     $scope.loadImage = function (input) {
@@ -1531,9 +1523,7 @@ app.controller('EditImgController', function ($scope, $http, $routeParams, Image
             return;
         }
         const productsWithoutImages = $scope.spct.filter((spcts) => !spcts.hinhAnh || spcts.hinhAnh.length === 0);
-        const productsWithoutDefaultImage = $scope.spct.filter(
-            (spcts) => spcts.hinhAnh && !spcts.hinhAnh.some((anh) => anh.anhMacDinh),
-        );
+        const productsWithoutDefaultImage = $scope.spct.filter((spcts) => spcts.hinhAnh && !spcts.hinhAnh.some((anh) => anh.anhMacDinh));
 
         if (productsWithoutImages.length > 0) {
             Swal.fire({

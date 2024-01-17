@@ -180,16 +180,14 @@ app.controller('CustomerController', function ($scope, $http) {
         let formattedDate = formatDate(selectedDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http
-            .get('http://localhost:8080/khachHang/timKiemNgay=' + formattedDate, { headers })
-            .then(function (response) {
-                const promotions = response.data;
-                promotions.forEach(function (promotion) {});
+        $http.get('http://localhost:8080/khachHang/timKiemNgay=' + formattedDate, { headers }).then(function (response) {
+            const promotions = response.data;
+            promotions.forEach(function (promotion) {});
 
-                $scope.$evalAsync(function () {
-                    $scope.promotions = promotions;
-                });
+            $scope.$evalAsync(function () {
+                $scope.promotions = promotions;
             });
+        });
     };
 
     function formatDate(dateString) {

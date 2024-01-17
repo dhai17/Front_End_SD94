@@ -18,24 +18,10 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between fromSearchBill">
             <div class="d-flex">
-                <input
-                    class="form-control me-1"
-                    type="search"
-                    placeholder="Tìm kiếm"
-                    aria-label="Search"
-                    ng-model="search"
-                />
+                <input class="form-control me-1" type="search" placeholder="Tìm kiếm" aria-label="Search" ng-model="search" />
 
-                <input
-                    class="form-control me-1"
-                    type="date"
-                    placeholder="Search"
-                    aria-label="Search"
-                    ng-model="searchDate"
-                />
-                <button class="btn btn-primary btn-sm" type="submit" ng-click="searchDateBill(searchDate)">
-                    Tìm kiếm
-                </button>
+                <input class="form-control me-1" type="date" placeholder="Search" aria-label="Search" ng-model="searchDate" />
+                <button class="btn btn-primary btn-sm" type="submit" ng-click="searchDateBill(searchDate)">Tìm kiếm</button>
 
                 <button
                     type="button"
@@ -83,8 +69,6 @@
         </tbody>
     </table>
     <div class="card-footer text-center">
-        <button class="btn active" ng-repeat="pageNumber in pager.pageNumbers" ng-click="pager.page = pageNumber">
-            {{pageNumber}}
-        </button>
+        <button class="btn active" ng-repeat="pageNumber in pager.pageNumbers" ng-click="pager.page = pageNumber">{{pageNumber}}</button>
     </div>
 </div>

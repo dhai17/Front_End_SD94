@@ -159,11 +159,9 @@ app.controller('ChoXacNhanController', function ($scope, $http) {
                     .then(function (response) {
                         $scope.loadData();
                         Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
-                        $http
-                            .get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, { headers })
-                            .then(function (response) {
-                                // Handle success
-                            });
+                        $http.get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, { headers }).then(function (response) {
+                            // Handle success
+                        });
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -175,16 +173,14 @@ app.controller('ChoXacNhanController', function ($scope, $http) {
     //Tìm kiếm
     $scope.$watch('search', function (newVal) {
         if (newVal) {
-            $http
-                .get('http://localhost:8080/hoaDon/datHang/choXacNhan/timKiem=' + newVal, { headers })
-                .then(function (response) {
-                    const pending = response.data;
+            $http.get('http://localhost:8080/hoaDon/datHang/choXacNhan/timKiem=' + newVal, { headers }).then(function (response) {
+                const pending = response.data;
 
-                    // Cập nhật lại dữ liệu trong table nhưng không load lại trang
-                    $scope.$evalAsync(function () {
-                        $scope.pending = pending;
-                    });
+                // Cập nhật lại dữ liệu trong table nhưng không load lại trang
+                $scope.$evalAsync(function () {
+                    $scope.pending = pending;
                 });
+            });
         } else {
             $scope.loadData();
         }
@@ -195,15 +191,13 @@ app.controller('ChoXacNhanController', function ($scope, $http) {
         let formattedDate = formatDate(searchDate);
 
         // Tiếp tục với yêu cầu HTTP và xử lý dữ liệu
-        $http
-            .get('http://localhost:8080/hoaDon/datHang/choXacNhan/timKiemNgay=' + formattedDate, { headers })
-            .then(function (response) {
-                const pending = response.data;
+        $http.get('http://localhost:8080/hoaDon/datHang/choXacNhan/timKiemNgay=' + formattedDate, { headers }).then(function (response) {
+            const pending = response.data;
 
-                $scope.$evalAsync(function () {
-                    $scope.pending = pending;
-                });
+            $scope.$evalAsync(function () {
+                $scope.pending = pending;
             });
+        });
     };
 
     function formatDate(dateString) {
@@ -343,23 +337,21 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
     };
     const id = $routeParams.id;
     $scope.loadData = function () {
-        $http
-            .get('http://localhost:8080/hoaDon/chiTietHoaDon/choXacNhan/id=' + id, { headers })
-            .then(function (response) {
-                const respone = response.data;
-                const hdct = respone.list_HDCT;
-                $scope.hdct = hdct;
+        $http.get('http://localhost:8080/hoaDon/chiTietHoaDon/choXacNhan/id=' + id, { headers }).then(function (response) {
+            const respone = response.data;
+            const hdct = respone.list_HDCT;
+            $scope.hdct = hdct;
 
-                const timeLine = respone.timeLine;
-                $scope.timeLine = timeLine;
+            const timeLine = respone.timeLine;
+            $scope.timeLine = timeLine;
 
-                const hoaDon = respone.hoaDon;
-                $scope.hoaDon = hoaDon;
+            const hoaDon = respone.hoaDon;
+            $scope.hoaDon = hoaDon;
 
-                const lsHoaDons = respone.lsHoaDons;
-                console.log(lsHoaDons);
-                $scope.lsHoaDons = lsHoaDons;
-            });
+            const lsHoaDons = respone.lsHoaDons;
+            console.log(lsHoaDons);
+            $scope.lsHoaDons = lsHoaDons;
+        });
     };
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
@@ -440,11 +432,9 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
                     .then(function (response) {
                         Swal.fire('Huỷ đơn hàng thành công!', '', 'success');
                         $scope.quayLai();
-                        $http
-                            .get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, { headers })
-                            .then(function (response) {
-                                // Handle success
-                            });
+                        $http.get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, { headers }).then(function (response) {
+                            // Handle success
+                        });
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -500,20 +490,18 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
                     showConfirmButton: false,
                     timer: 2000,
                 }).then(() => {
-                    $http
-                        .get('http://localhost:8080/hoaDon/chiTietHoaDon/choXacNhan/id=' + id, { headers })
-                        .then(function (response) {
-                            const respone = response.data;
-                            const hdct = respone.list_HDCT;
-                            $scope.hdct = hdct;
+                    $http.get('http://localhost:8080/hoaDon/chiTietHoaDon/choXacNhan/id=' + id, { headers }).then(function (response) {
+                        const respone = response.data;
+                        const hdct = respone.list_HDCT;
+                        $scope.hdct = hdct;
 
-                            const timeLine = respone.timeLine;
-                            $scope.timeLine = timeLine;
+                        const timeLine = respone.timeLine;
+                        $scope.timeLine = timeLine;
 
-                            const hoaDon = respone.hoaDon;
+                        const hoaDon = respone.hoaDon;
 
-                            $scope.hoaDon = hoaDon;
-                        });
+                        $scope.hoaDon = hoaDon;
+                    });
                 });
             })
             .catch(function (error) {
