@@ -127,16 +127,13 @@ app.controller('ChoXacNhanController', function ($scope, $http) {
                         headers,
                     })
                     .then(function (response) {
-                        if(response.data.statusCodeValue === 200){
-                            const pending = response.data;
-                            $scope.$evalAsync(function () {
-                                $scope.pending = pending;
-                            });
+                        if (response.data.statusCodeValue === 200) {
+                            $scope.loadData();
                             Swal.fire('Xác nhận thành công!', '', 'success');
                             $http
                                 .get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, { headers })
-                                .then(function (response) {});
-                        }else if(response.data.statusCodeValue === 400){
+                                .then(function (response) { });
+                        } else if (response.data.statusCodeValue === 400) {
                             Swal.fire({
                                 icon: 'error',
                                 title: response.data.body.err,
@@ -144,7 +141,7 @@ app.controller('ChoXacNhanController', function ($scope, $http) {
                                 timer: 2000,
                             });
                         }
-                        
+
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -277,9 +274,8 @@ app.controller('ChoXacNhanController', function ($scope, $http) {
                         $http
                             .put('http://localhost:8080/hoaDon/datHang/choXacNhan/xacNhanDon/daChon', data, { headers })
                             .then(function (response) {
-                                const pending = response.data;
+                                $scope.loadData();
                                 $scope.$evalAsync(function () {
-                                    $scope.pending = pending;
                                     $scope.coCheckboxDaChon = false;
                                     $scope.selectAll = false;
                                 });
@@ -290,7 +286,7 @@ app.controller('ChoXacNhanController', function ($scope, $http) {
                                         .get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, {
                                             headers,
                                         })
-                                        .then(function (response) {});
+                                        .then(function (response) { });
                                 }
                             });
                     }
@@ -322,9 +318,8 @@ app.controller('ChoXacNhanController', function ($scope, $http) {
                         $http
                             .put('http://localhost:8080/hoaDon/datHang/choXacNhan/huyDon/daChon', data, { headers })
                             .then(function (response) {
-                                const pending = response.data;
+                                $scope.loadData();
                                 $scope.$evalAsync(function () {
-                                    $scope.pending = pending;
                                     $scope.coCheckboxDaChon = false;
                                     $scope.selectAll = false;
                                 });
@@ -335,7 +330,7 @@ app.controller('ChoXacNhanController', function ($scope, $http) {
                                         .get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, {
                                             headers,
                                         })
-                                        .then(function (response) {});
+                                        .then(function (response) { });
                                 }
                             });
                     }
@@ -370,7 +365,7 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
 
             const lsHoaDons = respone.lsHoaDons;
             $scope.lsHoaDons = lsHoaDons;
-            });
+        });
     };
     // lay ra thong tin nguoi dang nhap
     function parseJwt(token) {
@@ -416,7 +411,7 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
                         Swal.fire('Xác nhận thành công!', '', 'success');
                         $http
                             .get('http://localhost:8080/hoaDon/datHang/choXacNhan/guiMail/' + id, { headers })
-                            .then(function (response) {});
+                            .then(function (response) { });
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -523,7 +518,7 @@ app.controller('CTChoXacNhan', function ($scope, $routeParams, $http) {
                         $scope.hoaDon = hoaDon;
                         const lsHoaDons = respone.lsHoaDons;
                         $scope.lsHoaDons = lsHoaDons;
-                        });
+                    });
                 });
             })
             .catch(function (error) {

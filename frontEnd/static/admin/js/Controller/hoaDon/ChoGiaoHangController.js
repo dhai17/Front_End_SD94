@@ -55,10 +55,7 @@ app.controller('ChoGiaoHangController', function ($scope, $http) {
                 $http
                     .post('http://localhost:8080/hoaDon/datHang/choGiaoHang/capNhatTrangThai/dangGiaoHang-tatCa', data, { headers })
                     .then(function (response) {
-                        const pending = response.data;
-                        $scope.$evalAsync(function () {
-                            $scope.pending = pending;
-                        });
+                        $scope.loadData();
                     });
                 Swal.fire('Xác nhận thành công!', '', 'success');
             }
@@ -222,9 +219,8 @@ app.controller('ChoGiaoHangController', function ($scope, $http) {
                                 headers,
                             })
                             .then(function (response) {
-                                const pending = response.data;
+                                $scope.loadData();
                                 $scope.$evalAsync(function () {
-                                    $scope.pending = pending;
                                     $scope.coCheckboxDaChon = false;
                                     $scope.selectAll = false;
                                 });
