@@ -185,6 +185,8 @@ app.controller('cartController', function ($scope, $http, $window) {
                                 title: response.data.body.err,
                                 showConfirmButton: false,
                                 timer: 2000,
+                            }).then(() => {
+                                window.location.reload()
                             });
                         } else {
                             Swal.fire({
